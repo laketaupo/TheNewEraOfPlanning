@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="A guided walkthrough of the o9 planning cycle from opening the workbench to releasing orders."><title>Running a Plan: Step by Step — How o9 Works</title><!-- Apply saved theme before render to avoid flash --><script>
+      if (localStorage.getItem('o9-theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script><!-- Inter font --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_topic_.DuXjodIZ.css"><script type="module" src="/_astro/hoisted.CCbTbuNd.js"></script></head> <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 font-sans antialiased min-h-screen transition-colors duration-200">   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800"> <a href="/" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"></path> </svg>
+How o9 Works
+</a> <a href="/chapters/04-the-simulation" class="text-sm font-medium border-b text-emerald-600 dark:text-emerald-400 border-emerald-400 dark:border-emerald-500 hover:opacity-80 transition-opacity"> The Simulation </a> <div class="flex items-center gap-3"> <div id="topic-progress-display" class="text-xs text-gray-400 dark:text-gray-500"></div> <button id="theme-toggle" aria-label="Toggle light/dark mode" class="p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"> <!-- Moon: visible in light mode, click to go dark --> <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path> </svg> <!-- Sun: visible in dark mode, click to go light --> <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path> </svg> </button>  </div> </header>  <main class="min-h-screen pt-16 pb-32 flex flex-col items-center"> <article class="w-full max-w-3xl px-6 py-12 animate-slide-up"> <!-- Chapter breadcrumb --> <p class="text-sm font-medium mb-2 text-emerald-600">
+Chapter 4 · Topic 4 </p> <!-- Topic title --> <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Running a Plan: Step by Step</h1> <p class="text-lg text-gray-600 dark:text-gray-400 mb-10">A guided walkthrough of the o9 planning cycle from opening the workbench to releasing orders.</p> <hr class="border-gray-200 dark:border-gray-800 mb-10"> <!-- Markdown content --> <div class="prose prose-gray dark:prose-invert prose-lg max-w-none
+        prose-headings:font-semibold
+        prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline
+        prose-code:text-emerald-700 dark:prose-code:text-emerald-300 prose-code:bg-emerald-50 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:rounded prose-code:text-sm
+        prose-pre:bg-gray-100 dark:prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-700
+        prose-table:text-sm
+        prose-blockquote:border-l-indigo-400"> <h2 id="follow-the-planning-cycle">Follow the Planning Cycle</h2>
+<p>This walkthrough guides you through a complete planning cycle in o9 — from opening your workbench to releasing supply orders. Click <strong>Next</strong> to advance through each step.</p>
+<!-- Widget rendered by the page layout when widget = "walkthrough" -->
+<h2 id="the-steps-in-brief">The Steps in Brief</h2>
+<ol>
+<li><strong>Open the workbench</strong> — navigate to your planning view (demand, supply, or integrated)</li>
+<li><strong>Review exceptions</strong> — see what has changed since the last planning cycle</li>
+<li><strong>Assess demand</strong> — confirm or adjust the demand forecast for the planning horizon</li>
+<li><strong>Run the supply plan</strong> — trigger the planning engine (constrained or unconstrained)</li>
+<li><strong>Review capacity</strong> — check for overloads and underloads on critical resources</li>
+<li><strong>Resolve conflicts</strong> — accept AI suggestions or manually adjust orders</li>
+<li><strong>Commit the plan</strong> — lock the baseline for the current review cycle</li>
+<li><strong>Release orders</strong> — push planned production orders and POs to execution systems</li>
+</ol>
+<h2 id="key-questions-at-each-step">Key Questions at Each Step</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Step</th><th>Question to answer</th></tr></thead><tbody><tr><td>Exceptions review</td><td>What changed and does it need action?</td></tr><tr><td>Demand review</td><td>Is the forecast aligned with market intelligence?</td></tr><tr><td>Supply run</td><td>Is the plan feasible within current constraints?</td></tr><tr><td>Capacity review</td><td>Where is the binding constraint this cycle?</td></tr><tr><td>Conflict resolution</td><td>What is the lowest-cost way to close the gap?</td></tr><tr><td>Order release</td><td>Are planners aligned and approvals obtained?</td></tr></tbody></table>
+<h2 id="placeholder-content">Placeholder Content</h2>
+<p><em>Customize each step with screenshots from your actual o9 environment, specific menu paths, and your organization’s naming conventions for workbenches and views.</em></p> </div> <!-- Simulation widget slot --> <div class="mt-10"> <div id="step-walkthrough" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-sky-50/50 dark:bg-gray-900/60 p-6"> <h3 class="text-sm font-semibold text-sky-400 mb-6 flex items-center gap-2"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path> </svg>
+Planning Cycle Walkthrough
+</h3> <!-- Progress dots at top --> <div class="flex items-center gap-1.5 mb-6"> <div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="0" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="1" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="2" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="3" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="4" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="5" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="6" style="width: 8px"></div><div class="sw-dot h-1.5 rounded-full transition-all duration-300 bg-gray-700" data-step="7" style="width: 8px"></div> <span id="sw-counter" class="ml-2 text-xs text-gray-500">1 / 8</span> </div> <!-- Step content area --> <div class="min-h-[180px] mb-6"> <div class="flex items-start gap-4"> <div id="sw-step-num" class="shrink-0 w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-500/20 border border-sky-300 dark:border-sky-500/40 flex items-center justify-center text-sky-600 dark:text-sky-400 font-bold text-sm">
+1
+</div> <div class="flex-1"> <h4 id="sw-step-title" class="text-lg font-semibold text-white mb-2"></h4> <p id="sw-step-desc" class="text-gray-400 text-sm leading-relaxed mb-4"></p> <div id="sw-step-panel" class="rounded-xl bg-white dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 p-4 text-sm"></div> </div> </div> </div> <!-- Navigation --> <div class="flex items-center justify-between"> <button id="sw-prev" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors disabled:opacity-30 disabled:pointer-events-none"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg>
+Previous
+</button> <button id="sw-next" class="flex items-center gap-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
+Next
+<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </button> </div> </div>  </div> </article> </main>  <nav class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white/95 dark:bg-gray-950/95 backdrop-blur border-t border-gray-200 dark:border-gray-800"> <div class="flex-1"> <a href="/chapters/04-the-simulation/03-demand-shock-sim" class="group flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg> <span class="hidden sm:inline">Demand Shock Simulation</span> <span class="sm:hidden">Prev</span> </a> </div> <!-- Topic completion toggle --> <button id="complete-btn" data-topic-id="ch4-t4" class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"> <svg id="complete-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path> </svg> <span id="complete-label">Mark complete</span> </button> <div class="flex-1 flex justify-end"> <a href="/chapters/04-the-simulation/05-reading-output" class="group flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <span class="hidden sm:inline">Reading Simulation Output</span> <span class="sm:hidden">Next</span> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </a> </div> </nav> <script>(function(){const topicId = "ch4-t4";
+
+    const STORAGE_KEY = 'o9-progress';
+
+    function getProgress() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch { return {}; }
+    }
+
+    function saveProgress(p) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+    }
+
+    const btn = document.getElementById('complete-btn');
+    const label = document.getElementById('complete-label');
+
+    function updateBtn(completed) {
+      if (completed) {
+        btn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        btn.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        label.textContent = 'Completed';
+      } else {
+        btn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        btn.classList.remove('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        label.textContent = 'Mark complete';
+      }
+    }
+
+    const progress = getProgress();
+    updateBtn(!!progress[topicId]);
+
+    btn.addEventListener('click', () => {
+      const p = getProgress();
+      p[topicId] = !p[topicId];
+      if (!p[topicId]) delete p[topicId];
+      saveProgress(p);
+      updateBtn(!!p[topicId]);
+    });
+
+    const display = document.getElementById('topic-progress-display');
+    if (display) {
+      const total = 21;
+      const done = Object.values(getProgress()).filter(Boolean).length;
+      display.textContent = `${done} / ${total} topics`;
+    }
+  })();</script>  </body></html>
