@@ -6,6 +6,6 @@ const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 
 export default defineConfig({
   site: 'https://laketaupo.github.io',
-  base: isGitHubActions ? '/Development' : '/',
+  base: isGitHubActions ? '/Development/' : '/',
   integrations: [tailwind(), mdx()],
 });
