@@ -14,6 +14,7 @@ export interface TopicMeta {
   chapter: string;
   estimatedMinutes: number;
   widget: string;
+  widgetStep?: number;
   nodeType?: string;
   summary?: string;
   slug: string;
@@ -60,6 +61,7 @@ export function getTopics(): TopicMeta[] {
         chapter: fm.chapter ?? chapterSlug,
         estimatedMinutes: fm.estimatedMinutes ?? 3,
         widget: fm.widget ?? '',
+        widgetStep: fm.widgetStep ?? undefined,
         nodeType: fm.nodeType ?? undefined,
         summary: fm.summary ?? undefined,
         slug: topicSlug,

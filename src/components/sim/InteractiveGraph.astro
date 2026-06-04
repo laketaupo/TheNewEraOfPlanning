@@ -1,8 +1,10 @@
 ---
 // Interactive Supply Chain Graph — vanilla SVG, click to inspect, drag to reposition
+interface Props { step?: number; }
+const { step } = Astro.props;
 ---
 
-<div id="ig-widget" class="rounded-2xl border border-indigo-200 dark:border-indigo-500/20 bg-white dark:bg-gray-900/60 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
+<div id="ig-widget" data-step={step ?? ''} class="rounded-2xl border border-indigo-200 dark:border-indigo-500/20 bg-white dark:bg-gray-900/60 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
 
   <!-- Header + Legend -->
   <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
@@ -47,7 +49,7 @@
   <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 bg-gray-50 dark:bg-gray-950/60">
     <svg
       id="ig-svg"
-      viewBox="0 0 640 320"
+      viewBox="0 0 1660 360"
       class="w-full select-none"
       style="touch-action: none; cursor: default;"
     >
@@ -94,57 +96,105 @@
     info: Record<string, string>;
   }
 
-  // ─── SAMPLE DATA — replace with real data when ready ────────────────────────
+  // ─── SEED PRODUCTION NETWORK DATA ───────────────────────────────────────────
   const NODES: NodeDef[] = [
-    {
-      id: 'raw-a', type: 'item', label: 'Raw Mat. A', x: 75, y: 155,
-      info: { 'Item type': 'Raw material', 'Unit': 'kg', 'Shelf life': '90 days', 'Source': 'Supplier WH' },
-    },
-    {
-      id: 'raw-b', type: 'item', label: 'Raw Mat. B', x: 75, y: 255,
-      info: { 'Item type': 'Raw material', 'Unit': 'liters', 'Shelf life': '180 days', 'Source': 'Supplier WH' },
-    },
-    {
-      id: 'mixing', type: 'transformation', label: 'Mixing', x: 225, y: 205,
-      info: { 'BOM type': 'Multi-input', 'Lead time': '4 hours', 'Yield': '1 unit / batch', 'Location': 'Plant A' },
-    },
-    {
-      id: 'mixer-tank', type: 'resource', label: 'Mixer Tank', x: 225, y: 100,
-      info: { 'Resource type': 'Machine', 'Capacity': '500 kg / hr', 'Shifts': '2 shifts, Mon–Sat', 'Location': 'Plant A' },
-    },
-    {
-      id: 'semi-x', type: 'item', label: 'Semi-fin. X', x: 370, y: 205,
-      info: { 'Item type': 'WIP', 'Unit': 'units', 'Safety stock': '50 units', 'Location': 'Plant A' },
-    },
-    {
-      id: 'assembly', type: 'transformation', label: 'Assembly', x: 490, y: 155,
-      info: { 'BOM type': 'Single-input', 'Lead time': '2 hours', 'Yield': '1 unit per input', 'Location': 'Plant A' },
-    },
-    {
-      id: 'asm-line', type: 'resource', label: 'Asm. Line', x: 490, y: 68,
-      info: { 'Resource type': 'Machine', 'Capacity': '200 units / hr', 'Shifts': '3 shifts, Mon–Fri', 'Location': 'Plant A' },
-    },
-    {
-      id: 'product-z', type: 'item', label: 'Product Z', x: 582, y: 155,
-      info: { 'Item type': 'Finished good', 'Unit': 'units', 'Shelf life': '365 days', 'MOQ': '100 units' },
-    },
-    {
-      id: 'dc-z', type: 'item', label: 'Product Z (DC)', x: 582, y: 265,
-      info: { 'Item type': 'Finished good', 'Unit': 'units', 'Safety stock': '200 units', 'Location': 'Distribution Centre' },
-    },
+    // ── Items ──────────────────────────────────────────────────────────────────
+    { id: 'item-a',     type: 'item', label: 'Item A', x: 150,  y: 125,
+      info: { 'Item type': 'Seed input', 'Location': 'Central Warehouse', 'Used in': 'Seed Production' } },
+    { id: 'item-b',     type: 'item', label: 'Item B', x: 150,  y: 255,
+      info: { 'Item type': 'Seed input', 'Location': 'Central Warehouse', 'Used in': 'Seed Production' } },
+    { id: 'item-a-gr',  type: 'item', label: 'Item A', x: 310,  y: 125,
+      info: { 'Item type': 'Seed input', 'Location': 'Grower', 'State': 'Transported' } },
+    { id: 'item-b-gr',  type: 'item', label: 'Item B', x: 310,  y: 255,
+      info: { 'Item type': 'Seed input', 'Location': 'Grower', 'State': 'Transported' } },
+    { id: 'item-c',     type: 'item', label: 'Item C', x: 475,  y: 190,
+      info: { 'Item type': 'Raw seed', 'Location': 'Grower', 'Produced by': 'Seed Production' } },
+    { id: 'item-c-cw',  type: 'item', label: 'Item C', x: 625,  y: 190,
+      info: { 'Item type': 'Raw seed', 'Location': 'Central Warehouse', 'State': 'Transported' } },
+    { id: 'item-d',     type: 'item', label: 'Item D', x: 790,  y: 190,
+      info: { 'Item type': 'Cleaned seed', 'Location': 'Central Warehouse', 'Produced by': 'Cleaning' } },
+    { id: 'item-e',     type: 'item', label: 'Item E', x: 960,  y: 115,
+      info: { 'Item type': 'Calibrated seed (E)', 'Location': 'Central Warehouse', 'Produced by': 'Calibrating' } },
+    { id: 'item-f',     type: 'item', label: 'Item F', x: 960,  y: 190,
+      info: { 'Item type': 'Calibrated seed (F)', 'Location': 'Central Warehouse', 'Used in': 'Priming' } },
+    { id: 'item-g',     type: 'item', label: 'Item G', x: 960,  y: 265,
+      info: { 'Item type': 'Calibrated seed (G)', 'Location': 'Central Warehouse', 'Produced by': 'Calibrating' } },
+    { id: 'item-h',     type: 'item', label: 'Item H', x: 1125, y: 190,
+      info: { 'Item type': 'Primed seed', 'Location': 'Central Warehouse', 'Produced by': 'Priming' } },
+    { id: 'item-i',     type: 'item', label: 'Item I', x: 1285, y: 190,
+      info: { 'Item type': 'Coated seed', 'Location': 'Central Warehouse', 'Produced by': 'Coating' } },
+    { id: 'item-j',     type: 'item', label: 'Item J', x: 1445, y: 190,
+      info: { 'Item type': 'Packed seed', 'Location': 'Central Warehouse', 'Produced by': 'Packing' } },
+    { id: 'item-j-out', type: 'item', label: 'Item J', x: 1615, y: 190,
+      info: { 'Item type': 'Packed seed', 'Location': 'In transit', 'State': 'Shipped to customer' } },
+    // ── Processes ──────────────────────────────────────────────────────────────
+    { id: 'proc-ship-a',      type: 'transportation', label: 'Ship [A]',   x: 230,  y: 125,
+      info: { 'BOD type': 'BOD', 'Location': 'In transit', 'Carries': 'Item A' } },
+    { id: 'proc-ship-b',      type: 'transportation', label: 'Ship [B]',   x: 230,  y: 255,
+      info: { 'BOD type': 'BOD', 'Location': 'In transit', 'Carries': 'Item B' } },
+    { id: 'proc-seed',        type: 'transformation', label: 'Seed Prod.', x: 395,  y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Grower', 'Input': 'Item A; Item B', 'Output': 'Item C' } },
+    { id: 'proc-ship-c',      type: 'transportation', label: 'Ship [C]',   x: 555,  y: 190,
+      info: { 'BOD type': 'BOD', 'Location': 'In transit', 'Carries': 'Item C' } },
+    { id: 'proc-cleaning',    type: 'transformation', label: 'Cleaning',   x: 710,  y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Central Warehouse', 'Input': 'Item C', 'Output': 'Item D' } },
+    { id: 'proc-calibrating', type: 'transformation', label: 'Calibrate',  x: 875,  y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Central Warehouse', 'Input': 'Item D', 'Output': 'Item E; Item F; Item G' } },
+    { id: 'proc-priming',     type: 'transformation', label: 'Priming',    x: 1045, y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Central Warehouse', 'Input': 'Item F', 'Output': 'Item H' } },
+    { id: 'proc-coating',     type: 'transformation', label: 'Coating',    x: 1205, y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Central Warehouse', 'Input': 'Item H', 'Output': 'Item I' } },
+    { id: 'proc-packing',     type: 'transformation', label: 'Packing',    x: 1365, y: 190,
+      info: { 'BOM type': 'BOM', 'Location': 'Central Warehouse', 'Input': 'Item I', 'Output': 'Item J' } },
+    { id: 'proc-ship-j',      type: 'transportation', label: 'Ship [J]',   x: 1530, y: 190,
+      info: { 'BOD type': 'BOD', 'Location': 'In transit', 'Carries': 'Item J' } },
+    // ── Resources (one per BOM process) ────────────────────────────────────────
+    { id: 'res-seed',        type: 'resource', label: 'Grow Field', x: 395,  y: 90,
+      info: { 'Resource type': 'Land',     'Consumed per': '1 ha / season',  'Location': 'Grower' } },
+    { id: 'res-cleaning',    type: 'resource', label: 'Cleaner',    x: 710,  y: 90,
+      info: { 'Resource type': 'Machine',  'Consumed per': '1 hr / 100 kg',  'Location': 'Central Warehouse' } },
+    { id: 'res-calibrating', type: 'resource', label: 'Calibrator', x: 875,  y: 90,
+      info: { 'Resource type': 'Machine',  'Consumed per': '0.5 hr / batch', 'Location': 'Central Warehouse' } },
+    { id: 'res-priming',     type: 'resource', label: 'Primer',     x: 1045, y: 90,
+      info: { 'Resource type': 'Machine',  'Consumed per': '2 hr / batch',   'Location': 'Central Warehouse' } },
+    { id: 'res-coating',     type: 'resource', label: 'Coater',     x: 1205, y: 90,
+      info: { 'Resource type': 'Machine',  'Consumed per': '1 hr / batch',   'Location': 'Central Warehouse' } },
+    { id: 'res-packing',     type: 'resource', label: 'Packer',     x: 1365, y: 90,
+      info: { 'Resource type': 'Machine',  'Consumed per': '0.25 hr / unit', 'Location': 'Central Warehouse' } },
   ];
 
   const EDGES: EdgeDef[] = [
-    { id: 'e1', from: 'raw-a',     to: 'mixing',    type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '2 kg',      'Scrap %': '0%' } },
-    { id: 'e2', from: 'raw-b',     to: 'mixing',    type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '0.5 L',     'Scrap %': '2%' } },
-    { id: 'e3', from: 'mixing',    to: 'semi-x',    type: 'bom',                  label: 'BOM output',            info: { 'Yield': '1 unit / batch', 'Co-products': 'None' } },
-    { id: 'e4', from: 'semi-x',    to: 'assembly',  type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '1 unit',    'Scrap %': '0.5%' } },
-    { id: 'e5', from: 'assembly',  to: 'product-z', type: 'bom',                  label: 'BOM output',            info: { 'Yield': '1 unit',         'Co-products': 'None' } },
-    { id: 'e6', from: 'mixer-tank',to: 'mixing',    type: 'resource-consumption', label: 'Resource consumption',  info: { 'Rate': '1 hr / batch',    'Efficiency': '95%' } },
-    { id: 'e7', from: 'asm-line',  to: 'assembly',  type: 'resource-consumption', label: 'Resource consumption',  info: { 'Rate': '0.5 hr / unit',   'Efficiency': '98%' } },
-    { id: 'e8', from: 'product-z', to: 'dc-z',      type: 'bod',                  label: 'Transportation lane',   info: { 'Transit time': '2 days',  'Min. order': '100 units', 'Mode': 'Truck' } },
+    { id: 'e3',  from: 'item-a',           to: 'proc-ship-a',   type: 'bod', label: 'BOD input',   info: { 'Item': 'Item A',            'Type': 'BOD input' } },
+    { id: 'e4',  from: 'item-b',           to: 'proc-ship-b',   type: 'bod', label: 'BOD input',   info: { 'Item': 'Item B',            'Type': 'BOD input' } },
+    { id: 'e5',  from: 'proc-ship-a',      to: 'item-a-gr',     type: 'bod', label: 'BOD output',  info: { 'Delivers': 'Item A to Grower',              'Type': 'BOD output' } },
+    { id: 'e5b', from: 'item-a-gr',        to: 'proc-seed',     type: 'bom', label: 'BOM input',   info: { 'Item': 'Item A (Grower)',   'Type': 'BOM input' } },
+    { id: 'e6',  from: 'proc-ship-b',      to: 'item-b-gr',     type: 'bod', label: 'BOD output',  info: { 'Delivers': 'Item B to Grower',              'Type': 'BOD output' } },
+    { id: 'e6b', from: 'item-b-gr',        to: 'proc-seed',     type: 'bom', label: 'BOM input',   info: { 'Item': 'Item B (Grower)',   'Type': 'BOM input' } },
+    { id: 'e7',  from: 'proc-seed',        to: 'item-c',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Seed Production','Type': 'BOM output' } },
+    { id: 'e8',  from: 'item-c',           to: 'proc-ship-c',   type: 'bod', label: 'BOD input',   info: { 'Item': 'Item C',            'Type': 'BOD input' } },
+    { id: 'e9',  from: 'proc-ship-c',      to: 'item-c-cw',     type: 'bod', label: 'BOD output',  info: { 'Delivers': 'Item C to Central Warehouse',   'Type': 'BOD output' } },
+    { id: 'e9b', from: 'item-c-cw',        to: 'proc-cleaning', type: 'bom', label: 'BOM input',   info: { 'Item': 'Item C (CW)',       'Type': 'BOM input' } },
+    { id: 'e10', from: 'proc-cleaning',    to: 'item-d',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Cleaning',       'Type': 'BOM output' } },
+    { id: 'e11', from: 'item-d',           to: 'proc-calibrating', type: 'bom', label: 'BOM input', info: { 'Item': 'Item D',           'Type': 'BOM input' } },
+    { id: 'e12', from: 'proc-calibrating', to: 'item-e',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Calibrating',    'Type': 'BOM output (co-product)' } },
+    { id: 'e13', from: 'proc-calibrating', to: 'item-f',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Calibrating',    'Type': 'BOM output (co-product)' } },
+    { id: 'e14', from: 'proc-calibrating', to: 'item-g',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Calibrating',    'Type': 'BOM output (co-product)' } },
+    { id: 'e15', from: 'item-f',           to: 'proc-priming',  type: 'bom', label: 'BOM input',   info: { 'Item': 'Item F',            'Type': 'BOM input' } },
+    { id: 'e16', from: 'proc-priming',     to: 'item-h',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Priming',        'Type': 'BOM output' } },
+    { id: 'e17', from: 'item-h',           to: 'proc-coating',  type: 'bom', label: 'BOM input',   info: { 'Item': 'Item H',            'Type': 'BOM input' } },
+    { id: 'e18', from: 'proc-coating',     to: 'item-i',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Coating',        'Type': 'BOM output' } },
+    { id: 'e19', from: 'item-i',           to: 'proc-packing',  type: 'bom', label: 'BOM input',   info: { 'Item': 'Item I',            'Type': 'BOM input' } },
+    { id: 'e20', from: 'proc-packing',     to: 'item-j',        type: 'bom', label: 'BOM output',  info: { 'Process': 'Packing',        'Type': 'BOM output' } },
+    { id: 'e21', from: 'item-j',           to: 'proc-ship-j',   type: 'bod', label: 'BOD input',   info: { 'Item': 'Item J',            'Type': 'BOD input' } },
+    { id: 'e22', from: 'proc-ship-j',      to: 'item-j-out',    type: 'bod', label: 'BOD output',  info: { 'Delivers': 'Item J to customer',            'Type': 'BOD output' } },
+    { id: 'er2', from: 'res-seed',        to: 'proc-seed',        type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '1 ha / season',  'Efficiency': '—' } },
+    { id: 'er3', from: 'res-cleaning',    to: 'proc-cleaning',    type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '1 hr / 100 kg',  'Efficiency': '95%' } },
+    { id: 'er4', from: 'res-calibrating', to: 'proc-calibrating', type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '0.5 hr / batch', 'Efficiency': '98%' } },
+    { id: 'er5', from: 'res-priming',     to: 'proc-priming',     type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '2 hr / batch',   'Efficiency': '90%' } },
+    { id: 'er6', from: 'res-coating',     to: 'proc-coating',     type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '1 hr / batch',   'Efficiency': '97%' } },
+    { id: 'er7', from: 'res-packing',     to: 'proc-packing',     type: 'resource-consumption', label: 'Resource consumption', info: { 'Rate': '0.25 hr / unit', 'Efficiency': '99%' } },
   ];
-  // ─── END SAMPLE DATA ─────────────────────────────────────────────────────────
+  // ─── END DATA ─────────────────────────────────────────────────────────────────
 
   const NODE_COLOR: Record<string, string> = {
     item:           '#6366f1',
@@ -168,6 +218,35 @@
     bod:                   'BOD — Bill of Distribution',
     'resource-consumption':'Resource Consumption',
   };
+
+  // ─── STEP MAP — which node IDs are introduced at each step ──────────────────
+  const STEP_NODES: string[][] = [
+    [],
+    ['item-a', 'item-b'],
+    ['proc-ship-a', 'item-a-gr', 'proc-ship-b', 'item-b-gr'],
+    ['proc-seed', 'item-c', 'res-seed'],
+    ['proc-ship-c', 'item-c-cw'],
+    ['proc-cleaning', 'item-d', 'res-cleaning'],
+    ['proc-calibrating', 'item-e', 'item-f', 'item-g', 'res-calibrating'],
+    ['proc-priming', 'item-h', 'res-priming'],
+    ['proc-coating', 'item-i', 'res-coating'],
+    ['proc-packing', 'item-j', 'res-packing'],
+    ['proc-ship-j', 'item-j-out'],
+  ];
+
+  const rawStep = (document.getElementById('ig-widget') as HTMLElement).dataset.step;
+  const STEP: number | null = rawStep ? parseInt(rawStep, 10) : null;
+
+  const visibleIds = new Set<string>();
+  const highlightIds = new Set<string>();
+  if (STEP !== null) {
+    for (let s = 1; s <= STEP && s < STEP_NODES.length; s++) {
+      for (const id of STEP_NODES[s]) {
+        visibleIds.add(id);
+        if (s === STEP) highlightIds.add(id);
+      }
+    }
+  }
 
   // Mutable node positions (updated on drag)
   const pos: Record<string, { x: number; y: number }> = {};
@@ -240,8 +319,11 @@
     for (const edge of EDGES) {
       const f = pos[edge.from], t = pos[edge.to];
       if (!f || !t) continue;
+      if (STEP !== null && (!visibleIds.has(edge.from) || !visibleIds.has(edge.to))) continue;
       const c = EDGE_COLOR[edge.type] ?? '#6b7280';
       const sel = selectedId === edge.id;
+      const isNew = STEP !== null && (highlightIds.has(edge.from) || highlightIds.has(edge.to));
+      const edgeOpacity = sel ? '1' : (STEP === null ? '0.5' : (isNew ? '0.8' : '0.2'));
 
       // Wide transparent hit target for easy clicking
       eg.appendChild(el('line', {
@@ -254,20 +336,29 @@
       eg.appendChild(el('line', {
         x1: f.x, y1: f.y, x2: t.x, y2: t.y,
         stroke: c,
-        'stroke-width': sel ? 3.5 : 1.8,
+        'stroke-width': sel ? 3.5 : (isNew ? 2.2 : 1.8),
         'stroke-dasharray': edge.type === 'resource-consumption' ? '6 4' : 'none',
-        opacity: sel ? '1' : '0.5',
+        opacity: edgeOpacity,
         'pointer-events': 'none',
       }));
     }
 
     // ── Nodes ────────────────────────────────────────────────────────────────
+    // Fill must be opaque so nodes always cover edges drawn beneath them.
+    // Dimming is achieved via stroke/text colour only — never via group opacity.
+    const isDark = document.documentElement.classList.contains('dark');
+    const bgFill = isDark ? '#0f172a' : '#ffffff';
+
     for (const node of NODES) {
+      if (STEP !== null && !visibleIds.has(node.id)) continue;
       const { x: cx, y: cy } = pos[node.id];
-      const c = NODE_COLOR[node.type] ?? '#6b7280';
+      const isDimmed = STEP !== null && !highlightIds.has(node.id);
+      const baseColor = NODE_COLOR[node.type] ?? '#6b7280';
+      const c = isDimmed ? 'rgba(156,163,175,0.3)' : baseColor;
       const sel = selectedId === node.id;
-      const fill = 'white';
-      const sw = sel ? '2.5' : '1.8';
+      const isNew = STEP !== null && highlightIds.has(node.id);
+      const fill = bgFill;
+      const sw = sel ? '2.5' : (isNew ? '2.5' : '1.8');
 
       const g = el<SVGGElement>('g', { 'data-node-id': node.id, style: 'cursor:grab' });
 
@@ -427,4 +518,8 @@
 
   // ── Init ──────────────────────────────────────────────────────────────────────
   render();
+  // Re-render when dark/light mode toggles so node fill colour stays in sync
+  new MutationObserver(() => render()).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['class'],
+  });
 </script>

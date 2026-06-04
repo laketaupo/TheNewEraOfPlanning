@@ -201,30 +201,72 @@ declare module 'astro:content' {
   collection: "chapters";
   data: any
 } & { render(): Render[".md"] };
-"02-the-network/02-nodes-and-relationships.md": {
-	id: "02-the-network/02-nodes-and-relationships.md";
-  slug: "02-the-network/02-nodes-and-relationships";
+"02-the-network/02-starting-items.md": {
+	id: "02-the-network/02-starting-items.md";
+  slug: "02-the-network/02-starting-items";
   body: string;
   collection: "chapters";
   data: any
 } & { render(): Render[".md"] };
-"02-the-network/03-data-flow.md": {
-	id: "02-the-network/03-data-flow.md";
-  slug: "02-the-network/03-data-flow";
+"02-the-network/03-shipping-item-a.md": {
+	id: "02-the-network/03-shipping-item-a.md";
+  slug: "02-the-network/03-shipping-item-a";
   body: string;
   collection: "chapters";
   data: any
 } & { render(): Render[".md"] };
-"02-the-network/04-real-time-ingestion.md": {
-	id: "02-the-network/04-real-time-ingestion.md";
-  slug: "02-the-network/04-real-time-ingestion";
+"02-the-network/05-seed-production.md": {
+	id: "02-the-network/05-seed-production.md";
+  slug: "02-the-network/05-seed-production";
   body: string;
   collection: "chapters";
   data: any
 } & { render(): Render[".md"] };
-"02-the-network/05-digital-twin.md": {
-	id: "02-the-network/05-digital-twin.md";
-  slug: "02-the-network/05-digital-twin";
+"02-the-network/06-shipping-seeds-back.md": {
+	id: "02-the-network/06-shipping-seeds-back.md";
+  slug: "02-the-network/06-shipping-seeds-back";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/07-cleaning.md": {
+	id: "02-the-network/07-cleaning.md";
+  slug: "02-the-network/07-cleaning";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/08-calibrating.md": {
+	id: "02-the-network/08-calibrating.md";
+  slug: "02-the-network/08-calibrating";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/09-priming.md": {
+	id: "02-the-network/09-priming.md";
+  slug: "02-the-network/09-priming";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/10-coating.md": {
+	id: "02-the-network/10-coating.md";
+  slug: "02-the-network/10-coating";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/11-packing.md": {
+	id: "02-the-network/11-packing.md";
+  slug: "02-the-network/11-packing";
+  body: string;
+  collection: "chapters";
+  data: any
+} & { render(): Render[".md"] };
+"02-the-network/12-final-shipment.md": {
+	id: "02-the-network/12-final-shipment.md";
+  slug: "02-the-network/12-final-shipment";
   body: string;
   collection: "chapters";
   data: any
