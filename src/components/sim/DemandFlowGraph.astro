@@ -40,11 +40,11 @@
   <!-- Progress -->
   <div class="flex items-center gap-2 mb-4">
     <div class="flex gap-1.5">
-      {[0,1,2,3,4,5].map((i) => (
+      {[0,1,2,3,4,5,6,7,8,9].map((i) => (
         <div class="dfg-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors" data-idx={i}></div>
       ))}
     </div>
-    <span id="dfg-step-label" class="text-xs text-gray-400 dark:text-gray-500 ml-1">Step 0 of 5</span>
+    <span id="dfg-step-label" class="text-xs text-gray-400 dark:text-gray-500 ml-1">Step 0 of 9</span>
   </div>
 
   <!-- SVG Canvas -->
@@ -56,8 +56,8 @@
         </marker>
       </defs>
       <g id="dfg-edges"></g>
-      <g id="dfg-nodes"></g>
       <g id="dfg-pulses"></g>
+      <g id="dfg-nodes"></g>
     </svg>
   </div>
 
@@ -139,47 +139,71 @@
       description: '100 units of Item J are forecasted by the customer. The demand signal enters at Item J (out) and propagates upstream through Ship [J] to Item J at the Central Warehouse — which must now have 100 units ready to ship.',
     },
     {
-      activeNodes: ['item-j', 'proc-packing', 'item-i', 'proc-coating', 'item-h'],
+      activeNodes: ['item-j', 'proc-packing', 'item-i'],
       demandEdges: [
         { from: 'item-j', to: 'proc-packing' },
         { from: 'proc-packing', to: 'item-i' },
+      ],
+      description: 'Demand for Item J triggers a planned order for Packing. Packing requires 100 units of Item I (coated seed) as input. The demand signal reaches Item I.',
+    },
+    {
+      activeNodes: ['item-i', 'proc-coating', 'item-h'],
+      demandEdges: [
         { from: 'item-i', to: 'proc-coating' },
         { from: 'proc-coating', to: 'item-h' },
       ],
-      description: 'Demand for Item J requires Packing → Item I (coated seed) → Coating → Item H (primed seed). Each process receives demand for 100 units.',
+      description: 'Demand for Item I triggers Coating. 100 units of Item H (primed seed) are needed as input. The demand signal propagates further upstream to Item H.',
     },
     {
-      activeNodes: ['item-h', 'proc-priming', 'item-f', 'proc-calibrating', 'item-d'],
+      activeNodes: ['item-h', 'proc-priming', 'item-f'],
       demandEdges: [
         { from: 'item-h', to: 'proc-priming' },
         { from: 'proc-priming', to: 'item-f' },
+      ],
+      description: 'Demand for Item H triggers Priming. Priming needs 100 units of Item F (calibrated seed). The demand signal reaches Item F.',
+    },
+    {
+      activeNodes: ['item-f', 'proc-calibrating', 'item-d'],
+      demandEdges: [
         { from: 'item-f', to: 'proc-calibrating' },
         { from: 'proc-calibrating', to: 'item-d' },
       ],
-      description: 'Priming needs 100 units of Item F (calibrated seed). Calibrating produces Item F at ~60 % yield — so to meet 100 units of F, about 167 units of Item D (cleaned seed) must enter Calibrating. Demand jumps to 167 units from here upstream.',
+      description: 'Demand for Item F triggers Calibrating. Calibrating produces Item F at ~60 % yield — so ~167 units of Item D (cleaned seed) must enter Calibrating to yield 100 units of Item F. Demand jumps to 167 units from here upstream.',
     },
     {
-      activeNodes: ['item-d', 'proc-cleaning', 'item-c-cw', 'proc-ship-c', 'item-c'],
+      activeNodes: ['item-d', 'proc-cleaning', 'item-c-cw'],
       demandEdges: [
         { from: 'item-d', to: 'proc-cleaning' },
         { from: 'proc-cleaning', to: 'item-c-cw' },
+      ],
+      description: '167 units of Item D require Cleaning to run. Cleaning needs ~167 units of Item C at the Central Warehouse. The demand signal reaches Item C-CW.',
+    },
+    {
+      activeNodes: ['item-c-cw', 'proc-ship-c', 'item-c'],
+      demandEdges: [
         { from: 'item-c-cw', to: 'proc-ship-c' },
         { from: 'proc-ship-c', to: 'item-c' },
       ],
-      description: 'Cleaning must produce ~167 units of Item D, requiring ~167 units of Item C at the Central Warehouse. Ship [C] carries Item C from the Grower — the demand signal reaches Item C at the Grower.',
+      description: 'Item C at the Central Warehouse must be transported from the Grower. Ship [C] receives demand to carry ~167 units. The demand signal reaches Item C at the Grower.',
     },
     {
-      activeNodes: ['item-c', 'proc-seed', 'item-a-gr', 'item-b-gr', 'proc-ship-a', 'proc-ship-b', 'item-a', 'item-b'],
+      activeNodes: ['item-c', 'proc-seed', 'item-a-gr', 'item-b-gr'],
       demandEdges: [
         { from: 'item-c', to: 'proc-seed' },
         { from: 'proc-seed', to: 'item-a-gr' },
         { from: 'proc-seed', to: 'item-b-gr' },
+      ],
+      description: 'Item C at the Grower is produced by Seed Production. Seed Production needs ~167 units each of Items A and B as inputs. The demand signal reaches Items A and B at the Grower.',
+    },
+    {
+      activeNodes: ['item-a-gr', 'item-b-gr', 'proc-ship-a', 'proc-ship-b', 'item-a', 'item-b'],
+      demandEdges: [
         { from: 'item-a-gr', to: 'proc-ship-a' },
         { from: 'proc-ship-a', to: 'item-a' },
         { from: 'item-b-gr', to: 'proc-ship-b' },
         { from: 'proc-ship-b', to: 'item-b' },
       ],
-      description: 'Seed Production at the Grower needs Items A and B as inputs. Demand for ~167 units of Item C (Grower) triggers demand for ~167 units of each input. Ship [A] and Ship [B] carry these inputs from the Central Warehouse — the demand signal has now reached the raw material inputs. The full upstream picture is complete.',
+      description: 'Items A and B at the Grower must be transported from the Central Warehouse. Ship [A] and Ship [B] receive demand simultaneously — each carrying ~167 units. The demand signal has reached the raw material inputs. The full upstream picture is complete.',
     },
   ];
 
@@ -385,10 +409,15 @@
     }
   }
 
-  document.getElementById('dfg-prev')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep - 1); });
-  document.getElementById('dfg-next')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep + 1); });
-  document.getElementById('dfg-play')!.addEventListener('click', togglePlay);
+  // Hoisted script is bundled into a chunk shared across every topic page; only run
+  // when this page actually contains the widget, else top-level DOM access throws
+  // and aborts the shared bundle for other widgets.
+  if (document.getElementById('dfg-edges')) {
+    document.getElementById('dfg-prev')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep - 1); });
+    document.getElementById('dfg-next')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep + 1); });
+    document.getElementById('dfg-play')!.addEventListener('click', togglePlay);
 
-  render();
-  new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    render();
+    new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
 </script>

@@ -40,19 +40,19 @@
   <!-- Progress -->
   <div class="flex items-center gap-2 mb-4">
     <div class="flex gap-1.5">
-      {[0,1,2,3,4,5,6].map((i) => (
+      {[0,1,2,3,4,5,6,7,8,9,10].map((i) => (
         <div class="sfg-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors" data-idx={i}></div>
       ))}
     </div>
-    <span id="sfg-step-label" class="text-xs text-gray-400 dark:text-gray-500 ml-1">Step 0 of 6</span>
+    <span id="sfg-step-label" class="text-xs text-gray-400 dark:text-gray-500 ml-1">Step 0 of 10</span>
   </div>
 
   <!-- SVG Canvas -->
   <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 bg-gray-50 dark:bg-gray-950/60">
     <svg id="sfg-svg" viewBox="0 0 1660 360" class="w-full select-none" style="touch-action: none;">
       <g id="sfg-edges"></g>
-      <g id="sfg-nodes"></g>
       <g id="sfg-pulses"></g>
+      <g id="sfg-nodes"></g>
     </svg>
   </div>
 
@@ -141,7 +141,7 @@
         { from: 'proc-ship-b', to: 'item-b-gr' },
       ],
       inventoryNodes: [],
-      description: 'Transportation planned orders are released for Ship [A] and Ship [B]. After the transit lead time (5 days), 167 units of Item A and 167 units of Item B arrive at the Grower — ready as inputs for Seed Production.',
+      description: 'Transportation planned orders are released for Ship [A] and Ship [B] simultaneously. After the transit lead time (5 days), 167 units of Item A and 167 units of Item B arrive at the Grower — ready as inputs for Seed Production.',
     },
     {
       activeNodes: ['item-a-gr', 'item-b-gr', 'proc-seed', 'item-c'],
@@ -151,44 +151,72 @@
         { from: 'proc-seed', to: 'item-c' },
       ],
       inventoryNodes: [],
-      description: 'Seed Production runs at the Grower, consuming Items A and B to produce 167 units of Item C (raw seed) after the growing season (90–120 days). Supply continues downstream.',
+      description: 'Seed Production runs at the Grower, consuming Items A and B to produce 167 units of Item C (raw seed) after the growing season (90–120 days).',
     },
     {
-      activeNodes: ['item-c', 'proc-ship-c', 'item-c-cw', 'proc-cleaning', 'item-d'],
+      activeNodes: ['item-c', 'proc-ship-c', 'item-c-cw'],
       supplyEdges: [
         { from: 'item-c', to: 'proc-ship-c' },
         { from: 'proc-ship-c', to: 'item-c-cw' },
+      ],
+      inventoryNodes: [],
+      description: 'Ship [C] transports 167 units of Item C from the Grower to the Central Warehouse. Item C is now available as input for Cleaning.',
+    },
+    {
+      activeNodes: ['item-c-cw', 'proc-cleaning', 'item-d'],
+      supplyEdges: [
         { from: 'item-c-cw', to: 'proc-cleaning' },
         { from: 'proc-cleaning', to: 'item-d' },
       ],
       inventoryNodes: ['item-d'],
-      description: 'Ship [C] delivers 167 units of Item C to the Central Warehouse. Cleaning is scheduled — but 20 units of Item D are already on hand (above safety stock), so only 147 units need to be produced. Inventory netting reduces the planned order quantity.',
+      description: 'Cleaning is scheduled — but 20 units of Item D are already on hand (above safety stock), so only 147 units need to be produced. Inventory netting reduces the planned order quantity.',
     },
     {
-      activeNodes: ['item-d', 'proc-calibrating', 'item-e', 'item-f', 'item-g', 'proc-priming', 'item-h'],
+      activeNodes: ['item-d', 'proc-calibrating', 'item-e', 'item-f', 'item-g'],
       supplyEdges: [
         { from: 'item-d', to: 'proc-calibrating' },
         { from: 'proc-calibrating', to: 'item-e' },
         { from: 'proc-calibrating', to: 'item-f' },
         { from: 'proc-calibrating', to: 'item-g' },
+      ],
+      inventoryNodes: [],
+      description: 'Calibrating processes 167 units of Item D, producing co-products: ~100 units of Item F (60 %), ~33 units of Item E (20 %), and ~33 units of Item G (20 %). Only Item F continues downstream through Priming. Items E and G accumulate in inventory.',
+    },
+    {
+      activeNodes: ['item-f', 'proc-priming', 'item-h'],
+      supplyEdges: [
         { from: 'item-f', to: 'proc-priming' },
         { from: 'proc-priming', to: 'item-h' },
       ],
       inventoryNodes: [],
-      description: 'Calibrating processes 167 units of Item D, producing co-products: ~100 units of Item F (60 %), ~33 units of Item E (20 %), and ~33 units of Item G (20 %). Only Item F feeds Priming. Items E and G enter inventory — their projected balances will be monitored for excess accumulation.',
+      description: 'Priming processes 100 units of Item F (calibrated seed) to produce 100 units of Item H (primed seed).',
     },
     {
-      activeNodes: ['item-h', 'proc-coating', 'item-i', 'proc-packing', 'item-j', 'proc-ship-j', 'item-j-out'],
+      activeNodes: ['item-h', 'proc-coating', 'item-i'],
       supplyEdges: [
         { from: 'item-h', to: 'proc-coating' },
         { from: 'proc-coating', to: 'item-i' },
+      ],
+      inventoryNodes: [],
+      description: 'Coating processes 100 units of Item H (primed seed) to produce 100 units of Item I (coated seed).',
+    },
+    {
+      activeNodes: ['item-i', 'proc-packing', 'item-j'],
+      supplyEdges: [
         { from: 'item-i', to: 'proc-packing' },
         { from: 'proc-packing', to: 'item-j' },
+      ],
+      inventoryNodes: [],
+      description: 'Packing processes 100 units of Item I (coated seed) into finished Item J (packed seed).',
+    },
+    {
+      activeNodes: ['item-j', 'proc-ship-j', 'item-j-out'],
+      supplyEdges: [
         { from: 'item-j', to: 'proc-ship-j' },
         { from: 'proc-ship-j', to: 'item-j-out' },
       ],
       inventoryNodes: [],
-      description: 'Coating → Item I → Packing → Item J → Ship [J] → Customer. 100 units of packed seed are delivered. The supply chain has completed a full downstream cycle, from raw material inputs to customer delivery.',
+      description: 'Ship [J] delivers 100 units of packed seed to the customer. The supply chain has completed a full downstream cycle, from raw material inputs to customer delivery.',
     },
   ];
 
@@ -390,10 +418,15 @@
     }
   }
 
-  document.getElementById('sfg-prev')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep - 1); });
-  document.getElementById('sfg-next')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep + 1); });
-  document.getElementById('sfg-play')!.addEventListener('click', togglePlay);
+  // Hoisted script is bundled into a chunk shared across every topic page; only run
+  // when this page actually contains the widget, else top-level DOM access throws
+  // and aborts the shared bundle for other widgets.
+  if (document.getElementById('sfg-edges')) {
+    document.getElementById('sfg-prev')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep - 1); });
+    document.getElementById('sfg-next')!.addEventListener('click', () => { if (playInterval) togglePlay(); setStep(currentStep + 1); });
+    document.getElementById('sfg-play')!.addEventListener('click', togglePlay);
 
-  render();
-  new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    render();
+    new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
 </script>

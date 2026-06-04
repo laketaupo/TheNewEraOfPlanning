@@ -208,15 +208,20 @@
     (document.getElementById('ds-play') as HTMLButtonElement).textContent = '▶ Play';
   }
 
-  document.getElementById('ds-play')?.addEventListener('click', () => {
-    if (timer) { pause(); } else { play(); }
-  });
+  // Hoisted script is bundled into a chunk shared across every topic page; only run
+  // when this page actually contains the widget, else top-level DOM access throws
+  // and aborts the shared bundle for other widgets.
+  if (document.getElementById('ds-play')) {
+    document.getElementById('ds-play')?.addEventListener('click', () => {
+      if (timer) { pause(); } else { play(); }
+    });
 
-  document.getElementById('ds-reset')?.addEventListener('click', () => {
-    pause();
-    current = 0;
+    document.getElementById('ds-reset')?.addEventListener('click', () => {
+      pause();
+      current = 0;
+      renderStep(0);
+    });
+
     renderStep(0);
-  });
-
-  renderStep(0);
+  }
 </script>

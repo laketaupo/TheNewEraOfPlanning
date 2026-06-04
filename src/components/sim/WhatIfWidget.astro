@@ -149,14 +149,19 @@
     fEl.className = `text-sm font-semibold mt-1 ${feasible ? 'text-emerald-400' : 'text-red-400'}`;
   }
 
-  [demandSlider, capacitySlider, leadtimeSlider].forEach((el) => el.addEventListener('input', render));
+  // This hoisted script is bundled into a chunk shared across every topic page, so
+  // only wire it up when this page actually contains the widget. Otherwise the
+  // top-level DOM access throws and aborts the shared bundle for other widgets.
+  if (demandSlider && capacitySlider && leadtimeSlider) {
+    [demandSlider, capacitySlider, leadtimeSlider].forEach((el) => el.addEventListener('input', render));
 
-  document.getElementById('reset-btn')?.addEventListener('click', () => {
-    demandSlider.value = '0';
-    capacitySlider.value = '100';
-    leadtimeSlider.value = '4';
+    document.getElementById('reset-btn')?.addEventListener('click', () => {
+      demandSlider.value = '0';
+      capacitySlider.value = '100';
+      leadtimeSlider.value = '4';
+      render();
+    });
+
     render();
-  });
-
-  render();
+  }
 </script>

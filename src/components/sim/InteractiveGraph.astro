@@ -234,7 +234,12 @@ const { step } = Astro.props;
     ['proc-ship-j', 'item-j-out'],
   ];
 
-  const rawStep = (document.getElementById('ig-widget') as HTMLElement).dataset.step;
+  // This hoisted script is bundled into a chunk shared across every topic page, so
+  // bail out unless this page actually contains the graph widget. Otherwise the
+  // top-level DOM access below throws and aborts the shared bundle for other widgets.
+  const igWidget = document.getElementById('ig-widget') as HTMLElement | null;
+  if (igWidget) {
+  const rawStep = igWidget.dataset.step;
   const STEP: number | null = rawStep ? parseInt(rawStep, 10) : null;
 
   const visibleIds = new Set<string>();
@@ -522,4 +527,5 @@ const { step } = Astro.props;
   new MutationObserver(() => render()).observe(document.documentElement, {
     attributes: true, attributeFilter: ['class'],
   });
+  }
 </script>

@@ -169,12 +169,17 @@
     }
   }
 
-  document.getElementById('sw-prev')?.addEventListener('click', () => {
-    if (current > 0) { current--; render(); }
-  });
-  document.getElementById('sw-next')?.addEventListener('click', () => {
-    if (current < STEPS.length - 1) { current++; render(); }
-  });
+  // Hoisted script is bundled into a chunk shared across every topic page; only run
+  // when this page actually contains the widget, else top-level DOM access throws
+  // and aborts the shared bundle for other widgets.
+  if (document.getElementById('sw-prev')) {
+    document.getElementById('sw-prev')?.addEventListener('click', () => {
+      if (current > 0) { current--; render(); }
+    });
+    document.getElementById('sw-next')?.addEventListener('click', () => {
+      if (current < STEPS.length - 1) { current++; render(); }
+    });
 
-  render();
+    render();
+  }
 </script>
