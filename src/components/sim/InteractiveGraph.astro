@@ -1,0 +1,430 @@
+---
+// Interactive Supply Chain Graph — vanilla SVG, click to inspect, drag to reposition
+---
+
+<div id="ig-widget" class="rounded-2xl border border-indigo-200 dark:border-indigo-500/20 bg-white dark:bg-gray-900/60 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
+
+  <!-- Header + Legend -->
+  <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
+    <div>
+      <h3 class="text-sm font-semibold text-indigo-400 mb-3 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/>
+        </svg>
+        Supply Chain Network Graph
+      </h3>
+      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-gray-400">
+        <span class="flex items-center gap-1.5">
+          <svg width="12" height="11" viewBox="0 0 12 11" aria-hidden="true"><polygon points="6,0 12,11 0,11" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Item
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="#0ea5e9" stroke-width="1.5"/></svg>
+          Process
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="12" height="11" viewBox="0 0 12 11" aria-hidden="true"><polygon points="0,0 12,0 6,11" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Resource
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#6366f1" stroke-width="1.5"/></svg>
+          BOM
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#8b5cf6" stroke-width="1.5"/></svg>
+          BOD
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
+          Resource consumption
+        </span>
+      </div>
+    </div>
+    <span class="text-xs text-gray-400 dark:text-gray-600 shrink-0">Drag nodes · Click to inspect</span>
+  </div>
+
+  <!-- SVG Canvas -->
+  <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 bg-gray-50 dark:bg-gray-950/60">
+    <svg
+      id="ig-svg"
+      viewBox="0 0 640 320"
+      class="w-full select-none"
+      style="touch-action: none; cursor: default;"
+    >
+      <g id="ig-edges"></g>
+      <g id="ig-nodes"></g>
+    </svg>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 px-5 py-4 min-h-[96px]">
+    <div id="ig-empty" class="flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 h-[64px]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/>
+      </svg>
+      Click any node or edge to explore its properties
+    </div>
+    <div id="ig-detail" class="hidden">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span id="ig-badge" class="text-xs font-medium px-2.5 py-0.5 rounded-full border"></span>
+        <span id="ig-name" class="text-sm font-semibold text-gray-900 dark:text-white"></span>
+      </div>
+      <dl id="ig-props" class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-1.5 text-xs"></dl>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  interface NodeDef {
+    id: string;
+    type: 'item' | 'transformation' | 'transportation' | 'resource';
+    label: string;
+    x: number;
+    y: number;
+    info: Record<string, string>;
+  }
+
+  interface EdgeDef {
+    id: string;
+    from: string;
+    to: string;
+    type: 'bom' | 'bod' | 'resource-consumption';
+    label: string;
+    info: Record<string, string>;
+  }
+
+  // ─── SAMPLE DATA — replace with real data when ready ────────────────────────
+  const NODES: NodeDef[] = [
+    {
+      id: 'raw-a', type: 'item', label: 'Raw Mat. A', x: 75, y: 155,
+      info: { 'Item type': 'Raw material', 'Unit': 'kg', 'Shelf life': '90 days', 'Source': 'Supplier WH' },
+    },
+    {
+      id: 'raw-b', type: 'item', label: 'Raw Mat. B', x: 75, y: 255,
+      info: { 'Item type': 'Raw material', 'Unit': 'liters', 'Shelf life': '180 days', 'Source': 'Supplier WH' },
+    },
+    {
+      id: 'mixing', type: 'transformation', label: 'Mixing', x: 225, y: 205,
+      info: { 'BOM type': 'Multi-input', 'Lead time': '4 hours', 'Yield': '1 unit / batch', 'Location': 'Plant A' },
+    },
+    {
+      id: 'mixer-tank', type: 'resource', label: 'Mixer Tank', x: 225, y: 100,
+      info: { 'Resource type': 'Machine', 'Capacity': '500 kg / hr', 'Shifts': '2 shifts, Mon–Sat', 'Location': 'Plant A' },
+    },
+    {
+      id: 'semi-x', type: 'item', label: 'Semi-fin. X', x: 370, y: 205,
+      info: { 'Item type': 'WIP', 'Unit': 'units', 'Safety stock': '50 units', 'Location': 'Plant A' },
+    },
+    {
+      id: 'assembly', type: 'transformation', label: 'Assembly', x: 490, y: 155,
+      info: { 'BOM type': 'Single-input', 'Lead time': '2 hours', 'Yield': '1 unit per input', 'Location': 'Plant A' },
+    },
+    {
+      id: 'asm-line', type: 'resource', label: 'Asm. Line', x: 490, y: 68,
+      info: { 'Resource type': 'Machine', 'Capacity': '200 units / hr', 'Shifts': '3 shifts, Mon–Fri', 'Location': 'Plant A' },
+    },
+    {
+      id: 'product-z', type: 'item', label: 'Product Z', x: 582, y: 155,
+      info: { 'Item type': 'Finished good', 'Unit': 'units', 'Shelf life': '365 days', 'MOQ': '100 units' },
+    },
+    {
+      id: 'dc-z', type: 'item', label: 'Product Z (DC)', x: 582, y: 265,
+      info: { 'Item type': 'Finished good', 'Unit': 'units', 'Safety stock': '200 units', 'Location': 'Distribution Centre' },
+    },
+  ];
+
+  const EDGES: EdgeDef[] = [
+    { id: 'e1', from: 'raw-a',     to: 'mixing',    type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '2 kg',      'Scrap %': '0%' } },
+    { id: 'e2', from: 'raw-b',     to: 'mixing',    type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '0.5 L',     'Scrap %': '2%' } },
+    { id: 'e3', from: 'mixing',    to: 'semi-x',    type: 'bom',                  label: 'BOM output',            info: { 'Yield': '1 unit / batch', 'Co-products': 'None' } },
+    { id: 'e4', from: 'semi-x',    to: 'assembly',  type: 'bom',                  label: 'BOM input',             info: { 'Qty / unit': '1 unit',    'Scrap %': '0.5%' } },
+    { id: 'e5', from: 'assembly',  to: 'product-z', type: 'bom',                  label: 'BOM output',            info: { 'Yield': '1 unit',         'Co-products': 'None' } },
+    { id: 'e6', from: 'mixer-tank',to: 'mixing',    type: 'resource-consumption', label: 'Resource consumption',  info: { 'Rate': '1 hr / batch',    'Efficiency': '95%' } },
+    { id: 'e7', from: 'asm-line',  to: 'assembly',  type: 'resource-consumption', label: 'Resource consumption',  info: { 'Rate': '0.5 hr / unit',   'Efficiency': '98%' } },
+    { id: 'e8', from: 'product-z', to: 'dc-z',      type: 'bod',                  label: 'Transportation lane',   info: { 'Transit time': '2 days',  'Min. order': '100 units', 'Mode': 'Truck' } },
+  ];
+  // ─── END SAMPLE DATA ─────────────────────────────────────────────────────────
+
+  const NODE_COLOR: Record<string, string> = {
+    item:           '#6366f1',
+    transformation: '#0ea5e9',
+    transportation: '#8b5cf6',
+    resource:       '#10b981',
+  };
+
+  const EDGE_COLOR: Record<string, string> = {
+    bom:                   '#6366f1',
+    bod:                   '#8b5cf6',
+    'resource-consumption':'#10b981',
+  };
+
+  const TYPE_LABEL: Record<string, string> = {
+    item:                  'Item',
+    transformation:        'Transformation Process',
+    transportation:        'Transportation Process',
+    resource:              'Resource',
+    bom:                   'BOM — Bill of Materials',
+    bod:                   'BOD — Bill of Distribution',
+    'resource-consumption':'Resource Consumption',
+  };
+
+  // Mutable node positions (updated on drag)
+  const pos: Record<string, { x: number; y: number }> = {};
+  for (const n of NODES) pos[n.id] = { x: n.x, y: n.y };
+
+  let selectedId: string | null = null;
+  let isDragging = false;
+
+  interface DragState { nodeId: string; startNx: number; startNy: number; startEx: number; startEy: number; }
+  let drag: DragState | null = null;
+
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function el<T extends SVGElement>(tag: string, attrs: Record<string, string | number>): T {
+    const e = document.createElementNS(NS, tag) as T;
+    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, String(v));
+    return e;
+  }
+
+  function svgPt(e: MouseEvent): { x: number; y: number } {
+    const svg = document.getElementById('ig-svg') as SVGSVGElement;
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    return pt.matrixTransform(ctm.inverse());
+  }
+
+  function upTriPoints(cx: number, cy: number): string {
+    return `${cx},${cy - 32} ${cx - 28},${cy + 16} ${cx + 28},${cy + 16}`;
+  }
+
+  function dnTriPoints(cx: number, cy: number): string {
+    return `${cx - 28},${cy - 16} ${cx + 28},${cy - 16} ${cx},${cy + 32}`;
+  }
+
+  function addLabel(parent: SVGGElement, text: string, cx: number, baseY: number, color: string) {
+    const words = text.split(' ');
+    const lines: string[] = [];
+    let cur = '';
+    for (const w of words) {
+      const next = cur ? cur + ' ' + w : w;
+      if (next.length <= 14) { cur = next; }
+      else { if (cur) lines.push(cur); cur = w; }
+    }
+    if (cur) lines.push(cur);
+
+    const t = el<SVGTextElement>('text', {
+      'text-anchor': 'middle', fill: color,
+      'font-size': '10', 'font-family': 'Inter,system-ui,sans-serif',
+      'pointer-events': 'none',
+    });
+    lines.forEach((line, i) => {
+      const s = document.createElementNS(NS, 'tspan') as SVGTSpanElement;
+      s.setAttribute('x', String(cx));
+      s.setAttribute('y', String(baseY + i * 13));
+      s.textContent = line;
+      t.appendChild(s);
+    });
+    parent.appendChild(t);
+  }
+
+  function render() {
+    const eg = document.getElementById('ig-edges') as SVGGElement;
+    const ng = document.getElementById('ig-nodes') as SVGGElement;
+    eg.innerHTML = '';
+    ng.innerHTML = '';
+
+    // ── Edges ────────────────────────────────────────────────────────────────
+    for (const edge of EDGES) {
+      const f = pos[edge.from], t = pos[edge.to];
+      if (!f || !t) continue;
+      const c = EDGE_COLOR[edge.type] ?? '#6b7280';
+      const sel = selectedId === edge.id;
+
+      // Wide transparent hit target for easy clicking
+      eg.appendChild(el('line', {
+        x1: f.x, y1: f.y, x2: t.x, y2: t.y,
+        stroke: 'transparent', 'stroke-width': 14,
+        'data-edge-id': edge.id, style: 'cursor:pointer',
+      }));
+
+      // Visible line
+      eg.appendChild(el('line', {
+        x1: f.x, y1: f.y, x2: t.x, y2: t.y,
+        stroke: c,
+        'stroke-width': sel ? 3.5 : 1.8,
+        'stroke-dasharray': edge.type === 'resource-consumption' ? '6 4' : 'none',
+        opacity: sel ? '1' : '0.5',
+        'pointer-events': 'none',
+      }));
+    }
+
+    // ── Nodes ────────────────────────────────────────────────────────────────
+    for (const node of NODES) {
+      const { x: cx, y: cy } = pos[node.id];
+      const c = NODE_COLOR[node.type] ?? '#6b7280';
+      const sel = selectedId === node.id;
+      const fill = 'white';
+      const sw = sel ? '2.5' : '1.8';
+
+      const g = el<SVGGElement>('g', { 'data-node-id': node.id, style: 'cursor:grab' });
+
+      if (node.type === 'transformation' || node.type === 'transportation') {
+        g.appendChild(el('circle', { cx, cy, r: 28, fill, stroke: c, 'stroke-width': sw }));
+        // Label inside circle — single line
+        const t = el<SVGTextElement>('text', {
+          x: cx, y: cy + 4, 'text-anchor': 'middle',
+          fill: c, 'font-size': '10', 'font-family': 'Inter,system-ui,sans-serif',
+          'pointer-events': 'none',
+        });
+        t.textContent = node.label;
+        g.appendChild(t);
+      } else if (node.type === 'resource') {
+        g.appendChild(el('polygon', {
+          points: dnTriPoints(cx, cy),
+          fill, stroke: c, 'stroke-width': sw, 'stroke-linejoin': 'round',
+        }));
+        // Label above the triangle (top of triangle is cy-16)
+        addLabel(g, node.label, cx, cy - 30, c);
+      } else {
+        // item
+        g.appendChild(el('polygon', {
+          points: upTriPoints(cx, cy),
+          fill, stroke: c, 'stroke-width': sw, 'stroke-linejoin': 'round',
+        }));
+        // Label below the triangle (bottom of triangle is cy+16)
+        addLabel(g, node.label, cx, cy + 33, c);
+      }
+
+      ng.appendChild(g);
+    }
+  }
+
+  // ── Selection & Info Panel ───────────────────────────────────────────────────
+  function setSelected(id: string | null) {
+    selectedId = id;
+    render();
+
+    const empty  = document.getElementById('ig-empty')!;
+    const detail = document.getElementById('ig-detail')!;
+
+    if (!id) {
+      empty.classList.remove('hidden');
+      detail.classList.add('hidden');
+      return;
+    }
+
+    const node = NODES.find((n) => n.id === id);
+    const edge = EDGES.find((e) => e.id === id);
+    const item = node ?? edge;
+    if (!item) return;
+
+    const color = node ? (NODE_COLOR[item.type] ?? '#6366f1') : (EDGE_COLOR[item.type] ?? '#6366f1');
+
+    empty.classList.add('hidden');
+    detail.classList.remove('hidden');
+
+    const badge = document.getElementById('ig-badge')!;
+    badge.textContent = TYPE_LABEL[item.type] ?? item.type;
+    badge.style.color = color;
+    badge.style.borderColor = color + '55';
+    badge.style.backgroundColor = color + '15';
+
+    document.getElementById('ig-name')!.textContent = item.label;
+
+    const props = document.getElementById('ig-props')!;
+    props.innerHTML = '';
+    for (const [key, val] of Object.entries(item.info)) {
+      const dt = document.createElement('dt');
+      dt.className = 'text-gray-400 dark:text-gray-500 truncate';
+      dt.textContent = key;
+      const dd = document.createElement('dd');
+      dd.className = 'text-gray-900 dark:text-gray-200 font-medium truncate';
+      dd.textContent = val;
+      props.appendChild(dt);
+      props.appendChild(dd);
+    }
+  }
+
+  // ── Drag & Click ─────────────────────────────────────────────────────────────
+  const svg = document.getElementById('ig-svg') as SVGSVGElement;
+
+  svg.addEventListener('mousedown', (e) => {
+    const nodeEl = (e.target as Element).closest('[data-node-id]');
+    if (!nodeEl) return;
+    isDragging = false;
+    const nodeId = nodeEl.getAttribute('data-node-id')!;
+    const { x, y } = svgPt(e);
+    drag = { nodeId, startNx: pos[nodeId].x, startNy: pos[nodeId].y, startEx: x, startEy: y };
+    svg.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!drag) return;
+    const { x, y } = svgPt(e);
+    pos[drag.nodeId].x = drag.startNx + (x - drag.startEx);
+    pos[drag.nodeId].y = drag.startNy + (y - drag.startEy);
+    isDragging = true;
+    render();
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (drag) { svg.style.cursor = 'default'; drag = null; }
+  });
+
+  svg.addEventListener('click', (e) => {
+    const was = isDragging;
+    isDragging = false;
+    if (was) return;
+
+    const nodeEl = (e.target as Element).closest('[data-node-id]');
+    const edgeEl = (e.target as Element).closest('[data-edge-id]');
+
+    if (nodeEl)      setSelected(nodeEl.getAttribute('data-node-id'));
+    else if (edgeEl) setSelected(edgeEl.getAttribute('data-edge-id'));
+    else             setSelected(null);
+  });
+
+  // ── Touch support ─────────────────────────────────────────────────────────────
+  function touchSvgPt(touch: Touch): { x: number; y: number } {
+    const s = document.getElementById('ig-svg') as SVGSVGElement;
+    const pt = s.createSVGPoint();
+    pt.x = touch.clientX; pt.y = touch.clientY;
+    const ctm = s.getScreenCTM();
+    if (!ctm) return { x: 0, y: 0 };
+    return pt.matrixTransform(ctm.inverse());
+  }
+
+  svg.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    const nodeEl = (t.target as Element).closest('[data-node-id]');
+    if (!nodeEl) return;
+    isDragging = false;
+    const nodeId = nodeEl.getAttribute('data-node-id')!;
+    const { x, y } = touchSvgPt(t);
+    drag = { nodeId, startNx: pos[nodeId].x, startNy: pos[nodeId].y, startEx: x, startEy: y };
+    e.preventDefault();
+  }, { passive: false });
+
+  svg.addEventListener('touchmove', (e) => {
+    if (!drag) return;
+    const { x, y } = touchSvgPt(e.touches[0]);
+    pos[drag.nodeId].x = drag.startNx + (x - drag.startEx);
+    pos[drag.nodeId].y = drag.startNy + (y - drag.startEy);
+    isDragging = true;
+    render();
+    e.preventDefault();
+  }, { passive: false });
+
+  svg.addEventListener('touchend', () => {
+    if (drag && !isDragging) setSelected(drag.nodeId);
+    drag = null;
+    isDragging = false;
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────────────────
+  render();
+</script>

@@ -1,0 +1,6 @@
+---
+import { getTopics } from '../lib/chapters';
+
+const first = getTopics()[0];
+return Astro.redirect(first?.url ?? '/');
+---

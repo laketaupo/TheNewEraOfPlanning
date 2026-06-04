@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ThemeToggle from '../../../components/ThemeToggle.astro';
+import { getChapters, getTopicsForChapter } from '../../../lib/chapters';
+
+export async function getStaticPaths() {
+  const chapters = getChapters();
+  return chapters.map((ch) => ({ params: { chapter: ch.slug } }));
+}
+
+const { chapter: chapterSlug } = Astro.params;
+const chapters = getChapters();
+const chapter = chapters.find((c) => c.slug === chapterSlug)!;
+const topics = getTopicsForChapter(chapterSlug);
+const allChapters = chapters;
+
+const colorTextMap: Record<string, string> = {
+  indigo: 'text-indigo-600 dark:text-indigo-400',
+  violet: 'text-violet-600 dark:text-violet-400',
+  sky:    'text-sky-600 dark:text-sky-400',
+  emerald:'text-emerald-600 dark:text-emerald-400',
+};
+const colorBorderMap: Record<string, string> = {
+  indigo: 'border-indigo-200 dark:border-indigo-500/40 hover:border-indigo-400',
+  violet: 'border-violet-200 dark:border-violet-500/40 hover:border-violet-400',
+  sky:    'border-sky-200 dark:border-sky-500/40 hover:border-sky-400',
+  emerald:'border-emerald-200 dark:border-emerald-500/40 hover:border-emerald-400',
+};
+const colorBgMap: Record<string, string> = {
+  indigo: 'bg-indigo-50 dark:bg-indigo-500/10',
+  violet: 'bg-violet-50 dark:bg-violet-500/10',
+  sky:    'bg-sky-50 dark:bg-sky-500/10',
+  emerald:'bg-emerald-50 dark:bg-emerald-500/10',
+};
+
+const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
+const borderClass = colorBorderMap[chapter.color] ?? 'border-brand-200 dark:border-brand-500/40';
+const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
+---
+<BaseLayout title={`${chapter.title} — How o9 Works`} description={chapter.description}>
+  <!-- Top nav -->
+  <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+    <a href="/" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
+      </svg>
+      How o9 Works
+    </a>
+
+    <!-- Chapter switcher -->
+    <nav class="hidden sm:flex items-center gap-1">
+      {allChapters.map((ch) => (
+        <a
+          href={`/chapters/${ch.slug}`}
+          class={`text-xs px-3 py-1 rounded-full transition-colors ${
+            ch.slug === chapterSlug
+              ? `${bgClass} ${textClass} font-medium`
+              : 'text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-300'
+          }`}
+        >
+          {ch.order}. {ch.title}
+        </a>
+      ))}
+    </nav>
+
+    <ThemeToggle />
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-16 animate-slide-up">
+    <!-- Chapter header -->
+    <p class={`text-sm font-medium ${textClass} mb-2`}>Chapter {chapter.order}</p>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">{chapter.title}</h1>
+    <p class="text-lg text-gray-500 dark:text-gray-400 mb-10">{chapter.description}</p>
+
+    <!-- Topic list -->
+    <ol class="space-y-3">
+      {topics.map((topic, i) => (
+        <li>
+          <a
+            href={topic.url}
+            class={`group flex items-start gap-4 p-4 rounded-xl border ${borderClass} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
+          >
+            <!-- Topic number -->
+            <span class={`text-sm font-mono font-bold ${textClass} w-6 shrink-0 mt-0.5`}>{String(i + 1).padStart(2, '0')}</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-gray-900 dark:text-white font-medium">{topic.title}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-500 mt-0.5">{topic.description}</p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 mt-0.5">
+              {topic.widget && (
+                <span class="text-xs text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full">interactive</span>
+              )}
+              <span class="text-xs text-gray-400 dark:text-gray-600">{topic.estimatedMinutes} min</span>
+              <!-- Completion dot (filled by JS) -->
+              <span
+                class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
+                data-topic-id={`ch${chapter.order}-t${topic.order}`}
+              ></span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Start chapter CTA -->
+    <div class="mt-10 flex items-center gap-4">
+      <a
+        href={topics[0]?.url ?? '/'}
+        class={`inline-flex items-center gap-2 ${bgClass} ${textClass} font-semibold px-5 py-2.5 rounded-xl border ${borderClass} hover:opacity-90 transition-opacity`}
+      >
+        Start chapter
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a href="/" class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Back to overview</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const STORAGE_KEY = 'o9-progress';
+  function getProgress(): Record<string, boolean> {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+  const progress = getProgress();
+  document.querySelectorAll<HTMLSpanElement>('.topic-completion-dot').forEach((dot) => {
+    const id = dot.dataset.topicId ?? '';
+    if (progress[id]) {
+      dot.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+      dot.classList.add('bg-emerald-500');
+    }
+  });
+</script>

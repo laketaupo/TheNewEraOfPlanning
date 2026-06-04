@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { getChapters, getTopics } from '../lib/chapters';
+
+const chapters = getChapters();
+const allTopics = getTopics();
+
+const iconMap: Record<string, string> = {
+  cube: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/></svg>`,
+  network: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="5" r="2" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7v4m0 4l-5 2m10-2l-5 2"/></svg>`,
+  cpu: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="6" y="6" width="12" height="12" rx="1" stroke-width="1.5"/><path stroke-linecap="round" stroke-width="1.5" d="M9 6V4M12 6V4M15 6V4M9 20v-2M12 20v-2M15 20v-2M6 9H4M6 12H4M6 15H4M20 9h-2M20 12h-2M20 15h-2"/></svg>`,
+  beaker: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3h6m-6 0v7l-4 9a1 1 0 001 1h12a1 1 0 001-1l-4-9V3"/></svg>`,
+};
+
+const colorBgMap: Record<string, string> = {
+  indigo: 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-400 dark:hover:border-indigo-400',
+  violet: 'bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400',
+  sky:    'bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30 hover:border-sky-400 dark:hover:border-sky-400',
+  emerald:'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-400',
+};
+
+const colorTextMap: Record<string, string> = {
+  indigo: 'text-indigo-600 dark:text-indigo-400',
+  violet: 'text-violet-600 dark:text-violet-400',
+  sky:    'text-sky-600 dark:text-sky-400',
+  emerald:'text-emerald-600 dark:text-emerald-400',
+};
+---
+<BaseLayout>
+  <!-- Floating theme toggle -->
+  <div class="fixed top-4 right-4 z-50">
+    <ThemeToggle />
+  </div>
+
+  <!-- Hero -->
+  <section class="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden">
+    <!-- Background grid (light: gray-200, dark: gray-800) -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <!-- Radial gradient -->
+    <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
+
+    <div class="relative z-10 animate-fade-in max-w-3xl">
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+        Interactive Learning Guide
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
+        How <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500">o9</span> Works
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
+        From the fundamental building blocks of a supply chain network to live scenario simulation — a guided tour of the o9 Solutions platform.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/start"
+          class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40"
+        >
+          Start from the beginning
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a
+          href="#chapters"
+          class="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+        >
+          Explore chapters
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex items-center justify-center gap-8 mt-12 text-sm text-gray-500 dark:text-gray-500">
+        <span><strong class="text-gray-900 dark:text-white">4</strong> chapters</span>
+        <span class="w-px h-4 bg-gray-300 dark:bg-gray-700"></span>
+        <span><strong class="text-gray-900 dark:text-white">{allTopics.length}</strong> topics</span>
+        <span class="w-px h-4 bg-gray-300 dark:bg-gray-700"></span>
+        <span><strong class="text-gray-900 dark:text-white">3</strong> interactive simulations</span>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-gray-400 dark:text-gray-600">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Chapter cards -->
+  <section id="chapters" class="px-6 py-20 max-w-6xl mx-auto">
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Chapters</h2>
+    <p class="text-gray-500 dark:text-gray-400 mb-10">Pick a chapter to jump in, or start from the beginning to follow the full learning path.</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {chapters.map((chapter, i) => {
+        const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
+        const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10 border-brand-200 dark:border-brand-500/30';
+        const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
+        return (
+          <a
+            href={`/chapters/${chapter.slug}`}
+            class={`group relative flex flex-col p-6 rounded-2xl border ${bgClass} bg-white dark:bg-transparent transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl`}
+          >
+            <!-- Chapter number -->
+            <span class={`text-xs font-mono font-bold ${textClass} mb-4`}>0{chapter.order}</span>
+
+            <!-- Icon + title -->
+            <div class="flex items-start gap-4 mb-4">
+              <div class={`${textClass} mt-0.5 shrink-0`} set:html={iconMap[chapter.icon] ?? iconMap['cube']} />
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{chapter.description}</p>
+              </div>
+            </div>
+
+            <!-- Topic count + progress ring -->
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-white/5">
+              <span class="text-xs text-gray-400 dark:text-gray-500">{topics.length} topics</span>
+              <div class={`flex items-center gap-1 text-xs ${textClass} opacity-0 group-hover:opacity-100 transition-opacity`}>
+                Open chapter
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+              <!-- Progress ring placeholder, filled by JS -->
+              <canvas
+                class="chapter-progress-ring hidden"
+                data-chapter-slug={chapter.slug}
+                data-topic-count={topics.length}
+                data-chapter-index={i}
+                width="32"
+                height="32"
+              ></canvas>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+    <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .bg-radial-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.08), transparent);
+  }
+  :global(.dark) .bg-radial-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.15), transparent);
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'o9-progress';
+
+  function getProgress(): Record<string, boolean> {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+  }
+
+  function drawRing(canvas: HTMLCanvasElement, percent: number, color: string) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const size = canvas.width;
+    const cx = size / 2, cy = size / 2, r = size / 2 - 3;
+    ctx.clearRect(0, 0, size, size);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = document.documentElement.classList.contains('dark')
+      ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    if (percent > 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * percent);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+  }
+
+  const chapterColors: Record<string, string> = {
+    '0': '#6366f1', // indigo-500
+    '1': '#8b5cf6', // violet-500
+    '2': '#0ea5e9', // sky-500
+    '3': '#10b981', // emerald-500
+  };
+
+  const progress = getProgress();
+
+  document.querySelectorAll<HTMLCanvasElement>('.chapter-progress-ring').forEach((canvas) => {
+    const slug = canvas.dataset.chapterSlug ?? '';
+    const count = parseInt(canvas.dataset.topicCount ?? '0', 10);
+    const idx = canvas.dataset.chapterIndex ?? '0';
+    if (!count) return;
+
+    const chapterNum = slug.split('-')[0];
+    const completed = Object.keys(progress).filter(
+      (k) => k.startsWith(`ch${parseInt(chapterNum, 10)}-`) && progress[k]
+    ).length;
+
+    const pct = count > 0 ? completed / count : 0;
+    canvas.classList.remove('hidden');
+    drawRing(canvas, pct, chapterColors[idx] ?? '#6366f1');
+  });
+</script>

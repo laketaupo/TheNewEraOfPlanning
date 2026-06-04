@@ -1,0 +1,84 @@
+---
+import TopicLayout from '../../../layouts/TopicLayout.astro';
+import NodeTopicLayout from '../../../layouts/NodeTopicLayout.astro';
+import WhatIfWidget from '../../../components/sim/WhatIfWidget.astro';
+import DemandShockSim from '../../../components/sim/DemandShockSim.astro';
+import StepWalkthrough from '../../../components/sim/StepWalkthrough.astro';
+import InteractiveGraph from '../../../components/sim/InteractiveGraph.astro';
+import { getChapters, getTopics, getTopicsForChapter, getAdjacentTopics } from '../../../lib/chapters';
+
+// Build static paths for all topics
+export async function getStaticPaths() {
+  const topics = getTopics();
+  const chapters = getChapters();
+
+  return topics.map((topic) => {
+    const chapter = chapters.find((c) => c.slug === topic.chapterSlug)!;
+    const [prev, next] = getAdjacentTopics(topic.url);
+
+    return {
+      params: { chapter: topic.chapterSlug, topic: topic.slug },
+      props: {
+        topic,
+        chapter,
+        prev,
+        next,
+      },
+    };
+  });
+}
+
+const { topic, chapter, prev, next } = Astro.props;
+
+// Dynamically import the MDX file for this topic
+const mdxFiles = import.meta.glob('../../../content/chapters/**/*.md', { eager: false });
+const mdxKey = Object.keys(mdxFiles).find((k) =>
+  k.endsWith(`/${topic.chapterSlug}/${topic.slug}.md`)
+);
+const { Content } = mdxKey ? await mdxFiles[mdxKey]() as any : { Content: null };
+
+const isNodeTopic = !!topic.nodeType;
+---
+
+{isNodeTopic ? (
+  <NodeTopicLayout
+    title={topic.title}
+    description={topic.description}
+    summary={topic.summary ?? ''}
+    chapterTitle={chapter.title}
+    chapterSlug={chapter.slug}
+    chapterColor={chapter.color}
+    topicOrder={topic.order}
+    chapterOrder={chapter.order}
+    prevUrl={prev?.url}
+    nextUrl={next?.url}
+    prevTitle={prev?.title}
+    nextTitle={next?.title}
+    nodeType={topic.nodeType as any}
+  />
+) : (
+  <TopicLayout
+    title={topic.title}
+    description={topic.description}
+    chapterTitle={chapter.title}
+    chapterSlug={chapter.slug}
+    chapterColor={chapter.color}
+    topicOrder={topic.order}
+    chapterOrder={chapter.order}
+    prevUrl={prev?.url}
+    nextUrl={next?.url}
+    prevTitle={prev?.title}
+    nextTitle={next?.title}
+    widget={topic.widget}
+  >
+    {Content && <Content />}
+
+    <!-- Simulation widgets (rendered in named slot "widget" inside TopicLayout) -->
+    <Fragment slot="widget">
+      {topic.widget === 'what-if' && <WhatIfWidget />}
+      {topic.widget === 'demand-shock' && <DemandShockSim />}
+      {topic.widget === 'walkthrough' && <StepWalkthrough />}
+      {topic.widget === 'graph' && <InteractiveGraph />}
+    </Fragment>
+  </TopicLayout>
+)}
