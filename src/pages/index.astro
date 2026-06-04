@@ -55,7 +55,7 @@ const colorTextMap: Record<string, string> = {
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <a
-          href="/start"
+          href={`${import.meta.env.BASE_URL}start`}
           class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-indigo-200 dark:shadow-indigo-900/40"
         >
           Start from the beginning
@@ -104,7 +104,7 @@ const colorTextMap: Record<string, string> = {
         const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
         return (
           <a
-            href={`/chapters/${chapter.slug}`}
+            href={`${import.meta.env.BASE_URL}chapters/${chapter.slug}`}
             class={`group relative flex flex-col p-6 rounded-2xl border ${bgClass} bg-white dark:bg-transparent transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl`}
           >
             <!-- Chapter number -->

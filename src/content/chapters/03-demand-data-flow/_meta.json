@@ -1,0 +1,7 @@
+{
+  "title": "Data Flow: Demand",
+  "description": "How a customer forecast travels upstream through the network — from finished good back to raw material inputs.",
+  "icon": "arrow-up",
+  "color": "amber",
+  "order": 3
+}

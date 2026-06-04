@@ -5,6 +5,8 @@ import WhatIfWidget from '../../../components/sim/WhatIfWidget.astro';
 import DemandShockSim from '../../../components/sim/DemandShockSim.astro';
 import StepWalkthrough from '../../../components/sim/StepWalkthrough.astro';
 import InteractiveGraph from '../../../components/sim/InteractiveGraph.astro';
+import DemandFlowGraph from '../../../components/sim/DemandFlowGraph.astro';
+import SupplyFlowGraph from '../../../components/sim/SupplyFlowGraph.astro';
 import { getChapters, getTopics, getTopicsForChapter, getAdjacentTopics } from '../../../lib/chapters';
 
 // Build static paths for all topics
@@ -79,6 +81,8 @@ const isNodeTopic = !!topic.nodeType;
       {topic.widget === 'demand-shock' && <DemandShockSim />}
       {topic.widget === 'walkthrough' && <StepWalkthrough />}
       {topic.widget === 'graph' && <InteractiveGraph step={topic.widgetStep} />}
+      {topic.widget === 'demand-flow' && <DemandFlowGraph />}
+      {topic.widget === 'supply-flow' && <SupplyFlowGraph />}
     </Fragment>
   </TopicLayout>
 )}
