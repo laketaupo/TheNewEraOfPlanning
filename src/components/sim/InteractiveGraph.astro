@@ -252,6 +252,21 @@ const { step } = Astro.props;
   const pos: Record<string, { x: number; y: number }> = {};
   for (const n of NODES) pos[n.id] = { x: n.x, y: n.y };
 
+  // Fit viewBox to visible nodes so early steps don't show a mostly-empty canvas.
+  // Always use fixed 1660×360 dimensions so the graph is the same on-screen size
+  // at every step — only the pan (x0, y0) changes to center on visible nodes.
+  function fitViewBox() {
+    const svg = document.getElementById('ig-svg') as SVGSVGElement;
+    const active = NODES.filter((n) => STEP === null || visibleIds.has(n.id));
+    if (active.length === 0) return;
+    const W = 1660, H = 360;
+    const xs = active.map((n) => pos[n.id].x);
+    const ys = active.map((n) => pos[n.id].y);
+    const cx = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+    svg.setAttribute('viewBox', `${cx - W / 2} ${cy - H / 2} ${W} ${H}`);
+  }
+
   let selectedId: string | null = null;
   let isDragging = false;
 
@@ -517,6 +532,7 @@ const { step } = Astro.props;
   });
 
   // ── Init ──────────────────────────────────────────────────────────────────────
+  fitViewBox();
   render();
   // Re-render when dark/light mode toggles so node fill colour stays in sync
   new MutationObserver(() => render()).observe(document.documentElement, {
