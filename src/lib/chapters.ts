@@ -66,7 +66,7 @@ export function getTopics(): TopicMeta[] {
         summary: fm.summary ?? undefined,
         slug: topicSlug,
         chapterSlug,
-        url: `/chapters/${chapterSlug}/${topicSlug}`,
+        url: `${import.meta.env.BASE_URL}chapters/${chapterSlug}/${topicSlug}`,
       } as TopicMeta;
     })
     .sort((a, b) => {

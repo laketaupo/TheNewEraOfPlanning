@@ -1,0 +1,7 @@
+{
+  "title": "Data Flow: Supply",
+  "description": "How planned orders and inventory flow downstream through the network — from raw material inputs to the customer.",
+  "icon": "arrow-down",
+  "color": "teal",
+  "order": 4
+}
