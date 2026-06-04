@@ -42,6 +42,44 @@ const colorMap: Record<string, string> = {
 };
 
 const chapterColorClass = colorMap[chapterColor] ?? 'text-brand-600 dark:text-brand-400 border-brand-500';
+
+const accentColorMap: Record<string, string> = {
+  indigo:  '#6366f1',
+  violet:  '#8b5cf6',
+  sky:     '#0ea5e9',
+  emerald: '#10b981',
+  amber:   '#f59e0b',
+  teal:    '#14b8a6',
+};
+
+const accentSubtleMap: Record<string, string> = {
+  indigo:  'rgba(99, 102, 241, 0.07)',
+  violet:  'rgba(139, 92, 246, 0.07)',
+  sky:     'rgba(14, 165, 233, 0.07)',
+  emerald: 'rgba(16, 185, 129, 0.07)',
+  amber:   'rgba(245, 158, 11, 0.07)',
+  teal:    'rgba(20, 184, 166, 0.07)',
+};
+
+const badgeBgMap: Record<string, string> = {
+  indigo:  'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400',
+  violet:  'bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/30 text-violet-600 dark:text-violet-400',
+  sky:     'bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30 text-sky-600 dark:text-sky-400',
+  emerald: 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400',
+};
+
+const dotColorMap: Record<string, string> = {
+  indigo:  'bg-indigo-500',
+  violet:  'bg-violet-500',
+  sky:     'bg-sky-500',
+  emerald: 'bg-emerald-500',
+};
+
+const accentColor   = accentColorMap[chapterColor]  ?? '#6366f1';
+const accentSubtle  = accentSubtleMap[chapterColor] ?? 'rgba(99, 102, 241, 0.07)';
+const badgeBgClass  = badgeBgMap[chapterColor]      ?? badgeBgMap.indigo;
+const dotColorClass = dotColorMap[chapterColor]     ?? 'bg-indigo-500';
+
 const topicId = `ch${chapterOrder}-t${topicOrder}`;
 ---
 <BaseLayout title={`${title} — How o9 Works`} description={description}>
@@ -79,13 +117,17 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
       <hr class="border-gray-200 dark:border-gray-800 mb-10" />
 
       <!-- Markdown content -->
-      <div class="prose prose-gray dark:prose-invert prose-lg max-w-none
+      <div class="topic-prose prose prose-gray dark:prose-invert prose-lg max-w-none
         prose-headings:font-semibold
+        prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+        prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+        prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300
+        prose-li:text-gray-700 dark:prose-li:text-gray-300 prose-li:my-1
         prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline
-        prose-code:text-emerald-700 dark:prose-code:text-emerald-300 prose-code:bg-emerald-50 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:rounded prose-code:text-sm
-        prose-pre:bg-gray-100 dark:prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-700
+        prose-code:text-emerald-700 dark:prose-code:text-emerald-300 prose-code:bg-emerald-50 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium
+        prose-pre:bg-gray-100 dark:prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-700 prose-pre:rounded-xl
         prose-table:text-sm
-        prose-blockquote:border-l-indigo-400">
+        prose-strong:text-gray-900 dark:prose-strong:text-white">
         <slot />
       </div>
 
@@ -147,6 +189,100 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
       )}
     </div>
   </nav>
+
+  <style is:global>
+    /* Section headings with accent bar */
+    .topic-prose h2 {
+      padding-left: 1rem;
+      border-left: 3px solid #6366f1;
+      margin-top: 3rem;
+    }
+    .dark .topic-prose h2 {
+      border-left-color: #818cf8;
+    }
+
+    .topic-prose h3 {
+      padding-top: 0.5rem;
+    }
+
+    /* Blockquote: styled callout card */
+    .topic-prose blockquote {
+      background: #eef2ff;
+      border-left: 4px solid #6366f1;
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      font-style: normal;
+      color: #374151;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .dark .topic-prose blockquote {
+      background: rgba(99, 102, 241, 0.08);
+      border-left-color: #818cf8;
+      color: #d1d5db;
+    }
+    .topic-prose blockquote p {
+      margin: 0;
+    }
+
+    /* Table: cleaner with header bg */
+    .topic-prose table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    .dark .topic-prose table {
+      border-color: #374151;
+    }
+    .topic-prose thead {
+      background: #f3f4f6;
+    }
+    .dark .topic-prose thead {
+      background: #1f2937;
+    }
+    .topic-prose th {
+      font-weight: 600;
+      text-align: left;
+      padding: 0.65rem 1rem;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7280;
+    }
+    .dark .topic-prose th {
+      color: #9ca3af;
+    }
+    .topic-prose td {
+      padding: 0.65rem 1rem;
+      border-top: 1px solid #f3f4f6;
+    }
+    .dark .topic-prose td {
+      border-top-color: #1f2937;
+    }
+    .topic-prose tbody tr:hover {
+      background: #f9fafb;
+    }
+    .dark .topic-prose tbody tr:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* List markers */
+    .topic-prose ul > li::marker {
+      color: #6366f1;
+    }
+    .dark .topic-prose ul > li::marker {
+      color: #818cf8;
+    }
+    .topic-prose ol > li::marker {
+      color: #6366f1;
+      font-weight: 600;
+    }
+    .dark .topic-prose ol > li::marker {
+      color: #818cf8;
+    }
+  </style>
 
   <script define:vars={{ topicId }}>
     const STORAGE_KEY = 'o9-progress';
