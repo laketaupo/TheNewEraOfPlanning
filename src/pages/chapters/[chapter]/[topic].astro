@@ -1,6 +1,10 @@
 ---
 import TopicLayout from '../../../layouts/TopicLayout.astro';
 import NodeTopicLayout from '../../../layouts/NodeTopicLayout.astro';
+import CardGridLayout from '../../../layouts/CardGridLayout.astro';
+import DataTableLayout from '../../../layouts/DataTableLayout.astro';
+import ComparisonLayout from '../../../layouts/ComparisonLayout.astro';
+import FullWidthWidgetLayout from '../../../layouts/FullWidthWidgetLayout.astro';
 import WhatIfWidget from '../../../components/sim/WhatIfWidget.astro';
 import DemandShockSim from '../../../components/sim/DemandShockSim.astro';
 import StepWalkthrough from '../../../components/sim/StepWalkthrough.astro';
@@ -39,43 +43,74 @@ const mdxKey = Object.keys(mdxFiles).find((k) =>
 );
 const { Content } = mdxKey ? await mdxFiles[mdxKey]() as any : { Content: null };
 
-const isNodeTopic = !!topic.nodeType;
+const layout = topic.topicLayout ?? 'topic';
+
+const sharedProps = {
+  title: topic.title,
+  description: topic.description,
+  chapterTitle: chapter.title,
+  chapterSlug: chapter.slug,
+  chapterColor: chapter.color,
+  topicOrder: topic.order,
+  chapterOrder: chapter.order,
+  prevUrl: prev?.url,
+  nextUrl: next?.url,
+  prevTitle: prev?.title,
+  nextTitle: next?.title,
+};
 ---
 
-{isNodeTopic ? (
+{layout === 'node-topic' ? (
   <NodeTopicLayout
-    title={topic.title}
-    description={topic.description}
+    {...sharedProps}
     summary={topic.summary ?? ''}
-    chapterTitle={chapter.title}
-    chapterSlug={chapter.slug}
-    chapterColor={chapter.color}
-    topicOrder={topic.order}
-    chapterOrder={chapter.order}
-    prevUrl={prev?.url}
-    nextUrl={next?.url}
-    prevTitle={prev?.title}
-    nextTitle={next?.title}
     nodeType={topic.nodeType as any}
+    bullets={topic.bullets ?? []}
+    nodeLocation={topic.nodeLocation}
+    lineInLabel={topic.lineInLabel}
+    lineOutLabel={topic.lineOutLabel}
+    durationLabel={topic.durationLabel}
+    transportMode={topic.transportMode}
+    consumptionLabel={topic.consumptionLabel}
   />
-) : (
-  <TopicLayout
-    title={topic.title}
-    description={topic.description}
-    chapterTitle={chapter.title}
-    chapterSlug={chapter.slug}
-    chapterColor={chapter.color}
-    topicOrder={topic.order}
-    chapterOrder={chapter.order}
-    prevUrl={prev?.url}
-    nextUrl={next?.url}
-    prevTitle={prev?.title}
-    nextTitle={next?.title}
+) : layout === 'card-grid' ? (
+  <CardGridLayout
+    {...sharedProps}
+    cards={topic.cards}
+  />
+) : layout === 'data-table' ? (
+  <DataTableLayout
+    {...sharedProps}
+    tableColumns={topic.tableColumns}
+    tableRows={topic.tableRows}
+  />
+) : layout === 'comparison' ? (
+  <ComparisonLayout
+    {...sharedProps}
+    left={topic.left}
+    right={topic.right}
+  />
+) : layout === 'full-widget' ? (
+  <FullWidthWidgetLayout
+    {...sharedProps}
     widget={topic.widget}
   >
     {Content && <Content />}
-
-    <!-- Simulation widgets (rendered in named slot "widget" inside TopicLayout) -->
+    <Fragment slot="widget">
+      {topic.widget === 'what-if' && <WhatIfWidget />}
+      {topic.widget === 'demand-shock' && <DemandShockSim />}
+      {topic.widget === 'walkthrough' && <StepWalkthrough />}
+      {topic.widget === 'graph' && <InteractiveGraph step={topic.widgetStep} />}
+      {topic.widget === 'demand-flow' && <DemandFlowGraph />}
+      {topic.widget === 'supply-flow' && <SupplyFlowGraph />}
+    </Fragment>
+  </FullWidthWidgetLayout>
+) : (
+  <TopicLayout
+    {...sharedProps}
+    widget={topic.widget}
+  >
+    {Content && <Content />}
     <Fragment slot="widget">
       {topic.widget === 'what-if' && <WhatIfWidget />}
       {topic.widget === 'demand-shock' && <DemandShockSim />}
