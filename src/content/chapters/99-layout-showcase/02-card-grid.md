@@ -1,0 +1,28 @@
+---
+title: "Card Grid Layout"
+description: "Use this layout to present a collection of concepts, modules, or features as a scannable grid of cards."
+order: 2
+chapter: "99-layout-showcase"
+estimatedMinutes: 3
+widget: ""
+topicLayout: "card-grid"
+cards:
+  - title: "Demand Planning"
+    description: "Statistical and machine-learning forecasts that drive the upstream supply plan."
+    icon: "beaker"
+  - title: "Supply Planning"
+    description: "Constraint-aware supply generation across the full bill of materials and distribution network."
+    icon: "network"
+  - title: "Inventory Optimisation"
+    description: "Safety stock and reorder point logic that balances service levels against working capital."
+    icon: "cube"
+  - title: "Production Scheduling"
+    description: "Detailed finite-capacity scheduling that sequences work orders across machines and shifts."
+    icon: "cpu"
+  - title: "S&OP"
+    description: "Monthly cross-functional alignment of volume and financial plans at an aggregate level."
+    icon: "beaker"
+  - title: "Scenario Planning"
+    description: "Side-by-side what-if comparison of plan variants before a decision is locked in."
+    icon: "network"
+---

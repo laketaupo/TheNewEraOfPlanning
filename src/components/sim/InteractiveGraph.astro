@@ -21,20 +21,16 @@ const { step } = Astro.props;
           Item
         </span>
         <span class="flex items-center gap-1.5">
-          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="#0ea5e9" stroke-width="1.5"/></svg>
-          Process
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="#ef4444" stroke-width="1.5"/></svg>
+          BOM
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="none" stroke="#8b5cf6" stroke-width="1.5"/></svg>
+          BOD
         </span>
         <span class="flex items-center gap-1.5">
           <svg width="12" height="11" viewBox="0 0 12 11" aria-hidden="true"><polygon points="0,0 12,0 6,11" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/></svg>
           Resource
-        </span>
-        <span class="flex items-center gap-1.5">
-          <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#6366f1" stroke-width="1.5"/></svg>
-          BOM
-        </span>
-        <span class="flex items-center gap-1.5">
-          <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#8b5cf6" stroke-width="1.5"/></svg>
-          BOD
         </span>
         <span class="flex items-center gap-1.5">
           <svg width="20" height="4" viewBox="0 0 20 4" aria-hidden="true"><line x1="0" y1="2" x2="20" y2="2" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3"/></svg>
@@ -42,7 +38,7 @@ const { step } = Astro.props;
         </span>
       </div>
     </div>
-    <span class="text-xs text-gray-400 dark:text-gray-600 shrink-0">Drag nodes · Click to inspect</span>
+    <span class="text-xs text-gray-400 dark:text-gray-600 shrink-0">Drag nodes to reposition</span>
   </div>
 
   <!-- SVG Canvas -->
@@ -58,22 +54,6 @@ const { step } = Astro.props;
     </svg>
   </div>
 
-  <!-- Info Panel -->
-  <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 px-5 py-4 min-h-[96px]">
-    <div id="ig-empty" class="flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 h-[64px]">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5"/>
-      </svg>
-      Click any node or edge to explore its properties
-    </div>
-    <div id="ig-detail" class="hidden">
-      <div class="flex flex-wrap items-center gap-3 mb-3">
-        <span id="ig-badge" class="text-xs font-medium px-2.5 py-0.5 rounded-full border"></span>
-        <span id="ig-name" class="text-sm font-semibold text-gray-900 dark:text-white"></span>
-      </div>
-      <dl id="ig-props" class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-1.5 text-xs"></dl>
-    </div>
-  </div>
 
 </div>
 
@@ -198,14 +178,14 @@ const { step } = Astro.props;
 
   const NODE_COLOR: Record<string, string> = {
     item:           '#6366f1',
-    transformation: '#0ea5e9',
+    transformation: '#ef4444',
     transportation: '#8b5cf6',
     resource:       '#10b981',
   };
 
   const EDGE_COLOR: Record<string, string> = {
-    bom:                   '#6366f1',
-    bod:                   '#8b5cf6',
+    bom:                   '#9ca3af',
+    bod:                   '#9ca3af',
     'resource-consumption':'#10b981',
   };
 
@@ -234,6 +214,21 @@ const { step } = Astro.props;
     ['proc-ship-j', 'item-j-out'],
   ];
 
+  // ─── STEP HIGHLIGHT — item-in + process + item-out highlighted per step ──────
+  const STEP_HIGHLIGHT: string[][] = [
+    [],
+    ['item-a', 'item-b'],
+    ['item-a', 'proc-ship-a', 'item-a-gr', 'item-b', 'proc-ship-b', 'item-b-gr'],
+    ['item-a-gr', 'item-b-gr', 'proc-seed', 'item-c', 'res-seed'],
+    ['item-c', 'proc-ship-c', 'item-c-cw'],
+    ['item-c-cw', 'proc-cleaning', 'item-d', 'res-cleaning'],
+    ['item-d', 'proc-calibrating', 'item-e', 'item-f', 'item-g', 'res-calibrating'],
+    ['item-f', 'proc-priming', 'item-h', 'res-priming'],
+    ['item-h', 'proc-coating', 'item-i', 'res-coating'],
+    ['item-i', 'proc-packing', 'item-j', 'res-packing'],
+    ['item-j', 'proc-ship-j', 'item-j-out'],
+  ];
+
   // This hoisted script is bundled into a chunk shared across every topic page, so
   // bail out unless this page actually contains the graph widget. Otherwise the
   // top-level DOM access below throws and aborts the shared bundle for other widgets.
@@ -246,11 +241,9 @@ const { step } = Astro.props;
   const highlightIds = new Set<string>();
   if (STEP !== null) {
     for (let s = 1; s <= STEP && s < STEP_NODES.length; s++) {
-      for (const id of STEP_NODES[s]) {
-        visibleIds.add(id);
-        if (s === STEP) highlightIds.add(id);
-      }
+      for (const id of STEP_NODES[s]) visibleIds.add(id);
     }
+    for (const id of (STEP_HIGHLIGHT[STEP] ?? [])) highlightIds.add(id);
   }
 
   // Mutable node positions (updated on drag)
@@ -327,7 +320,7 @@ const { step } = Astro.props;
       if (STEP !== null && (!visibleIds.has(edge.from) || !visibleIds.has(edge.to))) continue;
       const c = EDGE_COLOR[edge.type] ?? '#6b7280';
       const sel = selectedId === edge.id;
-      const isNew = STEP !== null && (highlightIds.has(edge.from) || highlightIds.has(edge.to));
+      const isNew = STEP !== null && (highlightIds.has(edge.from) && highlightIds.has(edge.to));
       const edgeOpacity = sel ? '1' : (STEP === null ? '0.5' : (isNew ? '0.8' : '0.2'));
 
       // Wide transparent hit target for easy clicking
@@ -398,50 +391,10 @@ const { step } = Astro.props;
     }
   }
 
-  // ── Selection & Info Panel ───────────────────────────────────────────────────
+  // ── Selection ────────────────────────────────────────────────────────────────
   function setSelected(id: string | null) {
     selectedId = id;
     render();
-
-    const empty  = document.getElementById('ig-empty')!;
-    const detail = document.getElementById('ig-detail')!;
-
-    if (!id) {
-      empty.classList.remove('hidden');
-      detail.classList.add('hidden');
-      return;
-    }
-
-    const node = NODES.find((n) => n.id === id);
-    const edge = EDGES.find((e) => e.id === id);
-    const item = node ?? edge;
-    if (!item) return;
-
-    const color = node ? (NODE_COLOR[item.type] ?? '#6366f1') : (EDGE_COLOR[item.type] ?? '#6366f1');
-
-    empty.classList.add('hidden');
-    detail.classList.remove('hidden');
-
-    const badge = document.getElementById('ig-badge')!;
-    badge.textContent = TYPE_LABEL[item.type] ?? item.type;
-    badge.style.color = color;
-    badge.style.borderColor = color + '55';
-    badge.style.backgroundColor = color + '15';
-
-    document.getElementById('ig-name')!.textContent = item.label;
-
-    const props = document.getElementById('ig-props')!;
-    props.innerHTML = '';
-    for (const [key, val] of Object.entries(item.info)) {
-      const dt = document.createElement('dt');
-      dt.className = 'text-gray-400 dark:text-gray-500 truncate';
-      dt.textContent = key;
-      const dd = document.createElement('dd');
-      dd.className = 'text-gray-900 dark:text-gray-200 font-medium truncate';
-      dd.textContent = val;
-      props.appendChild(dt);
-      props.appendChild(dd);
-    }
   }
 
   // ── Drag & Click ─────────────────────────────────────────────────────────────

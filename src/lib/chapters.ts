@@ -5,6 +5,7 @@ export interface ChapterMeta {
   color: string;
   order: number;
   slug: string;
+  hidden?: boolean;
 }
 
 export interface TopicMeta {
@@ -17,6 +18,19 @@ export interface TopicMeta {
   widgetStep?: number;
   nodeType?: string;
   summary?: string;
+  topicLayout?: string;
+  bullets?: string[];
+  nodeLocation?: string;
+  lineInLabel?: string;
+  lineOutLabel?: string;
+  durationLabel?: string;
+  transportMode?: string;
+  consumptionLabel?: string;
+  cards?: { title: string; description: string; icon?: string }[];
+  tableColumns?: string[];
+  tableRows?: string[][];
+  left?: { title: string; points: string[] };
+  right?: { title: string; points: string[] };
   slug: string;
   chapterSlug: string;
   url: string;
@@ -64,6 +78,19 @@ export function getTopics(): TopicMeta[] {
         widgetStep: fm.widgetStep ?? undefined,
         nodeType: fm.nodeType ?? undefined,
         summary: fm.summary ?? undefined,
+        topicLayout: fm.topicLayout ?? undefined,
+        bullets: fm.bullets ?? undefined,
+        nodeLocation: fm.nodeLocation ?? undefined,
+        lineInLabel: fm.lineInLabel ?? undefined,
+        lineOutLabel: fm.lineOutLabel ?? undefined,
+        durationLabel: fm.durationLabel ?? undefined,
+        transportMode: fm.transportMode ?? undefined,
+        consumptionLabel: fm.consumptionLabel ?? undefined,
+        cards: fm.cards ?? undefined,
+        tableColumns: fm.tableColumns ?? undefined,
+        tableRows: fm.tableRows ?? undefined,
+        left: fm.left ?? undefined,
+        right: fm.right ?? undefined,
         slug: topicSlug,
         chapterSlug,
         url: `${import.meta.env.BASE_URL}chapters/${chapterSlug}/${topicSlug}`,
