@@ -9,6 +9,14 @@ export interface ChapterMeta {
   hidden?: boolean;
 }
 
+export interface OrgNode {
+  id: string;
+  title: string;
+  description?: string;
+  responsibilities?: string[];
+  competencies?: string[];
+}
+
 export interface TopicMeta {
   title: string;
   description: string;
@@ -33,21 +41,8 @@ export interface TopicMeta {
   left?: { title: string; points: string[] };
   right?: { title: string; points: string[] };
   orgChart?: {
-    nodes: Array<{
-      id: string;
-      title: string;
-      description?: string;
-      responsibilities?: string[];
-      competencies?: string[];
-      children?: string[];
-    }>;
-    crossFunctional?: Array<{
-      id: string;
-      title: string;
-      description?: string;
-      responsibilities?: string[];
-      competencies?: string[];
-    }>;
+    nodes: Array<OrgNode & { children?: string[] }>;
+    crossFunctional?: Array<OrgNode>;
   };
   roles?: string[];
   steps?: Array<{
