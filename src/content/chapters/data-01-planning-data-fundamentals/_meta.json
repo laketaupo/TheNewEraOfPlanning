@@ -1,0 +1,8 @@
+{
+  "title": "Planning Data Fundamentals",
+  "description": "Understand what data-driven planning means, where data comes from, and how it flows through the o9 platform to produce a plan.",
+  "icon": "cube",
+  "color": "emerald",
+  "order": 1,
+  "pillar": "data"
+}
