@@ -1,0 +1,102 @@
+<h2>Pillar Color Scheme</h2>
+<p class="subtitle">How should the four pillars be colored? Technology is live — others are placeholders.</p>
+
+<div class="cards">
+
+  <!-- Option A: Each pillar has its own distinct color -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="background:#6366f1; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px;">👥</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">People</div>
+          <div style="font-size:9px; color:#c7d2fe; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#8b5cf6; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px;">⚙️</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Process</div>
+          <div style="font-size:9px; color:#ddd6fe; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#0ea5e9; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px;">🖥️</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Technology</div>
+          <div style="font-size:9px; color:#bae6fd; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="background:#10b981; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px;">📊</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Data</div>
+          <div style="font-size:9px; color:#a7f3d0; margin-top:2px;">Coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Each pillar has its own color</h3>
+      <p>Indigo, violet, sky, emerald — same palette as the current chapter cards. Vibrant and distinct. All four tiles feel equally alive.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Only Technology is colored, others greyed out -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.4;">👥</div>
+          <div style="font-size:11px; font-weight:700; color:#64748b; margin-top:4px;">People</div>
+          <div style="font-size:9px; color:#475569; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.4;">⚙️</div>
+          <div style="font-size:11px; font-weight:700; color:#64748b; margin-top:4px;">Process</div>
+          <div style="font-size:9px; color:#475569; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#0ea5e9,#6366f1); border-radius:6px; padding:14px; text-align:center; box-shadow:0 0 16px rgba(99,102,241,0.35);">
+          <div style="font-size:20px;">🖥️</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Technology</div>
+          <div style="font-size:9px; color:#bae6fd; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="background:#1e293b; border:1px solid #334155; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.4;">📊</div>
+          <div style="font-size:11px; font-weight:700; color:#64748b; margin-top:4px;">Data</div>
+          <div style="font-size:9px; color:#475569; margin-top:2px;">Coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Only Technology is lit up</h3>
+      <p>Placeholders are muted grey. Technology glows with a gradient. Honest about what's available — attention goes where content exists.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Subtle tint on all, Technology more vivid -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.25); border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.6;">👥</div>
+          <div style="font-size:11px; font-weight:700; color:#a5b4fc; margin-top:4px;">People</div>
+          <div style="font-size:9px; color:#6366f1; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.25); border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.6;">⚙️</div>
+          <div style="font-size:11px; font-weight:700; color:#c4b5fd; margin-top:4px;">Process</div>
+          <div style="font-size:9px; color:#8b5cf6; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#0ea5e9; border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px;">🖥️</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Technology</div>
+          <div style="font-size:9px; color:#bae6fd; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.25); border-radius:6px; padding:14px; text-align:center;">
+          <div style="font-size:20px; opacity:0.6;">📊</div>
+          <div style="font-size:11px; font-weight:700; color:#6ee7b7; margin-top:4px;">Data</div>
+          <div style="font-size:9px; color:#10b981; margin-top:2px;">Coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Tinted placeholders, vivid Technology</h3>
+      <p>Each pillar hints at its color but stays muted. Technology is fully saturated. The grid feels complete without overpromising on placeholder content.</p>
+    </div>
+  </div>
+
+</div>

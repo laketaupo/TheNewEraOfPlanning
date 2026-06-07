@@ -1,31 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { getChapters, getTopics } from '../lib/chapters';
+import { getChapters } from '../lib/chapters';
 
 const chapters = getChapters();
-const allTopics = getTopics();
-
-const iconMap: Record<string, string> = {
-  cube: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/></svg>`,
-  network: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="5" r="2" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7v4m0 4l-5 2m10-2l-5 2"/></svg>`,
-  cpu: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="6" y="6" width="12" height="12" rx="1" stroke-width="1.5"/><path stroke-linecap="round" stroke-width="1.5" d="M9 6V4M12 6V4M15 6V4M9 20v-2M12 20v-2M15 20v-2M6 9H4M6 12H4M6 15H4M20 9h-2M20 12h-2M20 15h-2"/></svg>`,
-  beaker: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3h6m-6 0v7l-4 9a1 1 0 001 1h12a1 1 0 001-1l-4-9V3"/></svg>`,
-};
-
-const colorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-400 dark:hover:border-indigo-400',
-  violet: 'bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400',
-  sky:    'bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30 hover:border-sky-400 dark:hover:border-sky-400',
-  emerald:'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-400',
-};
-
-const colorTextMap: Record<string, string> = {
-  indigo: 'text-indigo-600 dark:text-indigo-400',
-  violet: 'text-violet-600 dark:text-violet-400',
-  sky:    'text-sky-600 dark:text-sky-400',
-  emerald:'text-emerald-600 dark:text-emerald-400',
-};
+const techChapterCount = chapters.filter(c => !c.hidden).length;
 ---
 <BaseLayout>
   <!-- Floating theme toggle -->
@@ -34,8 +13,8 @@ const colorTextMap: Record<string, string> = {
   </div>
 
   <!-- Page wrapper -->
-  <div class="relative overflow-hidden">
-    <!-- Background grid (light: gray-200, dark: gray-800) -->
+  <div class="relative min-h-screen overflow-hidden">
+    <!-- Background grid -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <!-- Radial gradient -->
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
@@ -44,64 +23,73 @@ const colorTextMap: Record<string, string> = {
     <div class="relative z-10 px-6 pt-20 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
       <div class="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 rounded-full px-3 py-1 mb-6">
         <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-        Interactive Learning Guide
+        o9 Solutions
       </div>
 
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        How <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500">o9</span> Works
+        The New Era of<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500">Planning</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-        From the fundamental building blocks of a supply chain network to live scenario simulation — a guided tour of the o9 Solutions platform.
+        Explore the people, processes, technology, and data that power modern supply chain planning.
       </p>
     </div>
 
-    <!-- Chapter cards -->
-    <div class="relative z-10 px-6 pb-20 max-w-6xl mx-auto">
-      <div class="flex flex-col gap-4 max-w-3xl mx-auto">
-      {chapters.map((chapter, i) => {
-        const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
-        const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10 border-brand-200 dark:border-brand-500/30';
-        const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
-        return (
-          <a
-            href={`${import.meta.env.BASE_URL}chapters/${chapter.slug}`}
-            data-hidden-chapter={chapter.hidden ? 'true' : undefined}
-            class={`group relative flex flex-col p-6 rounded-2xl border ${bgClass} bg-white dark:bg-transparent transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl${chapter.hidden ? ' hidden-chapter hidden' : ''}`}
-          >
-            <!-- Chapter number -->
-            <span class={`text-xs font-mono font-bold ${textClass} mb-4`}>0{chapter.order}</span>
+    <!-- 2×2 Pillar grid -->
+    <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
+      <div class="grid grid-cols-2 gap-5">
 
-            <!-- Icon + title -->
-            <div class="flex items-start gap-4 mb-4">
-              <div class={`${textClass} mt-0.5 shrink-0`} set:html={iconMap[chapter.icon] ?? iconMap['cube']} />
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{chapter.description}</p>
-              </div>
-            </div>
+        <!-- People -->
+        <a href="/people" class="group pillar-card pillar-people">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h2 class="pillar-title">People</h2>
+          <p class="pillar-desc">Roles, mindsets, and collaboration patterns that drive planning success.</p>
+          <span class="pillar-badge">Coming soon</span>
+        </a>
 
-            <!-- Topic count + progress ring -->
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-white/5">
-              <span class="text-xs text-gray-400 dark:text-gray-500">{topics.length} topics</span>
-              <div class={`flex items-center gap-1 text-xs ${textClass} opacity-0 group-hover:opacity-100 transition-opacity`}>
-                Open chapter
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-              </div>
-              <!-- Progress ring placeholder, filled by JS -->
-              <canvas
-                class="chapter-progress-ring hidden"
-                data-chapter-slug={chapter.slug}
-                data-topic-count={topics.length}
-                data-chapter-index={i}
-                width="32"
-                height="32"
-              ></canvas>
-            </div>
-          </a>
-        );
-      })}
+        <!-- Process -->
+        <a href="/process" class="group pillar-card pillar-process">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h2 class="pillar-title">Process</h2>
+          <p class="pillar-desc">How planning workflows are structured, governed, and continuously improved.</p>
+          <span class="pillar-badge">Coming soon</span>
+        </a>
+
+        <!-- Technology -->
+        <a href="/technology" class="group pillar-card pillar-technology">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+            </svg>
+          </div>
+          <h2 class="pillar-title">Technology</h2>
+          <p class="pillar-desc">From building blocks to live scenario simulation — a guided tour of the o9 platform.</p>
+          <span class="pillar-badge pillar-badge-live">
+            <span class="live-dot"></span>
+            {techChapterCount} chapters available
+          </span>
+        </a>
+
+        <!-- Data -->
+        <a href="/data" class="group pillar-card pillar-data">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h2 class="pillar-title">Data</h2>
+          <p class="pillar-desc">Data models, signals, and structures that feed intelligent planning decisions.</p>
+          <span class="pillar-badge">Coming soon</span>
+        </a>
+
       </div>
     </div>
   </div>
@@ -119,71 +107,49 @@ const colorTextMap: Record<string, string> = {
   :global(.dark) .bg-radial-gradient {
     background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.15), transparent);
   }
+
+  .pillar-card {
+    @apply flex flex-col p-7 rounded-2xl text-white transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
+  }
+
+  .pillar-people    { background: linear-gradient(135deg, #4f46e5, #6366f1); box-shadow: 0 8px 32px rgba(99,102,241,0.25); }
+  .pillar-process   { background: linear-gradient(135deg, #7c3aed, #8b5cf6); box-shadow: 0 8px 32px rgba(139,92,246,0.25); }
+  .pillar-technology{ background: linear-gradient(135deg, #0284c7, #0ea5e9); box-shadow: 0 8px 32px rgba(14,165,233,0.25); }
+  .pillar-data      { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 8px 32px rgba(16,185,129,0.25); }
+
+  .pillar-card:hover { filter: brightness(1.08); }
+
+  .pillar-icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .pillar-title {
+    @apply text-xl font-bold text-white mb-2;
+  }
+
+  .pillar-desc {
+    @apply text-sm leading-relaxed mb-5 flex-1;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .pillar-badge {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+  }
+
+  .pillar-badge-live {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .live-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-white;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
 </style>
-
-<script>
-  const STORAGE_KEY = 'o9-progress';
-
-  function getProgress(): Record<string, boolean> {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-    catch { return {}; }
-  }
-
-  function drawRing(canvas: HTMLCanvasElement, percent: number, color: string) {
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const size = canvas.width;
-    const cx = size / 2, cy = size / 2, r = size / 2 - 3;
-    ctx.clearRect(0, 0, size, size);
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.strokeStyle = document.documentElement.classList.contains('dark')
-      ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-    if (percent > 0) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * percent);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-    }
-  }
-
-  const chapterColors: Record<string, string> = {
-    '0': '#6366f1', // indigo-500
-    '1': '#8b5cf6', // violet-500
-    '2': '#0ea5e9', // sky-500
-    '3': '#10b981', // emerald-500
-  };
-
-  // Toggle hidden chapters with 'y' (session-only)
-  let hiddenVisible = false;
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'y' && e.key !== 'Y') return;
-    if ((e.target as HTMLElement).tagName === 'INPUT' || (e.target as HTMLElement).tagName === 'TEXTAREA') return;
-    hiddenVisible = !hiddenVisible;
-    document.querySelectorAll<HTMLElement>('.hidden-chapter').forEach((el) => {
-      el.classList.toggle('hidden', !hiddenVisible);
-    });
-  });
-
-  const progress = getProgress();
-
-  document.querySelectorAll<HTMLCanvasElement>('.chapter-progress-ring').forEach((canvas) => {
-    const slug = canvas.dataset.chapterSlug ?? '';
-    const count = parseInt(canvas.dataset.topicCount ?? '0', 10);
-    const idx = canvas.dataset.chapterIndex ?? '0';
-    if (!count) return;
-
-    const chapterNum = slug.split('-')[0];
-    const completed = Object.keys(progress).filter(
-      (k) => k.startsWith(`ch${parseInt(chapterNum, 10)}-`) && progress[k]
-    ).length;
-
-    const pct = count > 0 ? completed / count : 0;
-    canvas.classList.remove('hidden');
-    drawRing(canvas, pct, chapterColors[idx] ?? '#6366f1');
-  });
-</script>

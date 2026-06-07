@@ -1,0 +1,107 @@
+<h2>Landing Page Layout</h2>
+<p class="subtitle">How should the four pillars be presented? Pick the layout that feels right.</p>
+
+<div class="cards">
+
+  <!-- Option A: 2x2 Card Grid -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="text-align:center; margin-bottom: 12px;">
+        <div style="font-size:11px; color:#94a3b8; letter-spacing:1px; text-transform:uppercase;">How o9 Works</div>
+        <div style="font-size:18px; font-weight:700; color:#f8fafc; margin: 4px 0;">Your Learning Hub</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div style="background:#6366f1; border-radius:6px; padding:12px; text-align:center;">
+          <div style="font-size:18px;">👥</div>
+          <div style="font-size:12px; font-weight:600; color:#fff;">People</div>
+          <div style="font-size:9px; color:#c7d2fe; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#8b5cf6; border-radius:6px; padding:12px; text-align:center;">
+          <div style="font-size:18px;">⚙️</div>
+          <div style="font-size:12px; font-weight:600; color:#fff;">Process</div>
+          <div style="font-size:9px; color:#ddd6fe; margin-top:2px;">Coming soon</div>
+        </div>
+        <div style="background:#0ea5e9; border-radius:6px; padding:12px; text-align:center; position:relative;">
+          <div style="font-size:18px;">🖥️</div>
+          <div style="font-size:12px; font-weight:600; color:#fff;">Technology</div>
+          <div style="font-size:9px; color:#bae6fd; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="background:#10b981; border-radius:6px; padding:12px; text-align:center;">
+          <div style="font-size:18px;">📊</div>
+          <div style="font-size:12px; font-weight:600; color:#fff;">Data</div>
+          <div style="font-size:9px; color:#a7f3d0; margin-top:2px;">Coming soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — 2×2 Card Grid</h3>
+      <p>Equal-weight tiles in a centered grid. Clean, symmetrical. Technology stands out only by content count, not placement.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Hero + Horizontal Strip -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="text-align:center; margin-bottom: 14px;">
+        <div style="font-size:18px; font-weight:700; color:#f8fafc;">How o9 Works</div>
+        <div style="font-size:10px; color:#94a3b8; margin-top:3px; max-width:200px; margin-left:auto; margin-right:auto;">A guided tour across four dimensions of the platform</div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <div style="flex:1; background:#1e293b; border:1px solid #334155; border-radius:6px; padding:10px; text-align:center; opacity:0.5;">
+          <div style="font-size:14px;">👥</div>
+          <div style="font-size:10px; font-weight:600; color:#94a3b8; margin-top:3px;">People</div>
+          <div style="font-size:8px; color:#475569; margin-top:2px;">Soon</div>
+        </div>
+        <div style="flex:1; background:#1e293b; border:1px solid #334155; border-radius:6px; padding:10px; text-align:center; opacity:0.5;">
+          <div style="font-size:14px;">⚙️</div>
+          <div style="font-size:10px; font-weight:600; color:#94a3b8; margin-top:3px;">Process</div>
+          <div style="font-size:8px; color:#475569; margin-top:2px;">Soon</div>
+        </div>
+        <div style="flex:1; background:linear-gradient(135deg,#3b82f6,#6366f1); border-radius:6px; padding:10px; text-align:center; box-shadow:0 0 12px rgba(99,102,241,0.4);">
+          <div style="font-size:14px;">🖥️</div>
+          <div style="font-size:10px; font-weight:700; color:#fff; margin-top:3px;">Technology</div>
+          <div style="font-size:8px; color:#bfdbfe; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="flex:1; background:#1e293b; border:1px solid #334155; border-radius:6px; padding:10px; text-align:center; opacity:0.5;">
+          <div style="font-size:14px;">📊</div>
+          <div style="font-size:10px; font-weight:600; color:#94a3b8; margin-top:3px;">Data</div>
+          <div style="font-size:8px; color:#475569; margin-top:2px;">Soon</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Hero + Horizontal Strip</h3>
+      <p>Big centered title up top, four cards in a row below. Technology glows/highlights as the active section. Clear visual priority.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Full-Screen Quadrants -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #0f172a; border-radius: 8px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:4px; height: 160px;">
+        <div style="background:#1e293b; border-radius:6px 0 0 0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0.4;">
+          <div style="font-size:20px;">👥</div>
+          <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-top:4px;">People</div>
+        </div>
+        <div style="background:#1e293b; border-radius:0 6px 0 0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0.4;">
+          <div style="font-size:20px;">⚙️</div>
+          <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-top:4px;">Process</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#1e3a8a,#312e81); border-radius:0 0 0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <div style="font-size:20px;">🖥️</div>
+          <div style="font-size:11px; font-weight:700; color:#fff; margin-top:4px;">Technology</div>
+          <div style="font-size:8px; color:#bfdbfe; margin-top:2px;">6 chapters →</div>
+        </div>
+        <div style="background:#1e293b; border-radius:0 0 6px 0; display:flex; flex-direction:column; align-items:center; justify-content:center; opacity:0.4;">
+          <div style="font-size:20px;">📊</div>
+          <div style="font-size:11px; font-weight:600; color:#94a3b8; margin-top:4px;">Data</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Full-Screen Quadrants</h3>
+      <p>Each pillar fills a quarter of the viewport. Bold, immersive. Technology is lit up, others are muted until content arrives.</p>
+    </div>
+  </div>
+
+</div>
