@@ -19,23 +19,27 @@ const colorTextMap: Record<string, string> = {
   violet: 'text-violet-600 dark:text-violet-400',
   sky:    'text-sky-600 dark:text-sky-400',
   emerald:'text-emerald-600 dark:text-emerald-400',
+  amber:  'text-amber-600 dark:text-amber-400',
 };
 const colorBorderMap: Record<string, string> = {
   indigo: 'border-indigo-200 dark:border-indigo-500/40 hover:border-indigo-400',
   violet: 'border-violet-200 dark:border-violet-500/40 hover:border-violet-400',
   sky:    'border-sky-200 dark:border-sky-500/40 hover:border-sky-400',
   emerald:'border-emerald-200 dark:border-emerald-500/40 hover:border-emerald-400',
+  amber:  'border-amber-200 dark:border-amber-500/40 hover:border-amber-400',
 };
 const colorBgMap: Record<string, string> = {
   indigo: 'bg-indigo-50 dark:bg-indigo-500/10',
   violet: 'bg-violet-50 dark:bg-violet-500/10',
   sky:    'bg-sky-50 dark:bg-sky-500/10',
   emerald:'bg-emerald-50 dark:bg-emerald-500/10',
+  amber:  'bg-amber-50 dark:bg-amber-500/10',
 };
 const pillarBackMap: Record<string, { href: string; label: string }> = {
   technology: { href: '/technology/how-o9-works', label: 'How o9 Works' },
-  data: { href: '/data', label: 'Data' },
-  process: { href: '/process', label: 'Process' },
+  data:       { href: '/data',                    label: 'Data' },
+  process:    { href: '/process',                 label: 'Process' },
+  people:     { href: '/people',                  label: 'People' },
 };
 const pillar = chapter.pillar ?? 'technology';
 const back = pillarBackMap[pillar] ?? pillarBackMap['technology'];
