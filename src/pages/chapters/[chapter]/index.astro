@@ -45,7 +45,7 @@ const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand
 const borderClass = colorBorderMap[chapter.color] ?? 'border-brand-200 dark:border-brand-500/40';
 const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
 ---
-<BaseLayout title={`${chapter.title} — How o9 Works`} description={chapter.description}>
+<BaseLayout title={`${chapter.title} — ${back.label}`} description={chapter.description}>
   <!-- Top nav -->
   <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
     <a href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
