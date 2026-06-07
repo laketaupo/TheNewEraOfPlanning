@@ -32,6 +32,28 @@ export interface TopicMeta {
   tableRows?: string[][];
   left?: { title: string; points: string[] };
   right?: { title: string; points: string[] };
+  orgChart?: {
+    nodes: Array<{
+      id: string;
+      title: string;
+      description?: string;
+      responsibilities?: string[];
+      competencies?: string[];
+      children?: string[];
+    }>;
+    crossFunctional?: Array<{
+      id: string;
+      title: string;
+      description?: string;
+      responsibilities?: string[];
+      competencies?: string[];
+    }>;
+  };
+  roles?: string[];
+  steps?: Array<{
+    label: string;
+    assignments: Record<string, string>;
+  }>;
   slug: string;
   chapterSlug: string;
   url: string;
@@ -96,6 +118,9 @@ export function getTopics(): TopicMeta[] {
         tableRows: fm.tableRows ?? undefined,
         left: fm.left ?? undefined,
         right: fm.right ?? undefined,
+        orgChart: fm.orgChart ?? undefined,
+        roles: fm.roles ?? undefined,
+        steps: fm.steps ?? undefined,
         slug: topicSlug,
         chapterSlug,
         url: `${import.meta.env.BASE_URL}chapters/${chapterSlug}/${topicSlug}`,
