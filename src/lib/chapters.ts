@@ -35,7 +35,7 @@ export interface TopicMeta {
   slug: string;
   chapterSlug: string;
   url: string;
-  pillar: string;
+  pillar?: string;
 }
 
 // Eagerly load all chapter _meta.json files
@@ -116,7 +116,8 @@ export function getTopicsForChapter(chapterSlug: string): TopicMeta[] {
 export function getAdjacentTopics(url: string): [TopicMeta | null, TopicMeta | null] {
   const all = getTopics();
   const current = all.find((t) => t.url === url);
-  const scoped = current ? all.filter((t) => t.pillar === current.pillar) : all;
+  if (!current) return [null, null];
+  const scoped = all.filter((t) => t.pillar === current.pillar);
   const idx = scoped.findIndex((t) => t.url === url);
   return [idx > 0 ? scoped[idx - 1] : null, idx < scoped.length - 1 ? scoped[idx + 1] : null];
 }
