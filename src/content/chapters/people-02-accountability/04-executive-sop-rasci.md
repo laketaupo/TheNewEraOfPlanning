@@ -15,7 +15,7 @@ roles:
 steps:
   - label: Pre-S&OP package preparation
     assignments:
-      S&OP Lead: R
+      S&OP Lead: A
       Demand Planner: S
       Supply Planner: S
       Finance BP: S
@@ -28,7 +28,7 @@ steps:
       Supply Planner: C
   - label: Executive S&OP meeting
     assignments:
-      S&OP Lead: R
+      S&OP Lead: A
       Finance BP: S
       Commercial Lead: S
   - label: Plan approval and sign-off

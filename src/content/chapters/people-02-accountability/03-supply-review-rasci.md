@@ -33,7 +33,7 @@ steps:
   - label: Supply plan approval
     assignments:
       S&OP Lead: A
-      Supply Planner: S
+      Supply Planner: R
       Finance BP: C
   - label: Risk and exception escalation
     assignments:

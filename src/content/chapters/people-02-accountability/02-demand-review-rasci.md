@@ -34,7 +34,7 @@ steps:
   - label: Consensus forecast sign-off
     assignments:
       S&OP Lead: A
-      Demand Planner: S
+      Demand Planner: R
       Finance BP: C
       Commercial Lead: C
   - label: Forecast publication to supply
