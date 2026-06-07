@@ -15,6 +15,8 @@ export interface Props {
   prevTitle?: string;
   nextTitle?: string;
   widget?: string;
+  pillar?: string;
+  totalTopics?: number;
 }
 
 const {
@@ -30,7 +32,17 @@ const {
   prevTitle,
   nextTitle,
   widget,
+  pillar,
+  totalTopics,
 } = Astro.props;
+
+const pillarBackMap: Record<string, { href: string; label: string }> = {
+  technology: { href: `${import.meta.env.BASE_URL}technology/how-o9-works`, label: 'How o9 Works' },
+  data:       { href: `${import.meta.env.BASE_URL}data`,                    label: 'Data' },
+  process:    { href: `${import.meta.env.BASE_URL}process`,                 label: 'Process' },
+  people:     { href: `${import.meta.env.BASE_URL}people`,                  label: 'People' },
+};
+const back = pillarBackMap[pillar ?? 'technology'] ?? pillarBackMap.technology;
 
 const colorMap: Record<string, string> = {
   indigo:  'text-indigo-600 dark:text-indigo-400 border-indigo-400 dark:border-indigo-500',
@@ -86,14 +98,14 @@ const dotColorClass      = dotColorMap[chapterColor]     ?? dotColorMap.indigo;
 const topicId = `ch${chapterOrder}-t${topicOrder}`;
 ---
 
-<BaseLayout title={`${title} — How o9 Works`} description={description}>
+<BaseLayout title={`${title} — ${back.label}`} description={description}>
   <!-- Top navigation bar -->
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
-    <a href={import.meta.env.BASE_URL} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+    <a href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
       </svg>
-      How o9 Works
+      {back.label}
     </a>
     <a href={`${import.meta.env.BASE_URL}chapters/${chapterSlug}`} class={`text-sm font-medium border-b ${chapterColorClass} hover:opacity-80 transition-opacity`}>
       {chapterTitle}
@@ -253,7 +265,7 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
     .dark .topic-prose strong { color: #f9fafb; }
   </style>
 
-  <script define:vars={{ topicId }}>
+  <script define:vars={{ topicId, totalTopics }}>
     const STORAGE_KEY = 'o9-progress';
     function getProgress() {
       try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
@@ -283,7 +295,7 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
     });
     const display = document.getElementById('topic-progress-display');
     if (display) {
-      const total = 21;
+      const total = totalTopics ?? 21;
       const done = Object.values(getProgress()).filter(Boolean).length;
       display.textContent = `${done} / ${total} topics`;
     }
