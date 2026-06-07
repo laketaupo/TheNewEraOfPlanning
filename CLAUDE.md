@@ -21,7 +21,7 @@ There are no tests or linters configured. Always run `npm run build` to verify c
 The site is a four-pillar learning hub. The root landing page (`/`) lets users choose between **People**, **Process**, **Technology**, and **Data**.
 
 Live pillars and their content:
-- **Technology** (`/technology`) — two tracks: **How o9 Works** (`/technology/how-o9-works`, chapter-based interactive content) and **Configuration Manual** (`/technology/configuration`, screenshot + explanation entries)
+- **Technology** (`/technology`) — two tracks: **How o9 Works** (`/technology/how-o9-works`, chapter-based interactive content with ~36 topics across 6 chapters) and **Configuration Manual** (`/technology/configuration`, screenshot + explanation entries)
 - **Data** (`/data`) — data-driven planning (2 chapters, 10 topics)
 - **Process** (`/process`) — scenario planning (2 chapters, 10 topics)
 - **People** (`/people`) — coming soon placeholder
@@ -34,13 +34,16 @@ Live pillars and their content:
 
 Chapter slug naming convention encodes the pillar: Technology chapters use numeric prefixes (`01-`, `02-`…), Data chapters use `data-01-`, `data-02-`…, Process chapters use `process-01-`, `process-02-`…. The `pillar` field in `_meta.json` is what actually drives filtering — slugs are just a naming aid.
 
+`src/content/chapters/99-layout-showcase/` is a hidden chapter (`"hidden": true` in `_meta.json`) used as a development reference for all layout types. It is included in static builds but not surfaced in any navigation UI.
+
 Topic frontmatter drives rendering. The key field is `topicLayout`, which selects the layout component used to display that topic. Valid values:
 - `node-topic` — network node diagram with summary + bullets
 - `card-grid` — card-based comparison layout
 - `comparison` — left/right two-column layout
 - `data-table` — tabular data layout
-- `topic` — generic prose layout
-- `full-width-widget` — full-width interactive simulation
+- `full-widget` — full-width interactive simulation
+- `prose-topic` — falls through to the default `TopicLayout` (used by Data and Process chapters)
+- *(omitted)* — defaults to `TopicLayout` (generic prose + optional widget)
 
 **Configuration manual content** lives in `src/content/configuration/`:
 - One `.md` file per screen: frontmatter fields are `title`, `description`, `order`, `screenshot` (path under `/public/`). The body is rendered as HTML on the configuration page.
@@ -53,7 +56,8 @@ Content is **not** loaded via Astro's content collections API. Instead, `src/lib
 All helper functions live in these two lib files and can be imported directly in any `.astro` page:
 - `getChapters(pillar?: string)` — returns all chapters, or only those matching the given pillar string
 - `getTopics()` — all topics across all pillars, each with a `pillar` field derived from its chapter's `_meta.json`
-- `getTopicsForChapter(slug)`, `getAdjacentTopics(url)` — adjacent topic navigation is scoped to the same pillar
+- `getTopicsForChapter(slug)` — topics for a single chapter
+- `getAdjacentTopics(url)` — returns `[prev, next]` scoped to the **same pillar** (not cross-pillar)
 - `getConfigurationEntries()` — configuration manual entries
 
 When adding a new pillar or chapter, the `pillar` field in `_meta.json` is required for filtering to work correctly. Omitting it causes topics to silently fall back to the `'technology'` pillar.
@@ -72,9 +76,31 @@ When adding a new pillar or chapter, the `pillar` field in `_meta.json` is requi
 
 The `[topic].astro` page dynamically imports the MDX file at request time (non-eager glob) and passes the `Content` component to the appropriate layout based on `topicLayout`.
 
+### Layout Prop Flow
+
+`[topic].astro` computes a `sharedProps` object in `getStaticPaths` and passes it to whichever layout is selected. All topic layouts accept the same base set of props:
+
+```
+title, description, chapterTitle, chapterSlug, chapterColor,
+topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
+pillar, totalTopics
+```
+
+`pillar` and `totalTopics` are used by every layout to render the correct back-link in the top nav (via a `pillarBackMap`) and to show an accurate progress counter (`N / totalTopics topics`). If you add a new layout, include these two props.
+
+The `pillarBackMap` pattern used in layouts and `[chapter]/index.astro`:
+```typescript
+const pillarBackMap = {
+  technology: { href: `${BASE_URL}technology/how-o9-works`, label: 'How o9 Works' },
+  data:       { href: `${BASE_URL}data`,                    label: 'Data' },
+  process:    { href: `${BASE_URL}process`,                 label: 'Process' },
+  people:     { href: `${BASE_URL}people`,                  label: 'People' },
+};
+```
+
 ### Layouts
 
-All topic layouts live in `src/layouts/` and receive a consistent set of props (`title`, `description`, `chapterTitle`, `chapterColor`, `prevUrl`, `nextUrl`, etc.). `BaseLayout.astro` is the HTML shell used by every page — it handles the theme persistence script (reads `o9-theme` from localStorage) and loads the Inter font.
+All topic layouts live in `src/layouts/` and share the prop interface above. `BaseLayout.astro` is the HTML shell used by every page — it handles the theme persistence script (reads `o9-theme` from localStorage) and loads the Inter font.
 
 ### Dark Mode
 

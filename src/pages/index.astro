@@ -4,7 +4,10 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 import { getChapters } from '../lib/chapters';
 
 const chapters = getChapters();
-const techChapterCount = chapters.filter(c => !c.hidden).length;
+const techChapterCount = chapters.filter(c => !c.hidden && c.pillar === 'technology').length;
+const peopleChapterCount = chapters.filter(c => !c.hidden && c.pillar === 'people').length;
+const processChapterCount = chapters.filter(c => !c.hidden && c.pillar === 'process').length;
+const dataChapterCount = chapters.filter(c => !c.hidden && c.pillar === 'data').length;
 ---
 <BaseLayout>
   <!-- Floating theme toggle -->
@@ -48,7 +51,10 @@ const techChapterCount = chapters.filter(c => !c.hidden).length;
           </div>
           <h2 class="pillar-title">People</h2>
           <p class="pillar-desc">Roles, mindsets, and collaboration patterns that drive planning success.</p>
-          <span class="pillar-badge">Coming soon</span>
+          <span class="pillar-badge pillar-badge-live">
+            <span class="live-dot"></span>
+            {peopleChapterCount} chapters available
+          </span>
         </a>
 
         <!-- Process -->
@@ -60,7 +66,10 @@ const techChapterCount = chapters.filter(c => !c.hidden).length;
           </div>
           <h2 class="pillar-title">Process</h2>
           <p class="pillar-desc">How planning workflows are structured, governed, and continuously improved.</p>
-          <span class="pillar-badge">Coming soon</span>
+          <span class="pillar-badge pillar-badge-live">
+            <span class="live-dot"></span>
+            {processChapterCount} chapters available
+          </span>
         </a>
 
         <!-- Technology -->
@@ -87,7 +96,10 @@ const techChapterCount = chapters.filter(c => !c.hidden).length;
           </div>
           <h2 class="pillar-title">Data</h2>
           <p class="pillar-desc">Data models, signals, and structures that feed intelligent planning decisions.</p>
-          <span class="pillar-badge">Coming soon</span>
+          <span class="pillar-badge pillar-badge-live">
+            <span class="live-dot"></span>
+            {dataChapterCount} chapters available
+          </span>
         </a>
 
       </div>
