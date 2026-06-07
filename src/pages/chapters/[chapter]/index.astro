@@ -32,6 +32,14 @@ const colorBgMap: Record<string, string> = {
   sky:    'bg-sky-50 dark:bg-sky-500/10',
   emerald:'bg-emerald-50 dark:bg-emerald-500/10',
 };
+const pillarBackMap: Record<string, { href: string; label: string }> = {
+  technology: { href: '/technology/how-o9-works', label: 'How o9 Works' },
+  data: { href: '/data', label: 'Data' },
+  process: { href: '/process', label: 'Process' },
+};
+const pillar = chapter.pillar ?? 'technology';
+const back = pillarBackMap[pillar] ?? pillarBackMap['technology'];
+const pillarChapters = getChapters(pillar);
 
 const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
 const borderClass = colorBorderMap[chapter.color] ?? 'border-brand-200 dark:border-brand-500/40';
@@ -40,16 +48,16 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
 <BaseLayout title={`${chapter.title} — How o9 Works`} description={chapter.description}>
   <!-- Top nav -->
   <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-    <a href={import.meta.env.BASE_URL} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+    <a href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
       </svg>
-      How o9 Works
+      {back.label}
     </a>
 
     <!-- Chapter switcher -->
     <nav class="hidden sm:flex items-center gap-1">
-      {allChapters.map((ch) => (
+      {pillarChapters.map((ch) => (
         <a
           href={`${import.meta.env.BASE_URL}chapters/${ch.slug}`}
           class={`text-xs px-3 py-1 rounded-full transition-colors ${
@@ -113,7 +121,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
       </a>
-      <a href={import.meta.env.BASE_URL} class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Back to overview</a>
+      <a href={back.href} class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Back to overview</a>
     </div>
   </main>
 </BaseLayout>
