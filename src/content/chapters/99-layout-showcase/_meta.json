@@ -4,5 +4,6 @@
   "icon": "cube",
   "color": "violet",
   "order": 99,
-  "hidden": true
+  "hidden": true,
+  "pillar": "technology"
 }
