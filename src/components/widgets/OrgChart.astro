@@ -1,0 +1,326 @@
+---
+import type { OrgNode } from '../../lib/chapters';
+import OrgTreeNode from './OrgTreeNode.astro';
+
+export interface Props {
+  orgChart?: {
+    nodes: Array<OrgNode & { children?: string[] }>;
+    crossFunctional?: Array<OrgNode>;
+  };
+}
+
+const { orgChart } = Astro.props;
+
+const nodes = orgChart?.nodes ?? [];
+const crossFunctional = orgChart?.crossFunctional ?? [];
+const hasData = nodes.length > 0 || crossFunctional.length > 0;
+
+// Find the root: the node not listed in any other node's children[].
+const childIds = new Set<string>();
+for (const n of nodes) {
+  for (const c of n.children ?? []) childIds.add(c);
+}
+const root = nodes.find((n) => !childIds.has(n.id));
+
+const byId = new Map(nodes.map((n) => [n.id, n] as const));
+
+// Recursively build the tree HTML on the server. Each node is a button that the
+// client script wires up; the heavy detail content is held in a serialized data
+// blob so the script can populate the detail panel.
+interface TreeNode {
+  node: OrgNode & { children?: string[] };
+  children: TreeNode[];
+}
+
+const seen = new Set<string>();
+function build(node: (OrgNode & { children?: string[] }) | undefined): TreeNode | null {
+  if (!node || seen.has(node.id)) return null;
+  seen.add(node.id);
+  const children: TreeNode[] = [];
+  for (const cid of node.children ?? []) {
+    const child = build(byId.get(cid));
+    if (child) children.push(child);
+  }
+  return { node, children };
+}
+const tree = build(root);
+
+// Serialize the full node set (incl. cross-functional) for the client detail panel.
+const detailData = [...nodes, ...crossFunctional].map((n) => ({
+  id: n.id,
+  title: n.title,
+  description: n.description ?? null,
+  responsibilities: n.responsibilities ?? [],
+  competencies: n.competencies ?? [],
+}));
+---
+
+{!hasData ? (
+  <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 text-sm text-gray-500 dark:text-gray-400">
+    No org chart data provided.
+  </div>
+) : (
+  <div class="org-chart" data-org-chart>
+    <script type="application/json" data-org-detail set:html={JSON.stringify(detailData)} />
+
+    <!-- Desktop: tree + detail panel side by side. Mobile: accordion. -->
+    <div class="hidden md:flex md:gap-6 md:items-start">
+      <!-- Tree -->
+      <div class="flex-1 overflow-x-auto">
+        <div class="org-tree inline-block min-w-full">
+          {tree && (
+            <ul class="org-root flex justify-center">
+              <OrgTreeNode node={tree} />
+            </ul>
+          )}
+        </div>
+
+        {crossFunctional.length > 0 && (
+          <div class="border-t border-dashed border-gray-300 dark:border-gray-700 mt-8 pt-6">
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+              Cross-functional
+            </p>
+            <div class="flex flex-wrap gap-3">
+              {crossFunctional.map((n) => (
+                <button
+                  type="button"
+                  data-node-id={n.id}
+                  class="org-node border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm font-medium bg-white dark:bg-gray-900 hover:border-amber-400 dark:hover:border-amber-500 transition-colors cursor-pointer text-gray-900 dark:text-gray-100"
+                >
+                  {n.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Detail panel -->
+      <aside class="w-80 shrink-0">
+        <div
+          data-detail-panel
+          class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 sticky top-6"
+        >
+          <p data-detail-empty class="text-sm text-gray-500 dark:text-gray-400">
+            Select a role to see its details.
+          </p>
+          <div data-detail-body class="hidden">
+            <h3 data-detail-title class="text-lg font-semibold text-gray-900 dark:text-white"></h3>
+            <p data-detail-description class="mt-2 text-sm text-gray-600 dark:text-gray-300"></p>
+            <div data-detail-resp class="mt-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400 mb-2">Responsibilities</p>
+              <ul data-detail-resp-list class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300"></ul>
+            </div>
+            <div data-detail-comp class="mt-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400 mb-2">Competencies</p>
+              <ul data-detail-comp-list class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300"></ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Mobile: accordion -->
+    <div class="md:hidden space-y-2">
+      {[...nodes, ...crossFunctional].map((n) => (
+        <details class="group border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 open:border-amber-400 dark:open:border-amber-500">
+          <summary class="flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 cursor-pointer list-none">
+            <span>{n.title}</span>
+            <svg class="w-4 h-4 text-gray-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-4 pb-4 pt-1 border-t border-gray-100 dark:border-gray-800">
+            {n.description && <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">{n.description}</p>}
+            {n.responsibilities && n.responsibilities.length > 0 && (
+              <div class="mt-3">
+                <p class="text-xs font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400 mb-1">Responsibilities</p>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                  {n.responsibilities.map((r) => <li>{r}</li>)}
+                </ul>
+              </div>
+            )}
+            {n.competencies && n.competencies.length > 0 && (
+              <div class="mt-3">
+                <p class="text-xs font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400 mb-1">Competencies</p>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                  {n.competencies.map((c) => <li>{c}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  /* Pure-CSS org tree using the classic border-connector technique. Each parent
+     centers its node above a horizontal row of child <li>s. Connectors are drawn
+     with borders on the child <li>s themselves, so no background masking is
+     needed and it works in both light and dark mode. */
+  .org-root {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .org-root,
+  .org-children {
+    display: flex;
+    justify-content: center;
+  }
+  /* A branch is the node plus its children subtree. */
+  .org-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+  }
+  /* Children row sits horizontally beneath the parent. */
+  .org-children {
+    margin: 0;
+    padding: 1.5rem 0 0 0;
+    list-style: none;
+    position: relative;
+  }
+  /* Stub dropping from the parent node down to the bus. */
+  .org-children::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 0.75rem;
+    background: theme('colors.gray.300');
+  }
+  :global(.dark) .org-children::before {
+    background: theme('colors.gray.700');
+  }
+  /* Each child column. The top border segment forms the horizontal bus and the
+     ::before pseudo draws the vertical stub up to its own node. */
+  .org-children > .org-branch {
+    position: relative;
+    padding: 1.5rem 1rem 0 1rem;
+  }
+  .org-children > .org-branch::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 1.5rem;
+    background: theme('colors.gray.300');
+  }
+  :global(.dark) .org-children > .org-branch::before {
+    background: theme('colors.gray.700');
+  }
+  /* Horizontal bus: top border on each child, joined across the row. */
+  .org-children.has-siblings > .org-branch::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 100%;
+    left: 0;
+    background: theme('colors.gray.300');
+  }
+  :global(.dark) .org-children.has-siblings > .org-branch::after {
+    background: theme('colors.gray.700');
+  }
+  /* Trim the bus so it stops at the centre of the first and last children. */
+  .org-children.has-siblings > .org-branch:first-child::after {
+    left: 50%;
+    width: 50%;
+  }
+  .org-children.has-siblings > .org-branch:last-child::after {
+    width: 50%;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-org-chart]').forEach((widget) => {
+    const dataEl = widget.querySelector<HTMLScriptElement>('[data-org-detail]');
+    if (!dataEl) return;
+
+    interface Detail {
+      id: string;
+      title: string;
+      description: string | null;
+      responsibilities: string[];
+      competencies: string[];
+    }
+
+    let details: Detail[] = [];
+    try {
+      details = JSON.parse(dataEl.textContent || '[]');
+    } catch {
+      details = [];
+    }
+    const byId = new Map(details.map((d) => [d.id, d]));
+
+    const buttons = widget.querySelectorAll<HTMLButtonElement>('.org-node');
+    const panel = widget.querySelector<HTMLElement>('[data-detail-panel]');
+    if (!panel) return;
+
+    const empty = panel.querySelector<HTMLElement>('[data-detail-empty]');
+    const body = panel.querySelector<HTMLElement>('[data-detail-body]');
+    const titleEl = panel.querySelector<HTMLElement>('[data-detail-title]');
+    const descEl = panel.querySelector<HTMLElement>('[data-detail-description]');
+    const respWrap = panel.querySelector<HTMLElement>('[data-detail-resp]');
+    const respList = panel.querySelector<HTMLElement>('[data-detail-resp-list]');
+    const compWrap = panel.querySelector<HTMLElement>('[data-detail-comp]');
+    const compList = panel.querySelector<HTMLElement>('[data-detail-comp-list]');
+
+    const SELECTED = [
+      'border-amber-500',
+      'bg-amber-50',
+      'dark:bg-amber-900/20',
+      'dark:border-amber-400',
+      'text-amber-900',
+      'dark:text-amber-200',
+    ];
+
+    function fillList(ul: HTMLElement | null, items: string[]) {
+      if (!ul) return;
+      ul.innerHTML = '';
+      for (const item of items) {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      }
+    }
+
+    function select(id: string) {
+      const detail = byId.get(id);
+      if (!detail) return;
+
+      buttons.forEach((b) => {
+        const active = b.dataset.nodeId === id;
+        b.classList.toggle('text-gray-900', !active);
+        b.classList.toggle('dark:text-gray-100', !active);
+        SELECTED.forEach((cls) => b.classList.toggle(cls, active));
+      });
+
+      empty?.classList.add('hidden');
+      body?.classList.remove('hidden');
+
+      if (titleEl) titleEl.textContent = detail.title;
+      if (descEl) {
+        descEl.textContent = detail.description || '';
+        descEl.classList.toggle('hidden', !detail.description);
+      }
+      fillList(respList, detail.responsibilities);
+      respWrap?.classList.toggle('hidden', detail.responsibilities.length === 0);
+      fillList(compList, detail.competencies);
+      compWrap?.classList.toggle('hidden', detail.competencies.length === 0);
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.nodeId;
+        if (id) select(id);
+      });
+    });
+  });
+</script>
