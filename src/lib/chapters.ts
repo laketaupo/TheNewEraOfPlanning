@@ -5,6 +5,7 @@ export interface ChapterMeta {
   color: string;
   order: number;
   slug: string;
+  pillar?: string;
   hidden?: boolean;
 }
 
@@ -34,6 +35,7 @@ export interface TopicMeta {
   slug: string;
   chapterSlug: string;
   url: string;
+  pillar: string;
 }
 
 // Eagerly load all chapter _meta.json files
@@ -53,21 +55,24 @@ function chapterSlugFromPath(path: string): string {
   return parts[parts.length - 2];
 }
 
-export function getChapters(): ChapterMeta[] {
+export function getChapters(pillar?: string): ChapterMeta[] {
   return Object.entries(chapterMetaFiles)
     .map(([path, mod]: [string, any]) => {
       const chapterSlug = path.split('/').slice(-2, -1)[0];
       return { ...mod, slug: chapterSlug } as ChapterMeta;
     })
+    .filter((ch) => !pillar || ch.pillar === pillar)
     .sort((a, b) => a.order - b.order);
 }
 
 export function getTopics(): TopicMeta[] {
+  const allChapters = getChapters();
   return Object.entries(topicFiles)
     .map(([path, mod]: [string, any]) => {
       const fm = mod.frontmatter ?? {};
       const topicSlug = slugFromPath(path);
       const chapterSlug = chapterSlugFromPath(path);
+      const chapter = allChapters.find((c) => c.slug === chapterSlug);
       return {
         title: fm.title ?? '',
         description: fm.description ?? '',
@@ -94,6 +99,7 @@ export function getTopics(): TopicMeta[] {
         slug: topicSlug,
         chapterSlug,
         url: `${import.meta.env.BASE_URL}chapters/${chapterSlug}/${topicSlug}`,
+        pillar: chapter?.pillar ?? 'technology',
       } as TopicMeta;
     })
     .sort((a, b) => {
@@ -106,9 +112,11 @@ export function getTopicsForChapter(chapterSlug: string): TopicMeta[] {
   return getTopics().filter((t) => t.chapterSlug === chapterSlug);
 }
 
-/** Returns [prev, next] for a given topic url */
+/** Returns [prev, next] for a given topic url, scoped to the same pillar */
 export function getAdjacentTopics(url: string): [TopicMeta | null, TopicMeta | null] {
   const all = getTopics();
-  const idx = all.findIndex((t) => t.url === url);
-  return [idx > 0 ? all[idx - 1] : null, idx < all.length - 1 ? all[idx + 1] : null];
+  const current = all.find((t) => t.url === url);
+  const scoped = current ? all.filter((t) => t.pillar === current.pillar) : all;
+  const idx = scoped.findIndex((t) => t.url === url);
+  return [idx > 0 ? scoped[idx - 1] : null, idx < scoped.length - 1 ? scoped[idx + 1] : null];
 }
