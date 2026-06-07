@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ThemeToggle from '../../components/ThemeToggle.astro';
 import { getChapters } from '../../lib/chapters';
 
-const chapters = getChapters();
+const chapters = getChapters('technology');
 const chapterCount = chapters.filter(c => !c.hidden).length;
 ---
 <BaseLayout>
