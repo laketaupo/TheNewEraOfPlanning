@@ -1,0 +1,78 @@
+<h2>How should the L4 detail pane appear?</h2>
+<p class="subtitle">After clicking a leaf node, where does its description show up?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:sans-serif;font-size:11px;">
+      <div style="color:#64748b;margin-bottom:10px;">Process &rsaquo; Plan &rsaquo; Demand &rsaquo; Statistical</div>
+      <!-- Nodes -->
+      <div style="display:flex;align-items:center;gap:0;margin-bottom:14px;">
+        <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Run Forecast</div>
+        <div style="width:20px;height:2px;background:#334155;"></div>
+        <div style="background:#7c3aed;color:#fff;padding:7px 12px;border-radius:8px;font-weight:600;box-shadow:0 0 0 2px rgba(139,92,246,0.4);">Review Output</div>
+        <div style="width:20px;height:2px;background:#334155;"></div>
+        <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Publish</div>
+      </div>
+      <!-- Detail pane below -->
+      <div style="border:1.5px solid #7c3aed;border-radius:8px;padding:10px;background:rgba(124,58,237,0.08);">
+        <div style="font-weight:600;color:#c4b5fd;margin-bottom:4px;">Review Output</div>
+        <div style="color:#94a3b8;font-size:10px;line-height:1.5;">Validate the statistical forecast against historical accuracy thresholds and flag outliers for manual review before promoting to consensus.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Inline below nodes</h3>
+      <p>Detail appears directly below the node row, within the same view. No panels, no overlays. Simple and always visible once expanded.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:sans-serif;font-size:11px;display:flex;gap:10px;">
+      <!-- Left: nodes -->
+      <div style="flex:1;">
+        <div style="color:#64748b;margin-bottom:10px;">… &rsaquo; Statistical</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Run Forecast</div>
+          <div style="background:#7c3aed;color:#fff;padding:7px 12px;border-radius:8px;font-weight:600;">Review Output</div>
+          <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Publish</div>
+        </div>
+      </div>
+      <!-- Right: detail -->
+      <div style="width:130px;border:1.5px solid #7c3aed;border-radius:8px;padding:10px;background:rgba(124,58,237,0.08);">
+        <div style="font-weight:600;color:#c4b5fd;margin-bottom:4px;font-size:10px;">Review Output</div>
+        <div style="color:#94a3b8;font-size:9px;line-height:1.5;">Validate the statistical forecast against historical accuracy thresholds and flag outliers for manual review.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Side panel (nodes go vertical)</h3>
+      <p>Clicking an L4 node switches the layout: nodes stack vertically on the left, detail appears on the right. Fits more content, feels like a master-detail UI.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:sans-serif;font-size:11px;position:relative;overflow:hidden;">
+      <!-- Nodes (dimmed) -->
+      <div style="color:#64748b;margin-bottom:10px;opacity:0.4;">… &rsaquo; Statistical</div>
+      <div style="display:flex;align-items:center;gap:0;margin-bottom:0;opacity:0.3;">
+        <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Run Forecast</div>
+        <div style="width:20px;height:2px;background:#334155;"></div>
+        <div style="background:#7c3aed;color:#fff;padding:7px 12px;border-radius:8px;">Review Output</div>
+        <div style="width:20px;height:2px;background:#334155;"></div>
+        <div style="background:#1e293b;color:#64748b;padding:7px 12px;border-radius:8px;border:1px solid #334155;">Publish</div>
+      </div>
+      <!-- Overlay modal -->
+      <div style="position:absolute;bottom:10px;left:10px;right:10px;background:#1e293b;border:1.5px solid #7c3aed;border-radius:10px;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,0.5);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div style="font-weight:600;color:#c4b5fd;">Review Output</div>
+          <div style="color:#64748b;font-size:10px;">✕</div>
+        </div>
+        <div style="color:#94a3b8;font-size:10px;line-height:1.5;">Validate the statistical forecast against historical accuracy thresholds and flag outliers for manual review before promoting to consensus.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Floating modal overlay</h3>
+      <p>A card floats over the visualization when an L4 node is selected. Dismissed with ✕ or clicking outside. Keeps context visible behind it.</p>
+    </div>
+  </div>
+
+</div>

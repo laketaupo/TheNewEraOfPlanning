@@ -1,0 +1,77 @@
+<h2>How should drilling down work?</h2>
+<p class="subtitle">Click a node to go deeper — but what does "going deeper" look like?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;">
+      <div style="color:#64748b;margin-bottom:8px;font-size:11px;">▸ Plan &nbsp;&nbsp; ▸ Source &nbsp;&nbsp; ▸ Make</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <div style="background:#6366f1;color:#fff;padding:8px 14px;border-radius:8px;font-weight:bold;">Plan</div>
+        <div style="color:#6366f1;">────▶</div>
+        <div style="background:#1e293b;color:#94a3b8;padding:8px 14px;border-radius:8px;border:1px solid #334155;">Source</div>
+        <div style="color:#334155;">────▶</div>
+        <div style="background:#1e293b;color:#94a3b8;padding:8px 14px;border-radius:8px;border:1px solid #334155;">Make</div>
+      </div>
+      <div style="color:#64748b;font-size:10px;margin-top:6px;">← After clicking "Plan", breadcrumb updates and L2 nodes appear</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Drill-down with breadcrumb</h3>
+      <p>Each click replaces the current view with the next level's nodes. A breadcrumb trail at the top shows your path and lets you navigate back. Clean and focused — you only see one level at a time.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;">
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <div style="background:#6366f1;color:#fff;padding:6px 12px;border-radius:6px;font-size:11px;">Plan</div>
+        <div style="color:#334155;align-self:center;">────▶</div>
+        <div style="background:#1e293b;color:#94a3b8;padding:6px 12px;border-radius:6px;border:1px solid #334155;font-size:11px;">Source</div>
+        <div style="color:#334155;align-self:center;">────▶</div>
+        <div style="background:#1e293b;color:#94a3b8;padding:6px 12px;border-radius:6px;border:1px solid #334155;font-size:11px;">Make</div>
+      </div>
+      <div style="border-left:2px solid #6366f1;margin-left:30px;padding-left:10px;">
+        <div style="color:#64748b;font-size:10px;margin-bottom:4px;">L2 under Plan:</div>
+        <div style="display:flex;gap:8px;">
+          <div style="background:#7c3aed;color:#fff;padding:5px 10px;border-radius:5px;font-size:10px;">Demand</div>
+          <div style="color:#334155;align-self:center;">──▶</div>
+          <div style="background:#1e293b;color:#94a3b8;padding:5px 10px;border-radius:5px;border:1px solid #334155;font-size:10px;">Supply</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Expand in place</h3>
+      <p>Clicking a node reveals its children directly below it, indented and connected. The parent stays visible. Multiple levels can be open at once. Good for seeing the full hierarchy at a glance, but can get tall.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;">
+      <div style="margin-bottom:8px;">
+        <div style="color:#64748b;font-size:10px;margin-bottom:3px;">L1</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div style="background:#6366f1;color:#fff;padding:5px 10px;border-radius:5px;font-size:11px;">Plan</div>
+          <div style="color:#6366f1;">──▶</div>
+          <div style="background:#1e293b;color:#64748b;padding:5px 10px;border-radius:5px;border:1px solid #334155;font-size:11px;opacity:0.4">Source</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #1e293b;padding-top:8px;margin-bottom:8px;">
+        <div style="color:#64748b;font-size:10px;margin-bottom:3px;">L2 (under Plan)</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div style="background:#7c3aed;color:#fff;padding:5px 10px;border-radius:5px;font-size:11px;">Demand</div>
+          <div style="color:#7c3aed;">──▶</div>
+          <div style="background:#1e293b;color:#94a3b8;padding:5px 10px;border-radius:5px;border:1px solid #334155;font-size:11px;">Supply</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #1e293b;padding-top:8px;">
+        <div style="color:#64748b;font-size:10px;margin-bottom:3px;">L3 (under Demand) · L4 (under Forecast)</div>
+        <div style="color:#475569;font-size:10px;">…expanding as you click…</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Stacked levels (swimlanes)</h3>
+      <p>All levels are shown as horizontal rows stacked vertically. Clicking a node filters and highlights the row below. You always see all active levels simultaneously. Dense but gives the full picture.</p>
+    </div>
+  </div>
+
+</div>
