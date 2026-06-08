@@ -14,7 +14,7 @@ There are no tests or linters configured. Always run `npm run build` to verify c
 
 ## Architecture
 
-**Stack:** Astro 4 (static site generation) + Tailwind CSS 3 + MDX. Deployed via GitHub Pages.
+**Stack:** Astro 4 (static site generation) + Tailwind CSS 3 + MDX. Deployed via Vercel (`@astrojs/vercel/static` adapter, v7.x — compatible with Astro 4).
 
 ### Site Structure
 
