@@ -4,5 +4,6 @@
   "icon": "cpu",
   "color": "emerald",
   "order": 2,
-  "pillar": "data"
+  "pillar": "data",
+  "module": "data-driven-planning"
 }

@@ -4,5 +4,6 @@
   "icon": "cube",
   "color": "emerald",
   "order": 1,
-  "pillar": "data"
+  "pillar": "data",
+  "module": "data-driven-planning"
 }

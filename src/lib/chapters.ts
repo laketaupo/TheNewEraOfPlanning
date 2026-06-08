@@ -6,6 +6,7 @@ export interface ChapterMeta {
   order: number;
   slug: string;
   pillar?: string;
+  module?: string;
   hidden?: boolean;
 }
 
@@ -52,7 +53,9 @@ export interface TopicMeta {
   slug: string;
   chapterSlug: string;
   url: string;
+  chapterUrl: string;
   pillar?: string;
+  module?: string;
 }
 
 // Eagerly load all chapter _meta.json files
@@ -82,6 +85,12 @@ export function getChapters(pillar?: string): ChapterMeta[] {
     .sort((a, b) => a.order - b.order);
 }
 
+export function getChapterUrl(ch: ChapterMeta): string {
+  const pillar = ch.pillar ?? 'technology';
+  const module = ch.module ?? 'how-o9-works';
+  return `${import.meta.env.BASE_URL}${pillar}/${module}/${ch.slug}`;
+}
+
 export function getTopics(): TopicMeta[] {
   const allChapters = getChapters();
   return Object.entries(topicFiles)
@@ -90,6 +99,8 @@ export function getTopics(): TopicMeta[] {
       const topicSlug = slugFromPath(path);
       const chapterSlug = chapterSlugFromPath(path);
       const chapter = allChapters.find((c) => c.slug === chapterSlug);
+      const pillar = chapter?.pillar ?? 'technology';
+      const module = chapter?.module ?? 'how-o9-works';
       return {
         title: fm.title ?? '',
         description: fm.description ?? '',
@@ -118,8 +129,10 @@ export function getTopics(): TopicMeta[] {
         steps: fm.steps ?? undefined,
         slug: topicSlug,
         chapterSlug,
-        url: `${import.meta.env.BASE_URL}chapters/${chapterSlug}/${topicSlug}`,
-        pillar: chapter?.pillar ?? 'technology',
+        url: `${import.meta.env.BASE_URL}${pillar}/${module}/${chapterSlug}/${topicSlug}`,
+        chapterUrl: `${import.meta.env.BASE_URL}${pillar}/${module}/${chapterSlug}`,
+        pillar,
+        module,
       } as TopicMeta;
     })
     .sort((a, b) => {

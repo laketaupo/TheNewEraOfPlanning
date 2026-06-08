@@ -4,5 +4,6 @@
   "icon": "beaker",
   "color": "violet",
   "order": 1,
-  "pillar": "process"
+  "pillar": "process",
+  "module": "scenario-planning"
 }

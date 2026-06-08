@@ -6,7 +6,7 @@ import { getChapters } from '../../lib/chapters';
 const chapters = getChapters('technology');
 const chapterCount = chapters.filter(c => !c.hidden).length;
 ---
-<BaseLayout>
+<BaseLayout title="Technology">
   <div class="fixed top-4 right-4 z-50">
     <ThemeToggle />
   </div>

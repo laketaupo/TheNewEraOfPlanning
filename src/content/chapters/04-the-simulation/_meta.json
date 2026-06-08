@@ -4,5 +4,6 @@
   "icon": "beaker",
   "color": "emerald",
   "order": 6,
-  "pillar": "technology"
+  "pillar": "technology",
+  "module": "how-o9-works"
 }

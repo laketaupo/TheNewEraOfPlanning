@@ -4,5 +4,6 @@
   "icon": "arrow-up",
   "color": "amber",
   "order": 3,
-  "pillar": "technology"
+  "pillar": "technology",
+  "module": "how-o9-works"
 }

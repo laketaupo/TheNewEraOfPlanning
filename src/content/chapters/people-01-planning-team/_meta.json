@@ -4,5 +4,6 @@
   "icon": "users",
   "color": "amber",
   "order": 1,
-  "pillar": "people"
+  "pillar": "people",
+  "module": "people-and-planning"
 }

@@ -4,5 +4,6 @@
   "icon": "cpu",
   "color": "sky",
   "order": 5,
-  "pillar": "technology"
+  "pillar": "technology",
+  "module": "how-o9-works"
 }

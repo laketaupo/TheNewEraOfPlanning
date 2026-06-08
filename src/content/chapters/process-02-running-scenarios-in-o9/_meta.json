@@ -4,5 +4,6 @@
   "icon": "network",
   "color": "violet",
   "order": 2,
-  "pillar": "process"
+  "pillar": "process",
+  "module": "scenario-planning"
 }

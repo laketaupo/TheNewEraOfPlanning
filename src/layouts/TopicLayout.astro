@@ -8,6 +8,7 @@ export interface Props {
   chapterTitle: string;
   chapterSlug: string;
   chapterColor: string;
+  chapterUrl: string;
   topicOrder: number;
   chapterOrder: number;
   prevUrl?: string;
@@ -25,6 +26,7 @@ const {
   chapterTitle,
   chapterSlug,
   chapterColor,
+  chapterUrl,
   topicOrder,
   chapterOrder,
   prevUrl,
@@ -37,10 +39,10 @@ const {
 } = Astro.props;
 
 const pillarBackMap: Record<string, { href: string; label: string }> = {
-  technology: { href: `${import.meta.env.BASE_URL}technology/how-o9-works`, label: 'How o9 Works' },
-  data:       { href: `${import.meta.env.BASE_URL}data`,                    label: 'Data' },
-  process:    { href: `${import.meta.env.BASE_URL}process`,                 label: 'Process' },
-  people:     { href: `${import.meta.env.BASE_URL}people`,                  label: 'People' },
+  technology: { href: `${import.meta.env.BASE_URL}technology/how-o9-works`,       label: 'How o9 Works' },
+  data:       { href: `${import.meta.env.BASE_URL}data/data-driven-planning`,      label: 'Data-Driven Planning' },
+  process:    { href: `${import.meta.env.BASE_URL}process/scenario-planning`,      label: 'Scenario Planning' },
+  people:     { href: `${import.meta.env.BASE_URL}people/people-and-planning`,     label: 'People & Planning' },
 };
 const back = pillarBackMap[pillar ?? 'technology'] ?? pillarBackMap.technology;
 
@@ -108,7 +110,7 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
       {back.label}
     </a>
 
-    <a href={`${import.meta.env.BASE_URL}chapters/${chapterSlug}`} class={`text-sm font-medium border-b ${chapterColorClass} hover:opacity-80 transition-opacity`}>
+    <a href={chapterUrl} class={`text-sm font-medium border-b ${chapterColorClass} hover:opacity-80 transition-opacity`}>
       {chapterTitle}
     </a>
 

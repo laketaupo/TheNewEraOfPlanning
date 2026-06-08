@@ -4,5 +4,6 @@
   "icon": "network",
   "color": "violet",
   "order": 2,
-  "pillar": "technology"
+  "pillar": "technology",
+  "module": "how-o9-works"
 }

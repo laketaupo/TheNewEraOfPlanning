@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { getChapters } from '../../lib/chapters';
+
+const dataChapterCount = getChapters('data').filter(c => !c.hidden).length;
+---
+<BaseLayout title="Data">
+  <div class="fixed top-4 right-4 z-50">
+    <ThemeToggle />
+  </div>
+
+  <div class="relative min-h-screen overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
+
+    <div class="relative z-10 px-6 pt-6 max-w-3xl mx-auto">
+      <a href="/" class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        The New Era of Planning
+      </a>
+    </div>
+
+    <div class="relative z-10 px-6 pt-14 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Data
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Data</span>
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
+        Understand how data quality and structure determine the quality of every plan your organisation produces.
+      </p>
+    </div>
+
+    <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+        <!-- Data-Driven Planning -->
+        <a href="/data/data-driven-planning" class="group track-card track-data">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Data-Driven Planning</h2>
+          <p class="track-desc">Understand how data quality and structure drive every planning outcome in o9.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            {dataChapterCount} chapters available
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+    <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .bg-radial-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.08), transparent);
+  }
+  :global(.dark) .bg-radial-gradient {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.15), transparent);
+  }
+
+  .track-card {
+    @apply flex flex-col p-7 rounded-2xl text-white transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
+  }
+  .track-card:hover { filter: brightness(1.08); }
+
+  .track-data {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 0 8px 32px rgba(16,185,129,0.25);
+  }
+
+  .track-icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
+    background: rgba(255,255,255,0.15);
+  }
+  .track-title {
+    @apply text-xl font-bold text-white mb-2;
+  }
+  .track-desc {
+    @apply text-sm leading-relaxed mb-5 flex-1;
+    color: rgba(255,255,255,0.75);
+  }
+  .track-badge {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+  }
+  .track-badge-live {
+    background: rgba(255,255,255,0.2);
+  }
+  .live-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-white;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+</style>
