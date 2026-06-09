@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Dependency mockup</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f8fafc; color: #1e293b; padding: 0; margin: 0; }
+  h2 { font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: #64748b; margin: 0 0 24px; }
+
+  .options-wrap { display: flex; flex-direction: column; gap: 24px; padding: 24px; max-width: 900px; margin: 0 auto; }
+
+  .option-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .option-card:hover { border-color: #94a3b8; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .option-card.selected { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+
+  .option-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .option-letter {
+    width: 28px; height: 28px;
+    background: #6366f1; color: white;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .option-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+  .option-desc { font-size: 12px; color: #64748b; margin-top: 2px; line-height: 1.4; }
+
+  .mockup-area { padding: 20px; background: #f8fafc; }
+
+  /* ── Shared grid styles ── */
+  .grid { display: grid; grid-template-columns: 130px repeat(7,1fr); gap: 3px; font-size: 10px; }
+  .ph { background: #6366f1; color: white; text-align: center; padding: 4px 2px; border-radius: 4px; font-weight: 700; font-size: 10px; }
+  .gh { grid-column: 1/-1; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; padding: 6px 2px 2px; }
+  .tn { font-size: 10px; color: #334155; font-weight: 500; display: flex; align-items: center; padding: 0 4px; min-height: 26px; }
+  .cell { height: 26px; border-radius: 3px; }
+  .empty { background: #f1f5f9; }
+  .red    { background: #ef4444; }
+  .blue   { background: #3b82f6; }
+  .green  { background: #22c55e; }
+  .yellow { background: #eab308; }
+  .fade   { opacity: 0.3; }
+
+  /* ── Option A: numbered badges ── */
+  .cell-wrap { position: relative; height: 26px; }
+  .badge {
+    position: absolute;
+    top: -5px; right: -5px;
+    width: 14px; height: 14px;
+    background: #0f172a;
+    color: white;
+    border-radius: 50%;
+    font-size: 8px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    border: 1.5px solid white;
+  }
+  .dep-legend {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .dep-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #475569;
+  }
+  .dep-num {
+    width: 16px; height: 16px;
+    background: #0f172a; color: white;
+    border-radius: 50%;
+    font-size: 8px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .dep-arrow { color: #94a3b8; font-size: 11px; }
+
+  /* ── Option B: hover arrows (SVG overlay) ── */
+  .grid-container { position: relative; }
+  svg.arrows {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+  .arr-line {
+    stroke: #0f172a;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4 3;
+    marker-end: url(#arrow);
+    opacity: 0.7;
+  }
+
+  /* ── Option C: dot indicators ── */
+  .dot-out {
+    position: absolute;
+    bottom: 3px; right: 3px;
+    width: 6px; height: 6px;
+    background: white;
+    border: 1.5px solid #0f172a;
+    border-radius: 50%;
+  }
+  .dot-in {
+    position: absolute;
+    bottom: 3px; left: 3px;
+    width: 6px; height: 6px;
+    background: #0f172a;
+    border-radius: 50%;
+  }
+  .dot-legend {
+    display: flex; gap: 16px; margin-top: 10px;
+    font-size: 10px; color: #475569;
+    align-items: center;
+  }
+  .dot-legend-item { display: flex; align-items: center; gap: 5px; }
+  .dl-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .highlight-row .tn { color: #6366f1; font-weight: 700; }
+
+  .selected-indicator {
+    position: absolute;
+    top: 2px; left: 0; right: 0; bottom: 2px;
+    border: 2px solid #0f172a;
+    border-radius: 3px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="options-wrap">
+  <h2>Hoe toon je kritieke afhankelijkheden in de swimlane?</h2>
+  <p class="subtitle">Klik op de variant die je het duidelijkst vindt — alle drie houden de grid leesbaar</p>
+
+  <!-- OPTION A: Numbered badges + legend -->
+  <div class="option-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <div class="option-letter">A</div>
+      <div>
+        <div class="option-title">Genummerde badges + legenda</div>
+        <div class="option-desc">Kleine nummers op cellen die een afhankelijkheid hebben. Onder de grid een legenda: "① Proceshandboek (Process completion) → Training processen". Geen lijnen, altijd leesbaar.</div>
+      </div>
+    </div>
+    <div class="mockup-area">
+      <div class="grid">
+        <div></div>
+        <div class="ph">F1</div><div class="ph">F2</div><div class="ph">F3</div><div class="ph">F4</div><div class="ph">F5</div><div class="ph">F6</div><div class="ph">F7</div>
+
+        <div class="gh">Procesontwerp</div>
+        <div class="tn">S&OP cycle</div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell red"></div><div class="badge">①</div></div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+
+        <div class="tn">Process completion</div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell green fade"></div></div>
+        <div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell green"></div><div class="badge">②</div></div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+
+        <div class="gh">Training</div>
+        <div class="tn">Training processen</div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell green"></div><div class="badge" style="background:#22c55e;">①</div></div>
+        <div class="cell-wrap"><div class="cell green fade"></div></div>
+        <div class="empty cell"></div>
+
+        <div class="tn">Training o9</div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell green"></div><div class="badge" style="background:#22c55e;">③</div></div>
+        <div class="cell-wrap"><div class="cell green fade"></div></div>
+        <div class="empty cell"></div>
+
+        <div class="gh">Systemen</div>
+        <div class="tn">Opleveren o9</div>
+        <div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell blue fade"></div></div>
+        <div class="empty cell"></div>
+        <div class="cell-wrap"><div class="cell blue"></div><div class="badge">③</div></div>
+        <div class="cell-wrap"><div class="cell blue"></div></div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+      </div>
+      <div class="dep-legend">
+        <div style="font-size:9px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">Kritieke afhankelijkheden</div>
+        <div class="dep-legend-item"><div class="dep-num">①</div><span>S&OP procesflow</span><span class="dep-arrow">→</span><span style="color:#22c55e;font-weight:600;">Training nieuwe processen</span></div>
+        <div class="dep-legend-item"><div class="dep-num">②</div><span>Goedgekeurd proceshandboek</span><span class="dep-arrow">→</span><span style="color:#22c55e;font-weight:600;">Training nieuwe processen</span></div>
+        <div class="dep-legend-item"><div class="dep-num">③</div><span>Geconfigureerde o9-omgeving</span><span class="dep-arrow">→</span><span style="color:#22c55e;font-weight:600;">Training o9</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B: SVG connecting lines -->
+  <div class="option-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <div class="option-letter">B</div>
+      <div>
+        <div class="option-title">Verbindingslijnen (SVG pijlen)</div>
+        <div class="option-desc">Stippellijnen van broncel naar doelcel. Direct visueel traceerbaar. Werkt goed bij max 5–6 pijlen; kan drukker worden bij meer afhankelijkheden.</div>
+      </div>
+    </div>
+    <div class="mockup-area">
+      <div class="grid-container">
+        <div class="grid" id="gridB">
+          <div></div>
+          <div class="ph">F1</div><div class="ph">F2</div><div class="ph">F3</div><div class="ph">F4</div><div class="ph">F5</div><div class="ph">F6</div><div class="ph">F7</div>
+
+          <div class="gh">Procesontwerp</div>
+          <div class="tn">S&OP cycle</div>
+          <div class="empty cell"></div><div class="empty cell"></div>
+          <div class="cell red" id="b-sop"></div>
+          <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+
+          <div class="tn">Process completion</div>
+          <div class="empty cell"></div><div class="empty cell"></div>
+          <div class="cell green fade"></div>
+          <div class="empty cell"></div>
+          <div class="cell green" id="b-pc"></div>
+          <div class="empty cell"></div><div class="empty cell"></div>
+
+          <div class="gh">Training</div>
+          <div class="tn">Training processen</div>
+          <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+          <div class="cell green" id="b-tp"></div>
+          <div class="cell green fade"></div>
+          <div class="empty cell"></div>
+
+          <div class="tn">Training o9</div>
+          <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+          <div class="cell green" id="b-to9"></div>
+          <div class="cell green fade"></div>
+          <div class="empty cell"></div>
+
+          <div class="gh">Systemen</div>
+          <div class="tn">Opleveren o9</div>
+          <div class="empty cell"></div>
+          <div class="cell blue fade"></div>
+          <div class="empty cell"></div>
+          <div class="cell blue" id="b-o9"></div>
+          <div class="cell blue"></div>
+          <div class="empty cell"></div><div class="empty cell"></div>
+        </div>
+        <svg class="arrows" id="svgB">
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="#0f172a" opacity="0.7"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C: Click-to-highlight row + dots -->
+  <div class="option-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <div class="option-letter">C</div>
+      <div>
+        <div class="option-title">Klik-om-te-highlighten</div>
+        <div class="option-desc">Elke cel met een afhankelijkheid heeft een subtiel bolletje. Klik je erop → de afhankelijke rij(en) lichten op en het panel toont de deliverable-koppeling. Cleaner standaardweergave, detail on demand.</div>
+      </div>
+    </div>
+    <div class="mockup-area">
+      <div style="font-size:9px;color:#94a3b8;margin-bottom:8px;font-style:italic;">↓ "Process completion F5" aangeklikt — afhankelijke teams oplichten</div>
+      <div class="grid">
+        <div></div>
+        <div class="ph">F1</div><div class="ph">F2</div><div class="ph">F3</div><div class="ph">F4</div><div class="ph">F5</div><div class="ph">F6</div><div class="ph">F7</div>
+
+        <div class="gh">Procesontwerp</div>
+        <div class="tn" style="color:#94a3b8;">S&OP cycle</div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell red" style="opacity:0.3;"></div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+
+        <div class="tn" style="color:#94a3b8;">Process completion</div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell green" style="opacity:0.3;"></div>
+        <div class="empty cell"></div>
+        <div class="cell-wrap" style="position:relative;">
+          <div class="cell green" style="outline:2.5px solid #0f172a;outline-offset:1px;position:relative;"></div>
+          <div class="dot-out"></div>
+        </div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+
+        <div class="gh" style="color:#22c55e;">Training ← ontvangt deliverable</div>
+        <div class="tn" style="color:#22c55e;font-weight:700;">Training processen</div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap" style="position:relative;">
+          <div class="cell green" style="background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.3);"></div>
+          <div class="dot-in"></div>
+        </div>
+        <div class="cell green fade"></div>
+        <div class="empty cell"></div>
+
+        <div class="tn" style="color:#22c55e;font-weight:700;">Training o9</div>
+        <div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div><div class="empty cell"></div>
+        <div class="cell-wrap" style="position:relative;">
+          <div class="cell green" style="background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.3);"></div>
+          <div class="dot-in"></div>
+        </div>
+        <div class="cell green fade"></div>
+        <div class="empty cell"></div>
+
+        <div class="gh" style="color:#94a3b8;">Systemen</div>
+        <div class="tn" style="color:#94a3b8;">Opleveren o9</div>
+        <div class="empty cell"></div>
+        <div class="cell blue" style="opacity:0.3;"></div>
+        <div class="empty cell"></div>
+        <div class="cell blue" style="opacity:0.3;"></div>
+        <div class="cell blue" style="opacity:0.3;"></div>
+        <div class="empty cell"></div><div class="empty cell"></div>
+      </div>
+      <div class="dot-legend">
+        <div class="dot-legend-item"><div class="dl-dot" style="background:white;border:1.5px solid #0f172a;"></div><span>Levert een kritieke deliverable</span></div>
+        <div class="dot-legend-item"><div class="dl-dot" style="background:#0f172a;"></div><span>Ontvangt een kritieke deliverable</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  if (window.parent && window.parent.recordChoice) window.parent.recordChoice(el.dataset.choice);
+  try { window.superpowers && window.superpowers.select(el.dataset.choice, el.querySelector('.option-title').textContent); } catch(e){}
+}
+
+// Draw SVG arrows for option B
+function drawArrows() {
+  const svg = document.getElementById('svgB');
+  const container = svg.parentElement;
+  const rect = container.getBoundingClientRect();
+
+  function center(el) {
+    const r = el.getBoundingClientRect();
+    return {
+      x: r.left - rect.left + r.width / 2,
+      y: r.top - rect.top + r.height / 2
+    };
+  }
+
+  function drawCurve(fromEl, toEl, color) {
+    if (!fromEl || !toEl) return;
+    const f = center(fromEl);
+    const t = center(toEl);
+    const mx = (f.x + t.x) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${f.x},${f.y} C${f.x+30},${f.y} ${t.x-30},${t.y} ${t.x},${t.y}`);
+    path.setAttribute('stroke', '#0f172a');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-dasharray', '4 3');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('opacity', '0.65');
+    path.setAttribute('marker-end', 'url(#arrow)');
+    svg.appendChild(path);
+  }
+
+  setTimeout(() => {
+    drawCurve(document.getElementById('b-pc'), document.getElementById('b-tp'));
+    drawCurve(document.getElementById('b-o9'), document.getElementById('b-to9'));
+    drawCurve(document.getElementById('b-sop'), document.getElementById('b-tp'));
+  }, 100);
+}
+
+drawArrows();
+window.addEventListener('resize', () => {
+  const svg = document.getElementById('svgB');
+  while(svg.lastChild && svg.lastChild.tagName === 'path') svg.removeChild(svg.lastChild);
+  drawArrows();
+});
+</script>
+</body>
+</html>
