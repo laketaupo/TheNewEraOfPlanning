@@ -24,7 +24,7 @@ A planned order is a structured record attached to a node in the network. It spe
 | **Completion date** | When the output will be available |
 | **Source** | Which upstream node provides the input |
 
-In o9 these records are called **line items** or **supply line items**. They are the supply-side counterpart to the demand line items you saw in Chapter 3.
+In Planning software these records are called **line items** or **supply line items**. They are the supply-side counterpart to the demand line items you saw in Chapter 3.
 
 ## Two supply sources
 

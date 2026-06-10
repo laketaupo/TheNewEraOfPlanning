@@ -35,4 +35,4 @@ Confusing the two is a common failure mode: executive meetings get dragged into 
 
 ## S&OP in an agricultural context
 
-For seed and crop planning businesses, S&OP has to account for long lead times and seasonal production cycles. A decision made in the executive S&OP in October may determine what gets planted the following spring. This makes the quality of decision-making in S&OP especially consequential — and makes the connection between the S&OP plan and the o9 planning model critical.
+For seed and crop planning businesses, S&OP has to account for long lead times and seasonal production cycles. A decision made in the executive S&OP in October may determine what gets planted the following spring. This makes the quality of decision-making in S&OP especially consequential — and makes the connection between the S&OP plan and the Planning software planning model critical.

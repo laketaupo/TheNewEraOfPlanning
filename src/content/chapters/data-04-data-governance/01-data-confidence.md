@@ -23,7 +23,7 @@ A planner who ignores data confidence and treats all inputs as equally reliable 
 
 For each key data input, ask:
 - **How recent is it?** Data freshness matters. A demand signal updated this morning is more reliable than one from two weeks ago.
-- **What is the source?** Automated feeds from operational systems (BC, Cropin) are generally more reliable than manual inputs. Excel-based demand forecasts passed through email are lower confidence than structured system integrations.
+- **What is the source?** Automated feeds from operational systems (ERP, FMS) are generally more reliable than manual inputs. Excel-based demand forecasts passed through email are lower confidence than structured system integrations.
 - **Has it been validated?** Has someone with domain knowledge reviewed this data and confirmed it is reasonable? An unreviewed crop yield forecast from a junior field agent has lower confidence than one that has been reviewed by the agronomist.
 - **What is the error history?** If a supplier's lead time has varied widely in the past, the current lead time is lower confidence than for a supplier who always delivers within the stated lead time.
 

@@ -34,12 +34,12 @@ Each of these distinctions seems minor in isolation. Collectively, they represen
 The single source of truth (SSoT) principle is that for any given data element, there is exactly one authoritative source — one system, one version, one number that is the agreed reference. All other representations of that data should be derived from or consistent with the SSoT.
 
 In the four-system landscape:
-- **Item master** → SSoT is Pimcore. The o9 and BC item records are derived from Pimcore.
-- **Inventory positions** → SSoT is BC. The o9 planning model uses BC's inventory as its starting point.
-- **Demand signals** → SSoT is o9. The demand plan in o9 is the authoritative planning version; Excel spreadsheets used in commercial discussions are not.
-- **Grower contracts** → SSoT is Cropin Grow. The contracted supply figures used in planning come from Cropin.
+- **Item master** → SSoT is MDM system. The Planning software and ERP item records are derived from MDM system.
+- **Inventory positions** → SSoT is ERP. The Planning software planning model uses ERP's inventory as its starting point.
+- **Demand signals** → SSoT is Planning software. The demand plan in Planning software is the authoritative planning version; Excel spreadsheets used in commercial discussions are not.
+- **Grower contracts** → SSoT is FMS. The contracted supply figures used in planning come from FMS.
 
-The SSoT principle breaks down when people maintain parallel versions of the same data in different systems — a commercial team that maintains its own demand forecast in Excel alongside the official o9 forecast, or a planner who adjusts lead times directly in o9 without updating Pimcore. These parallel versions create conflicting "authoritative" numbers and undermine trust in the planning process.
+The SSoT principle breaks down when people maintain parallel versions of the same data in different systems — a commercial team that maintains its own demand forecast in Excel alongside the official Planning software forecast, or a planner who adjusts lead times directly in Planning software without updating MDM system. These parallel versions create conflicting "authoritative" numbers and undermine trust in the planning process.
 
 ## Establishing definitions in practice
 

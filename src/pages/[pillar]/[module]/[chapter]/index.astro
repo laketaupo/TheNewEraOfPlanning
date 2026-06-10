@@ -39,8 +39,8 @@ const colorBgMap: Record<string, string> = {
 
 const BASE_URL = import.meta.env.BASE_URL;
 const moduleBackMap: Record<string, { href: string; label: string }> = {
-  'how-o9-works':         { href: `${BASE_URL}technology/how-o9-works`,         label: 'How o9 Works' },
-  'business-central':     { href: `${BASE_URL}technology/business-central`,     label: 'Business Central' },
+  'how-planning-software-works':         { href: `${BASE_URL}technology/how-planning-software-works`,         label: 'How Planning Software Works' },
+  'erp':                  { href: `${BASE_URL}technology/erp`,     label: 'ERP' },
   'architecture':         { href: `${BASE_URL}technology/architecture`,         label: 'Architecture & Integration' },
   'ecosystem':            { href: `${BASE_URL}technology/ecosystem`,            label: 'System Ecosystem' },
   'data-driven-planning': { href: `${BASE_URL}data/data-driven-planning`,       label: 'Data-Driven Planning' },
@@ -48,7 +48,7 @@ const moduleBackMap: Record<string, { href: string; label: string }> = {
   'people-and-planning':  { href: `${BASE_URL}people/people-and-planning`,      label: 'People & Planning' },
 };
 const pillar = chapter.pillar ?? 'technology';
-const currentModule = chapter.module ?? Astro.params.module ?? 'how-o9-works';
+const currentModule = chapter.module ?? Astro.params.module ?? 'how-planning-software-works';
 const back = moduleBackMap[currentModule] ?? { href: `${BASE_URL}${pillar}/${currentModule}`, label: currentModule };
 const pillarChapters = getChapters(pillar).filter(c => !c.hidden && c.module === Astro.params.module);
 
@@ -58,13 +58,20 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
 ---
 <BaseLayout title={`${chapter.title} — ${back.label}`} description={chapter.description}>
   <!-- Top nav -->
-  <header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-    <a href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
-      </svg>
-      {back.label}
-    </a>
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+    <div class="flex items-center gap-3">
+      <a href={import.meta.env.BASE_URL} title="Home" class="flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </a>
+      <a href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
+        </svg>
+        {back.label}
+      </a>
+    </div>
 
     <!-- Chapter switcher -->
     <nav class="hidden sm:flex items-center gap-1">
@@ -85,7 +92,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
     <ThemeToggle />
   </header>
 
-  <main class="max-w-3xl mx-auto px-6 py-16 animate-slide-up">
+  <main class="max-w-3xl mx-auto px-6 pt-24 pb-16 animate-slide-up">
     <!-- Chapter header -->
     <p class={`text-sm font-medium ${textClass} mb-2`}>Chapter {chapter.order}</p>
     <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">{chapter.title}</h1>
@@ -138,7 +145,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
 </BaseLayout>
 
 <script>
-  const STORAGE_KEY = 'o9-progress';
+  const STORAGE_KEY = 'platform-progress';
   function getProgress(): Record<string, boolean> {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
     catch { return {}; }

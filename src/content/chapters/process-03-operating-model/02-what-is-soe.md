@@ -23,9 +23,9 @@ S&OE operates at a more detailed level than S&OP — by SKU, week, and site rath
 
 The output of S&OE is not a new plan — it is **corrective action** within the bounds of the existing plan. If the deviations are large enough to require a change to the S&OP plan itself, that is escalated to the next S&OP cycle (or an extraordinary review).
 
-## S&OE in o9
+## S&OE in Planning software
 
-In o9, S&OE is supported by the exception-based working model. Rather than reviewing every order or every item weekly, planners focus on exceptions: items flagged as at-risk, behind schedule, or outside tolerance. The o9 workspace can be configured to surface these exceptions automatically, allowing the S&OE meeting to move quickly through the most urgent items.
+In Planning software, S&OE is supported by the exception-based working model. Rather than reviewing every order or every item weekly, planners focus on exceptions: items flagged as at-risk, behind schedule, or outside tolerance. The Planning software workspace can be configured to surface these exceptions automatically, allowing the S&OE meeting to move quickly through the most urgent items.
 
 ## The S&OP / S&OE boundary
 

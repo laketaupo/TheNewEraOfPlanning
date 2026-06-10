@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## Step 1: Define the question
 
-A scenario without a clear question is just an experiment. Before opening o9, know what decision you're trying to support.
+A scenario without a clear question is just an experiment. Before opening Planning software, know what decision you're trying to support.
 
 Good scenario questions:
 - "Should we accept this large order given our current capacity situation?"
@@ -24,7 +24,7 @@ The question defines which assumptions to change, which outputs to examine, and 
 
 ## Step 2: Model the assumption
 
-This is the technical step — making the change in o9 that represents the what-if. You might:
+This is the technical step — making the change in Planning software that represents the what-if. You might:
 - Adjust demand quantities for specific items and periods
 - Modify a supplier's delivery capability
 - Block or constrain a production resource

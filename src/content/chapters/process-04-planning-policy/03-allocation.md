@@ -25,9 +25,9 @@ Without an explicit allocation policy, the decision defaults to whoever is most 
 
 In practice, most businesses use a hybrid: a priority tier structure with proportional allocation within each tier.
 
-## Encoding allocation in o9
+## Encoding allocation in Planning software
 
-In o9, allocation rules can be encoded at the demand signal or customer level. The system respects these priorities during planning, ensuring that the plan reflects the intended allocation logic before orders are confirmed. This is preferable to allocating manually after the plan has been published — by then, commitments may already have been communicated.
+In Planning software, allocation rules can be encoded at the demand signal or customer level. The system respects these priorities during planning, ensuring that the plan reflects the intended allocation logic before orders are confirmed. This is preferable to allocating manually after the plan has been published — by then, commitments may already have been communicated.
 
 ## When to invoke allocation
 

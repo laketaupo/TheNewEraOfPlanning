@@ -11,7 +11,7 @@ topicLayout: "prose-topic"
 
 KPIs tell you how you performed. Exceptions tell you what to do today to improve tomorrow's performance.
 
-OTIF is a lagging KPI — it measures what has already been delivered or missed. A shortage exception in o9 is a leading signal — it tells the planner that a future OTIF miss is at risk if nothing is done. The connection between the two is direct: resolving exceptions is how you protect KPI performance.
+OTIF is a lagging KPI — it measures what has already been delivered or missed. A shortage exception in Planning software is a leading signal — it tells the planner that a future OTIF miss is at risk if nothing is done. The connection between the two is direct: resolving exceptions is how you protect KPI performance.
 
 This means exception management is not just an operational discipline — it is the mechanism through which KPI targets are actually achieved. An organisation that sets a 95% OTIF target but has no functioning exception management process is making a commitment it cannot keep.
 
@@ -19,7 +19,7 @@ This means exception management is not just an operational discipline — it is 
 
 The target KPI determines what the exception threshold should be. If the OTIF target is 95%, then any item projected to fall below that threshold is an exception. The exception threshold is derived from the target — it is not an independent configuration.
 
-In o9, exception thresholds are parameters that can be set at the item, category, or global level. Setting them correctly — at a level that reflects the KPI target rather than operational habit — is a planning governance decision.
+In Planning software, exception thresholds are parameters that can be set at the item, category, or global level. Setting them correctly — at a level that reflects the KPI target rather than operational habit — is a planning governance decision.
 
 ## Closing the loop
 

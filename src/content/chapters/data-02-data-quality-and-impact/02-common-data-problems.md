@@ -10,7 +10,7 @@ topicLayout: "prose-topic"
 ## Master data problems
 
 **Incomplete or outdated BOMs**
-Bills of materials change when products are reformulated, repackaged, or re-sourced. If the BOM in o9 isn't updated to reflect the current recipe, the engine plans the wrong components.
+Bills of materials change when products are reformulated, repackaged, or re-sourced. If the BOM in Planning software isn't updated to reflect the current recipe, the engine plans the wrong components.
 
 **Wrong lead times**
 Lead times entered at implementation and never reviewed. A supplier that used to deliver in 4 weeks now delivers in 6. The plan places orders too late, stockouts occur, and no one knows why — until someone checks the master data.

@@ -7,20 +7,20 @@ estimatedMinutes: 3
 widget: ""
 nodeType: "item"
 topicLayout: "node-topic"
-summary: "An Item is the most fundamental building block in o9 — anything that can be planned, produced, stored, bought, or sold. It can be a raw material, a semi-finished good, a finished product, or a packaging component. Every supply and demand signal, every production order, and every purchase requisition in o9 is tied to an item. Think of items as the nouns of your supply chain: everything else acts on them or connects them."
+summary: "An Item is the most fundamental building block in Planning software — anything that can be planned, produced, stored, bought, or sold. It can be a raw material, a semi-finished good, a finished product, or a packaging component. Every supply and demand signal, every production order, and every purchase requisition in Planning software is tied to an item. Think of items as the nouns of your supply chain: everything else acts on them or connects them."
 bullets:
   - "Has a unique Item ID across the entire network"
   - "Classified as raw material, WIP, or finished good"
   - "Carries unit of measure, shelf life, and planning horizon"
   - "Can be stocked at multiple network locations"
-  - "Every supply and demand signal in o9 is tied to an item"
+  - "Every supply and demand signal in Planning software is tied to an item"
 ---
 
 ## What is an Item?
 
-An **Item** is the most fundamental building block in o9. It represents anything that can be planned, produced, stored, bought, or sold — a raw material, semi-finished good, finished product, or packaging component.
+An **Item** is the most fundamental building block in Planning software. It represents anything that can be planned, produced, stored, bought, or sold — a raw material, semi-finished good, finished product, or packaging component.
 
-In o9, every item has a unique identifier and a set of attributes that drive planning behavior:
+In Planning software, every item has a unique identifier and a set of attributes that drive planning behavior:
 
 - **Item ID** — unique key across the network
 - **Item type** — raw material, WIP, finished good
@@ -30,7 +30,7 @@ In o9, every item has a unique identifier and a set of attributes that drive pla
 
 ## Why Items Matter
 
-The o9 planning engine generates supply and demand signals at the item level. Everything — from demand forecasts to production orders to purchase requisitions — is tied to an item.
+The Planning software planning engine generates supply and demand signals at the item level. Everything — from demand forecasts to production orders to purchase requisitions — is tied to an item.
 
 > Think of items as the **nouns** of your supply chain. Everything else (processes, resources, networks) acts on them or connects them.
 
@@ -44,4 +44,4 @@ The o9 planning engine generates supply and demand signals at the item level. Ev
 
 ## Placeholder Content
 
-*This topic is ready for your detailed content. Replace this section with specific o9 item attributes, screenshots, or examples from your environment.*
+*This topic is ready for your detailed content. Replace this section with specific Planning software item attributes, screenshots, or examples from your environment.*

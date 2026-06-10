@@ -28,7 +28,7 @@ Not all products and customers warrant the same service level commitment. A well
 - **By channel** — own distribution may be held to different standards than export or spot sales
 - **By season** — peak season may require elevated targets that are relaxed in the off-season
 
-In o9, service level targets can be set at the item-location level, allowing differentiated policies to be encoded directly in the planning parameters rather than applied as manual overrides.
+In Planning software, service level targets can be set at the item-location level, allowing differentiated policies to be encoded directly in the planning parameters rather than applied as manual overrides.
 
 ## Reviewing and updating targets
 

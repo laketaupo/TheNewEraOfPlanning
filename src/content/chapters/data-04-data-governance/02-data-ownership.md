@@ -15,7 +15,7 @@ A data owner is the person or role responsible for a specific data element or da
 - Investigating and resolving data quality issues
 - Defining the standards and rules that govern how the data is managed
 
-Data ownership is not the same as data entry. An operations manager may own the production capacity data even if they do not personally input it into Pimcore. The owner defines what the data should be; others may maintain the technical records.
+Data ownership is not the same as data entry. An operations manager may own the production capacity data even if they do not personally input it into MDM system. The owner defines what the data should be; others may maintain the technical records.
 
 ## Data ownership in the planning context
 
@@ -43,6 +43,6 @@ Ownership gaps are especially common at the boundaries between functions. Who ow
 Data ownership only has value if it is exercised. Owners need:
 - A defined process for how data change requests are submitted and approved
 - A review cadence — when do they review their data domain to check for accuracy?
-- Escalation authority — if someone uses data incorrectly (e.g., overrides a parameter in o9 without updating Pimcore), the owner has the authority to require correction
+- Escalation authority — if someone uses data incorrectly (e.g., overrides a parameter in Planning software without updating MDM system), the owner has the authority to require correction
 
 Documenting data owners in a data catalogue (even a simple spreadsheet) and reviewing it in the S&OP cycle is enough to make ownership operational. The goal is not bureaucracy — it is ensuring that someone can be called when a data problem is found.

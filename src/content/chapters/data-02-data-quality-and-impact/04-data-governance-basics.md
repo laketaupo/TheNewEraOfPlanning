@@ -17,7 +17,7 @@ Data quality problems are almost always human process problems, not technical pr
 Every critical data element should have a named owner — a person or team responsible for its accuracy. For demand forecasts, this is typically commercial planning or sales. For master data (BOMs, lead times, item attributes), it is typically the supply chain master data team. Without ownership, no one is accountable when data is wrong.
 
 **Change management**
-When a product changes — a new recipe, a new supplier, a new packaging format — the data in o9 must be updated before the next planning run. This requires a process: a trigger (the change decision), an action (update the data), and a verification (confirm the update was applied correctly).
+When a product changes — a new recipe, a new supplier, a new packaging format — the data in Planning software must be updated before the next planning run. This requires a process: a trigger (the change decision), an action (update the data), and a verification (confirm the update was applied correctly).
 
 **Audit trails**
 Changes to planning-critical data should be logged: what changed, who changed it, and when. This makes it possible to trace a plan anomaly back to a data change, and to reverse errors quickly.

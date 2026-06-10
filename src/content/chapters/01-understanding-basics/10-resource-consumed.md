@@ -8,7 +8,7 @@ widget: ""
 nodeType: "resource"
 topicLayout: "node-topic"
 consumptionLabel: "0.5 hr/unit"
-summary: "Resource Consumed is the link that connects a transformation process to a resource — it specifies how much capacity is used each time the process runs. Without this link, the planning engine has no way to know that making 1,000 units of Product X will occupy Bottling Line 3 for 8 hours. Consumption can be fixed (a setup cost paid once per batch) or variable (a run rate proportional to output). o9 sums all resource consumptions across the plan and compares them against available capacity to identify bottlenecks."
+summary: "Resource Consumed is the link that connects a transformation process to a resource — it specifies how much capacity is used each time the process runs. Without this link, the planning engine has no way to know that making 1,000 units of Product X will occupy Bottling Line 3 for 8 hours. Consumption can be fixed (a setup cost paid once per batch) or variable (a run rate proportional to output). Planning software sums all resource consumptions across the plan and compares them against available capacity to identify bottlenecks."
 bullets:
   - "Links a transformation process to the resource it consumes"
   - "Defines the consumption rate — capacity used per unit of output"
@@ -49,8 +49,8 @@ Transformation Process  ──uses──►  Resource
        └────────────────────────────┘
 ```
 
-When o9 generates a production plan, it sums all resource consumptions across all planned batches and compares them to available capacity — flagging overloads or underutilization.
+When Planning software generates a production plan, it sums all resource consumptions across all planned batches and compares them to available capacity — flagging overloads or underutilization.
 
 ## Placeholder Content
 
-*Replace this section with specific consumption rates, bottleneck analysis, or o9 screenshots from your environment.*
+*Replace this section with specific consumption rates, bottleneck analysis, or Planning software screenshots from your environment.*

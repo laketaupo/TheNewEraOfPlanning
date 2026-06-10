@@ -24,4 +24,4 @@ Choose this layout when:
 
 ## The graph widget
 
-The panel below shows the supply chain network graph — the same one used in Chapter 2. Use it to explore how nodes and edges connect in a live o9-style network diagram.
+The panel below shows the supply chain network graph — the same one used in Chapter 2. Use it to explore how nodes and edges connect in a live Planning software-style network diagram.

@@ -1,6 +1,6 @@
 ---
 title: "What Is a Workflow Simulation?"
-description: "A workflow simulation in o9 is an end-to-end what-if run that lets you change assumptions, recalculate the plan, and compare the result against the baseline — without touching the live plan."
+description: "A workflow simulation in Planning software is an end-to-end what-if run that lets you change assumptions, recalculate the plan, and compare the result against the baseline — without touching the live plan."
 order: 1
 chapter: "04-the-simulation"
 estimatedMinutes: 4
@@ -9,13 +9,13 @@ topicLayout: "prose-topic"
 
 ## The purpose of a simulation
 
-In o9, a simulation is a controlled environment for testing planning assumptions before committing to them. It works like this: you take a copy of the current plan, change one or more inputs (a demand signal, a supply constraint, a lead time), let the planning engine recalculate, and then compare the new plan against the baseline.
+In Planning software, a simulation is a controlled environment for testing planning assumptions before committing to them. It works like this: you take a copy of the current plan, change one or more inputs (a demand signal, a supply constraint, a lead time), let the planning engine recalculate, and then compare the new plan against the baseline.
 
 The key property is isolation. The simulation runs in its own workspace — the live plan is unaffected until you explicitly choose to promote the simulation to the baseline.
 
 ## Simulation vs. scenario
 
-The terms are related but refer to different scopes. A **scenario** in o9 is a named planning version with modified assumptions — it is the object you work with. A **simulation** (or workflow simulation) is the act of running the planning engine to calculate the consequences of those modified assumptions. In practice, running a simulation means: create a scenario, modify inputs, trigger the planning engine, review the output.
+The terms are related but refer to different scopes. A **scenario** in Planning software is a named planning version with modified assumptions — it is the object you work with. A **simulation** (or workflow simulation) is the act of running the planning engine to calculate the consequences of those modified assumptions. In practice, running a simulation means: create a scenario, modify inputs, trigger the planning engine, review the output.
 
 ## What you can simulate
 

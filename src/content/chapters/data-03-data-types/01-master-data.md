@@ -27,10 +27,10 @@ Master data errors are particularly dangerous because they are structural: a wro
 
 ## Master data ownership
 
-In the four-system landscape, Pimcore is the master data management system — the authoritative source for item, BOM, and BOD master data. Changes to master data should always start in Pimcore, not in o9 or BC. A change made directly in o9 will be overwritten by the next Pimcore sync.
+In the four-system landscape, MDM system is the master data management system — the authoritative source for item, BOM, and BOD master data. Changes to master data should always start in MDM system, not in Planning software or ERP. A change made directly in Planning software will be overwritten by the next MDM system sync.
 
-Master data has defined owners — typically a data management team rather than the planning team. When a planner identifies a master data error, the correct process is to raise it with the data owner, not to apply a manual workaround in o9.
+Master data has defined owners — typically a data management team rather than the planning team. When a planner identifies a master data error, the correct process is to raise it with the data owner, not to apply a manual workaround in Planning software.
 
 ## Master data change management
 
-Master data changes are not trivial. A new item needs to be set up in Pimcore, synced to o9 and BC, and have its planning parameters validated before it appears correctly in the planning model. A lead time change affects every future planned order for that item. Changes need to be managed through a structured process — not made ad hoc by whoever notices a discrepancy first.
+Master data changes are not trivial. A new item needs to be set up in MDM system, synced to Planning software and ERP, and have its planning parameters validated before it appears correctly in the planning model. A lead time change affects every future planned order for that item. Changes need to be managed through a structured process — not made ad hoc by whoever notices a discrepancy first.

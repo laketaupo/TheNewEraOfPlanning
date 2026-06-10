@@ -19,11 +19,11 @@ Supply risk scenarios are most valuable when uncertainty is structural — a sup
 
 **Capacity constraints** model a production resource running at reduced throughput — because of maintenance, labour shortages, or equipment issues. The scenario reveals which products compete for the constrained resource and what sequencing decisions need to be made.
 
-**Lead time extensions** model suppliers or transport legs taking longer than normal. Because o9 plans using Bill of Distribution lead times, extending a leg shifts all downstream due dates and can surface capacity bottlenecks that were previously hidden.
+**Lead time extensions** model suppliers or transport legs taking longer than normal. Because Planning software plans using Bill of Distribution lead times, extending a leg shifts all downstream due dates and can surface capacity bottlenecks that were previously hidden.
 
 **Multi-node disruptions** model the compounding effect of simultaneous failures — a supplier shortage combined with a logistics delay, for example. These are harder to anticipate but the scenarios that most often reveal systemic fragility.
 
-## Setting up a supply risk scenario in o9
+## Setting up a supply risk scenario in Planning software
 
 A supply risk scenario typically starts by modifying one or more of:
 - **Supplier capacity parameters** — capping available supply from a specific node

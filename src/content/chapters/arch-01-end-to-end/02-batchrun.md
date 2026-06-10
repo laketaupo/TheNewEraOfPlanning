@@ -15,15 +15,15 @@ Batch runs are what make the daily planning cycle sustainable. Without them, pla
 
 ## The overnight planning cycle
 
-A standard overnight batch cycle for the o9 planning environment runs in sequence:
+A standard overnight batch cycle for the Planning software planning environment runs in sequence:
 
-1. **Master data sync** — updated item master, BOMs, and BODs are pulled from Pimcore into o9. Any new items, changed parameters, or updated lead times are applied.
+1. **Master data sync** — updated item master, BOMs, and BODs are pulled from MDM system into Planning software. Any new items, changed parameters, or updated lead times are applied.
 
-2. **Transactional data import** — actual inventory positions, goods receipts, and production order completions from BC are imported into o9. Open purchase orders and production orders are updated to reflect current status.
+2. **Transactional data import** — actual inventory positions, goods receipts, and production order completions from ERP are imported into Planning software. Open purchase orders and production orders are updated to reflect current status.
 
-3. **Field signal refresh** — updated crop forecasts and grower contract data from Cropin Grow are loaded into o9 as updated supply signals.
+3. **Field signal refresh** — updated crop forecasts and grower contract data from FMS are loaded into Planning software as updated supply signals.
 
-4. **Planning engine run** — o9 recalculates the supply plan across the full network, incorporating the updated master data and transactional actuals. New planned orders are generated, existing orders are rescheduled where needed, and exception flags are updated.
+4. **Planning engine run** — Planning software recalculates the supply plan across the full network, incorporating the updated master data and transactional actuals. New planned orders are generated, existing orders are rescheduled where needed, and exception flags are updated.
 
 5. **Exception report generation** — the updated exception list is made available to planners for the morning S&OE review.
 
@@ -38,7 +38,7 @@ Key indicators of batch run health:
 
 ## Common batch run issues
 
-**Data format errors** — a change to the source system's data structure (e.g., a new field in Pimcore) can break the interface mapping. The batch run fails on the records that don't conform to the expected schema.
+**Data format errors** — a change to the source system's data structure (e.g., a new field in MDM system) can break the interface mapping. The batch run fails on the records that don't conform to the expected schema.
 
 **Timeout errors** — large data volumes combined with network latency can cause batch jobs to exceed their timeout window. This is common when a source system is upgraded or when a month-end close increases transaction volumes.
 

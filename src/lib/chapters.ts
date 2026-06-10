@@ -87,7 +87,7 @@ export function getChapters(pillar?: string): ChapterMeta[] {
 
 export function getChapterUrl(ch: ChapterMeta): string {
   const pillar = ch.pillar ?? 'technology';
-  const module = ch.module ?? 'how-o9-works';
+  const module = ch.module ?? 'how-planning-software-works';
   return `${import.meta.env.BASE_URL}${pillar}/${module}/${ch.slug}`;
 }
 
@@ -100,7 +100,7 @@ export function getTopics(): TopicMeta[] {
       const chapterSlug = chapterSlugFromPath(path);
       const chapter = allChapters.find((c) => c.slug === chapterSlug);
       const pillar = chapter?.pillar ?? 'technology';
-      const module = chapter?.module ?? 'how-o9-works';
+      const module = chapter?.module ?? 'how-planning-software-works';
       return {
         title: fm.title ?? '',
         description: fm.description ?? '',

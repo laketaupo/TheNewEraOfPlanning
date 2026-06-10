@@ -1,0 +1,9 @@
+{
+  "title": "Running Scenarios in Planning Software",
+  "description": "The practical how-to: creating, adjusting, comparing, and promoting scenarios within the Planning software.",
+  "icon": "network",
+  "color": "violet",
+  "order": 2,
+  "pillar": "process",
+  "module": "scenario-planning"
+}

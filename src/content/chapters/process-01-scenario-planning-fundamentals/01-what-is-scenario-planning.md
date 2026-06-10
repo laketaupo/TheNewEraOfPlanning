@@ -1,6 +1,6 @@
 ---
 title: "What is Scenario Planning?"
-description: "Scenario planning is the discipline of exploring alternative futures before committing to a course of action. In o9, it means running parallel plans."
+description: "Scenario planning is the discipline of exploring alternative futures before committing to a course of action. In Planning software, it means running parallel plans."
 order: 1
 chapter: "process-01-scenario-planning-fundamentals"
 estimatedMinutes: 4
@@ -15,7 +15,7 @@ Scenario planning is the practice of asking "what if?" **before** uncertainty re
 
 ## What a scenario is
 
-In o9, a scenario is a **copy of the planning model** with modified assumptions. You might create a scenario that models a 20% demand increase for a key product line, or a scenario that models a supplier delivering at 70% of normal capacity, or a scenario that tests the impact of delaying a production shutdown.
+In Planning software, a scenario is a **copy of the planning model** with modified assumptions. You might create a scenario that models a 20% demand increase for a key product line, or a scenario that models a supplier delivering at 70% of normal capacity, or a scenario that tests the impact of delaying a production shutdown.
 
 Within that scenario, the planning engine calculates a new plan: what orders would need to be placed, what inventory would build or deplete, what capacity would be tight. You can see the consequences of the assumption change without changing the live plan.
 

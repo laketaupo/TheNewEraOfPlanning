@@ -6,7 +6,7 @@ chapter: "99-layout-showcase"
 estimatedMinutes: 3
 widget: ""
 topicLayout: "data-table"
-tableColumns: ["Object", "o9 Name", "Key Fields", "Created By"]
+tableColumns: ["Object", "Planning software Name", "Key Fields", "Created By"]
 tableRows:
   - ["Product / SKU", "Item", "Item ID, UOM, shelf life, planning horizon", "Master data team"]
   - ["Recipe / BOM", "Transformation Process", "Input items, output item, yield, lead time, location", "Engineering / supply chain"]

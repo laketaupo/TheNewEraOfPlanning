@@ -1,0 +1,9 @@
+{
+  "title": "ERP Basics",
+  "description": "Understand what ERP does in the Planning software ecosystem, how it differs from the legacy ERP, and how planners interact with it.",
+  "icon": "office-building",
+  "color": "sky",
+  "order": 1,
+  "pillar": "technology",
+  "module": "erp"
+}

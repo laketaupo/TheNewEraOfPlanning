@@ -22,7 +22,7 @@ The standard safety stock formula takes three inputs:
 
 The formula: `SS = Z × √(LT × σ_demand² + D_avg² × σ_LT²)`
 
-In practice, o9 handles this calculation using the planning parameters set for each item-location. The planner's role is to set the right service level target and ensure that demand and lead time variability data is accurate.
+In practice, Planning software handles this calculation using the planning parameters set for each item-location. The planner's role is to set the right service level target and ensure that demand and lead time variability data is accurate.
 
 ## Safety stock as a policy decision
 

@@ -1,6 +1,6 @@
 ---
 title: "Running the Simulation"
-description: "Triggering the o9 planning engine recalculates the supply plan end-to-end. Understanding what happens during the run helps you interpret the output correctly."
+description: "Triggering the Planning software planning engine recalculates the supply plan end-to-end. Understanding what happens during the run helps you interpret the output correctly."
 order: 3
 chapter: "04-the-simulation"
 estimatedMinutes: 3
@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## What happens when you run the simulation
 
-When you trigger a planning run in o9, the engine executes the supply planning logic across the entire network, in the sequence defined by the Bill of Distribution and Bill of Material:
+When you trigger a planning run in Planning software, the engine executes the supply planning logic across the entire network, in the sequence defined by the Bill of Distribution and Bill of Material:
 
 1. **Demand netting** — the gross demand signals are processed against existing inventory and scheduled receipts to determine net requirements at each node
 2. **MRP / DRP propagation** — net requirements are exploded upstream through the BOM and BOD: what needs to be produced, what needs to be shipped, what needs to be ordered

@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## The comparison view
 
-The primary way to read simulation results is through comparison: the scenario plan vs. the baseline plan, side by side. o9 provides views that let you see the delta — what changed as a result of your input modification — rather than just the absolute numbers in the new plan.
+The primary way to read simulation results is through comparison: the scenario plan vs. the baseline plan, side by side. Planning software provides views that let you see the delta — what changed as a result of your input modification — rather than just the absolute numbers in the new plan.
 
 Focus first on the metrics you noted before the run: total shortage volume, inventory DoH, planned order quantities for the affected items. These are your anchors. The comparison should answer your original question directly.
 

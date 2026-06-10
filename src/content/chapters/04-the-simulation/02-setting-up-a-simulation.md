@@ -1,6 +1,6 @@
 ---
 title: "Setting Up a Simulation"
-description: "Before running a simulation in o9, you need to define what you are testing, create the scenario, and make the right input changes. Preparation determines whether the output is useful."
+description: "Before running a simulation in Planning software, you need to define what you are testing, create the scenario, and make the right input changes. Preparation determines whether the output is useful."
 order: 2
 chapter: "04-the-simulation"
 estimatedMinutes: 4
@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## Start with a clear question
 
-The most common mistake in simulation setup is starting with the tool rather than the question. Before opening o9, you should be able to state: "I want to know what happens to my supply plan if [specific assumption changes]." The more specific the question, the more useful the simulation.
+The most common mistake in simulation setup is starting with the tool rather than the question. Before opening Planning software, you should be able to state: "I want to know what happens to my supply plan if [specific assumption changes]." The more specific the question, the more useful the simulation.
 
 Vague question: "What if demand is higher?"  
 Good question: "What happens to inventory and shortage risk for Variety X if the June demand signal increases by 25%?"

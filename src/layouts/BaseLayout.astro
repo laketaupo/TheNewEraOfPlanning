@@ -6,7 +6,7 @@ export interface Props {
   description?: string;
 }
 
-const { title = 'How o9 Works', description = 'An interactive guide to the o9 Solutions planning platform.' } = Astro.props;
+const { title = 'How Planning Software Works', description = 'An interactive guide to the Planning software.' } = Astro.props;
 ---
 <!doctype html>
 <html lang="en" class="scroll-smooth">
@@ -18,7 +18,7 @@ const { title = 'How o9 Works', description = 'An interactive guide to the o9 So
 
     <!-- Apply saved theme before render to avoid flash -->
     <script is:inline>
-      if (localStorage.getItem('o9-theme') === 'dark') {
+      if (localStorage.getItem('platform-theme') === 'dark') {
         document.documentElement.classList.add('dark');
       }
     </script>

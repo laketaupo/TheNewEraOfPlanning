@@ -48,7 +48,7 @@ orgChart:
         - Prepare demand review materials
       competencies:
         - Statistical forecasting methods
-        - Data literacy and Excel/o9 proficiency
+        - Data literacy and Excel/Planning software proficiency
         - Business acumen and market awareness
         - Structured communication
     - id: supply-mgr
@@ -89,7 +89,7 @@ orgChart:
         - Advanced data skills (SQL, Excel, BI tools)
         - Process documentation
         - Attention to detail
-        - o9 platform administration
+        - Planning software administration
   crossFunctional:
     - id: finance-bp
       title: Finance Business Partner

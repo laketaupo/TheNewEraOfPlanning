@@ -1,6 +1,6 @@
 ---
 title: "Reading Plan Output"
-description: "Plan output is what the o9 planning engine produces: planned orders, inventory projections, exception flags. Knowing how to read these outputs is the core skill of working in o9."
+description: "Plan output is what the Planning software planning engine produces: planned orders, inventory projections, exception flags. Knowing how to read these outputs is the core skill of working in Planning software."
 order: 3
 chapter: "05-navigation-and-ui"
 estimatedMinutes: 5
@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## The three types of plan output
 
-The o9 planning engine produces three main types of output:
+The Planning software planning engine produces three main types of output:
 
 **1. Planned orders** — recommendations to order, produce, or transfer material. Each planned order has a quantity, a due date, a source (supplier, production resource, sending location), and a destination. Planned orders are proposals until they are released to the ERP as purchase orders, production orders, or transfer orders.
 
@@ -40,7 +40,7 @@ A closing stock that drops below zero in any period is a projected shortage. A c
 
 ## Understanding exception flags
 
-Exceptions in o9 use a standard severity coding:
+Exceptions in Planning software use a standard severity coding:
 
 - **Red / Critical** — the item will stock out within the actionable horizon (typically 4–6 weeks); a decision must be made now
 - **Amber / Warning** — the item is at risk of stocking out within the planning horizon; action is needed soon

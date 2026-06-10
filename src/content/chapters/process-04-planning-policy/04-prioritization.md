@@ -35,7 +35,7 @@ Common criteria for prioritization include:
 
 Prioritization policy needs to be encoded in the planning system — not left as a manual override. If prioritization is only applied after the plan is published (by a sales manager changing an order priority in the ERP), then the planning system is generating plans that don't reflect business reality, and the value of the planning model is degraded.
 
-In o9, demand signals can carry priority attributes that the planning engine uses to sequence fulfilment. Setting these attributes correctly — and keeping them current — is a joint responsibility between the commercial team (who knows the priority) and the planning team (who maintains the system).
+In Planning software, demand signals can carry priority attributes that the planning engine uses to sequence fulfilment. Setting these attributes correctly — and keeping them current — is a joint responsibility between the commercial team (who knows the priority) and the planning team (who maintains the system).
 
 ## Prioritization is a governance decision
 

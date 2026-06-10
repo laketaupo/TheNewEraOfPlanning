@@ -38,7 +38,7 @@ Setting safety stock correctly is a planning decision. Too high and capital is t
 
 ## Time-phased inventory
 
-Inventory is not just a static number — it changes period by period as planned orders arrive and demand consumes stock. o9 maintains a **projected inventory profile** for each line item, showing the expected on-hand balance week by week across the planning horizon.
+Inventory is not just a static number — it changes period by period as planned orders arrive and demand consumes stock. Planning software maintains a **projected inventory profile** for each line item, showing the expected on-hand balance week by week across the planning horizon.
 
 The engine nets against this time-phased profile, not just today's snapshot. A planned order arriving in Week 12 contributes to the available balance from Week 12 onwards, potentially eliminating the need for a further order in Week 13.
 

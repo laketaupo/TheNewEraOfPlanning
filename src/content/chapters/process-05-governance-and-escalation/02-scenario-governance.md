@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## The governance problem with scenarios
 
-o9 makes it easy to create scenarios. That is a feature — but it creates a governance challenge. Without rules around scenario creation and lifecycle, the planning environment can accumulate:
+Planning software makes it easy to create scenarios. That is a feature — but it creates a governance challenge. Without rules around scenario creation and lifecycle, the planning environment can accumulate:
 
 - Dozens of scenarios with no clear owner or status
 - Scenarios built on outdated assumptions that are still visible to the organisation

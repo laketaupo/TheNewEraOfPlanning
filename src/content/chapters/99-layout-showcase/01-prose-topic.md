@@ -31,7 +31,7 @@ Use it when you have a few paragraphs to write and don't need any special struct
 
 ### Inline code
 
-Refer to o9 objects like `Item`, `BOM`, or `BOD` inline without breaking the sentence flow.
+Refer to Planning software objects like `Item`, `BOM`, or `BOD` inline without breaking the sentence flow.
 
 ### Tables
 

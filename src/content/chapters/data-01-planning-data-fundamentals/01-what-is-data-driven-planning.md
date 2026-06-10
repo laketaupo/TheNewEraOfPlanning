@@ -15,7 +15,7 @@ Data-driven planning replaces gut feel with **structured, repeatable inputs** th
 
 ## What "data-driven" actually means
 
-In an o9 context, data-driven planning means three things:
+In an Planning software context, data-driven planning means three things:
 
 1. **The plan is calculated from data, not entered manually.** Demand forecasts, inventory levels, production capacities, and supply constraints are loaded into the system and the plan falls out of the logic — not from a spreadsheet someone filled in.
 

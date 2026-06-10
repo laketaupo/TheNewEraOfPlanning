@@ -11,18 +11,18 @@ topicLayout: "prose-topic"
 
 Automated interfaces handle the steady-state data flow. Manual uploads are needed for:
 - **One-off corrections** — a single item's parameter needs updating immediately, outside the next overnight batch cycle
-- **Historical data loads** — when setting up o9 or adding a new product line, historical demand data may need to be loaded from a spreadsheet
+- **Historical data loads** — when setting up Planning software or adding a new product line, historical demand data may need to be loaded from a spreadsheet
 - **New data sources** — when a new supplier or grower is onboarded before the automated interface is configured
 - **Interface outages** — when an interface fails and data needs to be loaded manually to keep the planning cycle running
 
-## Upload formats in o9
+## Upload formats in Planning software
 
-o9 supports data uploads via:
+Planning software supports data uploads via:
 - **Excel templates** — pre-formatted spreadsheets with defined column structures for each data type (demand signals, supply orders, inventory positions, planning parameters)
-- **CSV import** — structured flat files that map to the o9 data model
-- **API upload** — for technical users, the o9 API allows programmatic data upload for larger volumes
+- **CSV import** — structured flat files that map to the Planning software data model
+- **API upload** — for technical users, the Planning software API allows programmatic data upload for larger volumes
 
-Each upload type has a defined schema. Uploading data in the wrong format or with missing required fields will fail with a validation error. Always use the latest template from the o9 configuration rather than a copy from a previous upload.
+Each upload type has a defined schema. Uploading data in the wrong format or with missing required fields will fail with a validation error. Always use the latest template from the Planning software configuration rather than a copy from a previous upload.
 
 ## Upload governance
 

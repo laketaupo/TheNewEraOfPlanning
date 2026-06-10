@@ -16,7 +16,7 @@ A forecast of **100 units of Item J** in a given planning period is the starting
 
 The raw forecast from the ML model is a probability distribution — for example, "90 % confidence the customer will need between 85 and 115 units." The **demand plan** is the single number committed to by the commercial team: 100 units. This is the number that the planning engine uses.
 
-In o9 the demand plan lives on the Item J **line item** at the customer location. A line item is a (item, location, time) combination, and the demand plan is one of its key attributes alongside on-hand inventory, safety stock, and lead time.
+In Planning software the demand plan lives on the Item J **line item** at the customer location. A line item is a (item, location, time) combination, and the demand plan is one of its key attributes alongside on-hand inventory, safety stock, and lead time.
 
 ## The parent line item relationship
 

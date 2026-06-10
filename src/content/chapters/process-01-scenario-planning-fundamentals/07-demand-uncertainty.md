@@ -31,4 +31,4 @@ The output of a demand scenario is not a new forecast — it is a decision trigg
 2. **What is the inventory risk on the downside?** If demand falls, which stocks are stranded and for how long?
 3. **What are the decision points?** At what point in the timeline does the decision become irreversible — a production run committed, a seed treatment started?
 
-In o9, these questions are answered by comparing scenario outputs side-by-side against the baseline plan, giving planners a quantified view of the exposure in each direction before committing resources.
+In Planning software, these questions are answered by comparing scenario outputs side-by-side against the baseline plan, giving planners a quantified view of the exposure in each direction before committing resources.

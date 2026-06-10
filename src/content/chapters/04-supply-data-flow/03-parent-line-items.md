@@ -8,7 +8,7 @@ estimatedMinutes: 4
 
 ## What is a parent line item?
 
-A **parent line item** is the supply source for a given item. In o9, the relationship is defined by the network graph:
+A **parent line item** is the supply source for a given item. In Planning software, the relationship is defined by the network graph:
 
 - The **BOD edge** from Ship [A] to Item A at the Grower makes Item A (Central Warehouse) the parent of Item A (Grower).
 - The **BOM edge** from Seed Production to Item C makes Seed Production the parent of Item C.

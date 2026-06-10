@@ -8,7 +8,7 @@ widget: ""
 nodeType: "transportation"
 transportMode: "Road"
 topicLayout: "node-topic"
-summary: "Transport Mode defines the physical method of movement on a distribution lane — truck, rail, sea, or air. Each mode carries a different lead time, cost profile, and capacity constraint. The planning engine uses transport mode to determine which lanes are feasible for a given replenishment need and when shipments must depart to arrive on time. Multiple modes can be defined on a single lane, allowing o9 to choose the best option based on urgency and cost."
+summary: "Transport Mode defines the physical method of movement on a distribution lane — truck, rail, sea, or air. Each mode carries a different lead time, cost profile, and capacity constraint. The planning engine uses transport mode to determine which lanes are feasible for a given replenishment need and when shipments must depart to arrive on time. Multiple modes can be defined on a single lane, allowing Planning software to choose the best option based on urgency and cost."
 bullets:
   - "Defines the physical method of movement on a lane — truck, rail, sea, air"
   - "Each mode has a different lead time, cost, and capacity profile"

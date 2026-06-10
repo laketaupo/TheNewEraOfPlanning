@@ -28,7 +28,7 @@ A standard planning cadence has three levels that nest together:
 - Exception review: items at risk in the 1–6 week horizon
 - Corrective action assignment and tracking
 - Short-horizon capacity and supply resolution
-- Update to o9 planning model where needed
+- Update to Planning software planning model where needed
 
 **Daily — Execution layer**
 - Production order status review
@@ -42,6 +42,6 @@ The cadence above is a template, not a prescription. In practice, the right cade
 
 For agricultural businesses with long growing cycles, the monthly S&OP cycle often needs to be supplemented with **seasonal planning reviews** — deep dives that happen quarterly or at key crop cycle milestones rather than on a calendar month basis.
 
-## The cadence in o9
+## The cadence in Planning software
 
-o9 supports the cadence through its workflow and collaboration features: scenarios can be locked and published after S&OP sign-off, exceptions can be assigned to owners for S&OE resolution, and plan versions can be tracked across the monthly cycle. The system does not enforce the cadence — it is the people and process that make it work — but it provides the structure within which the cadence operates.
+Planning software supports the cadence through its workflow and collaboration features: scenarios can be locked and published after S&OP sign-off, exceptions can be assigned to owners for S&OE resolution, and plan versions can be tracked across the monthly cycle. The system does not enforce the cadence — it is the people and process that make it work — but it provides the structure within which the cadence operates.

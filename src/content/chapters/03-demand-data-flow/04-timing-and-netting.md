@@ -16,7 +16,7 @@ Safety stock is treated as a floor: the engine will not net below it. If Item D 
 
 ## Time-phased demand
 
-o9 plans in discrete time buckets — typically days or weeks. The demand signal is not just a quantity; it is a **quantity at a specific time**. The planning engine must ensure that each upstream node completes its work in time to feed the next downstream node.
+Planning software plans in discrete time buckets — typically days or weeks. The demand signal is not just a quantity; it is a **quantity at a specific time**. The planning engine must ensure that each upstream node completes its work in time to feed the next downstream node.
 
 Each process has a **lead time** attribute (set on the Transformation or Transportation Process node). When the engine places demand upstream, it subtracts the lead time to find the latest possible start date:
 

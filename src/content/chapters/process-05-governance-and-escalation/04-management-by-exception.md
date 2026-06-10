@@ -25,9 +25,9 @@ An exception is any planning situation that falls outside a defined tolerance. C
 
 Each exception type should have a defined tolerance (e.g., "flag as exception if projected stock drops below 2 weeks of forward demand") and a defined owner.
 
-## Exception-based working in o9
+## Exception-based working in Planning software
 
-o9 is designed to support exception-based working. The workspace can be configured to surface exceptions automatically on the planner's dashboard — grouped by type, severity, and due date. This means the planner opens o9 each morning and sees not a full inventory of the planning model, but a prioritised list of issues that need attention.
+Planning software is designed to support exception-based working. The workspace can be configured to surface exceptions automatically on the planner's dashboard — grouped by type, severity, and due date. This means the planner opens Planning software each morning and sees not a full inventory of the planning model, but a prioritised list of issues that need attention.
 
 The discipline is not just in the system configuration. It requires that planners trust the exceptions list — if an item is not on the exceptions list, it does not need daily review. Planners who override this and review everything "just in case" are defeating the model and creating a false sense of control.
 

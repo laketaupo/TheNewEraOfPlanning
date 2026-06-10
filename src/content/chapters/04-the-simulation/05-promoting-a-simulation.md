@@ -23,17 +23,17 @@ A simulation should only be promoted when:
 
 3. **Sign-off has been obtained** — per the scenario governance policy, promotion requires the appropriate level of authorisation (planning manager, or S&OP sign-off for large changes to the baseline).
 
-4. **Execution systems are ready** — if the new plan will generate purchase orders or production orders in BC, the relevant execution team needs to be prepared for the new planned quantities and timing.
+4. **Execution systems are ready** — if the new plan will generate purchase orders or production orders in ERP, the relevant execution team needs to be prepared for the new planned quantities and timing.
 
 ## The promotion process
 
-In o9, promotion is typically performed by a planning administrator or planning manager. The steps are:
+In Planning software, promotion is typically performed by a planning administrator or planning manager. The steps are:
 
 1. Archive the current baseline (preserve a snapshot for reference)
 2. Promote the scenario to baseline
 3. Trigger a fresh planning run to confirm the promoted plan calculates correctly
 4. Publish the new baseline to the relevant stakeholders
-5. Update ERP (BC) with the new planned orders where the integration requires manual release
+5. Update ERP (ERP) with the new planned orders where the integration requires manual release
 
 ## After promotion
 

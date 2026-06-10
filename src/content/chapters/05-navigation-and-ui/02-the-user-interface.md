@@ -1,6 +1,6 @@
 ---
 title: "The User Interface"
-description: "The o9 interface is built around a grid-and-chart model. Understanding the core UI components — grids, filters, charts, and the exception panel — makes every workspace easier to use."
+description: "The Planning software interface is built around a grid-and-chart model. Understanding the core UI components — grids, filters, charts, and the exception panel — makes every workspace easier to use."
 order: 2
 chapter: "05-navigation-and-ui"
 estimatedMinutes: 5
@@ -9,7 +9,7 @@ topicLayout: "prose-topic"
 
 ## The grid view
 
-The grid is the most common view type in o9. It presents planning data in a row-column structure: rows represent items (products, locations, customers) and columns represent time periods. Cells contain values — inventory quantities, planned order volumes, demand signals.
+The grid is the most common view type in Planning software. It presents planning data in a row-column structure: rows represent items (products, locations, customers) and columns represent time periods. Cells contain values — inventory quantities, planned order volumes, demand signals.
 
 Key grid features:
 - **Freeze panes** — the left column (item hierarchy) and time headers can be frozen while scrolling
@@ -29,7 +29,7 @@ Filters are applied at the workspace level and persist while you navigate within
 
 ## Charts and visualisations
 
-Chart views in o9 typically show:
+Chart views in Planning software typically show:
 - **Inventory waterfall** — stock projection over time, showing opening stock, receipts, demand, and closing stock per period
 - **Demand vs. supply bar chart** — side-by-side comparison of demand signal and supply plan by period
 - **Exception trend** — the number and type of exceptions over time, useful for tracking whether the planning process is improving or degrading
@@ -44,4 +44,4 @@ The exception panel is the starting point for exception-based working: open the 
 
 ## Saving and sharing views
 
-o9 allows personalised view configurations — filter settings, column arrangements, chart types — to be saved and shared. Creating a saved view for your standard daily exception check saves time and ensures consistency across the team.
+Planning software allows personalised view configurations — filter settings, column arrangements, chart types — to be saved and shared. Creating a saved view for your standard daily exception check saves time and ensures consistency across the team.

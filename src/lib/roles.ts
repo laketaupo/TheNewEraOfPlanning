@@ -60,7 +60,7 @@ export function getRole(slug: string): RoleConfig | undefined {
  * Note: topicId uses the site-wide `ch{chapterOrder}-t{topicOrder}` scheme.
  * Chapter orders restart per module, so IDs collide across pillars (e.g. two
  * different topics can both be `ch1-t1`) — completing one ticks both. That is
- * existing site-wide behavior of the o9-progress store; migrating to
+ * existing site-wide behavior of the platform-progress store; migrating to
  * collision-free IDs is intentionally out of scope here.
  */
 export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
