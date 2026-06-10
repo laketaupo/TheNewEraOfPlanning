@@ -1,8 +1,10 @@
 ---
 import { getChapters, getTopics, getChapterUrl } from '../lib/chapters';
+import { getRoles } from '../lib/roles';
 
 const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics = getTopics();
+const liveRoles = getRoles().filter(r => !r.comingSoon);
 
 const pillarOrder = ['technology', 'process', 'data', 'people'];
 
@@ -150,6 +152,31 @@ const totalTopics = allTopics.length;
 
           </section>
         ))}
+
+        {liveRoles.length > 0 && (
+          <section class="pillar-section" data-pillar="roles">
+            <div class="flex items-center gap-2 px-5 py-2 mt-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400">Roles</span>
+              <div class="flex-1 h-px bg-teal-100 dark:bg-teal-500/20"></div>
+            </div>
+            <div class="module-group" data-module="roles">
+              {liveRoles.map(role => (
+                <div class="chapter-card" data-chapter={`${role.title} role course`.toLowerCase()}>
+                  <a
+                    href={role.url}
+                    class="chapter-link flex items-center gap-2 pl-12 pr-5 py-1 group"
+                    data-search={role.title.toLowerCase()}
+                  >
+                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0 group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></span>
+                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">
+                      {role.title}
+                    </span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <!-- Empty state -->
         <p id="site-overlay-empty" class="hidden text-sm text-gray-400 dark:text-gray-500 text-center py-10">Geen pagina's gevonden.</p>

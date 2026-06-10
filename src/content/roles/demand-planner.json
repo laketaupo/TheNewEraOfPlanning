@@ -1,0 +1,9 @@
+{
+  "title": "Demand Planner",
+  "description": "Forecasting, demand signals, and shaping the demand plan that drives everything downstream.",
+  "icon": "trending-up",
+  "color": "amber",
+  "order": 3,
+  "comingSoon": true,
+  "sections": []
+}

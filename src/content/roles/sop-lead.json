@@ -1,0 +1,9 @@
+{
+  "title": "S&OP Lead",
+  "description": "Run the end-to-end S&OP cycle: cadence, governance, and decision-making across functions.",
+  "icon": "beaker",
+  "color": "indigo",
+  "order": 2,
+  "comingSoon": true,
+  "sections": []
+}

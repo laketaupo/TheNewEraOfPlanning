@@ -1,0 +1,9 @@
+{
+  "title": "Finance Business Partner",
+  "description": "Connect plans to money: financial impact, scenario trade-offs, and the integrated reconciliation step.",
+  "icon": "currency",
+  "color": "emerald",
+  "order": 4,
+  "comingSoon": true,
+  "sections": []
+}

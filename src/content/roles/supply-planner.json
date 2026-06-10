@@ -1,0 +1,75 @@
+{
+  "title": "Supply Planner",
+  "description": "Own the supply plan: master the network, supply data flow, scenarios, and the policies that govern supply decisions.",
+  "icon": "truck",
+  "color": "teal",
+  "order": 1,
+  "sections": [
+    {
+      "title": "Planning Foundations",
+      "description": "The building blocks every supply plan is made of.",
+      "topics": [
+        "01-understanding-basics/01-item",
+        "01-understanding-basics/02-item-at-location",
+        "01-understanding-basics/03-bom",
+        "01-understanding-basics/05-bom-lead-time",
+        "01-understanding-basics/06-bod"
+      ]
+    },
+    {
+      "title": "The Network & Planning Logic",
+      "description": "How the blocks connect, and how the engine decides what to make, move, and buy.",
+      "topics": [
+        "02-the-network/11-full-network",
+        "03-the-logic/04-scheduled-receipt",
+        "03-the-logic/05-push",
+        "03-the-logic/06-pull",
+        "03-the-logic/07-safety-stock"
+      ]
+    },
+    {
+      "title": "How Supply Flows Through the Plan",
+      "description": "From demand signal to the downstream supply cascade.",
+      "topics": [
+        "03-demand-data-flow/01-demand-signal",
+        "03-demand-data-flow/03-upstream-cascade",
+        "04-supply-data-flow/01-supply-signal",
+        "04-supply-data-flow/02-inventory-netting",
+        "04-supply-data-flow/03-parent-line-items",
+        "04-supply-data-flow/04-downstream-cascade"
+      ]
+    },
+    {
+      "title": "Scenarios & Simulation",
+      "description": "Stress-test the supply plan before committing to it.",
+      "topics": [
+        "process-01-scenario-planning-fundamentals/01-what-is-scenario-planning",
+        "process-01-scenario-planning-fundamentals/06-supply-risks",
+        "04-the-simulation/02-setting-up-a-simulation",
+        "process-02-running-scenarios-in-o9/01-creating-a-scenario-in-o9",
+        "process-02-running-scenarios-in-o9/03-running-and-comparing-scenarios"
+      ]
+    },
+    {
+      "title": "Operating Model & Planning Policy",
+      "description": "The cadence and the rules the supply plan lives by.",
+      "topics": [
+        "process-03-operating-model/01-what-is-sop",
+        "process-03-operating-model/04-the-cadence",
+        "process-04-planning-policy/02-safety-stock",
+        "process-04-planning-policy/03-allocation"
+      ]
+    },
+    {
+      "title": "Your Role, Data & Governance",
+      "description": "Where the Supply Planner sits, and what keeps the plan trustworthy.",
+      "topics": [
+        "people-01-planning-team/02-planning-roles-overview",
+        "people-02-accountability/03-supply-review-rasci",
+        "data-03-data-types/03-planning-parameters",
+        "process-05-governance-and-escalation/03-escalation-paths",
+        "process-06-kpis/02-key-planning-kpis"
+      ]
+    }
+  ]
+}

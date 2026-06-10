@@ -1,0 +1,9 @@
+{
+  "title": "Planning Analyst",
+  "description": "Keep the engine honest: data quality, planning parameters, and the analytics behind the plan.",
+  "icon": "chart",
+  "color": "sky",
+  "order": 6,
+  "comingSoon": true,
+  "sections": []
+}
