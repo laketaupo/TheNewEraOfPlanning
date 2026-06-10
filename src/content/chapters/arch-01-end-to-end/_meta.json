@@ -1,0 +1,9 @@
+{
+  "title": "End-to-End Architecture",
+  "description": "How BC, o9, Cropin Grow, and Pimcore connect: the interfaces, batch runs, and data upload processes that keep the system landscape in sync.",
+  "icon": "arrows-expand",
+  "color": "indigo",
+  "order": 1,
+  "pillar": "technology",
+  "module": "architecture"
+}

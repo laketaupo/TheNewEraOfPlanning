@@ -1,0 +1,9 @@
+{
+  "title": "KPIs",
+  "description": "Key performance indicators for supply chain planning — what to measure, how to define it, who owns it, and how to connect KPI performance to the S&OP cycle.",
+  "icon": "chart-bar",
+  "color": "violet",
+  "order": 6,
+  "pillar": "process",
+  "module": "scenario-planning"
+}

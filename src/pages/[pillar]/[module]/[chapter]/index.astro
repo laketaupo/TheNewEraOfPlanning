@@ -38,14 +38,18 @@ const colorBgMap: Record<string, string> = {
 };
 
 const BASE_URL = import.meta.env.BASE_URL;
-const pillarBackMap: Record<string, { href: string; label: string }> = {
-  technology: { href: `${BASE_URL}technology/how-o9-works`,      label: 'How o9 Works' },
-  data:       { href: `${BASE_URL}data/data-driven-planning`,    label: 'Data-Driven Planning' },
-  process:    { href: `${BASE_URL}process/scenario-planning`,    label: 'Scenario Planning' },
-  people:     { href: `${BASE_URL}people/people-and-planning`,   label: 'People & Planning' },
+const moduleBackMap: Record<string, { href: string; label: string }> = {
+  'how-o9-works':         { href: `${BASE_URL}technology/how-o9-works`,         label: 'How o9 Works' },
+  'business-central':     { href: `${BASE_URL}technology/business-central`,     label: 'Business Central' },
+  'architecture':         { href: `${BASE_URL}technology/architecture`,         label: 'Architecture & Integration' },
+  'ecosystem':            { href: `${BASE_URL}technology/ecosystem`,            label: 'System Ecosystem' },
+  'data-driven-planning': { href: `${BASE_URL}data/data-driven-planning`,       label: 'Data-Driven Planning' },
+  'scenario-planning':    { href: `${BASE_URL}process/scenario-planning`,       label: 'Scenario Planning' },
+  'people-and-planning':  { href: `${BASE_URL}people/people-and-planning`,      label: 'People & Planning' },
 };
 const pillar = chapter.pillar ?? 'technology';
-const back = pillarBackMap[pillar] ?? pillarBackMap['technology'];
+const currentModule = chapter.module ?? Astro.params.module ?? 'how-o9-works';
+const back = moduleBackMap[currentModule] ?? { href: `${BASE_URL}${pillar}/${currentModule}`, label: currentModule };
 const pillarChapters = getChapters(pillar).filter(c => !c.hidden && c.module === Astro.params.module);
 
 const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';

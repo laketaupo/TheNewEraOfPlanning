@@ -1,0 +1,9 @@
+{
+  "title": "System Integration",
+  "description": "How BC, o9, Cropin Grow, and Pimcore are integrated — the data flows, trigger points, and responsibilities for keeping the four-system landscape in sync.",
+  "icon": "switch-horizontal",
+  "color": "sky",
+  "order": 2,
+  "pillar": "technology",
+  "module": "architecture"
+}

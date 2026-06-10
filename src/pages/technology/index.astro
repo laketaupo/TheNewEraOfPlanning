@@ -67,6 +67,51 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
           <span class="track-badge">Business configuration guide</span>
         </a>
 
+        <!-- Business Central -->
+        <a href="/technology/business-central" class="group track-card track-bc">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Business Central</h2>
+          <p class="track-desc">The ERP that executes the plan — how BC works, how to navigate it, and how it connects to o9.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            ERP guide
+          </span>
+        </a>
+
+        <!-- Architecture & Integration -->
+        <a href="/technology/architecture" class="group track-card track-arch">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Architecture &amp; Integration</h2>
+          <p class="track-desc">Interfaces, batch runs, and data flows — how BC, o9, Cropin Grow, and Pimcore stay in sync.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            Integration guide
+          </span>
+        </a>
+
+        <!-- System Ecosystem -->
+        <a href="/technology/ecosystem" class="group track-card track-eco">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+            </svg>
+          </div>
+          <h2 class="track-title">System Ecosystem</h2>
+          <p class="track-desc">Pimcore (MDM) and Cropin Grow (FMS) — the supporting systems that feed master data and field signals into planning.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            Supporting systems
+          </span>
+        </a>
+
       </div>
     </div>
   </div>
@@ -96,6 +141,18 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
   .track-config {
     background: linear-gradient(135deg, #4338ca, #6366f1);
     box-shadow: 0 8px 32px rgba(99,102,241,0.25);
+  }
+  .track-bc {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    box-shadow: 0 8px 32px rgba(2,132,199,0.25);
+  }
+  .track-arch {
+    background: linear-gradient(135deg, #3730a3, #4f46e5);
+    box-shadow: 0 8px 32px rgba(79,70,229,0.25);
+  }
+  .track-eco {
+    background: linear-gradient(135deg, #047857, #10b981);
+    box-shadow: 0 8px 32px rgba(16,185,129,0.25);
   }
 
   .track-icon {

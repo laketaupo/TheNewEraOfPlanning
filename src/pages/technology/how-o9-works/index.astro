@@ -3,7 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ThemeToggle from '../../../components/ThemeToggle.astro';
 import { getChapters, getTopics } from '../../../lib/chapters';
 
-const chapters = getChapters('technology');
+const chapters = getChapters('technology').filter(ch => ch.module === 'how-o9-works');
 const allTopics = getTopics();
 
 const iconMap: Record<string, string> = {

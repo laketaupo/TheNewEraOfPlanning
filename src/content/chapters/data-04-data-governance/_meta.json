@@ -1,0 +1,9 @@
+{
+  "title": "Data Governance",
+  "description": "Data confidence, ownership, definitions, and the single source of truth — the governance structures that keep planning data reliable across a multi-system landscape.",
+  "icon": "shield-check",
+  "color": "emerald",
+  "order": 4,
+  "pillar": "data",
+  "module": "data-driven-planning"
+}
