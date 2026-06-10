@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Planning parameters are the settings that control how the planning engine behaves for each item: lead times, safety stock, minimum order quantities, lot sizes. Getting them right is as important as having good data."><title>Planning Parameters — Data-Driven Planning</title><!-- Apply saved theme before render to avoid flash --><script>
+      if (localStorage.getItem('o9-theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script><!-- Inter font --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/_astro/_topic_.HFXTooL5.css">
+<link rel="stylesheet" href="/_astro/_topic_.MxvjCL_9.css"><script type="module" src="/_astro/hoisted.00G-hwDo.js"></script></head> <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 font-sans antialiased min-h-screen transition-colors duration-200">   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800"> <a href="/data/data-driven-planning" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"></path> </svg> Data-Driven Planning </a> <a href="/data/data-driven-planning/data-03-data-types" class="text-sm font-medium border-b text-emerald-600 dark:text-emerald-400 border-emerald-400 dark:border-emerald-500 hover:opacity-80 transition-opacity"> Data Types in Planning </a> <div class="flex items-center gap-3"> <div id="topic-progress-display" class="text-xs text-gray-400 dark:text-gray-500"></div> <button id="theme-toggle" aria-label="Toggle light/dark mode" class="p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"> <!-- Moon: visible in light mode, click to go dark --> <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path> </svg> <!-- Sun: visible in dark mode, click to go light --> <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path> </svg> </button>  </div> </header>  <main class="min-h-screen pt-16 pb-32" style="--accent: #10b981; --accent-subtle: rgba(16, 185, 129, 0.07);"> <!-- ── Hero: landing-page treatment ── --> <div class="bg-gray-50 dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800"> <!-- Top chapter-color accent line --> <div class="h-[3px]" style="background: linear-gradient(90deg, #10b981, #10b98144 60%, transparent)"></div> <!-- Header content --> <div class="max-w-3xl mx-auto px-6 pt-6 pb-7 animate-fade-in"> <!-- Chapter badge --> <div class="inline-flex items-center gap-2 text-xs font-medium border rounded-full px-3 py-1 mb-3 bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400"> <span class="w-1.5 h-1.5 rounded-full animate-pulse bg-emerald-500"></span> Data Types in Planning · Topic 3 </div> <!-- Title --> <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 leading-tight tracking-tight">Planning Parameters</h1> <!-- Description --> <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">Planning parameters are the settings that control how the planning engine behaves for each item: lead times, safety stock, minimum order quantities, lot sizes. Getting them right is as important as having good data.</p> </div> </div> <!-- ── Widget (above prose) ── -->  <!-- ── Reading area ── --> <div class="bg-gray-50 dark:bg-gray-950"> <article class="max-w-3xl mx-auto px-6 py-14 animate-slide-up"> <div class="topic-prose prose prose-gray dark:prose-invert prose-lg max-w-none
+          prose-headings:font-bold prose-headings:tracking-tight
+          prose-p:leading-[1.85] prose-p:text-gray-700 dark:prose-p:text-gray-300
+          prose-li:text-gray-700 dark:prose-li:text-gray-300
+          prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline prose-a:font-medium
+          prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold"> <h2 id="what-planning-parameters-are">What planning parameters are</h2>
+<p>Planning parameters are the configuration inputs that tell o9 how to plan for each item at each location. They are distinct from master data (which describes what exists) and transactional data (which records what happened). Parameters describe the planning rules: how much lead time to allow, how much safety stock to hold, how orders should be sized.</p>
+<p>Getting planning parameters right is one of the most impactful — and most neglected — aspects of supply chain planning. A wrong lead time parameter causes systematic late ordering. A wrong minimum order quantity causes systematic over-procurement. Unlike a wrong transaction (which causes a one-time error), a wrong parameter causes every planning run to produce wrong results until it is fixed.</p>
+<h2 id="the-key-planning-parameters">The key planning parameters</h2>
+<p><strong>Lead time</strong> — the time between placing an order and receiving the goods, or between starting production and finishing it. Lead time is used to determine when a planned order needs to be placed to meet a future demand date. If the actual lead time is longer than the parameter, orders will be placed too late.</p>
+<p><strong>Safety stock</strong> — the minimum inventory buffer held to protect against uncertainty. In o9, safety stock can be set as a fixed quantity, a number of days of demand, or a statistical calculation based on variability. The parameter determines the floor below which o9 will generate a replenishment order.</p>
+<p><strong>Minimum order quantity (MOQ)</strong> — the smallest quantity that can be ordered in a single purchase or production run. MOQ constraints cause the planning engine to round up planned orders, which can lead to inventory peaks when demand is low.</p>
+<p><strong>Lot size / order multiples</strong> — production or purchase quantities must be in multiples of a defined lot size. For agricultural seed, this may reflect packaging constraints (pallets, bags) or production economics (minimum batch size).</p>
+<p><strong>Reorder point</strong> — the inventory level that triggers a new order. In some planning systems, this is calculated dynamically based on lead time and safety stock. In o9, it is typically derived from the planning engine’s requirements calculation rather than set as a static parameter.</p>
+<p><strong>Shelf life / expiry</strong> — for perishable items (seed lots have a limited germination validity period), the shelf life parameter controls how far into the future demand can be served from a given production lot. This prevents the system from planning delivery of seed that would arrive after its usable window.</p>
+<h2 id="parameter-review-process">Parameter review process</h2>
+<p>Planning parameters should be reviewed on a defined cycle — at minimum annually, and ideally before each major planning cycle (e.g., before the new season’s production programme is confirmed). The review should check:</p>
+<ul>
+<li>Are lead times still accurate, or have supplier or logistics lead times changed?</li>
+<li>Are safety stock levels calibrated to the current service level targets?</li>
+<li>Are MOQs and lot sizes still correct, or have production or packaging setups changed?</li>
+</ul>
+<p>Parameters that are wrong and never reviewed create a planning model that gradually diverges from reality — producing plans that cannot be executed without constant manual override.</p>
+<h2 id="where-parameters-live">Where parameters live</h2>
+<p>In the four-system landscape, planning parameters are defined in Pimcore and synced to o9. Changes should be made in Pimcore, not directly in o9, to ensure they persist through the next synchronisation cycle. If a parameter needs to be adjusted urgently (e.g., a supplier’s lead time has changed immediately), the correct process is to update Pimcore and trigger a sync — not to change it directly in o9 and wait for Pimcore to be updated later.</p> </div> </article> </div> </main>  <nav class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white/95 dark:bg-gray-950/95 backdrop-blur border-t border-gray-200 dark:border-gray-800"> <div class="flex-1"> <a href="/data/data-driven-planning/data-03-data-types/02-transactional-data" class="group flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg> <span class="hidden sm:inline">Transactional Data</span> <span class="sm:hidden">Prev</span> </a> </div> <!-- Topic completion toggle --> <button id="complete-btn" data-topic-id="ch3-t3" class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"> <svg id="complete-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path> </svg> <span id="complete-label">Mark complete</span> </button> <div class="flex-1 flex justify-end"> <a href="/data/data-driven-planning/data-04-data-governance/01-data-confidence" class="group flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"> <span class="hidden sm:inline">Data Confidence</span> <span class="sm:hidden">Next</span> <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </a> </div> </nav>  <script>(function(){const topicId = "ch3-t3";
+const totalTopics = 16;
+
+    const STORAGE_KEY = 'o9-progress';
+
+    function getProgress() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch { return {}; }
+    }
+
+    function saveProgress(p) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+    }
+
+    const btn = document.getElementById('complete-btn');
+    const label = document.getElementById('complete-label');
+
+    function updateBtn(completed) {
+      if (completed) {
+        btn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        btn.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        label.textContent = 'Completed';
+      } else {
+        btn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        btn.classList.remove('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        label.textContent = 'Mark complete';
+      }
+    }
+
+    const progress = getProgress();
+    updateBtn(!!progress[topicId]);
+
+    btn.addEventListener('click', () => {
+      const p = getProgress();
+      p[topicId] = !p[topicId];
+      if (!p[topicId]) delete p[topicId];
+      saveProgress(p);
+      updateBtn(!!p[topicId]);
+    });
+
+    const display = document.getElementById('topic-progress-display');
+    if (display) {
+      const total = totalTopics ?? 21;
+      const done = Object.values(getProgress()).filter(Boolean).length;
+      display.textContent = `${done} / ${total} topics`;
+    }
+  })();</script>  </body></html>
