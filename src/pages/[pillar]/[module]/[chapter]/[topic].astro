@@ -8,6 +8,8 @@ import FullWidthWidgetLayout from '../../../../layouts/FullWidthWidgetLayout.ast
 import RasciTableLayout from '../../../../layouts/RasciTableLayout.astro';
 import WhatIfWidget from '../../../../components/sim/WhatIfWidget.astro';
 import DemandSlicingWidget from '../../../../components/sim/DemandSlicingWidget.astro';
+import VarietyDisaggWidget from '../../../../components/sim/VarietyDisaggWidget.astro';
+import SeasonalDisaggWidget from '../../../../components/sim/SeasonalDisaggWidget.astro';
 import OrgChart from '../../../../components/widgets/OrgChart.astro';
 import DemandShockSim from '../../../../components/sim/DemandShockSim.astro';
 import StepWalkthrough from '../../../../components/sim/StepWalkthrough.astro';
@@ -112,6 +114,8 @@ const sharedProps = {
       {topic.widget === 'supply-flow' && <SupplyFlowGraph />}
       {topic.widget === 'org-chart' && <OrgChart orgChart={topic.orgChart} />}
       {topic.widget === 'demand-slicing' && <DemandSlicingWidget />}
+      {topic.widget === 'variety-disagg' && <VarietyDisaggWidget />}
+      {topic.widget === 'seasonal-disagg' && <SeasonalDisaggWidget />}
     </Fragment>
   </FullWidthWidgetLayout>
 ) : layout === 'rasci-table' ? (
