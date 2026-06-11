@@ -6,5 +6,6 @@
   "order": 99,
   "hidden": true,
   "pillar": "technology",
-  "module": "planning-software"
+  "module": "planning-software",
+  "moduleOrder": 1
 }

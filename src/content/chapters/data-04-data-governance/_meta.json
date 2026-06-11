@@ -5,5 +5,6 @@
   "color": "emerald",
   "order": 4,
   "pillar": "data",
-  "module": "data-driven-planning"
+  "module": "data-driven-planning",
+  "moduleOrder": 1
 }

@@ -5,5 +5,6 @@
   "color": "emerald",
   "order": 6,
   "pillar": "technology",
-  "module": "planning-software"
+  "module": "planning-software",
+  "moduleOrder": 1
 }

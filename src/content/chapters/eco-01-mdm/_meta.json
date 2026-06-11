@@ -5,5 +5,6 @@
   "color": "emerald",
   "order": 1,
   "pillar": "technology",
-  "module": "mdm"
+  "module": "mdm",
+  "moduleOrder": 4
 }

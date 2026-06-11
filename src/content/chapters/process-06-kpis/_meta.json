@@ -5,5 +5,6 @@
   "color": "violet",
   "order": 6,
   "pillar": "process",
-  "module": "scenario-planning"
+  "module": "scenario-planning",
+  "moduleOrder": 1
 }

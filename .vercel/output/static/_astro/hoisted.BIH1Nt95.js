@@ -1,0 +1,1 @@
+import"./hoisted.BoG4Zdi0.js";import"./hoisted.npP3oBLd.js";const e="platform-progress";function o(){try{return JSON.parse(localStorage.getItem(e)||"{}")}catch{return{}}}const s=o();document.querySelectorAll(".topic-completion-dot").forEach(r=>{const t=r.dataset.topicId??"";s[t]&&(r.classList.remove("bg-gray-200","dark:bg-gray-700"),r.classList.add("bg-emerald-500"))});

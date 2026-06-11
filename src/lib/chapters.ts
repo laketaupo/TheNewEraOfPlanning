@@ -4,6 +4,7 @@ export interface ChapterMeta {
   icon: string;
   color: string;
   order: number;
+  moduleOrder?: number;
   slug: string;
   pillar?: string;
   module?: string;
