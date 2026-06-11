@@ -1,0 +1,385 @@
+---
+// Demand Slicing Widget — step-by-step inventory allocation simulator
+---
+<div id="dsw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-gray-900/60 p-6 select-none">
+
+  <!-- Header -->
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
+    <h3 class="text-sm font-semibold text-sky-500 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+      </svg>
+      Demand Slicing Simulator
+    </h3>
+    <div class="flex items-center gap-2">
+      <button id="dsw-step-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+        Step →
+      </button>
+      <button id="dsw-play-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white transition-colors">
+        ▶ Play
+      </button>
+      <button id="dsw-reset-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-300 transition-colors">
+        Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- Slicing factor control -->
+  <div class="bg-gray-50 dark:bg-gray-800/60 rounded-xl px-5 py-4 mb-6">
+    <div class="flex items-center gap-4 mb-2">
+      <span class="text-xs font-medium text-gray-500 uppercase tracking-wide whitespace-nowrap">Slicing factor</span>
+      <input id="dsw-slider" type="range" min="1" max="10" value="5"
+        class="flex-1 h-1.5 rounded-full appearance-none cursor-pointer accent-sky-500
+               bg-gray-200 dark:bg-gray-700" />
+      <span id="dsw-n-display" class="text-2xl font-bold text-sky-500 tabular-nums w-7 text-right leading-none">5</span>
+    </div>
+    <div class="flex justify-between text-xs text-gray-400 mt-1">
+      <span>1 — first come, first served</span>
+      <span id="dsw-info" class="text-sky-600 dark:text-sky-400 font-medium">5 slices · 20 units each</span>
+      <span>10 — max fairness</span>
+    </div>
+  </div>
+
+  <!-- Main visualization -->
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+    <!-- Sequence grid (left, 3 cols) -->
+    <div class="md:col-span-3">
+      <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-3">
+        Allocation sequence
+      </p>
+      <div id="dsw-grid" class="space-y-1.5 max-h-72 overflow-y-auto pr-1"></div>
+    </div>
+
+    <!-- Right panel (2 cols) -->
+    <div class="md:col-span-2 flex flex-col gap-6">
+
+      <!-- Inventory gauge -->
+      <div>
+        <div class="flex justify-between text-xs font-medium mb-2">
+          <span class="text-gray-400 dark:text-gray-500 uppercase tracking-wide">Inventory</span>
+          <span id="dsw-inv-text" class="text-gray-600 dark:text-gray-300 tabular-nums">130 / 300 units</span>
+        </div>
+        <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div id="dsw-inv-bar" class="h-full rounded-full transition-all duration-500"
+               style="width:43.3%;background:linear-gradient(90deg,#0ea5e9,#38bdf8)"></div>
+        </div>
+        <div class="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
+          Fixed: 130 units available · 300 total demand
+        </div>
+      </div>
+
+      <!-- Country allocation bars -->
+      <div>
+        <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-3">
+          Allocation result
+        </p>
+        <div id="dsw-country-bars"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Status bar -->
+  <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+    <p id="dsw-status" class="text-sm text-gray-500 dark:text-gray-400 min-h-[1.375rem] transition-all duration-200">
+      Adjust the slicing factor above, then press ▶ Play or Step → to run the simulation.
+    </p>
+  </div>
+
+</div>
+
+<script>
+if (document.getElementById('dsw')) {
+  const INVENTORY = 130;
+  const DEMAND = 100;
+  const COUNTRIES = ['A', 'B', 'C'];
+
+  let N = 5;
+  let stepIdx = -1;
+  let seq = [];
+  let timer = null;
+
+  // ── Logic ─────────────────────────────────────────────────────────────
+
+  function buildSeq(n) {
+    const steps = [];
+    let inv = INVENTORY;
+    const totals = [0, 0, 0];
+    const s = DEMAND / n;
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < 3; c++) {
+        const give = Math.min(s, inv);
+        const invBefore = inv;
+        inv = Math.max(0, inv - s);
+        totals[c] += give;
+        steps.push({
+          r, c,
+          label: `${COUNTRIES[c]}${r + 1}`,
+          give, sliceAmt: s,
+          invBefore, invAfter: inv,
+          totals: [...totals],
+          status: give >= s - 0.001 ? 'full' : give > 0.001 ? 'partial' : 'skipped',
+        });
+      }
+    }
+    return steps;
+  }
+
+  // ── DOM builders ─────────────────────────────────────────────────────
+
+  function buildGrid(n) {
+    const grid = document.getElementById('dsw-grid');
+    grid.innerHTML = '';
+    for (let r = 0; r < n; r++) {
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-2';
+
+      const lbl = document.createElement('span');
+      lbl.className = 'text-xs text-gray-400 dark:text-gray-500 w-14 shrink-0 font-medium';
+      lbl.textContent = `Round ${r + 1}`;
+      row.appendChild(lbl);
+
+      for (let c = 0; c < 3; c++) {
+        const pill = document.createElement('div');
+        pill.id = `dsw-pill-${r}-${c}`;
+        setPill(pill, 'pending', r, c);
+        row.appendChild(pill);
+      }
+      grid.appendChild(row);
+    }
+  }
+
+  function buildCountryBars() {
+    const el = document.getElementById('dsw-country-bars');
+    el.innerHTML = '';
+    for (const c of COUNTRIES) {
+      el.innerHTML += `
+        <div class="mb-3">
+          <div class="flex justify-between items-baseline mb-1">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Country ${c}</span>
+            <span id="dsw-pct-${c}" class="text-sm font-bold tabular-nums text-gray-700 dark:text-gray-300">0%</span>
+          </div>
+          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div id="dsw-cbar-${c}" class="h-full rounded-full transition-all duration-500"
+                 style="width:0%;background:#6b7280"></div>
+          </div>
+        </div>`;
+    }
+  }
+
+  // ── Pill state ────────────────────────────────────────────────────────
+
+  function setPill(pill, state, r, c) {
+    const base = 'flex-1 text-center py-1.5 px-1 text-xs rounded-lg font-semibold transition-all duration-300';
+    const styles = {
+      pending:  `${base} bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500`,
+      active:   `${base} bg-sky-500 text-white ring-2 ring-sky-300 dark:ring-sky-600 scale-105`,
+      full:     `${base} bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400`,
+      partial:  `${base} bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400`,
+      skipped:  `${base} bg-gray-100 dark:bg-gray-800 text-gray-300 dark:text-gray-600 opacity-40`,
+    };
+    const labels = {
+      pending: `${COUNTRIES[c]}${r + 1}`,
+      active:  `${COUNTRIES[c]}${r + 1}`,
+      full:    `${COUNTRIES[c]}${r + 1} ✓`,
+      partial: `${COUNTRIES[c]}${r + 1} ~`,
+      skipped: `${COUNTRIES[c]}${r + 1} ✕`,
+    };
+    pill.className = styles[state] ?? styles.pending;
+    pill.textContent = labels[state] ?? labels.pending;
+  }
+
+  // ── Display updates ───────────────────────────────────────────────────
+
+  function updateInventory(inv) {
+    const pct = (inv / 300) * 100;
+    const bar = document.getElementById('dsw-inv-bar');
+    bar.style.width = `${pct}%`;
+    bar.style.background = inv > 90
+      ? 'linear-gradient(90deg,#0ea5e9,#38bdf8)'
+      : inv > 20
+      ? 'linear-gradient(90deg,#f59e0b,#fbbf24)'
+      : 'linear-gradient(90deg,#ef4444,#f87171)';
+    document.getElementById('dsw-inv-text').textContent = `${Math.round(inv)} / 300 units`;
+  }
+
+  function updateCountries(totals) {
+    COUNTRIES.forEach((c, i) => {
+      const pct  = (totals[i] / DEMAND) * 100;
+      const bar  = document.getElementById(`dsw-cbar-${c}`);
+      const lbl  = document.getElementById(`dsw-pct-${c}`);
+      if (!bar || !lbl) return;
+      bar.style.width = `${pct}%`;
+      bar.style.background = pct >= 80 ? '#10b981'
+        : pct >= 35 ? '#f59e0b'
+        : pct >  0  ? '#ef4444'
+        : '#6b7280';
+      lbl.textContent = `${Math.round(pct)}%`;
+    });
+  }
+
+  function setStatus(text) {
+    document.getElementById('dsw-status').textContent = text;
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────
+
+  function renderCurrent(i) {
+    for (let j = 0; j < seq.length; j++) {
+      const s    = seq[j];
+      const pill = document.getElementById(`dsw-pill-${s.r}-${s.c}`);
+      if (!pill) continue;
+      if (j < i) {
+        setPill(pill, s.status, s.r, s.c);
+      } else if (j === i) {
+        setPill(pill, 'active', s.r, s.c);
+        // Scroll active row into view within overflow container
+        const grid = document.getElementById('dsw-grid');
+        const row  = pill.parentElement;
+        const relTop = row.offsetTop - grid.scrollTop;
+        if (relTop < 0) {
+          grid.scrollTop = row.offsetTop - 4;
+        } else if (relTop + row.clientHeight > grid.clientHeight) {
+          grid.scrollTop = row.offsetTop + row.clientHeight - grid.clientHeight + 4;
+        }
+      } else {
+        setPill(pill, 'pending', s.r, s.c);
+      }
+    }
+
+    const s         = seq[i];
+    const units     = Math.round(s.give * 10) / 10;
+    const sliceU    = Math.round(s.sliceAmt * 10) / 10;
+
+    updateInventory(s.invAfter);
+    updateCountries(s.totals);
+
+    if (s.status === 'full') {
+      setStatus(
+        `Allocating ${s.label}: Country ${COUNTRIES[s.c]} receives ${units} units. ` +
+        `Inventory: ${Math.round(s.invBefore)} → ${Math.round(s.invAfter)}`
+      );
+    } else if (s.status === 'partial') {
+      setStatus(
+        `⚠ Inventory depleted mid-slice! ${s.label}: Country ${COUNTRIES[s.c]} receives only ` +
+        `${units} of ${sliceU} units. Remaining demand cannot be fulfilled.`
+      );
+    } else {
+      setStatus(
+        `✕ Inventory exhausted — ${s.label} receives 0 units. ` +
+        `Country ${COUNTRIES[s.c]} cannot be served further.`
+      );
+    }
+  }
+
+  function renderAllToEnd() {
+    for (let j = 0; j < seq.length; j++) {
+      const s    = seq[j];
+      const pill = document.getElementById(`dsw-pill-${s.r}-${s.c}`);
+      if (pill) setPill(pill, s.status, s.r, s.c);
+    }
+    const last = seq[seq.length - 1];
+    updateInventory(last.invAfter);
+    updateCountries(last.totals);
+  }
+
+  function renderReset() {
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < 3; c++) {
+        const pill = document.getElementById(`dsw-pill-${r}-${c}`);
+        if (pill) setPill(pill, 'pending', r, c);
+      }
+    }
+    document.getElementById('dsw-grid').scrollTop = 0;
+    updateInventory(INVENTORY);
+    updateCountries([0, 0, 0]);
+    setStatus('Adjust the slicing factor above, then press ▶ Play or Step → to run the simulation.');
+  }
+
+  function showFinal() {
+    const last   = seq[seq.length - 1];
+    const totals = last.totals;
+    const results = COUNTRIES.map((c, i) => `Country ${c}: ${Math.round(totals[i])}%`).join(' · ');
+    const filled  = totals.filter(t => t > 0);
+    const max     = Math.max(...totals);
+    const min     = filled.length ? Math.min(...filled) : 0;
+    const imbalance = Math.round(max - min);
+    setStatus(`✓ Done — ${results} · Max imbalance: ${imbalance} units`);
+    document.getElementById('dsw-play-btn').textContent = '▶ Play';
+  }
+
+  // ── Timer / advance ───────────────────────────────────────────────────
+
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+    document.getElementById('dsw-play-btn').textContent = '▶ Play';
+  }
+
+  function advance() {
+    if (stepIdx >= seq.length - 1) { stopTimer(); showFinal(); return; }
+    stepIdx++;
+    renderCurrent(stepIdx);
+
+    // After a partial step: reveal all remaining as skipped after a short pause
+    if (seq[stepIdx].status === 'partial') {
+      stopTimer();
+      setTimeout(() => {
+        stepIdx = seq.length - 1;
+        renderAllToEnd();
+        showFinal();
+      }, 900);
+      return;
+    }
+
+    if (stepIdx >= seq.length - 1) { stopTimer(); showFinal(); }
+  }
+
+  // ── Controls ──────────────────────────────────────────────────────────
+
+  function handlePlay() {
+    if (timer) { stopTimer(); return; }
+    if (stepIdx >= seq.length - 1) { stepIdx = -1; renderReset(); }
+    document.getElementById('dsw-play-btn').textContent = '⏸ Pause';
+    timer = setInterval(advance, 550);
+  }
+
+  function handleStep() {
+    stopTimer();
+    if (stepIdx >= seq.length - 1) { stepIdx = -1; renderReset(); return; }
+    advance();
+  }
+
+  function handleReset() {
+    stopTimer();
+    stepIdx = -1;
+    renderReset();
+  }
+
+  function handleSlider(e) {
+    N = parseInt(e.target.value, 10);
+    const sliceAmt = Math.round((DEMAND / N) * 10) / 10;
+    document.getElementById('dsw-n-display').textContent = String(N);
+    document.getElementById('dsw-info').textContent =
+      `${N} slice${N > 1 ? 's' : ''} · ${sliceAmt} units each`;
+    stopTimer();
+    seq     = buildSeq(N);
+    stepIdx = -1;
+    buildGrid(N);
+    buildCountryBars();
+    renderReset();
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────
+
+  seq = buildSeq(N);
+  buildGrid(N);
+  buildCountryBars();
+  renderReset();
+
+  document.getElementById('dsw-play-btn').addEventListener('click', handlePlay);
+  document.getElementById('dsw-step-btn').addEventListener('click', handleStep);
+  document.getElementById('dsw-reset-btn').addEventListener('click', handleReset);
+  document.getElementById('dsw-slider').addEventListener('input', handleSlider);
+}
+</script>
