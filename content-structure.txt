@@ -1,0 +1,272 @@
+TECHNOLOGY
+  Planning Software
+    Understanding the Basics
+      Item
+      Item @ Location
+      BOM (Bill of Material)
+      BOM: Input & Output
+      BOM: Lead time
+      BOD (Bill of Distribution)
+      BOD: Transport mode
+      BOD: Transport lead time
+      Resource
+      Resource Consumed
+    The Network
+      The Starting Items
+      Shipping Items to the Grower
+      Seed Production
+      Shipping Seeds Back
+      Cleaning
+      Calibrating
+      Priming
+      Coating
+      Packing
+      Final Shipment
+      Full network (the graph Data Model)
+    Data Flow: Demand
+      What Is a Demand Signal?
+      Where Demand Enters the Network
+      Demand Propagating Upstream
+      Lead Times and Demand Netting
+    Data Flow: Supply
+      What Is a Supply Signal?
+      Inventory Netting
+      Parent Line Items
+      Supply Flowing Downstream
+    The Logic
+      Disaggregation from variety to item
+      Disaggregation from year to month
+      Backward consumption
+      Scheduled receipt
+      Push
+      Pull
+      Safety stock
+    The Simulation
+      What Is a Workflow Simulation?
+      Setting Up a Simulation
+      Running the Simulation
+      Reading Simulation Results
+      Promoting a Simulation to Baseline
+    Navigation & User Interface
+      Navigating Planning software
+      The User Interface
+      Reading Plan Output
+  ERP
+    Understanding the Basics
+      What Is an ERP?
+      ERP vs. Legacy ERP
+      Core ERP Concepts
+    The Data Model
+      How ERP Structures Data
+      Key Master Data in ERP
+      Key Transactional Data in ERP
+    Data Flow: Into ERP
+      Where Data Originates
+      How Operational Data Enters ERP
+      Data Validation and Posting
+    Data Flow: Out of ERP
+      What ERP Sends to Planning
+      ERP Output to Other Systems
+      Reconciling ERP and Planning Data
+    The Logic
+      ERP Business Rules
+      Order Management Logic
+      Inventory Management Logic
+    Key ERP Workflows
+      Creating and Managing Orders
+      Goods Receipt and Issue
+      Reporting and Extraction
+    Navigation & User Interface
+      Navigating ERP
+      The ERP Interface
+      Reading ERP Output
+  Architecture
+    End-to-End Architecture
+      System Interfaces Overview
+      Batch Runs
+      Data Upload
+    System Integration
+      ERP ↔ Planning software Integration
+      Planning software ↔ FMS & MDM system
+  MDM
+    Understanding the Basics
+      What Is MDM?
+      Why Master Data Management Matters
+      Core MDM Concepts
+    The Data Model
+      How MDM Structures Data
+      Key Master Data Entities
+      Data Hierarchies and Relationships
+    Data Flow: Into MDM
+      Where Master Data Originates
+      How Data Enters MDM
+      Data Validation in MDM
+    Data Flow: Out of MDM
+      What MDM Sends to Planning
+      MDM Output to Other Systems
+      Keeping Master Data in Sync
+    The Logic
+      MDM Governance Rules
+      Data Matching and Deduplication
+      Approval Workflows
+    Key MDM Workflows
+      Creating and Maintaining Records
+      Managing Data Changes
+      Auditing and Reporting
+    Navigation & User Interface
+      Navigating MDM
+      The MDM Interface
+      Reading MDM Output
+  FMS
+    Understanding the Basics
+      What Is an FMS?
+      Why Field Management Matters
+      Core FMS Concepts
+    The Data Model
+      How FMS Structures Data
+      Key Field Data Entities
+      Field-to-Plan Data Mapping
+    Data Flow: Into FMS
+      Where Field Data Originates
+      How Field Activity Enters FMS
+      Data Capture and Validation
+    Data Flow: Out of FMS
+      What FMS Sends to Planning
+      FMS Output to Other Systems
+      Reconciling Field Data with the Plan
+    The Logic
+      FMS Business Rules
+      Field Assignment Logic
+      Yield and Activity Tracking
+    Key FMS Workflows
+      Managing Field Activities
+      Recording Actuals
+      Reporting and Extraction
+    Navigation & User Interface
+      Navigating FMS
+      The FMS Interface
+      Reading FMS Output
+DATA
+  Data-Driven Planning
+    Planning Data Fundamentals
+      What is Data-Driven Planning?
+      The Planning software Data Model Overview
+      Where Data Comes From
+      How Data Flows into a Plan
+      The Cost of Bad Data
+    Data Quality & Its Impact
+      What Makes Data "Good Enough"?
+      Common Data Problems in Planning
+      How Data Quality Shows Up in Plans
+      Data Governance Basics
+      Improving Data Quality Over Time
+    Data Types in Planning
+      Master Data
+      Transactional Data
+      Planning Parameters
+    Data Governance
+      Data Confidence
+      Data Ownership
+      Data Definitions & Single Source of Truth
+PROCESS
+  Process Foundations
+    Operating Model
+      What Is S&OP?
+      What Is S&OE?
+      Execution: Translating Plans into Action
+      The Planning Cadence
+    Planning Policy
+      Service Level Targets
+      Safety Stock Policy
+      Allocation Policy
+      Prioritization Frameworks
+    Governance & Escalation
+      Decision Framework
+      Escalation Paths
+      Management by Exception
+    KPIs
+      KPI Framework Overview
+      Key Planning KPIs Defined
+      KPI Ownership and Review Cadence
+      KPIs and Exception Management
+  Scenario Planning
+    Scenario Planning Fundamentals
+      What is Scenario Planning?
+      When to Use Scenario Planning
+      Types of Scenarios in Supply Chain
+      The Scenario Planning Process
+      Setting Up Effective Scenarios
+      Scenarios for Supply Risks
+      Scenarios for Demand Uncertainty
+    Running Scenarios in Planning Software
+      Creating a Scenario in Planning software
+      Adjusting Parameters & Assumptions
+      Running & Comparing Scenarios
+      Promoting a Scenario to Baseline
+      Communicating Scenario Findings
+  S&OE Process
+    S&OE Fundamentals
+      What Is S&OE?
+      The Weekly S&OE Cadence
+      S&OE Roles and Participants
+      Exception-Based Working in S&OE
+      Escalating from S&OE to S&OP
+    Running S&OE
+      Monitoring the Near-Term Plan
+      Making Adjustments and Resetting the Plan
+      The Integrated S&OE Review
+      Handoff to Execution
+  S&OP Process
+    S&OP Fundamentals
+      What Is S&OP?
+      The S&OP Cycle
+      S&OP Roles and Participants
+      S&OP Outputs and Decisions
+      S&OP in Planning Software
+    Running S&OP Effectively
+      Running the Demand Review
+      Running the Supply Review
+      Pre-S&OP and Integrated Reconciliation
+      Running the Executive S&OP Review
+      Why S&OP Fails
+  Execution Process
+    Execution Fundamentals
+      What Is Execution?
+      From Plan to Action
+      Managing Execution Exceptions
+      Execution KPIs
+      Execution and ERP
+    Daily Execution Management
+      Order Prioritisation
+      Real-Time Visibility in Execution
+      Execution Discipline
+      Feeding Actuals Back to Planning
+PEOPLE
+  Organisation & Roles
+    The Planning Team
+      Who Is in the Planning Team?
+      Planning Roles Overview
+      The Planning Org Chart
+      Role Competencies
+      Building an Effective Planning Team
+      The Broader Organisation Structure
+    Accountability & Governance
+      What Is RASCI?
+      Demand Review RASCI
+      Supply Review RASCI
+      Executive S&OP RASCI
+      Making RASCI Work in Practice
+  Implementation & Change
+    Shared Vision & Case for Change
+      The Case for Change
+      Defining the Future State
+      Aligning Stakeholders
+    Training & Capability Building
+      Assessing Capability Gaps
+      Building a Training Plan
+      Delivering Effective Training
+    Adoption & Change Management
+      Why Adoption Fails
+      Managing Resistance
+      Embedding New Behaviors
+      Measuring Adoption
