@@ -1,0 +1,9 @@
+{
+  "title": "FMS Tool",
+  "description": "The field management system that tracks grower activity, contracts, and crop development — the primary source of supply-side signals for agricultural produce.",
+  "icon": "globe",
+  "color": "sky",
+  "order": 2,
+  "pillar": "technology",
+  "module": "fms"
+}

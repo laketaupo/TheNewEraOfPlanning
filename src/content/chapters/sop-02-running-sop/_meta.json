@@ -1,0 +1,9 @@
+{
+  "title": "Running S&OP Effectively",
+  "description": "How to run each step of the S&OP cycle well — from demand review through executive sign-off — and the failure modes that derail even well-designed processes.",
+  "icon": "beaker",
+  "color": "violet",
+  "order": 2,
+  "pillar": "process",
+  "module": "sop-process"
+}

@@ -1,74 +1,135 @@
 {
   "title": "Supply Planner",
-  "description": "Own the supply plan: master the network, supply data flow, scenarios, and the policies that govern supply decisions.",
+  "description": "Guide the supply planning transformation: from shared vision and process design through data governance, system readiness, training, and lasting adoption.",
   "icon": "truck",
   "color": "teal",
   "order": 1,
   "sections": [
     {
-      "title": "Planning Foundations",
-      "description": "The building blocks every supply plan is made of.",
+      "title": "Shared Vision",
+      "description": "Understand why the transformation is happening, what success looks like, and how to align the organisation behind the change.",
       "topics": [
-        "01-understanding-basics/01-item",
-        "01-understanding-basics/02-item-at-location",
-        "01-understanding-basics/03-bom",
-        "01-understanding-basics/05-bom-lead-time",
-        "01-understanding-basics/06-bod"
+        "people-03-shared-vision/01-the-case-for-change",
+        "people-03-shared-vision/02-defining-the-future-state",
+        "people-03-shared-vision/03-aligning-stakeholders"
       ]
     },
     {
-      "title": "The Network & Planning Logic",
-      "description": "How the blocks connect, and how the engine decides what to make, move, and buy.",
-      "topics": [
-        "02-the-network/11-full-network",
-        "03-the-logic/04-scheduled-receipt",
-        "03-the-logic/05-push",
-        "03-the-logic/06-pull",
-        "03-the-logic/07-safety-stock"
-      ]
-    },
-    {
-      "title": "How Supply Flows Through the Plan",
-      "description": "From demand signal to the downstream supply cascade.",
-      "topics": [
-        "03-demand-data-flow/01-demand-signal",
-        "03-demand-data-flow/03-upstream-cascade",
-        "04-supply-data-flow/01-supply-signal",
-        "04-supply-data-flow/02-inventory-netting",
-        "04-supply-data-flow/03-parent-line-items",
-        "04-supply-data-flow/04-downstream-cascade"
-      ]
-    },
-    {
-      "title": "Scenarios & Simulation",
-      "description": "Stress-test the supply plan before committing to it.",
-      "topics": [
-        "process-01-scenario-planning-fundamentals/01-what-is-scenario-planning",
-        "process-01-scenario-planning-fundamentals/06-supply-risks",
-        "04-the-simulation/02-setting-up-a-simulation",
-        "process-02-running-scenarios/01-creating-a-scenario",
-        "process-02-running-scenarios/03-running-and-comparing-scenarios"
-      ]
-    },
-    {
-      "title": "Operating Model & Planning Policy",
-      "description": "The cadence and the rules the supply plan lives by.",
+      "title": "Operating Model",
+      "description": "How S&OP and S&OE work — the governance layer, meeting cadence, and how plans move from decision to execution.",
       "topics": [
         "process-03-operating-model/01-what-is-sop",
-        "process-03-operating-model/04-the-cadence",
-        "process-04-planning-policy/02-safety-stock",
-        "process-04-planning-policy/03-allocation"
+        "process-03-operating-model/02-what-is-soe",
+        "process-03-operating-model/03-execution",
+        "process-03-operating-model/04-the-cadence"
       ]
     },
     {
-      "title": "Your Role, Data & Governance",
-      "description": "Where the Supply Planner sits, and what keeps the plan trustworthy.",
+      "title": "Roles & Responsibilities",
+      "description": "Who does what in the planning organisation — team structure, role definitions, and the accountability framework that makes it work.",
       "topics": [
+        "people-01-planning-team/01-who-is-in-the-planning-team",
         "people-01-planning-team/02-planning-roles-overview",
+        "people-01-planning-team/03-the-planning-org-chart",
+        "people-02-accountability/01-what-is-rasci",
         "people-02-accountability/03-supply-review-rasci",
-        "data-03-data-types/03-planning-parameters",
+        "people-02-accountability/05-making-rasci-work"
+      ]
+    },
+    {
+      "title": "Process Design",
+      "description": "How the planning processes are structured — decision frameworks, escalation paths, exception handling, and service level design.",
+      "topics": [
+        "process-01-scenario-planning-fundamentals/04-the-scenario-planning-process",
+        "process-04-planning-policy/01-service-level-targets",
+        "process-05-governance-and-escalation/01-decision-framework",
         "process-05-governance-and-escalation/03-escalation-paths",
-        "process-06-kpis/02-key-planning-kpis"
+        "process-05-governance-and-escalation/04-management-by-exception"
+      ]
+    },
+    {
+      "title": "Data Requirements",
+      "description": "What data the plan depends on — the data model, where data comes from, how it flows in, and what happens when it's wrong.",
+      "topics": [
+        "data-01-planning-data-fundamentals/01-what-is-data-driven-planning",
+        "data-01-planning-data-fundamentals/03-where-data-comes-from",
+        "data-01-planning-data-fundamentals/04-how-data-flows-into-a-plan",
+        "data-01-planning-data-fundamentals/05-the-cost-of-bad-data",
+        "data-03-data-types/01-master-data",
+        "data-03-data-types/02-transactional-data",
+        "data-03-data-types/03-planning-parameters"
+      ]
+    },
+    {
+      "title": "Data Governance",
+      "description": "How data quality is owned, measured, and improved — from defining good enough to assigning accountability and building confidence.",
+      "topics": [
+        "data-02-data-quality-and-impact/01-what-makes-data-good-enough",
+        "data-02-data-quality-and-impact/02-common-data-problems",
+        "data-02-data-quality-and-impact/04-data-governance-basics",
+        "data-04-data-governance/01-data-confidence",
+        "data-04-data-governance/02-data-ownership",
+        "data-04-data-governance/03-data-definitions"
+      ]
+    },
+    {
+      "title": "System Design",
+      "description": "How the technology is architected — the data model, system interfaces, batch processing, and how ERP and planning software integrate.",
+      "topics": [
+        "data-01-planning-data-fundamentals/02-data-model-overview",
+        "arch-01-end-to-end/01-interfaces",
+        "arch-01-end-to-end/02-batchrun",
+        "arch-01-end-to-end/03-data-upload",
+        "arch-02-integration/01-erp-planning-software-integration",
+        "arch-02-integration/02-planning-software-fms-mdm"
+      ]
+    },
+    {
+      "title": "Training",
+      "description": "How to build planning capability — assessing gaps, sequencing the learning journey, and delivering training that transfers to the job.",
+      "topics": [
+        "people-01-planning-team/04-role-competencies",
+        "people-01-planning-team/05-building-an-effective-planning-team",
+        "people-04-training/01-assessing-capability-gaps",
+        "people-04-training/02-building-a-training-plan",
+        "people-04-training/03-delivering-effective-training"
+      ]
+    },
+    {
+      "title": "Adoption",
+      "description": "Making the new way of working permanent — understanding why adoption fails and how to embed lasting behavioural change.",
+      "topics": [
+        "people-05-adoption/01-why-adoption-fails",
+        "people-05-adoption/02-managing-resistance",
+        "people-05-adoption/03-embedding-new-behaviors",
+        "people-05-adoption/04-measuring-adoption"
+      ]
+    },
+    {
+      "title": "Advanced Planning",
+      "description": "Scenario analysis, what-if simulation, and the policy decisions — safety stock, allocation, prioritisation — that sharpen the supply plan.",
+      "topics": [
+        "process-01-scenario-planning-fundamentals/01-what-is-scenario-planning",
+        "process-01-scenario-planning-fundamentals/05-setting-up-effective-scenarios",
+        "process-01-scenario-planning-fundamentals/06-supply-risks",
+        "process-02-running-scenarios/01-creating-a-scenario",
+        "process-02-running-scenarios/02-adjusting-parameters-and-assumptions",
+        "process-02-running-scenarios/03-running-and-comparing-scenarios",
+        "process-04-planning-policy/02-safety-stock",
+        "process-04-planning-policy/03-allocation",
+        "process-04-planning-policy/04-prioritization"
+      ]
+    },
+    {
+      "title": "Continuous Improvement",
+      "description": "How to sustain and improve performance — KPI frameworks, exception management, data quality cycles, and scenario governance.",
+      "topics": [
+        "process-06-kpis/01-kpi-framework-overview",
+        "process-06-kpis/02-key-planning-kpis",
+        "process-06-kpis/03-kpi-ownership-and-review",
+        "process-06-kpis/04-kpis-and-exception-management",
+        "data-02-data-quality-and-impact/05-improving-data-quality-over-time",
+        "process-05-governance-and-escalation/02-scenario-governance"
       ]
     }
   ]

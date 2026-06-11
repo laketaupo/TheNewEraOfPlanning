@@ -4,7 +4,7 @@ import ThemeToggle from '../../components/ThemeToggle.astro';
 import { getChapters } from '../../lib/chapters';
 
 const chapters = getChapters('technology');
-const chapterCount = chapters.filter(c => !c.hidden).length;
+const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-software').length;
 ---
 <BaseLayout title="Technology">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
@@ -44,31 +44,19 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
     <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-        <!-- How Planning Software Works -->
-        <a href="/technology/how-planning-software-works" class="group track-card track-how-platform">
+        <!-- Planning Software -->
+        <a href="/technology/planning-software" class="group track-card track-how-platform">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
             </svg>
           </div>
-          <h2 class="track-title">How Planning Software Works</h2>
+          <h2 class="track-title">Planning Software</h2>
           <p class="track-desc">From building blocks to live scenario simulation — a guided tour of the Planning software.</p>
           <span class="track-badge track-badge-live">
             <span class="live-dot"></span>
             {chapterCount} chapters available
           </span>
-        </a>
-
-        <!-- Configuration Manual -->
-        <a href="/technology/configuration" class="group track-card track-config">
-          <div class="track-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-            </svg>
-          </div>
-          <h2 class="track-title">Configuration Manual</h2>
-          <p class="track-desc">Step-by-step screenshots and explanations for configuring Planning software for your business.</p>
-          <span class="track-badge">Business configuration guide</span>
         </a>
 
         <!-- ERP -->
@@ -101,18 +89,33 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
           </span>
         </a>
 
-        <!-- System Ecosystem -->
-        <a href="/technology/ecosystem" class="group track-card track-eco">
+        <!-- MDM Tool -->
+        <a href="/technology/mdm" class="group track-card track-mdm">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 1.1.9 2 2 2h12a2 2 0 002-2V7M4 7c0-1.1.9-2 2-2h12a2 2 0 012 2M4 7h16M8 11h8M8 15h5"/>
+            </svg>
+          </div>
+          <h2 class="track-title">MDM Tool</h2>
+          <p class="track-desc">The master data hub — product records, hierarchies, and planning parameters that all other systems depend on.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            Master data guide
+          </span>
+        </a>
+
+        <!-- FMS Tool -->
+        <a href="/technology/fms" class="group track-card track-fms">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
             </svg>
           </div>
-          <h2 class="track-title">System Ecosystem</h2>
-          <p class="track-desc">MDM system and FMS — the supporting systems that feed master data and field signals into planning.</p>
+          <h2 class="track-title">FMS Tool</h2>
+          <p class="track-desc">Field management tracking grower contracts, crop development, and harvest signals for supply-side planning.</p>
           <span class="track-badge track-badge-live">
             <span class="live-dot"></span>
-            Supporting systems
+            Field management guide
           </span>
         </a>
 
@@ -142,10 +145,6 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
     background: linear-gradient(135deg, #0284c7, #0ea5e9);
     box-shadow: 0 8px 32px rgba(14,165,233,0.25);
   }
-  .track-config {
-    background: linear-gradient(135deg, #4338ca, #6366f1);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.25);
-  }
   .track-bc {
     background: linear-gradient(135deg, #0369a1, #0284c7);
     box-shadow: 0 8px 32px rgba(2,132,199,0.25);
@@ -154,9 +153,13 @@ const chapterCount = chapters.filter(c => !c.hidden).length;
     background: linear-gradient(135deg, #3730a3, #4f46e5);
     box-shadow: 0 8px 32px rgba(79,70,229,0.25);
   }
-  .track-eco {
+  .track-mdm {
     background: linear-gradient(135deg, #047857, #10b981);
     box-shadow: 0 8px 32px rgba(16,185,129,0.25);
+  }
+  .track-fms {
+    background: linear-gradient(135deg, #0369a1, #0ea5e9);
+    box-shadow: 0 8px 32px rgba(14,165,233,0.25);
   }
 
   .track-icon {

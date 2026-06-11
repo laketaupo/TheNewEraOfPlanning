@@ -18,6 +18,7 @@ export interface Props {
   roles?: string[];
   steps?: Array<{ label: string; assignments: Record<string, string> }>;
   pillar?: string;
+  module?: string;
   totalTopics?: number;
 }
 
@@ -37,16 +38,26 @@ const {
   roles = [],
   steps = [],
   pillar,
+  module,
   totalTopics,
 } = Astro.props;
 
-const pillarBackMap: Record<string, { href: string; label: string }> = {
-  technology: { href: `${import.meta.env.BASE_URL}technology/how-planning-software-works`,          label: 'How Planning Software Works' },
-  data:       { href: `${import.meta.env.BASE_URL}data/data-driven-planning`,        label: 'Data-Driven Planning' },
-  process:    { href: `${import.meta.env.BASE_URL}process/scenario-planning`,        label: 'Scenario Planning' },
-  people:     { href: `${import.meta.env.BASE_URL}people/people-and-planning`,       label: 'People & Planning' },
+const BASE_URL = import.meta.env.BASE_URL;
+const moduleBackMap: Record<string, { href: string; label: string }> = {
+  'planning-software':         { href: `${BASE_URL}technology/planning-software`,         label: 'Planning Software' },
+  'erp':                       { href: `${BASE_URL}technology/erp`,                       label: 'ERP' },
+  'architecture':              { href: `${BASE_URL}technology/architecture`,              label: 'Architecture & Integration' },
+  'mdm':                       { href: `${BASE_URL}technology/mdm`,                       label: 'MDM Tool' },
+  'fms':                       { href: `${BASE_URL}technology/fms`,                       label: 'FMS Tool' },
+  'data-driven-planning':      { href: `${BASE_URL}data/data-driven-planning`,            label: 'Data-Driven Planning' },
+  'scenario-planning':         { href: `${BASE_URL}process/scenario-planning`,            label: 'Scenario Planning' },
+  'sop-process':               { href: `${BASE_URL}process/sop-process`,                  label: 'S&OP Process' },
+  'soe-process':               { href: `${BASE_URL}process/soe-process`,                  label: 'S&OE Process' },
+  'execution-process':         { href: `${BASE_URL}process/execution-process`,            label: 'Execution Process' },
+  'organisation-and-roles':    { href: `${BASE_URL}people/organisation-and-roles`,        label: 'Organisation & Roles' },
+  'implementation-and-change': { href: `${BASE_URL}people/implementation-and-change`,     label: 'Implementation & Change' },
 };
-const back = pillarBackMap[pillar ?? 'technology'] ?? pillarBackMap.technology;
+const back = moduleBackMap[module ?? 'planning-software'] ?? { href: BASE_URL, label: 'Home' };
 
 const colorMap: Record<string, string> = {
   indigo:  'text-indigo-600 dark:text-indigo-400 border-indigo-400 dark:border-indigo-500',

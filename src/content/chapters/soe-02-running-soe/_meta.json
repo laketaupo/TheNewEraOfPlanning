@@ -1,0 +1,9 @@
+{
+  "title": "Running S&OE",
+  "description": "How to run the weekly S&OE cycle in practice — monitoring performance, resolving exceptions, adjusting the near-term plan, and keeping the handoff to execution clean.",
+  "icon": "beaker",
+  "color": "violet",
+  "order": 2,
+  "pillar": "process",
+  "module": "soe-process"
+}

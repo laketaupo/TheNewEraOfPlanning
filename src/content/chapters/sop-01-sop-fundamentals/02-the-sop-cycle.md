@@ -1,0 +1,40 @@
+---
+title: "The S&OP Cycle"
+description: "A standard S&OP cycle runs monthly through four or five structured steps — from statistical forecast to executive sign-off."
+order: 2
+chapter: "sop-01-sop-fundamentals"
+estimatedMinutes: 6
+topicLayout: "prose-topic"
+---
+
+## How the monthly cycle works
+
+A standard S&OP cycle runs monthly and progresses through a defined sequence of reviews. Each step builds on the previous: data is prepared, reviewed by one function, handed to the next, and escalated only where decisions cannot be made at a lower level.
+
+### Step 1 — Statistical refresh
+
+The planning team updates the statistical baseline forecast using the latest demand signals: actuals, point-of-sale data, orders, and market intelligence. This is the starting point for the demand review, not the output of it.
+
+### Step 2 — Demand review
+
+The commercial team — sales, marketing, key account managers — reviews the statistical baseline and overlays their judgment. They adjust for known events: promotions, new product launches, customer wins or losses, seasonal shifts. The output is a **consensus demand plan** with agreed volumes and a documented list of assumptions.
+
+### Step 3 — Supply review
+
+Operations reviews whether supply capacity can meet the consensus demand. This includes manufacturing, procurement, logistics, and inventory. The supply team identifies gaps: where supply falls short, where there is excess capacity, and at what cost different options can close the gaps.
+
+### Step 4 — Pre-S&OP (integrated reconciliation)
+
+Demand and supply leads meet before the executive review to resolve gaps that are within their authority. Trade-off options are prepared for any remaining gaps: build-ahead, accept a service level miss, adjust the demand plan, invest in capacity. The pre-S&OP ends with a clear list of items requiring executive decision.
+
+### Step 5 — Executive S&OP
+
+Leadership reviews unresolved gaps, approves trade-offs, and signs off on the plan. This is a decision meeting, not a status update. Decisions made here are binding: they cascade into procurement commitments, capacity investments, and financial forecasts.
+
+## The role of time horizons
+
+S&OP typically covers a rolling 18–24 month horizon, with the greatest detail in the near term (months 1–3) and more aggregate views further out. The near-term months feed directly into S&OE and execution planning. The outer months inform capacity and capital decisions.
+
+## Cadence discipline matters
+
+The cycle only works if it runs on a fixed calendar. A demand review that slips by a week compresses the supply review and leaves no time for pre-S&OP preparation. Most failures in S&OP trace back to a lack of cadence discipline — the calendar exists but is routinely overridden by "urgent" operational issues.

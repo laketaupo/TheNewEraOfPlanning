@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev      # Start dev server at http://localhost:4321
-npm run build    # Build to dist/ (run this to verify before committing)
+npm run build    # Build to dist/ — always run this to verify before considering a task done
 npm run preview  # Preview the built site
 ```
 
-There are no tests or linters configured. Always run `npm run build` to verify changes compile without errors before considering a task done.
+No tests or linters are configured.
 
 ## Architecture
 
@@ -18,98 +18,117 @@ There are no tests or linters configured. Always run `npm run build` to verify c
 
 ### Site Structure
 
-The site is a four-pillar learning hub. The root landing page (`/`) lets users choose between **People**, **Process**, **Technology**, and **Data**.
+A four-pillar learning hub (Technology, Process, Data, People). Each pillar has one or more **modules**, each module has one or more **chapters**, each chapter has one or more **topics**. The full URL shape is:
 
-Live pillars and their content:
-- **Technology** (`/technology`) — two tracks: **How o9 Works** (`/technology/how-o9-works`, chapter-based interactive content with ~36 topics across 6 chapters) and **Configuration Manual** (`/technology/configuration`, screenshot + explanation entries)
-- **Data** (`/data`) — data-driven planning (2 chapters, 10 topics)
-- **Process** (`/process`) — scenario planning (2 chapters, 10 topics)
-- **People** (`/people`) — coming soon placeholder
+```
+/{pillar}/{module}/{chapter-slug}/{topic-slug}
+```
+
+Current modules per pillar:
+
+| Pillar | Modules |
+|---|---|
+| `technology` | `planning-software`, `erp`, `architecture`, `mdm`, `fms` |
+| `data` | `data-driven-planning` |
+| `process` | `scenario-planning` |
+| `people` | `people-and-planning` |
+
+The Configuration Manual (`/technology/configuration`) is a separate content type surfaced via the Planning Software module page — it does not use the pillar/module/chapter/topic system.
 
 ### Content Model
 
 **Chapter content** lives in `src/content/chapters/<chapter-slug>/`:
-- `_meta.json` — chapter metadata (`title`, `description`, `icon`, `color`, `order`, `pillar`, `hidden?`)
-- `NN-topic-slug.md` — one file per topic, frontmatter-heavy
+- `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `order`, `pillar`, `module`. Optional: `hidden` (bool).
+- `NN-topic-slug.md` — one file per topic, frontmatter-heavy.
 
-Chapter slug naming convention encodes the pillar: Technology chapters use numeric prefixes (`01-`, `02-`…), Data chapters use `data-01-`, `data-02-`…, Process chapters use `process-01-`, `process-02-`…. The `pillar` field in `_meta.json` is what actually drives filtering — slugs are just a naming aid.
+Both `pillar` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (pillar defaults to `'technology'`, module defaults to `'planning-software'`).
 
-`src/content/chapters/99-layout-showcase/` is a hidden chapter (`"hidden": true` in `_meta.json`) used as a development reference for all layout types. It is included in static builds but not surfaced in any navigation UI.
+`99-layout-showcase/` is a hidden dev-reference chapter (`"hidden": true`) — included in builds, invisible in nav.
 
-Topic frontmatter drives rendering. The key field is `topicLayout`, which selects the layout component used to display that topic. Valid values:
-- `node-topic` — network node diagram with summary + bullets
-- `card-grid` — card-based comparison layout
-- `comparison` — left/right two-column layout
-- `data-table` — tabular data layout
-- `full-widget` — full-width interactive simulation
-- `prose-topic` — falls through to the default `TopicLayout` (used by Data and Process chapters)
-- *(omitted)* — defaults to `TopicLayout` (generic prose + optional widget)
+**Topic frontmatter** — the key field is `topicLayout`, which selects the layout component:
 
-**Configuration manual content** lives in `src/content/configuration/`:
-- One `.md` file per screen: frontmatter fields are `title`, `description`, `order`, `screenshot` (path under `/public/`). The body is rendered as HTML on the configuration page.
-- Screenshots go in `public/configuration/`.
+| `topicLayout` value | Layout used |
+|---|---|
+| `node-topic` | `NodeTopicLayout.astro` — network node diagram with summary + bullets |
+| `card-grid` | `CardGridLayout.astro` — card-based comparison |
+| `comparison` | `ComparisonLayout.astro` — left/right two-column |
+| `data-table` | `DataTableLayout.astro` — tabular data |
+| `full-widget` | `FullWidthWidgetLayout.astro` — interactive simulation |
+| `rasci-table` | `RasciTableLayout.astro` — RASCI responsibility matrix |
+| `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
 
-### Data Loading Pattern
+**Configuration manual** lives in `src/content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
 
-Content is **not** loaded via Astro's content collections API. Instead, `src/lib/chapters.ts` uses `import.meta.glob` at module level to eagerly load `_meta.json` files and topic `.md` frontmatter. The same pattern is used in `src/lib/configuration.ts` for the configuration manual.
+**Roles** live in `src/content/roles/<slug>.json` — defines role-based courses as a list of `"chapter-slug/topic-slug"` references. Bad references throw at build time via `resolveRoleSections()`.
 
-All helper functions live in these two lib files and can be imported directly in any `.astro` page:
-- `getChapters(pillar?: string)` — returns all chapters, or only those matching the given pillar string
-- `getTopics()` — all topics across all pillars, each with a `pillar` field derived from its chapter's `_meta.json`
-- `getTopicsForChapter(slug)` — topics for a single chapter
-- `getAdjacentTopics(url)` — returns `[prev, next]` scoped to the **same pillar** (not cross-pillar)
-- `getConfigurationEntries()` — configuration manual entries
+### Data Loading
 
-When adding a new pillar or chapter, the `pillar` field in `_meta.json` is required for filtering to work correctly. Omitting it causes topics to silently fall back to the `'technology'` pillar.
+Content is loaded via `import.meta.glob` (not Astro content collections):
+
+- `src/lib/chapters.ts` — eagerly loads all `_meta.json` and topic frontmatter.
+  - `getChapters(pillar?)` — all chapters, optionally filtered by pillar
+  - `getTopics()` — all topics, each with derived `pillar`, `module`, `url`, `chapterUrl`
+  - `getTopicsForChapter(slug)` — topics for one chapter
+  - `getAdjacentTopics(url)` — `[prev, next]` scoped to same pillar
+  - `getChapterUrl(ch)` — builds `/{pillar}/{module}/{slug}`
+- `src/lib/configuration.ts` — loads configuration manual entries.
+- `src/lib/roles.ts` — loads role JSON files; `resolveRoleSections()` validates and hydrates topic references.
 
 ### Routing
 
-| Route | File |
+| Route pattern | File |
 |---|---|
 | `/` | `src/pages/index.astro` |
-| `/people`, `/process`, `/data` | `src/pages/people.astro`, `process.astro`, `data.astro` |
-| `/technology` | `src/pages/technology/index.astro` |
-| `/technology/how-o9-works` | `src/pages/technology/how-o9-works/index.astro` |
+| `/start` | `src/pages/start.astro` (redirects to first topic) |
+| `/technology`, `/data`, `/process`, `/people` | `src/pages/{pillar}/index.astro` |
+| `/technology/planning-software` | `src/pages/technology/planning-software/index.astro` |
+| `/technology/erp` | `src/pages/technology/erp/index.astro` |
+| `/technology/architecture` | `src/pages/technology/architecture/index.astro` |
+| `/technology/mdm` | `src/pages/technology/mdm/index.astro` |
+| `/technology/fms` | `src/pages/technology/fms/index.astro` |
 | `/technology/configuration` | `src/pages/technology/configuration/index.astro` |
-| `/chapters/[chapter]/` | `src/pages/chapters/[chapter]/index.astro` |
-| `/chapters/[chapter]/[topic]` | `src/pages/chapters/[chapter]/[topic].astro` |
+| `/{pillar}/{module}` (data/process/people) | `src/pages/{pillar}/{module}/index.astro` |
+| `/{pillar}/{module}/{chapter}/` | `src/pages/[pillar]/[module]/[chapter]/index.astro` |
+| `/{pillar}/{module}/{chapter}/{topic}` | `src/pages/[pillar]/[module]/[chapter]/[topic].astro` |
+| `/roles/{role}` | `src/pages/roles/[role].astro` |
 
-The `[topic].astro` page dynamically imports the MDX file at request time (non-eager glob) and passes the `Content` component to the appropriate layout based on `topicLayout`.
+The module index pages for Technology each filter `getChapters('technology')` by `ch.module === '{module-slug}'`. The dynamic `[pillar]/[module]/[chapter]/` pages handle all pillars generically.
 
-### Layout Prop Flow
+### Key Patterns
 
-`[topic].astro` computes a `sharedProps` object in `getStaticPaths` and passes it to whichever layout is selected. All topic layouts accept the same base set of props:
+**`moduleBackMap`** — used in `[chapter]/index.astro` to resolve the back-link for each module. When adding a new module, add an entry here:
 
-```
-title, description, chapterTitle, chapterSlug, chapterColor,
-topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
-pillar, totalTopics
-```
-
-`pillar` and `totalTopics` are used by every layout to render the correct back-link in the top nav (via a `pillarBackMap`) and to show an accurate progress counter (`N / totalTopics topics`). If you add a new layout, include these two props.
-
-The `pillarBackMap` pattern used in layouts and `[chapter]/index.astro`:
 ```typescript
-const pillarBackMap = {
-  technology: { href: `${BASE_URL}technology/how-o9-works`, label: 'How o9 Works' },
-  data:       { href: `${BASE_URL}data`,                    label: 'Data' },
-  process:    { href: `${BASE_URL}process`,                 label: 'Process' },
-  people:     { href: `${BASE_URL}people`,                  label: 'People' },
+const moduleBackMap: Record<string, { href: string; label: string }> = {
+  'planning-software': { href: `${BASE_URL}technology/planning-software`, label: 'Planning Software' },
+  'erp':              { href: `${BASE_URL}technology/erp`,                label: 'ERP' },
+  // ... all modules must be listed
 };
 ```
 
-### Layouts
+**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with `moduleBackMap`.
 
-All topic layouts live in `src/layouts/` and share the prop interface above. `BaseLayout.astro` is the HTML shell used by every page — it handles the theme persistence script (reads `o9-theme` from localStorage) and loads the Inter font.
+**Layout prop flow** — `[topic].astro` builds a `sharedProps` object passed to whichever layout is selected. All layouts accept:
+```
+title, description, chapterTitle, chapterSlug, chapterColor, chapterUrl,
+topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
+pillar, totalTopics
+```
+`pillar` drives the back-link in topic layouts (via a `pillarBackMap` inside each layout that maps pillar → module URL). **Note:** topic layouts currently map all `technology` topics back to Planning Software — ERP/Architecture/MDM/FMS topics inherit this; it's a known gap.
 
-### Dark Mode
+**Tailwind class safety** — color-specific classes must appear as complete strings in source. Never build them with string interpolation (e.g. `` `bg-${color}-500` ``) — Tailwind will purge them. Use lookup maps (`colorBgMap`, `colorTextMap`, etc.) defined inline per page.
 
-Class-based (`darkMode: 'class'` in Tailwind). The `ThemeToggle` component toggles the `dark` class on `<html>` and persists to `localStorage` under the key `o9-theme`. `BaseLayout` applies the saved theme before first render to prevent flash.
+### Dark Mode & Persistence
 
-### Progress Tracking
+- Dark mode: class-based (`darkMode: 'class'`). `ThemeToggle` toggles `.dark` on `<html>` and persists to `localStorage` key `o9-theme`. `BaseLayout` applies it before first render to prevent flash.
+- Progress tracking: client-side only, `localStorage` key `o9-progress` as `{ [topicId]: boolean }`. Topic IDs: `ch{chapterOrder}-t{topicOrder}`. Chapter orders restart per module, so IDs can collide across modules — this is existing behaviour.
 
-Chapter progress rings and topic completion dots are purely client-side, stored in `localStorage` under the key `o9-progress` as a flat object of `{ [topicId]: boolean }`. Topic IDs follow the pattern `ch{chapterOrder}-t{topicOrder}`.
+### Adding Content
 
-### Colors
+**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above.
 
-Each pillar and chapter has a color (indigo / violet / sky / emerald). Color-specific Tailwind classes are built via lookup maps (`colorBgMap`, `colorTextMap`, etc.) defined inline in each page — Tailwind requires full class strings to avoid purging. Don't use string interpolation to construct partial class names.
+**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `pillar` and `module`) and topic files. No routing changes needed — the dynamic `[pillar]/[module]/[chapter]/` route picks it up automatically.
+
+**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in `[chapter]/index.astro` and `moduleLabels` in `SiteOverlay.astro`.
+
+**New role course:** add `src/content/roles/{slug}.json`. Topic references use `"chapter-slug/topic-slug"` format; bad refs throw at build time.

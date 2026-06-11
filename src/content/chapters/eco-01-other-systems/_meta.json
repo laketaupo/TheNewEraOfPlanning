@@ -1,9 +1,0 @@
-{
-  "title": "System Ecosystem",
-  "description": "Overview of MDM system (MDM) and FMS (FMS) — what each system does, how planners interact with it, and how it fits into the broader technology landscape.",
-  "icon": "globe",
-  "color": "emerald",
-  "order": 1,
-  "pillar": "technology",
-  "module": "ecosystem"
-}
