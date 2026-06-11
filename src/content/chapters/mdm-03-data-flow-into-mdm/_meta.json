@@ -1,0 +1,10 @@
+{
+  "title": "Data Flow: Into MDM",
+  "description": "Where master data originates and how it enters MDM — from new product requests to attribute updates and hierarchy changes.",
+  "icon": "database",
+  "color": "emerald",
+  "order": 3,
+  "pillar": "technology",
+  "module": "mdm",
+  "moduleOrder": 4
+}

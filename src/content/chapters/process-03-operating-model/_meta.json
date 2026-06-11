@@ -3,8 +3,8 @@
   "description": "Understand the planning operating model: the S&OP and S&OE cycles, execution handoff, and the meeting cadence that keeps plans aligned with reality.",
   "icon": "calendar",
   "color": "violet",
-  "order": 3,
+  "order": 1,
   "pillar": "process",
-  "module": "scenario-planning",
-  "moduleOrder": 1
+  "module": "process-foundations",
+  "moduleOrder": 0
 }

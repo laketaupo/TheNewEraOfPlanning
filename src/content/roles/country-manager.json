@@ -1,0 +1,10 @@
+{
+  "title": "Country Manager",
+  "description": "Lead in-country planning: local demand, supply constraints, and the subsidiary view that feeds and challenges the global plan.",
+  "icon": "briefcase",
+  "color": "indigo",
+  "order": 14,
+  "department": "Subsidiary",
+  "comingSoon": true,
+  "sections": []
+}

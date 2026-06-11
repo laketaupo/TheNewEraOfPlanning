@@ -1,0 +1,10 @@
+{
+  "title": "Understanding the Basics",
+  "description": "What FMS is, why field management matters for supply chain planning, and the core concepts that connect field activity to the supply plan.",
+  "icon": "globe",
+  "color": "indigo",
+  "order": 1,
+  "pillar": "technology",
+  "module": "fms",
+  "moduleOrder": 5
+}

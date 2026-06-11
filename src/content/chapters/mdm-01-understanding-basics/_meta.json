@@ -1,0 +1,10 @@
+{
+  "title": "Understanding the Basics",
+  "description": "What MDM is, why master data management matters, and the core concepts that underpin how MDM serves the rest of the system landscape.",
+  "icon": "database",
+  "color": "emerald",
+  "order": 1,
+  "pillar": "technology",
+  "module": "mdm",
+  "moduleOrder": 4
+}

@@ -1,0 +1,10 @@
+---
+title: "Auditing and Reporting"
+description: "How to review the change history of a master data record, identify who made a change and when, and generate reports on data quality and completeness."
+order: 3
+chapter: "mdm-06-key-mdm-workflows"
+estimatedMinutes: 4
+topicLayout: "prose-topic"
+---
+
+*Content coming soon.*

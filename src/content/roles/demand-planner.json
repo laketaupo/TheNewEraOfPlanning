@@ -3,7 +3,8 @@
   "description": "Forecasting, demand signals, and shaping the demand plan that drives everything downstream.",
   "icon": "trending-up",
   "color": "amber",
-  "order": 3,
+  "order": 12,
+  "department": "Supply Chain",
   "comingSoon": true,
   "sections": []
 }

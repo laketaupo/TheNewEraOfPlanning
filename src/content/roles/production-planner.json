@@ -1,0 +1,10 @@
+{
+  "title": "Production Planner",
+  "description": "Schedule and sequence production runs — work orders, capacity constraints, and the execution of the supply plan on the shop floor.",
+  "icon": "beaker",
+  "color": "teal",
+  "order": 9,
+  "department": "Production",
+  "comingSoon": true,
+  "sections": []
+}

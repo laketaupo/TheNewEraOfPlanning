@@ -3,7 +3,8 @@
   "description": "Guide the supply planning transformation: from shared vision and process design through data governance, system readiness, training, and lasting adoption.",
   "icon": "truck",
   "color": "teal",
-  "order": 1,
+  "order": 11,
+  "department": "Supply Chain",
   "sections": [
     {
       "title": "Shared Vision",
@@ -43,8 +44,8 @@
         "process-01-scenario-planning-fundamentals/04-the-scenario-planning-process",
         "process-04-planning-policy/01-service-level-targets",
         "process-05-governance-and-escalation/01-decision-framework",
-        "process-05-governance-and-escalation/03-escalation-paths",
-        "process-05-governance-and-escalation/04-management-by-exception"
+        "process-05-governance-and-escalation/02-escalation-paths",
+        "process-05-governance-and-escalation/03-management-by-exception"
       ]
     },
     {
@@ -128,8 +129,7 @@
         "process-06-kpis/02-key-planning-kpis",
         "process-06-kpis/03-kpi-ownership-and-review",
         "process-06-kpis/04-kpis-and-exception-management",
-        "data-02-data-quality-and-impact/05-improving-data-quality-over-time",
-        "process-05-governance-and-escalation/02-scenario-governance"
+        "data-02-data-quality-and-impact/05-improving-data-quality-over-time"
       ]
     }
   ]

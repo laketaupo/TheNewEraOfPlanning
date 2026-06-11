@@ -3,8 +3,8 @@
   "description": "Planning policies — service level targets, safety stock rules, allocation logic, and prioritisation frameworks — are the documented decisions that govern how the planning system behaves.",
   "icon": "document-text",
   "color": "violet",
-  "order": 4,
+  "order": 2,
   "pillar": "process",
-  "module": "scenario-planning",
-  "moduleOrder": 1
+  "module": "process-foundations",
+  "moduleOrder": 0
 }

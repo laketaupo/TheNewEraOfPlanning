@@ -1,0 +1,10 @@
+{
+  "title": "Key FMS Workflows",
+  "description": "Managing field activities, recording actuals, and extracting supply signals — the workflows that connect grower operations to the planning system.",
+  "icon": "globe",
+  "color": "indigo",
+  "order": 6,
+  "pillar": "technology",
+  "module": "fms",
+  "moduleOrder": 5
+}

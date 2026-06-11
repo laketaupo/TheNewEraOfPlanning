@@ -1,0 +1,10 @@
+{
+  "title": "The Logic",
+  "description": "The business rules that govern how ERP processes orders, manages inventory, and posts transactions — what happens automatically and why.",
+  "icon": "office-building",
+  "color": "sky",
+  "order": 5,
+  "pillar": "technology",
+  "module": "erp",
+  "moduleOrder": 2
+}

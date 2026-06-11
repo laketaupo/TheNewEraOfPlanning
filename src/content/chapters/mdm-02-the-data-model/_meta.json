@@ -1,0 +1,10 @@
+{
+  "title": "The Data Model",
+  "description": "How MDM organises product data — item hierarchies, attribute structures, and the relationships between entities that downstream systems rely on.",
+  "icon": "database",
+  "color": "emerald",
+  "order": 2,
+  "pillar": "technology",
+  "module": "mdm",
+  "moduleOrder": 4
+}

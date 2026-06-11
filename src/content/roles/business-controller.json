@@ -1,0 +1,10 @@
+{
+  "title": "Business Controller",
+  "description": "Own the numbers behind the plan: budget control, variance analysis, and financial sign-off on supply chain decisions.",
+  "icon": "chart",
+  "color": "emerald",
+  "order": 2,
+  "department": "Finance / Business Control",
+  "comingSoon": true,
+  "sections": []
+}

@@ -12,6 +12,7 @@ export interface RoleConfig {
   icon: string;
   color: string;
   order: number;
+  department?: string;
   comingSoon?: boolean;
   sections: RoleSectionConfig[];
   slug: string;

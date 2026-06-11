@@ -1,0 +1,10 @@
+{
+  "title": "Sales Planner",
+  "description": "Translate commercial targets into demand signals — account-level forecasts, promotion lifts, and the bottom-up view of what will sell.",
+  "icon": "trending-up",
+  "color": "amber",
+  "order": 8,
+  "department": "Sales",
+  "comingSoon": true,
+  "sections": []
+}
