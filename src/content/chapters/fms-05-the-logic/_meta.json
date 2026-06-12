@@ -2,7 +2,7 @@
   "title": "The Logic",
   "description": "The rules and calculations FMS applies to field data — how yield forecasts are generated, how field assignments work, and how harvest schedules are derived.",
   "icon": "globe",
-  "color": "indigo",
+  "color": "emerald",
   "order": 5,
   "pillar": "technology",
   "module": "fms",

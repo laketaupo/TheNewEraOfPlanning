@@ -9,10 +9,10 @@ const liveRoles = getRoles().filter(r => !r.comingSoon);
 const pillarOrder = ['technology', 'process', 'data', 'people'];
 
 const pillarMeta: Record<string, { label: string; accent: string; line: string }> = {
-  technology: { label: 'Technology', accent: 'text-sky-600 dark:text-sky-400',     line: 'bg-sky-100 dark:bg-sky-500/20' },
-  process:    { label: 'Process',    accent: 'text-violet-600 dark:text-violet-400', line: 'bg-violet-100 dark:bg-violet-500/20' },
-  data:       { label: 'Data',       accent: 'text-emerald-600 dark:text-emerald-400', line: 'bg-emerald-100 dark:bg-emerald-500/20' },
-  people:     { label: 'People',     accent: 'text-amber-600 dark:text-amber-400',  line: 'bg-amber-100 dark:bg-amber-500/20' },
+  technology: { label: 'Technology', accent: 'text-emerald-600 dark:text-emerald-400', line: 'bg-emerald-100 dark:bg-emerald-500/20' },
+  process:    { label: 'Process',    accent: 'text-blue-600 dark:text-blue-400',      line: 'bg-blue-100 dark:bg-blue-500/20' },
+  data:       { label: 'Data',       accent: 'text-yellow-600 dark:text-yellow-400',  line: 'bg-yellow-100 dark:bg-yellow-500/20' },
+  people:     { label: 'People',     accent: 'text-red-600 dark:text-red-400',        line: 'bg-red-100 dark:bg-red-500/20' },
 };
 
 const moduleLabels: Record<string, string> = {
@@ -22,13 +22,15 @@ const moduleLabels: Record<string, string> = {
   'mdm':                  'MDM Tool',
   'fms':                  'FMS Tool',
   'data-driven-planning': 'Data-Driven Planning',
+  'data-fundamentals':    'Data Fundamentals',
+  'data-governance':      'Data Governance',
+  'reporting':            'Reporting',
   'process-foundations':  'Process Foundations',
   'scenario-planning':    'Scenario Planning',
   'sop-process':          'S&OP Process',
   'soe-process':          'S&OE Process',
   'execution-process':    'Execution Process',
   'organisation-and-roles':    'Organisation & Roles',
-  'implementation-and-change': 'Implementation & Change',
 };
 
 const pillars = pillarOrder.map(pillar => {

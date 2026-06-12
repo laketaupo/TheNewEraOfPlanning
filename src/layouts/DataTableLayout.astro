@@ -52,12 +52,14 @@ const moduleBackMap: Record<string, { href: string; label: string }> = {
   'mdm':                       { href: `${BASE_URL}technology/mdm`,                       label: 'MDM Tool' },
   'fms':                       { href: `${BASE_URL}technology/fms`,                       label: 'FMS Tool' },
   'data-driven-planning':      { href: `${BASE_URL}data/data-driven-planning`,            label: 'Data-Driven Planning' },
+  'data-fundamentals':         { href: `${BASE_URL}data/data-fundamentals`,               label: 'Data Fundamentals' },
+  'data-governance':           { href: `${BASE_URL}data/data-governance`,                 label: 'Data Governance' },
+  'reporting':                 { href: `${BASE_URL}technology/reporting`,                 label: 'Reporting' },
   'scenario-planning':         { href: `${BASE_URL}process/scenario-planning`,            label: 'Scenario Planning' },
   'sop-process':               { href: `${BASE_URL}process/sop-process`,                  label: 'S&OP Process' },
   'soe-process':               { href: `${BASE_URL}process/soe-process`,                  label: 'S&OE Process' },
   'execution-process':         { href: `${BASE_URL}process/execution-process`,            label: 'Execution Process' },
   'organisation-and-roles':    { href: `${BASE_URL}people/organisation-and-roles`,        label: 'Organisation & Roles' },
-  'implementation-and-change': { href: `${BASE_URL}people/implementation-and-change`,     label: 'Implementation & Change' },
 };
 const back = moduleBackMap[module ?? 'planning-software'] ?? { href: BASE_URL, label: 'Home' };
 
@@ -68,6 +70,9 @@ const colorMap: Record<string, string> = {
   emerald: 'text-emerald-600 dark:text-emerald-400 border-emerald-400 dark:border-emerald-500',
   amber:   'text-amber-600 dark:text-amber-400 border-amber-400 dark:border-amber-500',
   teal:    'text-teal-600 dark:text-teal-400 border-teal-400 dark:border-teal-500',
+  yellow:  'text-yellow-600 dark:text-yellow-400 border-yellow-400 dark:border-yellow-500',
+  blue:    'text-blue-600 dark:text-blue-400 border-blue-400 dark:border-blue-500',
+  red:     'text-red-600 dark:text-red-400 border-red-400 dark:border-red-500',
 };
 
 const accentColorMap: Record<string, string> = {
@@ -77,6 +82,9 @@ const accentColorMap: Record<string, string> = {
   emerald: '#10b981',
   amber:   '#f59e0b',
   teal:    '#14b8a6',
+  yellow:  '#eab308',
+  blue:    '#3b82f6',
+  red:     '#ef4444',
 };
 
 const accentSubtleMap: Record<string, string> = {
@@ -86,6 +94,9 @@ const accentSubtleMap: Record<string, string> = {
   emerald: 'rgba(16, 185, 129, 0.07)',
   amber:   'rgba(245, 158, 11, 0.07)',
   teal:    'rgba(20, 184, 166, 0.07)',
+  yellow:  'rgba(234, 179, 8, 0.07)',
+  blue:    'rgba(59, 130, 246, 0.07)',
+  red:     'rgba(239, 68, 68, 0.07)',
 };
 
 const badgeBgMap: Record<string, string> = {
@@ -95,6 +106,9 @@ const badgeBgMap: Record<string, string> = {
   emerald: 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400',
   amber:   'bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30 text-amber-600 dark:text-amber-400',
   teal:    'bg-teal-50 dark:bg-teal-500/10 border-teal-200 dark:border-teal-500/30 text-teal-600 dark:text-teal-400',
+  yellow:  'bg-yellow-50 dark:bg-yellow-500/10 border-yellow-200 dark:border-yellow-500/30 text-yellow-600 dark:text-yellow-400',
+  blue:    'bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400',
+  red:     'bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/30 text-red-600 dark:text-red-400',
 };
 
 const dotColorMap: Record<string, string> = {
@@ -104,6 +118,9 @@ const dotColorMap: Record<string, string> = {
   emerald: 'bg-emerald-500',
   amber:   'bg-amber-500',
   teal:    'bg-teal-500',
+  yellow:  'bg-yellow-500',
+  blue:    'bg-blue-500',
+  red:     'bg-red-500',
 };
 
 const chapterColorClass = colorMap[chapterColor]    ?? 'text-brand-600 dark:text-brand-400 border-brand-500';

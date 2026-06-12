@@ -2,7 +2,7 @@
   "title": "Data Flow: Into FMS",
   "description": "Where field data originates and how it enters FMS — from contract setup to crop monitoring records and harvest reporting.",
   "icon": "globe",
-  "color": "indigo",
+  "color": "emerald",
   "order": 3,
   "pillar": "technology",
   "module": "fms",

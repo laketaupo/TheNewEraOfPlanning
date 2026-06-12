@@ -2,7 +2,7 @@
   "title": "Execution Fundamentals",
   "description": "Understand what execution means in a planning context — the daily operational layer that turns confirmed plans into shipped orders, produced batches, and delivered commitments.",
   "icon": "lightning-bolt",
-  "color": "violet",
+  "color": "blue",
   "order": 1,
   "pillar": "process",
   "module": "execution-process",

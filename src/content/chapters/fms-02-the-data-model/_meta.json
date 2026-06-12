@@ -2,7 +2,7 @@
   "title": "The Data Model",
   "description": "How FMS organises field data — growers, contracts, fields, and crops — and how these entities map to the items and locations Planning software uses.",
   "icon": "globe",
-  "color": "indigo",
+  "color": "emerald",
   "order": 2,
   "pillar": "technology",
   "module": "fms",

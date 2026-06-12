@@ -2,7 +2,7 @@
   "title": "Navigation & User Interface",
   "description": "Learn how to navigate Planning software, understand the workspace layout, and read the plan output that the system generates.",
   "icon": "cursor-click",
-  "color": "indigo",
+  "color": "emerald",
   "order": 7,
   "pillar": "technology",
   "module": "planning-software",

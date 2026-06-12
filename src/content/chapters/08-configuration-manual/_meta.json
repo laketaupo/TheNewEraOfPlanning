@@ -2,7 +2,7 @@
   "title": "Configuration Manual",
   "description": "Step-by-step configuration of Planning software for your business — items, BOMs, BODs, resources, parameters, and network setup.",
   "icon": "document-text",
-  "color": "indigo",
+  "color": "emerald",
   "order": 8,
   "pillar": "technology",
   "module": "planning-software",

@@ -29,12 +29,12 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-14 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-500/10 border border-sky-200 dark:border-sky-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
         Technology
       </div>
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
-        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-500">Technology</span>
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Technology</span>
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
         Understand the systems that power modern supply chain planning — the Planning software model, ERP data flows, master data management, field systems, and how they all connect.
@@ -119,6 +119,20 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
           </span>
         </a>
 
+        <!-- Reporting -->
+        <a href="/technology/reporting" class="group track-card track-reporting">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Reporting</h2>
+          <p class="track-desc">Power BI dashboards and KPI reports — connecting planning outputs to the insights that drive decisions.</p>
+          <span class="track-badge">
+            Coming soon
+          </span>
+        </a>
+
       </div>
     </div>
   </div>
@@ -130,59 +144,90 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14,165,233,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14,165,233,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.15), transparent);
   }
 
   .track-card {
-    @apply flex flex-col p-7 rounded-2xl text-white transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
-  }
-  .track-card:hover { filter: brightness(1.08); }
-
-  .track-how-platform {
-    background: linear-gradient(135deg, #0284c7, #0ea5e9);
-    box-shadow: 0 8px 32px rgba(14,165,233,0.25);
-  }
-  .track-bc {
-    background: linear-gradient(135deg, #0369a1, #0284c7);
-    box-shadow: 0 8px 32px rgba(2,132,199,0.25);
-  }
-  .track-arch {
-    background: linear-gradient(135deg, #3730a3, #4f46e5);
-    box-shadow: 0 8px 32px rgba(79,70,229,0.25);
-  }
-  .track-mdm {
-    background: linear-gradient(135deg, #047857, #10b981);
-    box-shadow: 0 8px 32px rgba(16,185,129,0.25);
-  }
-  .track-fms {
-    background: linear-gradient(135deg, #0369a1, #0ea5e9);
-    box-shadow: 0 8px 32px rgba(14,165,233,0.25);
+    @apply flex flex-col rounded-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
+    padding: 1.75rem;
+    padding-top: 1.5rem;
+    border-top-width: 4px;
+    border-top-style: solid;
   }
 
+  /* ── Light mode (all technology tracks = green) ── */
+  .track-how-platform,
+  .track-bc,
+  .track-arch,
+  .track-mdm,
+  .track-fms,
+  .track-reporting {
+    background: #f0fdf4;
+    border: 1.5px solid #bbf7d0;
+    border-top: 4px solid #86efac;
+  }
+  .track-card:hover { box-shadow: 0 6px 24px rgba(34,197,94,0.12); }
+
+  /* ── Dark mode ──────────────────────────────────── */
+  :global(.dark) .track-how-platform,
+  :global(.dark) .track-bc,
+  :global(.dark) .track-arch,
+  :global(.dark) .track-mdm,
+  :global(.dark) .track-fms,
+  :global(.dark) .track-reporting {
+    background: rgba(34,197,94,0.06);
+    border-color: rgba(34,197,94,0.18);
+    border-top-color: rgba(134,239,172,0.5);
+  }
+  :global(.dark) .track-card:hover {
+    background: rgba(34,197,94,0.09);
+    box-shadow: 0 6px 28px rgba(34,197,94,0.1);
+  }
+
+  /* ── Icon ───────────────────────────────────────── */
   .track-icon {
     @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
-    background: rgba(255,255,255,0.15);
+    background: #dcfce7;
+    color: #15803d;
   }
-  .track-title {
-    @apply text-xl font-bold text-white mb-2;
+  :global(.dark) .track-icon {
+    background: rgba(34,197,94,0.12);
+    color: #86efac;
   }
-  .track-desc {
-    @apply text-sm leading-relaxed mb-5 flex-1;
-    color: rgba(255,255,255,0.75);
-  }
+
+  /* ── Title ──────────────────────────────────────── */
+  .track-title { @apply text-xl font-bold mb-2; color: #111827; }
+  :global(.dark) .track-title { color: #f3f4f6; }
+
+  /* ── Description ────────────────────────────────── */
+  .track-desc { @apply text-sm leading-relaxed mb-5 flex-1; color: #6b7280; }
+  :global(.dark) .track-desc { color: rgba(243,244,246,0.45); }
+
+  /* ── Badge ──────────────────────────────────────── */
   .track-badge {
     @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.9);
+    background: #dcfce7;
+    color: #166534;
   }
-  .track-badge-live {
-    background: rgba(255,255,255,0.2);
+  :global(.dark) .track-badge {
+    background: rgba(34,197,94,0.12);
+    color: #86efac;
   }
+  .track-badge:not(.track-badge-live) {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+  :global(.dark) .track-badge:not(.track-badge-live) {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
+  }
+
   .live-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-white;
+    @apply w-1.5 h-1.5 rounded-full;
+    background: currentColor;
     animation: pulse 2s infinite;
   }
   @keyframes pulse {

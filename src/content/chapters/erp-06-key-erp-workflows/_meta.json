@@ -2,7 +2,7 @@
   "title": "Key ERP Workflows",
   "description": "The core transactions planners trigger or monitor in ERP — releasing orders, receiving goods, issuing materials, and extracting reports.",
   "icon": "document-text",
-  "color": "sky",
+  "color": "emerald",
   "order": 6,
   "pillar": "technology",
   "module": "erp",

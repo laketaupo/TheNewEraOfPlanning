@@ -1,0 +1,10 @@
+{
+  "title": "Data Sources & Architecture",
+  "description": "Where planning data originates and how the Planning software represents the supply chain as a connected graph of nodes and relationships.",
+  "icon": "server",
+  "color": "yellow",
+  "order": 2,
+  "moduleOrder": 1,
+  "pillar": "data",
+  "module": "data-fundamentals"
+}

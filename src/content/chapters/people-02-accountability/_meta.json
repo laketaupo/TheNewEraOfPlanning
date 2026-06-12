@@ -2,7 +2,7 @@
   "title": "Accountability & Governance",
   "description": "How responsibility is assigned across the S&OP cycle — who owns each step, who supports, and who needs to be kept informed.",
   "icon": "network",
-  "color": "amber",
+  "color": "red",
   "order": 2,
   "pillar": "people",
   "module": "organisation-and-roles",

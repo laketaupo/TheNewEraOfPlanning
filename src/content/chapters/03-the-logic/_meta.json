@@ -2,7 +2,7 @@
   "title": "The Logic",
   "description": "How the Planning software planning engine turns network data into optimized, constrained supply plans.",
   "icon": "cpu",
-  "color": "sky",
+  "color": "emerald",
   "order": 5,
   "pillar": "technology",
   "module": "planning-software",

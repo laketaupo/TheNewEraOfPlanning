@@ -3,7 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ThemeToggle from '../../components/ThemeToggle.astro';
 import { getChapters } from '../../lib/chapters';
 
-const dataChapterCount = getChapters('data').filter(c => !c.hidden).length;
+const chapters = getChapters('data').filter(c => !c.hidden);
+const fundamentalsCount = chapters.filter(c => c.module === 'data-fundamentals').length;
+const planningCount = chapters.filter(c => c.module === 'data-driven-planning').length;
+const governanceCount = chapters.filter(c => c.module === 'data-governance').length;
 ---
 <BaseLayout title="Data">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
@@ -28,12 +31,12 @@ const dataChapterCount = getChapters('data').filter(c => !c.hidden).length;
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-14 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
         Data
       </div>
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
-        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Data</span>
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-amber-500">Data</span>
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
         Understand how data quality and structure determine the quality of every plan your organisation produces.
@@ -43,18 +46,50 @@ const dataChapterCount = getChapters('data').filter(c => !c.hidden).length;
     <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
+        <!-- Data Fundamentals -->
+        <a href="/data/data-fundamentals" class="group track-card track-fundamentals">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <ellipse cx="12" cy="5" rx="9" ry="3" stroke-width="1.5"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Data Fundamentals</h2>
+          <p class="track-desc">Types, sources, and structure — the building blocks every planner needs to understand before working with planning data.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            {fundamentalsCount} chapters available
+          </span>
+        </a>
+
         <!-- Data-Driven Planning -->
-        <a href="/data/data-driven-planning" class="group track-card track-data">
+        <a href="/data/data-driven-planning" class="group track-card track-planning">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
             </svg>
           </div>
           <h2 class="track-title">Data-Driven Planning</h2>
-          <p class="track-desc">Understand how data quality and structure drive every planning outcome in Planning software.</p>
+          <p class="track-desc">How data quality and structure drive every planning outcome — from data flow to the cost of bad data in plans.</p>
           <span class="track-badge track-badge-live">
             <span class="live-dot"></span>
-            {dataChapterCount} chapters available
+            {planningCount} chapters available
+          </span>
+        </a>
+
+        <!-- Data Governance -->
+        <a href="/data/data-governance" class="group track-card track-governance">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Data Governance</h2>
+          <p class="track-desc">Ownership, definitions, and the governance structures that keep planning data reliable across a multi-system landscape.</p>
+          <span class="track-badge track-badge-live">
+            <span class="live-dot"></span>
+            {governanceCount} chapters available
           </span>
         </a>
 
@@ -69,43 +104,76 @@ const dataChapterCount = getChapters('data').filter(c => !c.hidden).length;
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.15), transparent);
   }
 
   .track-card {
-    @apply flex flex-col p-7 rounded-2xl text-white transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
-  }
-  .track-card:hover { filter: brightness(1.08); }
-
-  .track-data {
-    background: linear-gradient(135deg, #059669, #10b981);
-    box-shadow: 0 8px 32px rgba(16,185,129,0.25);
+    @apply flex flex-col rounded-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
+    padding: 1.75rem;
+    padding-top: 1.5rem;
+    border-top-width: 4px;
+    border-top-style: solid;
   }
 
+  /* ── Light mode (all data tracks = yellow) ──────── */
+  .track-fundamentals,
+  .track-planning,
+  .track-governance {
+    background: #fffbeb;
+    border: 1.5px solid #fde68a;
+    border-top: 4px solid #fcd34d;
+  }
+  .track-card:hover { box-shadow: 0 6px 24px rgba(234,179,8,0.16); }
+
+  /* ── Dark mode ──────────────────────────────────── */
+  :global(.dark) .track-fundamentals,
+  :global(.dark) .track-planning,
+  :global(.dark) .track-governance {
+    background: rgba(234,179,8,0.06);
+    border-color: rgba(234,179,8,0.18);
+    border-top-color: rgba(253,211,77,0.5);
+  }
+  :global(.dark) .track-card:hover {
+    background: rgba(234,179,8,0.09);
+    box-shadow: 0 6px 28px rgba(234,179,8,0.12);
+  }
+
+  /* ── Icon ───────────────────────────────────────── */
   .track-icon {
     @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
-    background: rgba(255,255,255,0.15);
+    background: #fef3c7;
+    color: #b45309;
   }
-  .track-title {
-    @apply text-xl font-bold text-white mb-2;
+  :global(.dark) .track-icon {
+    background: rgba(234,179,8,0.12);
+    color: #fcd34d;
   }
-  .track-desc {
-    @apply text-sm leading-relaxed mb-5 flex-1;
-    color: rgba(255,255,255,0.75);
-  }
+
+  /* ── Title ──────────────────────────────────────── */
+  .track-title { @apply text-xl font-bold mb-2; color: #111827; }
+  :global(.dark) .track-title { color: #f3f4f6; }
+
+  /* ── Description ────────────────────────────────── */
+  .track-desc { @apply text-sm leading-relaxed mb-5 flex-1; color: #6b7280; }
+  :global(.dark) .track-desc { color: rgba(243,244,246,0.45); }
+
+  /* ── Badge ──────────────────────────────────────── */
   .track-badge {
     @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.9);
+    background: #fef3c7;
+    color: #92400e;
   }
-  .track-badge-live {
-    background: rgba(255,255,255,0.2);
+  :global(.dark) .track-badge {
+    background: rgba(234,179,8,0.12);
+    color: #fcd34d;
   }
+
   .live-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-white;
+    @apply w-1.5 h-1.5 rounded-full;
+    background: currentColor;
     animation: pulse 2s infinite;
   }
   @keyframes pulse {

@@ -2,9 +2,9 @@
   "title": "Data Types in Planning",
   "description": "Master data, transactional data, and planning parameters are three distinct data categories. Understanding the difference — and where each lives — is essential for data quality management.",
   "icon": "database",
-  "color": "emerald",
-  "order": 3,
+  "color": "yellow",
+  "order": 1,
+  "moduleOrder": 1,
   "pillar": "data",
-  "module": "data-driven-planning",
-  "moduleOrder": 1
+  "module": "data-fundamentals"
 }

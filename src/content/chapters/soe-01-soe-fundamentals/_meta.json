@@ -2,7 +2,7 @@
   "title": "S&OE Fundamentals",
   "description": "Understand what Sales & Operations Execution is, how it differs from S&OP, and how the weekly cadence keeps supply and demand aligned between monthly planning cycles.",
   "icon": "calendar",
-  "color": "violet",
+  "color": "blue",
   "order": 1,
   "pillar": "process",
   "module": "soe-process",

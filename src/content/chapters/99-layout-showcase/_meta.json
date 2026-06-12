@@ -2,7 +2,7 @@
   "title": "Layout Showcase",
   "description": "A preview of every available topic layout — card grid, data table, comparison, full-width widget, and standard prose.",
   "icon": "cube",
-  "color": "violet",
+  "color": "emerald",
   "order": 99,
   "hidden": true,
   "pillar": "technology",

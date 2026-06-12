@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Design Samples — Light Mode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f4f6;
+    }
+
+    /* ─── Sticky nav ──────────────────────────────────────────────────────── */
+    .sample-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e5e7eb;
+      display: flex; gap: 6px; padding: 10px 24px;
+      overflow-x: auto;
+    }
+    .sample-nav a {
+      white-space: nowrap;
+      padding: 5px 13px; border-radius: 6px;
+      font-size: 12px; font-weight: 600;
+      text-decoration: none; color: #6b7280;
+      transition: all 0.15s;
+    }
+    .sample-nav a:hover { color: #111; background: #f3f4f6; }
+
+    /* ─── Shared page shell ───────────────────────────────────────────────── */
+    .page {
+      background: #fff;
+      padding: 72px 24px 80px;
+      display: flex; flex-direction: column; align-items: center;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* ─── Shared hero ─────────────────────────────────────────────────────── */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11px; font-weight: 600; color: #4f46e5;
+      background: #eef2ff; border: 1px solid #c7d2fe;
+      border-radius: 999px; padding: 4px 12px;
+      margin-bottom: 24px;
+    }
+    .hero-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #6366f1; animation: pulse 2s infinite;
+    }
+    h1 {
+      font-size: clamp(34px, 5.5vw, 54px);
+      font-weight: 800; line-height: 1.1;
+      text-align: center; color: #111827;
+      letter-spacing: -0.03em; margin-bottom: 16px;
+    }
+    h1 span {
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 16px; color: #6b7280;
+      text-align: center; max-width: 420px;
+      line-height: 1.7; margin-bottom: 52px;
+    }
+
+    /* ─── Card grid ───────────────────────────────────────────────────────── */
+    .grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 14px; width: 100%; max-width: 640px;
+    }
+    .card {
+      border-radius: 18px; padding: 26px;
+      display: flex; flex-direction: column;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer; text-decoration: none;
+    }
+    .card:hover { transform: translateY(-2px); }
+
+    .card-title {
+      font-size: 17px; font-weight: 700;
+      color: #111827; margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 13px; color: #6b7280;
+      line-height: 1.65; flex: 1; margin-bottom: 20px;
+    }
+    .card-tag {
+      font-size: 11px; font-weight: 600;
+      border-radius: 999px; padding: 4px 10px;
+      display: inline-flex; align-items: center; gap: 5px;
+      align-self: flex-start;
+    }
+    .tag-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    /* ─── Icon box ────────────────────────────────────────────────────────── */
+    .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    svg { display: block; }
+
+    /* ─── Sample label ────────────────────────────────────────────────────── */
+    .sample-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 6px;
+      margin-bottom: 36px; display: inline-block;
+      background: #f3f4f6; color: #374151;
+      border: 1px solid #e5e7eb;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.35; }
+    }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION A — Soft pastel fill + colored icon
+       Very light tinted backgrounds per card, icon carries the color.
+       Border matches the tint. Feels fresh without being loud.
+    ══════════════════════════════════════════════════════════════════════ */
+
+    /* People — soft violet */
+    #a .card-people {
+      background: #f5f3ff;
+      border: 1.5px solid #ddd6fe;
+    }
+    #a .card-people:hover { box-shadow: 0 6px 24px rgba(139,92,246,0.12); }
+    #a .card-people .card-icon { background: #ede9fe; color: #7c3aed; }
+    #a .card-people .card-tag { background: #ede9fe; color: #6d28d9; }
+    #a .card-people .tag-dot  { background: #7c3aed; }
+
+    /* Process — soft blue */
+    #a .card-process {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+    }
+    #a .card-process:hover { box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
+    #a .card-process .card-icon { background: #dbeafe; color: #1d4ed8; }
+    #a .card-process .card-tag { background: #dbeafe; color: #1e40af; }
+    #a .card-process .tag-dot  { background: #3b82f6; }
+
+    /* Technology — soft emerald */
+    #a .card-technology {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+    }
+    #a .card-technology:hover { box-shadow: 0 6px 24px rgba(16,185,129,0.12); }
+    #a .card-technology .card-icon { background: #dcfce7; color: #15803d; }
+    #a .card-technology .card-tag { background: #dcfce7; color: #166534; }
+    #a .card-technology .tag-dot  { background: #22c55e; }
+
+    /* Data — soft amber */
+    #a .card-data {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+    }
+    #a .card-data:hover { box-shadow: 0 6px 24px rgba(234,179,8,0.14); }
+    #a .card-data .card-icon { background: #fef3c7; color: #b45309; }
+    #a .card-data .card-tag { background: #fef3c7; color: #92400e; }
+    #a .card-data .tag-dot  { background: #f59e0b; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION B — White cards, colored left border accent only
+       Clean white surface, single 3px colored left border.
+       Most restrained — color as a signal, not a fill.
+    ══════════════════════════════════════════════════════════════════════ */
+
+    #b .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 3px solid transparent;
+    }
+    #b .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+
+    #b .card-people    { border-left-color: #8b5cf6; }
+    #b .card-process   { border-left-color: #3b82f6; }
+    #b .card-technology{ border-left-color: #10b981; }
+    #b .card-data      { border-left-color: #f59e0b; }
+
+    #b .card-people    .card-icon { background: #f5f3ff; color: #7c3aed; }
+    #b .card-process   .card-icon { background: #eff6ff; color: #2563eb; }
+    #b .card-technology.card-icon { background: #f0fdf4; color: #16a34a; }
+    #b .card-data      .card-icon { background: #fffbeb; color: #d97706; }
+
+    #b .card-people    .card-tag { background: #f5f3ff; color: #6d28d9; }
+    #b .card-process   .card-tag { background: #eff6ff; color: #1d4ed8; }
+    #b .card-technology .card-tag { background: #f0fdf4; color: #15803d; }
+    #b .card-data      .card-tag { background: #fffbeb; color: #92400e; }
+
+    #b .card-people    .tag-dot { background: #8b5cf6; }
+    #b .card-process   .tag-dot { background: #3b82f6; }
+    #b .card-technology .tag-dot { background: #10b981; }
+    #b .card-data      .tag-dot { background: #f59e0b; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION C — Neutral gray cards, icon is the only color element
+       All cards are identical gray surface — icon fill is the sole differentiator.
+       Very minimal, slightly desaturated palette.
+    ══════════════════════════════════════════════════════════════════════ */
+
+    #c .card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    #c .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); background: #fff; }
+
+    #c .card-people    .card-icon { background: #ede9fe; color: #6d28d9; }
+    #c .card-process   .card-icon { background: #dbeafe; color: #1d4ed8; }
+    #c .card-technology .card-icon { background: #d1fae5; color: #065f46; }
+    #c .card-data      .card-icon { background: #fef3c7; color: #92400e; }
+
+    #c .card-title { color: #111827; }
+    #c .card-desc  { color: #6b7280; }
+    #c .card-tag   { background: #f3f4f6; color: #4b5563; }
+    #c .tag-dot    { background: #9ca3af; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION D — White cards, colored top stripe + icon
+       A 4px colored top border + matching icon tint.
+       More decorative than B but not as filled as A.
+    ══════════════════════════════════════════════════════════════════════ */
+
+    #d .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-top: 4px solid transparent;
+      padding-top: 22px;
+    }
+    #d .card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.08); }
+
+    #d .card-people    { border-top-color: #a78bfa; }
+    #d .card-process   { border-top-color: #60a5fa; }
+    #d .card-technology{ border-top-color: #34d399; }
+    #d .card-data      { border-top-color: #fbbf24; }
+
+    #d .card-people    .card-icon { background: #f5f3ff; color: #7c3aed; }
+    #d .card-process   .card-icon { background: #eff6ff; color: #2563eb; }
+    #d .card-technology .card-icon { background: #ecfdf5; color: #059669; }
+    #d .card-data      .card-icon { background: #fffbeb; color: #d97706; }
+
+    #d .card-people    .card-tag { background: #f5f3ff; color: #6d28d9; }
+    #d .card-process   .card-tag { background: #eff6ff; color: #1d4ed8; }
+    #d .card-technology .card-tag { background: #ecfdf5; color: #065f46; }
+    #d .card-data      .card-tag { background: #fffbeb; color: #92400e; }
+
+    #d .card-people    .tag-dot { background: #8b5cf6; }
+    #d .card-process   .tag-dot { background: #3b82f6; }
+    #d .card-technology .tag-dot { background: #10b981; }
+    #d .card-data      .tag-dot { background: #f59e0b; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION E — Original 4 colors · Pastel fill + same-family top stripe
+       Stripe is a mid-tone of the same hue as the card fill (not a dark accent).
+       People=red · Process=blue · Technology=green · Data=yellow
+    ══════════════════════════════════════════════════════════════════════ */
+
+    #e .card { padding-top: 22px; }
+
+    /* People — red */
+    #e .card-people {
+      background: #fff5f5;
+      border: 1.5px solid #fecaca;
+      border-top: 4px solid #fca5a5;
+    }
+    #e .card-people:hover { box-shadow: 0 6px 24px rgba(239,68,68,0.13); }
+    #e .card-people .card-icon { background: #fee2e2; color: #b91c1c; }
+    #e .card-people .card-tag  { background: #fee2e2; color: #991b1b; }
+    #e .card-people .tag-dot   { background: #ef4444; }
+
+    /* Process — blue */
+    #e .card-process {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-top: 4px solid #93c5fd;
+    }
+    #e .card-process:hover { box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
+    #e .card-process .card-icon { background: #dbeafe; color: #1d4ed8; }
+    #e .card-process .card-tag  { background: #dbeafe; color: #1e40af; }
+    #e .card-process .tag-dot   { background: #3b82f6; }
+
+    /* Technology — green */
+    #e .card-technology {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-top: 4px solid #86efac;
+    }
+    #e .card-technology:hover { box-shadow: 0 6px 24px rgba(16,185,129,0.12); }
+    #e .card-technology .card-icon { background: #dcfce7; color: #15803d; }
+    #e .card-technology .card-tag  { background: #dcfce7; color: #166534; }
+    #e .card-technology .tag-dot   { background: #22c55e; }
+
+    /* Data — yellow */
+    #e .card-data {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-top: 4px solid #fcd34d;
+    }
+    #e .card-data:hover { box-shadow: 0 6px 24px rgba(234,179,8,0.16); }
+    #e .card-data .card-icon { background: #fef3c7; color: #b45309; }
+    #e .card-data .card-tag  { background: #fef3c7; color: #92400e; }
+    #e .card-data .tag-dot   { background: #f59e0b; }
+
+
+    /* ══════════════════════════════════════════════════════════════════════
+       OPTION F — Dark theme of E
+       Deep dark bg · tinted card surfaces · same stripe/icon logic
+    ══════════════════════════════════════════════════════════════════════ */
+
+    #f {
+      background: #0d0f14;
+    }
+    #f .hero-badge {
+      background: rgba(99,102,241,0.12);
+      border-color: rgba(99,102,241,0.25);
+      color: #a5b4fc;
+    }
+    #f .hero-dot { background: #818cf8; }
+    #f h1 { color: #f9fafb; }
+    #f .hero-sub { color: rgba(249,250,251,0.4); }
+
+    #f .card { padding-top: 22px; }
+    #f .card-title { color: #f3f4f6; }
+    #f .card-desc  { color: rgba(243,244,246,0.4); }
+
+    /* People — red */
+    #f .card-people {
+      background: rgba(239,68,68,0.06);
+      border: 1.5px solid rgba(239,68,68,0.18);
+      border-top: 4px solid rgba(252,165,165,0.55);
+    }
+    #f .card-people:hover { box-shadow: 0 6px 28px rgba(239,68,68,0.12); background: rgba(239,68,68,0.09); }
+    #f .card-people .card-icon { background: rgba(239,68,68,0.12); color: #fca5a5; }
+    #f .card-people .card-tag  { background: rgba(239,68,68,0.12); color: #fca5a5; }
+    #f .card-people .tag-dot   { background: #f87171; }
+
+    /* Process — blue */
+    #f .card-process {
+      background: rgba(59,130,246,0.06);
+      border: 1.5px solid rgba(59,130,246,0.18);
+      border-top: 4px solid rgba(147,197,253,0.55);
+    }
+    #f .card-process:hover { box-shadow: 0 6px 28px rgba(59,130,246,0.12); background: rgba(59,130,246,0.09); }
+    #f .card-process .card-icon { background: rgba(59,130,246,0.12); color: #93c5fd; }
+    #f .card-process .card-tag  { background: rgba(59,130,246,0.12); color: #93c5fd; }
+    #f .card-process .tag-dot   { background: #60a5fa; }
+
+    /* Technology — green */
+    #f .card-technology {
+      background: rgba(34,197,94,0.06);
+      border: 1.5px solid rgba(34,197,94,0.18);
+      border-top: 4px solid rgba(134,239,172,0.55);
+    }
+    #f .card-technology:hover { box-shadow: 0 6px 28px rgba(34,197,94,0.1); background: rgba(34,197,94,0.09); }
+    #f .card-technology .card-icon { background: rgba(34,197,94,0.12); color: #86efac; }
+    #f .card-technology .card-tag  { background: rgba(34,197,94,0.12); color: #86efac; }
+    #f .card-technology .tag-dot   { background: #4ade80; }
+
+    /* Data — yellow */
+    #f .card-data {
+      background: rgba(234,179,8,0.06);
+      border: 1.5px solid rgba(234,179,8,0.18);
+      border-top: 4px solid rgba(253,211,77,0.55);
+    }
+    #f .card-data:hover { box-shadow: 0 6px 28px rgba(234,179,8,0.12); background: rgba(234,179,8,0.09); }
+    #f .card-data .card-icon { background: rgba(234,179,8,0.12); color: #fcd34d; }
+    #f .card-data .card-tag  { background: rgba(234,179,8,0.12); color: #fcd34d; }
+    #f .card-data .tag-dot   { background: #fbbf24; }
+  </style>
+</head>
+<body>
+
+  <nav class="sample-nav">
+    <a href="#a">A · Pastel fill</a>
+    <a href="#b">B · Left border</a>
+    <a href="#c">C · Icon only</a>
+    <a href="#d">D · Top stripe</a>
+    <a href="#e" style="color:#b91c1c;background:#fff5f5">E · Original colors ✦</a>
+    <a href="#f" style="color:#a5b4fc;background:#1e1f2e">F · Dark theme ✦</a>
+  </nav>
+
+  <!-- Reusable hero snippet (identical across all 4) -->
+
+  <!-- ══ A ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="a" class="page">
+    <span class="sample-label">A — Soft pastel fill</span>
+    <div class="hero-badge"><span class="hero-dot"></span> Planning software</div>
+    <h1>The New Era of <span>Planning</span></h1>
+    <p class="hero-sub">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ B ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="b" class="page">
+    <span class="sample-label">B — Colored left border</span>
+    <div class="hero-badge"><span class="hero-dot"></span> Planning software</div>
+    <h1>The New Era of <span>Planning</span></h1>
+    <p class="hero-sub">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ C ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="c" class="page">
+    <span class="sample-label">C — Icon color only</span>
+    <div class="hero-badge"><span class="hero-dot"></span> Planning software</div>
+    <h1>The New Era of <span>Planning</span></h1>
+    <p class="hero-sub">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ D ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="d" class="page">
+    <span class="sample-label">D — Colored top stripe</span>
+    <div class="hero-badge"><span class="hero-dot"></span> Planning software</div>
+    <h1>The New Era of <span>Planning</span></h1>
+    <p class="hero-sub">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ E ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="e" class="page">
+    <span class="sample-label" style="background:#fff5f5;color:#991b1b;border-color:#fecaca">E — Original colors · Pastel fill + same-family top stripe</span>
+    <div class="hero-badge"><span class="hero-dot"></span> Planning software</div>
+    <h1>The New Era of <span>Planning</span></h1>
+    <p class="hero-sub">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ══ F ══ ──────────────────────────────────────────────────────────────── -->
+  <section id="f" class="page" style="background:#0d0f14;border-top:1px solid rgba(255,255,255,0.06)">
+    <span class="sample-label" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1)">F — Dark theme</span>
+    <div class="hero-badge" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.25);color:#a5b4fc">
+      <span class="hero-dot" style="background:#818cf8"></span> Planning software
+    </div>
+    <h1 style="color:#f9fafb">The New Era of <span>Planning</span></h1>
+    <p class="hero-sub" style="color:rgba(249,250,251,0.4)">Explore the people, processes, technology, and data that power modern supply chain planning.</p>
+    <div class="grid">
+
+      <a href="#" class="card card-people">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="card-title">People</div>
+        <div class="card-desc">Roles, mindsets, and collaboration patterns that drive planning success.</div>
+        <div class="card-tag"><span class="tag-dot"></span>2 modules available</div>
+      </a>
+
+      <a href="#" class="card card-process">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="card-title">Process</div>
+        <div class="card-desc">How planning workflows are structured, governed, and continuously improved.</div>
+        <div class="card-tag"><span class="tag-dot"></span>4 modules available</div>
+      </a>
+
+      <a href="#" class="card card-technology">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div class="card-title">Technology</div>
+        <div class="card-desc">From building blocks to live scenario simulation — a guided tour of the planning software.</div>
+        <div class="card-tag"><span class="tag-dot"></span>5 modules available</div>
+      </a>
+
+      <a href="#" class="card card-data">
+        <div class="card-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div class="card-title">Data</div>
+        <div class="card-desc">Data models, signals, and structures that feed intelligent planning decisions.</div>
+        <div class="card-tag"><span class="tag-dot"></span>1 module available</div>
+      </a>
+
+    </div>
+  </section>
+
+</body>
+</html>
