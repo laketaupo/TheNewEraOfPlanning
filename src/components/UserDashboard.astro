@@ -1,0 +1,560 @@
+---
+import { getChapters, getTopics } from '../lib/chapters';
+import { getRoles, resolveRoleSections, resolveRolePhases } from '../lib/roles';
+
+const allChapters = getChapters().filter(c => !c.hidden);
+const allTopics   = getTopics();
+
+const pillarOrder = ['technology', 'process', 'data', 'people'];
+
+const moduleLabels: Record<string, string> = {
+  'planning-software':         'Planning Software',
+  'erp':                       'ERP',
+  'architecture':              'Architecture & Integration',
+  'mdm':                       'MDM Tool',
+  'fms':                       'FMS Tool',
+  'data-driven-planning':      'Data-Driven Planning',
+  'process-foundations':       'Process Foundations',
+  'scenario-planning':         'Scenario Planning',
+  'sop-process':               'S&OP Process',
+  'soe-process':               'S&OE Process',
+  'execution-process':         'Execution Process',
+  'organisation-and-roles':    'Organisation & Roles',
+  'implementation-and-change': 'Implementation & Change',
+};
+
+const pillarMeta: Record<string, { label: string; accentClass: string; lineClass: string }> = {
+  technology: { label: 'Technology', accentClass: 'text-sky-600 dark:text-sky-400',        lineClass: 'bg-sky-100 dark:bg-sky-500/20' },
+  process:    { label: 'Process',    accentClass: 'text-violet-600 dark:text-violet-400',   lineClass: 'bg-violet-100 dark:bg-violet-500/20' },
+  data:       { label: 'Data',       accentClass: 'text-emerald-600 dark:text-emerald-400', lineClass: 'bg-emerald-100 dark:bg-emerald-500/20' },
+  people:     { label: 'People',     accentClass: 'text-amber-600 dark:text-amber-400',     lineClass: 'bg-amber-100 dark:bg-amber-500/20' },
+};
+
+const hierarchy = pillarOrder.map(pillarKey => {
+  const meta = pillarMeta[pillarKey];
+  const pillarChapters = allChapters.filter(c => c.pillar === pillarKey);
+
+  const moduleKeys = [...new Set(pillarChapters.map(c => c.module ?? ''))].filter(Boolean)
+    .sort((a, b) => {
+      const aOrd = pillarChapters.find(c => c.module === a)?.moduleOrder ?? 999;
+      const bOrd = pillarChapters.find(c => c.module === b)?.moduleOrder ?? 999;
+      return aOrd - bOrd;
+    });
+
+  const modules = moduleKeys.map(moduleKey => {
+    const moduleChapters = pillarChapters.filter(c => c.module === moduleKey);
+    const chapters = moduleChapters.map(ch => ({
+      slug:       ch.slug,
+      title:      ch.title,
+      topicCount: allTopics.filter(t => t.chapterSlug === ch.slug).length,
+    }));
+    return {
+      key:        moduleKey,
+      label:      moduleLabels[moduleKey] ?? moduleKey,
+      topicCount: chapters.reduce((s, c) => s + c.topicCount, 0),
+      chapters:   chapters.filter(c => c.topicCount > 0),
+    };
+  }).filter(m => m.topicCount > 0);
+
+  const topicCount = modules.reduce((s, m) => s + m.topicCount, 0);
+  if (topicCount === 0) return null;
+  return { key: pillarKey, ...meta, topicCount, modules };
+}).filter(Boolean) as {
+  key: string; label: string; accentClass: string; lineClass: string;
+  topicCount: number;
+  modules: { key: string; label: string; topicCount: number; chapters: { slug: string; title: string; topicCount: number }[] }[];
+}[];
+
+const topicsForClient = allTopics.map(t => {
+  const chapter = allChapters.find(c => c.slug === t.chapterSlug);
+  return {
+    id:          `${t.chapterSlug}/${t.slug}`,
+    title:       t.title,
+    url:         t.url,
+    chapterSlug: t.chapterSlug,
+    topicSlug:   t.slug,
+    moduleKey:   chapter?.module ?? '',
+    pillarKey:   chapter?.pillar ?? '',
+    order:       t.order,
+  };
+});
+
+// Roles that actually have topics (skip the "coming soon" placeholders).
+// Each role keeps its own phase → section → topic hierarchy so the dashboard
+// can show the role's learning path rather than the site's pillar tree.
+// Roles without phases are normalised to a single untitled phase.
+const rolesForClient = getRoles()
+  .filter(r => !r.comingSoon)
+  .map(r => {
+    const resolvedPhases = resolveRolePhases(r);
+    const phases = (resolvedPhases ?? [{ title: null, sections: resolveRoleSections(r) }]).map(p => ({
+      title: p.title ?? null,
+      sections: p.sections.map(s => ({
+        title: s.title,
+        topics: s.topics.map(t => ({
+          id:    t.topicId,
+          title: t.title,
+          url:   t.url,
+          ref:   `${t.chapterSlug}/${t.slug}`,
+        })),
+      })),
+    }));
+    const refs = phases.flatMap(p => p.sections.flatMap(s => s.topics.map(t => t.ref)));
+    return { slug: r.slug, label: r.title, refs: [...new Set(refs)], phases };
+  })
+  .filter(r => r.refs.length > 0);
+
+const totalTopics = allTopics.length;
+---
+
+<style>
+  .dash-tree details > summary { list-style: none; cursor: pointer; }
+  .dash-tree details > summary::-webkit-details-marker { display: none; }
+  .dash-tree .dash-chevron { transition: transform 0.15s ease; }
+  .dash-tree details[open] > summary .dash-chevron { transform: rotate(90deg); }
+</style>
+
+<!-- Fixed user icon trigger button -->
+<button
+  id="user-dashboard-btn"
+  aria-label="Your progress dashboard"
+  class="fixed top-3 right-16 z-[55] p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+  </svg>
+  <span
+    id="dash-badge"
+    class="hidden absolute -top-1 -right-1 min-w-[16px] h-4 bg-emerald-500 rounded-full text-[9px] text-white font-bold flex items-center justify-center px-1 leading-none pointer-events-none"
+  ></span>
+</button>
+
+<!-- Dashboard panel overlay -->
+<div
+  id="user-dashboard"
+  class="fixed inset-0 z-[9990] hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Progress dashboard"
+>
+  <!-- Backdrop -->
+  <div id="user-dashboard-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+  <!-- Right-side panel -->
+  <div class="absolute top-0 right-0 bottom-0 w-80 flex flex-col bg-white dark:bg-gray-900 shadow-2xl">
+
+    <!-- Panel header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        <span class="text-sm font-semibold text-gray-900 dark:text-white">Your Progress</span>
+      </div>
+      <button
+        id="user-dashboard-close"
+        class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+        aria-label="Close"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Role selector -->
+    {rolesForClient.length > 0 && (
+      <div class="px-5 pt-4 pb-3 border-b border-gray-100 dark:border-gray-800 shrink-0">
+        <label for="dash-role-select" class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1.5">
+          View as role
+        </label>
+        <select
+          id="dash-role-select"
+          class="w-full text-xs rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400/40 cursor-pointer"
+        >
+          <option value="">All topics</option>
+          {rolesForClient.map(r => (
+            <option value={r.slug}>{r.label}</option>
+          ))}
+        </select>
+      </div>
+    )}
+
+    <!-- Overall stats -->
+    <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
+      <div class="flex items-start gap-6 mb-3">
+        <div>
+          <div class="text-xl font-bold text-emerald-600 dark:text-emerald-400" id="dash-complete-num">0</div>
+          <div class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">complete</div>
+        </div>
+        <div>
+          <div class="text-xl font-bold text-amber-500 dark:text-amber-400" id="dash-unclear-num">0</div>
+          <div class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">unclear</div>
+        </div>
+        <div>
+          <div class="text-xl font-bold text-gray-300 dark:text-gray-600" id="dash-remaining-num">0</div>
+          <div class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">remaining</div>
+        </div>
+      </div>
+      <div class="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden flex">
+        <div id="dash-complete-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+        <div id="dash-unclear-bar"  class="h-full bg-amber-400 transition-all duration-300"   style="width: 0%"></div>
+      </div>
+      <div class="text-[11px] text-gray-400 dark:text-gray-500 mt-1.5" id="dash-overall-text">
+        0 of {totalTopics} topics complete
+      </div>
+    </div>
+
+    <!-- Hierarchy tree (scrollable) -->
+    <div class="flex-1 overflow-y-auto py-1 dash-tree">
+
+      <!-- Role view: phase → section → topic. Built by JS when a role is selected. -->
+      <div id="dash-role-view" class="hidden"></div>
+
+      <!-- Default view: pillar → module → chapter → topic -->
+      <div id="dash-pillar-view">
+      {hierarchy.map((pillar, pi) => (
+        <details data-pillar-node={pillar.key}>
+          <!-- Pillar header -->
+          <summary class={`flex items-center gap-2 px-5 py-2 select-none hover:bg-gray-50 dark:hover:bg-gray-800/40 ${pi > 0 ? 'mt-1' : ''}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" class={`dash-chevron w-2.5 h-2.5 shrink-0 ${pillar.accentClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+            <span class={`text-[10px] font-bold uppercase tracking-widest ${pillar.accentClass}`}>{pillar.label}</span>
+            <div class={`flex-1 h-px ${pillar.lineClass}`}></div>
+            <span class="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums shrink-0" data-pillar-count={pillar.key}>
+              0/{pillar.topicCount}
+            </span>
+          </summary>
+
+          {pillar.modules.map(mod => (
+            <details data-module-node={mod.key}>
+              <!-- Module header -->
+              <summary class="flex items-center gap-2 pl-8 pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-gray-800/40">
+                <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+                <span class="text-xs font-medium text-gray-600 dark:text-gray-300 flex-1 truncate">{mod.label}</span>
+                <span class="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums shrink-0" data-module-count={mod.key}>
+                  0/{mod.topicCount}
+                </span>
+              </summary>
+
+              {mod.chapters.map(ch => (
+                <details data-chapter-node={ch.slug}>
+                  <!-- Chapter header -->
+                  <summary class="block pl-11 pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-gray-800/40">
+                    <div class="flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"/>
+                      </svg>
+                      <span class="text-xs text-gray-700 dark:text-gray-300 flex-1 truncate leading-snug">{ch.title}</span>
+                      <span class="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums shrink-0" data-chapter-count={ch.slug}>
+                        0/{ch.topicCount}
+                      </span>
+                    </div>
+                    <!-- Mini progress bar -->
+                    <div class="h-1 mt-1.5 ml-4 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden flex">
+                      <div class="h-full bg-emerald-500 transition-all duration-300" data-chapter-complete-bar={ch.slug} style="width: 0%"></div>
+                      <div class="h-full bg-amber-400 transition-all duration-300"   data-chapter-unclear-bar={ch.slug}  style="width: 0%"></div>
+                    </div>
+                  </summary>
+
+                  <!-- Topics list, populated by JS -->
+                  <div class="pl-[52px] pr-5 pb-2 pt-0.5 space-y-0.5" data-chapter-topics={ch.slug}></div>
+                </details>
+              ))}
+            </details>
+          ))}
+        </details>
+      ))}
+      </div>
+
+      <!-- Empty state when a role has no matching topics in a section -->
+      <div id="dash-empty" class="hidden px-5 py-8 text-center text-xs text-gray-400 dark:text-gray-500">
+        No topics for this role yet.
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="px-5 py-3 border-t border-gray-100 dark:border-gray-800 shrink-0">
+      <button
+        id="dash-reset-btn"
+        class="text-xs text-gray-400 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+      >
+        Reset all progress
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script define:vars={{ topicsForClient, totalTopics, rolesForClient }}>
+  const STORAGE_KEY = 'platform-progress';
+  const ROLE_KEY    = 'platform-dashboard-role';
+
+  // Lookups: role slug -> Set of "chapterSlug/topicSlug" refs, and -> full role object
+  const roleRefs = {};
+  const roleBySlug = {};
+  rolesForClient.forEach(r => { roleRefs[r.slug] = new Set(r.refs); roleBySlug[r.slug] = r; });
+
+  let activeRole = localStorage.getItem(ROLE_KEY) || '';
+  if (activeRole && !roleRefs[activeRole]) activeRole = ''; // role no longer exists
+
+  const dotClass = {
+    complete: 'bg-emerald-500',
+    unclear:  'bg-amber-400',
+    none:     'bg-gray-300 dark:bg-gray-600',
+  };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  }
+
+  function getProgress() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const result = {};
+      for (const [k, v] of Object.entries(raw)) {
+        if (v === 'complete' || v === 'unclear') result[k] = v;
+        else if (v === true) result[k] = 'complete';
+      }
+      return result;
+    } catch { return {}; }
+  }
+
+  // Is a topic part of the currently-selected role? (true for everything when "All topics")
+  function inScope(t) {
+    if (!activeRole) return true;
+    return roleRefs[activeRole].has(`${t.chapterSlug}/${t.topicSlug}`);
+  }
+
+  const panel      = document.getElementById('user-dashboard');
+  const triggerBtn = document.getElementById('user-dashboard-btn');
+  const closeBtn   = document.getElementById('user-dashboard-close');
+  const backdrop   = document.getElementById('user-dashboard-backdrop');
+  const badge      = document.getElementById('dash-badge');
+  const roleSelect = document.getElementById('dash-role-select');
+  const pillarView = document.getElementById('dash-pillar-view');
+  const roleView   = document.getElementById('dash-role-view');
+
+  function closeDashboard() {
+    panel.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function openDashboard() {
+    refreshDashboard();
+    panel.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Badge is always global (total completed across the whole site)
+  function updateBadge() {
+    const progress = getProgress();
+    const n = topicsForClient.filter(t => progress[t.id] === 'complete').length;
+    if (n > 0) {
+      badge.textContent = String(n);
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  // A topic row used in both views
+  function topicRow(t, state) {
+    const dot = dotClass[state] ?? dotClass.none;
+    return `<a href="${esc(t.url)}"
+               class="flex items-center gap-2 py-0.5 group"
+               onclick="document.getElementById('user-dashboard').classList.add('hidden');document.body.style.overflow='';">
+              <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0"></span>
+              <span class="text-[11px] text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white leading-snug truncate">${esc(t.title)}</span>
+            </a>`;
+  }
+
+  // Build the role view (phase → section → topic) once, collapsed. Counts/dots
+  // are filled in by updateRoleView so user collapse state survives refreshes.
+  function buildRoleView(role) {
+    roleView.innerHTML = role.phases.map((phase, pi) => {
+      const sectionsHtml = phase.sections.map((section, si) => `
+        <details data-rolesec-node="${pi}-${si}">
+          <summary class="flex items-center gap-2 ${phase.title ? 'pl-8' : 'pl-5'} pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-gray-800/40">
+            <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="text-xs font-medium text-gray-600 dark:text-gray-300 flex-1 truncate">${esc(section.title)}</span>
+            <span class="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums shrink-0" data-rolesec-count="${pi}-${si}">0/${section.topics.length}</span>
+          </summary>
+          <div class="${phase.title ? 'pl-12' : 'pl-9'} pr-5 pb-2 pt-0.5 space-y-0.5" data-rolesec-topics="${pi}-${si}"></div>
+        </details>`).join('');
+
+      // Untitled phase (role had no phases) → render sections directly, no wrapper
+      if (!phase.title) return sectionsHtml;
+
+      const phaseTotal = phase.sections.reduce((s, sec) => s + sec.topics.length, 0);
+      return `
+        <details data-rolephase-node="${pi}" ${pi > 0 ? 'class="mt-1"' : ''}>
+          <summary class="flex items-center gap-2 px-5 py-2 select-none hover:bg-gray-50 dark:hover:bg-gray-800/40">
+            <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2.5 h-2.5 shrink-0 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400">${esc(phase.title)}</span>
+            <div class="flex-1 h-px bg-sky-100 dark:bg-sky-500/20"></div>
+            <span class="text-[10px] text-gray-400 dark:text-gray-500 tabular-nums shrink-0" data-rolephase-count="${pi}">0/${phaseTotal}</span>
+          </summary>
+          ${sectionsHtml}
+        </details>`;
+    }).join('');
+  }
+
+  // Update counts/dots in the (already-built) role view
+  function updateRoleView(role, progress) {
+    role.phases.forEach((phase, pi) => {
+      let phaseDone = 0, phaseTotal = 0;
+      phase.sections.forEach((section, si) => {
+        let secDone = 0;
+        const rows = section.topics.map(t => {
+          const state = progress[t.id] ?? 'none';
+          if (state === 'complete') secDone++;
+          return topicRow(t, state);
+        }).join('');
+        const cont = roleView.querySelector(`[data-rolesec-topics="${pi}-${si}"]`);
+        if (cont) cont.innerHTML = rows;
+        const cnt = roleView.querySelector(`[data-rolesec-count="${pi}-${si}"]`);
+        if (cnt) cnt.textContent = `${secDone}/${section.topics.length}`;
+        phaseDone += secDone; phaseTotal += section.topics.length;
+      });
+      const pCnt = roleView.querySelector(`[data-rolephase-count="${pi}"]`);
+      if (pCnt) pCnt.textContent = `${phaseDone}/${phaseTotal}`;
+    });
+  }
+
+  function updatePillarView(progress) {
+    const chapterComplete = {}, chapterUnclear = {};
+    const moduleComplete  = {}, pillarComplete = {};
+    const chapterTotal    = {}, moduleTotal    = {}, pillarTotal = {};
+    const byChapter = {};
+
+    topicsForClient.forEach(t => {
+      (byChapter[t.chapterSlug] ??= []).push(t);
+      chapterTotal[t.chapterSlug] = (chapterTotal[t.chapterSlug] ?? 0) + 1;
+      moduleTotal[t.moduleKey]    = (moduleTotal[t.moduleKey]    ?? 0) + 1;
+      pillarTotal[t.pillarKey]    = (pillarTotal[t.pillarKey]    ?? 0) + 1;
+      const state = progress[t.id];
+      if (state === 'complete') {
+        chapterComplete[t.chapterSlug] = (chapterComplete[t.chapterSlug] ?? 0) + 1;
+        moduleComplete[t.moduleKey]    = (moduleComplete[t.moduleKey]    ?? 0) + 1;
+        pillarComplete[t.pillarKey]    = (pillarComplete[t.pillarKey]    ?? 0) + 1;
+      } else if (state === 'unclear') {
+        chapterUnclear[t.chapterSlug] = (chapterUnclear[t.chapterSlug] ?? 0) + 1;
+      }
+    });
+
+    pillarView.querySelectorAll('[data-pillar-node]').forEach(node => {
+      const key = node.dataset.pillarNode;
+      const countEl = node.querySelector('[data-pillar-count]');
+      if (countEl) countEl.textContent = `${pillarComplete[key] ?? 0}/${pillarTotal[key] ?? 0}`;
+    });
+    pillarView.querySelectorAll('[data-module-node]').forEach(node => {
+      const key = node.dataset.moduleNode;
+      const countEl = node.querySelector('[data-module-count]');
+      if (countEl) countEl.textContent = `${moduleComplete[key] ?? 0}/${moduleTotal[key] ?? 0}`;
+    });
+    pillarView.querySelectorAll('[data-chapter-node]').forEach(node => {
+      const slug    = node.dataset.chapterNode;
+      const total   = chapterTotal[slug] ?? 0;
+      const done    = chapterComplete[slug] ?? 0;
+      const unclear = chapterUnclear[slug] ?? 0;
+      const countEl = node.querySelector('[data-chapter-count]');
+      if (countEl) countEl.textContent = `${done}/${total}`;
+      const cBar = node.querySelector('[data-chapter-complete-bar]');
+      if (cBar) cBar.style.width = `${total > 0 ? (done / total) * 100 : 0}%`;
+      const uBar = node.querySelector('[data-chapter-unclear-bar]');
+      if (uBar) uBar.style.width = `${total > 0 ? (unclear / total) * 100 : 0}%`;
+      const container = node.querySelector('[data-chapter-topics]');
+      if (container) {
+        container.innerHTML = (byChapter[slug] ?? [])
+          .sort((a, b) => a.order - b.order)
+          .map(t => topicRow(t, progress[t.id] ?? 'none')).join('');
+      }
+    });
+  }
+
+  function refreshDashboard() {
+    const progress = getProgress();
+    const role = activeRole ? roleBySlug[activeRole] : null;
+
+    // Topics in the active scope (role filter, or everything) drive the header stats
+    const scoped = topicsForClient.filter(inScope);
+    let completedCount = 0, unclearCount = 0;
+    scoped.forEach(t => {
+      const state = progress[t.id];
+      if (state === 'complete') completedCount++;
+      else if (state === 'unclear') unclearCount++;
+    });
+
+    const scopeTotal     = scoped.length;
+    const remainingCount  = scopeTotal - completedCount - unclearCount;
+    const completePct     = scopeTotal > 0 ? (completedCount / scopeTotal) * 100 : 0;
+    const unclearPct      = scopeTotal > 0 ? (unclearCount   / scopeTotal) * 100 : 0;
+
+    document.getElementById('dash-complete-num').textContent  = String(completedCount);
+    document.getElementById('dash-unclear-num').textContent   = String(unclearCount);
+    document.getElementById('dash-remaining-num').textContent = String(remainingCount);
+    document.getElementById('dash-complete-bar').style.width  = `${completePct}%`;
+    document.getElementById('dash-unclear-bar').style.width   = `${unclearPct}%`;
+    document.getElementById('dash-overall-text').textContent  =
+      `${completedCount} of ${scopeTotal} topics complete`;
+
+    // Swap views and update the active one
+    if (role) {
+      pillarView.classList.add('hidden');
+      roleView.classList.remove('hidden');
+      updateRoleView(role, progress);
+    } else {
+      roleView.classList.add('hidden');
+      pillarView.classList.remove('hidden');
+      updatePillarView(progress);
+    }
+
+    document.getElementById('dash-empty').classList.toggle('hidden', scopeTotal > 0);
+    updateBadge();
+  }
+
+  updateBadge();
+
+  if (roleSelect) {
+    roleSelect.value = activeRole;
+    if (activeRole) buildRoleView(roleBySlug[activeRole]); // restore persisted role
+    roleSelect.addEventListener('change', () => {
+      activeRole = roleSelect.value;
+      if (activeRole) {
+        localStorage.setItem(ROLE_KEY, activeRole);
+        buildRoleView(roleBySlug[activeRole]); // rebuild structure, collapsed, on role change
+      } else {
+        localStorage.removeItem(ROLE_KEY);
+      }
+      refreshDashboard();
+    });
+  }
+
+  triggerBtn.addEventListener('click', () =>
+    panel.classList.contains('hidden') ? openDashboard() : closeDashboard()
+  );
+  closeBtn.addEventListener('click', closeDashboard);
+  backdrop.addEventListener('click', closeDashboard);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.classList.contains('hidden')) closeDashboard();
+  });
+
+  document.getElementById('dash-reset-btn').addEventListener('click', () => {
+    if (confirm('Reset all progress? This cannot be undone.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      refreshDashboard();
+      location.reload();
+    }
+  });
+
+  window.addEventListener('platform-progress-changed', () => {
+    if (!panel.classList.contains('hidden')) refreshDashboard();
+    else updateBadge();
+  });
+</script>

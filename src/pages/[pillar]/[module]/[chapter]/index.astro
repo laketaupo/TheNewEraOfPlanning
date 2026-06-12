@@ -126,7 +126,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
               <!-- Completion dot (filled by JS) -->
               <span
                 class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
-                data-topic-id={`ch${chapter.order}-t${topic.order}`}
+                data-topic-id={`${chapter.slug}/${topic.slug}`}
               ></span>
             </div>
           </a>

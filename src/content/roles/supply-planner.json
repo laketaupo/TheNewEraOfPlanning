@@ -1,135 +1,194 @@
 {
   "title": "Supply Planner",
-  "description": "Guide the supply planning transformation: from shared vision and process design through data governance, system readiness, training, and lasting adoption.",
+  "description": "Master the full planning process — from S&OP and S&OE through daily execution — then understand how Planning Software and ERP support each step of the way.",
   "icon": "truck",
   "color": "teal",
   "order": 11,
   "department": "Supply Chain",
-  "sections": [
+  "phases": [
     {
-      "title": "Shared Vision",
-      "description": "Understand why the transformation is happening, what success looks like, and how to align the organisation behind the change.",
-      "topics": [
-        "people-03-shared-vision/01-the-case-for-change",
-        "people-03-shared-vision/02-defining-the-future-state",
-        "people-03-shared-vision/03-aligning-stakeholders"
+      "title": "Process Foundation",
+      "description": "Understand how S&OP, S&OE, and Execution connect into a single planning operating model — and what your role looks like inside each cycle.",
+      "sections": [
+        {
+          "title": "The Planning Operating Model",
+          "description": "How S&OP, S&OE, and Execution relate to each other — the three planning horizons and the cadence that connects them.",
+          "topics": [
+            "process-03-operating-model/01-what-is-sop",
+            "process-03-operating-model/02-what-is-soe",
+            "process-03-operating-model/03-execution",
+            "process-03-operating-model/04-the-cadence"
+          ]
+        },
+        {
+          "title": "S&OP — Monthly Planning",
+          "description": "The full monthly S&OP cycle — what it produces, who participates, and how to run each step from demand review through executive sign-off.",
+          "topics": [
+            "sop-01-sop-fundamentals/01-what-is-sop",
+            "sop-01-sop-fundamentals/02-the-sop-cycle",
+            "sop-01-sop-fundamentals/03-sop-roles",
+            "sop-01-sop-fundamentals/04-sop-outputs",
+            "sop-01-sop-fundamentals/05-sop-in-planning-software",
+            "sop-02-running-sop/01-demand-review",
+            "sop-02-running-sop/02-supply-review",
+            "sop-02-running-sop/03-pre-sop",
+            "sop-02-running-sop/04-executive-sop"
+          ]
+        },
+        {
+          "title": "S&OE — Weekly Execution",
+          "description": "The weekly S&OE cycle — monitoring the near-term plan, resolving exceptions, and handing off cleanly to execution.",
+          "topics": [
+            "soe-01-soe-fundamentals/01-what-is-soe",
+            "soe-01-soe-fundamentals/02-weekly-cadence",
+            "soe-01-soe-fundamentals/03-soe-roles",
+            "soe-01-soe-fundamentals/04-exception-management",
+            "soe-01-soe-fundamentals/05-escalating-to-sop",
+            "soe-02-running-soe/01-monitoring-the-plan",
+            "soe-02-running-soe/02-adjustments-and-resets",
+            "soe-02-running-soe/03-integrated-soe-review",
+            "soe-02-running-soe/04-handoff-to-execution"
+          ]
+        },
+        {
+          "title": "Execution — Daily Operations",
+          "description": "How confirmed plans become shipped orders — order prioritisation, real-time visibility, execution discipline, and feeding actuals back to planning.",
+          "topics": [
+            "exec-01-execution-fundamentals/01-what-is-execution",
+            "exec-01-execution-fundamentals/02-from-plan-to-action",
+            "exec-01-execution-fundamentals/03-execution-exceptions",
+            "exec-01-execution-fundamentals/05-execution-and-erp",
+            "exec-02-daily-execution/01-order-prioritisation",
+            "exec-02-daily-execution/02-real-time-visibility",
+            "exec-02-daily-execution/03-execution-discipline",
+            "exec-02-daily-execution/04-feedback-to-planning"
+          ]
+        }
       ]
     },
     {
-      "title": "Operating Model",
-      "description": "How S&OP and S&OE work — the governance layer, meeting cadence, and how plans move from decision to execution.",
-      "topics": [
-        "process-03-operating-model/01-what-is-sop",
-        "process-03-operating-model/02-what-is-soe",
-        "process-03-operating-model/03-execution",
-        "process-03-operating-model/04-the-cadence"
+      "title": "Understanding the Tools",
+      "description": "Learn how Planning Software and ERP support the processes from Phase 1 — from how the planning engine models your supply chain to how you work in both systems day-to-day.",
+      "sections": [
+        {
+          "title": "Planning Software — Building Blocks",
+          "description": "The core objects the planning engine uses to model your supply chain: items, locations, BOMs, BODs, resources, and how they form a network.",
+          "topics": [
+            "01-understanding-basics/01-item",
+            "01-understanding-basics/02-item-at-location",
+            "01-understanding-basics/03-bom",
+            "01-understanding-basics/06-bod",
+            "01-understanding-basics/09-resource",
+            "02-the-network/11-full-network"
+          ]
+        },
+        {
+          "title": "Planning Software — Data Flow & Logic",
+          "description": "How demand propagates upstream and supply flows downstream through the network, and the key planning logic rules that shape the output.",
+          "topics": [
+            "03-demand-data-flow/01-demand-signal",
+            "03-demand-data-flow/02-forecast-origin",
+            "03-demand-data-flow/03-upstream-cascade",
+            "03-demand-data-flow/04-timing-and-netting",
+            "04-supply-data-flow/01-supply-signal",
+            "04-supply-data-flow/02-inventory-netting",
+            "04-supply-data-flow/04-downstream-cascade",
+            "03-the-logic/03-backward-consumption",
+            "03-the-logic/06-pull",
+            "03-the-logic/07-safety-stock"
+          ]
+        },
+        {
+          "title": "Planning Software — Simulations & Navigation",
+          "description": "How to run workflow simulations in Planning Software and navigate the interface to read and act on plan output.",
+          "topics": [
+            "04-the-simulation/01-what-is-a-workflow-simulation",
+            "04-the-simulation/02-setting-up-a-simulation",
+            "04-the-simulation/03-running-the-simulation",
+            "04-the-simulation/04-reading-simulation-results",
+            "04-the-simulation/05-promoting-a-simulation",
+            "05-navigation-and-ui/01-navigating-planning-software",
+            "05-navigation-and-ui/02-the-user-interface",
+            "05-navigation-and-ui/03-reading-plan-output"
+          ]
+        },
+        {
+          "title": "ERP — Understanding the System",
+          "description": "What ERP is, how it structures data, and what it sends back to Planning Software — the signals that keep the plan grounded in reality.",
+          "topics": [
+            "erp-01-erp-basics/01-what-is-erp",
+            "erp-01-erp-basics/03-core-erp-concepts",
+            "erp-02-the-data-model/01-how-erp-structures-data",
+            "erp-02-the-data-model/02-key-master-data-in-erp",
+            "erp-02-the-data-model/03-key-transactional-data-in-erp",
+            "erp-04-data-flow-out-of-erp/01-what-erp-sends-to-planning"
+          ]
+        },
+        {
+          "title": "ERP — Working in ERP",
+          "description": "The business logic, key workflows, and navigation a supply planner uses in ERP — releasing orders, managing inventory, and reading output.",
+          "topics": [
+            "erp-05-the-logic/02-order-management-logic",
+            "erp-05-the-logic/03-inventory-management-logic",
+            "erp-06-key-erp-workflows/01-creating-and-managing-orders",
+            "erp-06-key-erp-workflows/02-goods-receipt-and-issue",
+            "erp-07-navigation-and-ui/01-navigating-erp",
+            "erp-07-navigation-and-ui/03-reading-erp-output"
+          ]
+        }
       ]
     },
     {
-      "title": "Roles & Responsibilities",
-      "description": "Who does what in the planning organisation — team structure, role definitions, and the accountability framework that makes it work.",
-      "topics": [
-        "people-01-planning-team/01-who-is-in-the-planning-team",
-        "people-01-planning-team/02-planning-roles-overview",
-        "people-01-planning-team/03-the-planning-org-chart",
-        "people-02-accountability/01-what-is-rasci",
-        "people-02-accountability/03-supply-review-rasci",
-        "people-02-accountability/05-making-rasci-work"
-      ]
-    },
-    {
-      "title": "Process Design",
-      "description": "How the planning processes are structured — decision frameworks, escalation paths, exception handling, and service level design.",
-      "topics": [
-        "process-01-scenario-planning-fundamentals/04-the-scenario-planning-process",
-        "process-04-planning-policy/01-service-level-targets",
-        "process-05-governance-and-escalation/01-decision-framework",
-        "process-05-governance-and-escalation/02-escalation-paths",
-        "process-05-governance-and-escalation/03-management-by-exception"
-      ]
-    },
-    {
-      "title": "Data Requirements",
-      "description": "What data the plan depends on — the data model, where data comes from, how it flows in, and what happens when it's wrong.",
-      "topics": [
-        "data-01-planning-data-fundamentals/01-what-is-data-driven-planning",
-        "data-01-planning-data-fundamentals/03-where-data-comes-from",
-        "data-01-planning-data-fundamentals/04-how-data-flows-into-a-plan",
-        "data-01-planning-data-fundamentals/05-the-cost-of-bad-data",
-        "data-03-data-types/01-master-data",
-        "data-03-data-types/02-transactional-data",
-        "data-03-data-types/03-planning-parameters"
-      ]
-    },
-    {
-      "title": "Data Governance",
-      "description": "How data quality is owned, measured, and improved — from defining good enough to assigning accountability and building confidence.",
-      "topics": [
-        "data-02-data-quality-and-impact/01-what-makes-data-good-enough",
-        "data-02-data-quality-and-impact/02-common-data-problems",
-        "data-02-data-quality-and-impact/04-data-governance-basics",
-        "data-04-data-governance/01-data-confidence",
-        "data-04-data-governance/02-data-ownership",
-        "data-04-data-governance/03-data-definitions"
-      ]
-    },
-    {
-      "title": "System Design",
-      "description": "How the technology is architected — the data model, system interfaces, batch processing, and how ERP and planning software integrate.",
-      "topics": [
-        "data-01-planning-data-fundamentals/02-data-model-overview",
-        "arch-01-end-to-end/01-interfaces",
-        "arch-01-end-to-end/02-batchrun",
-        "arch-01-end-to-end/03-data-upload",
-        "arch-02-integration/01-erp-planning-software-integration",
-        "arch-02-integration/02-planning-software-fms-mdm"
-      ]
-    },
-    {
-      "title": "Training",
-      "description": "How to build planning capability — assessing gaps, sequencing the learning journey, and delivering training that transfers to the job.",
-      "topics": [
-        "people-01-planning-team/04-role-competencies",
-        "people-01-planning-team/05-building-an-effective-planning-team",
-        "people-04-training/01-assessing-capability-gaps",
-        "people-04-training/02-building-a-training-plan",
-        "people-04-training/03-delivering-effective-training"
-      ]
-    },
-    {
-      "title": "Adoption",
-      "description": "Making the new way of working permanent — understanding why adoption fails and how to embed lasting behavioural change.",
-      "topics": [
-        "people-05-adoption/01-why-adoption-fails",
-        "people-05-adoption/02-managing-resistance",
-        "people-05-adoption/03-embedding-new-behaviors",
-        "people-05-adoption/04-measuring-adoption"
-      ]
-    },
-    {
-      "title": "Advanced Planning",
-      "description": "Scenario analysis, what-if simulation, and the policy decisions — safety stock, allocation, prioritisation — that sharpen the supply plan.",
-      "topics": [
-        "process-01-scenario-planning-fundamentals/01-what-is-scenario-planning",
-        "process-01-scenario-planning-fundamentals/05-setting-up-effective-scenarios",
-        "process-01-scenario-planning-fundamentals/06-supply-risks",
-        "process-02-running-scenarios/01-creating-a-scenario",
-        "process-02-running-scenarios/02-adjusting-parameters-and-assumptions",
-        "process-02-running-scenarios/03-running-and-comparing-scenarios",
-        "process-04-planning-policy/02-safety-stock",
-        "process-04-planning-policy/03-allocation",
-        "process-04-planning-policy/04-prioritization"
-      ]
-    },
-    {
-      "title": "Continuous Improvement",
-      "description": "How to sustain and improve performance — KPI frameworks, exception management, data quality cycles, and scenario governance.",
-      "topics": [
-        "process-06-kpis/01-kpi-framework-overview",
-        "process-06-kpis/02-key-planning-kpis",
-        "process-06-kpis/03-kpi-ownership-and-review",
-        "process-06-kpis/04-kpis-and-exception-management",
-        "data-02-data-quality-and-impact/05-improving-data-quality-over-time"
+      "title": "Advanced Planning Methodologies",
+      "description": "Go beyond the baseline plan — use scenario planning to stress-test supply risks and demand uncertainty, set the policies that govern system behaviour, and measure planning performance.",
+      "sections": [
+        {
+          "title": "Scenario Planning Fundamentals",
+          "description": "What scenario planning is, when to use it, and how to set up scenarios that surface the decisions worth making.",
+          "topics": [
+            "process-01-scenario-planning-fundamentals/01-what-is-scenario-planning",
+            "process-01-scenario-planning-fundamentals/02-when-to-use-scenario-planning",
+            "process-01-scenario-planning-fundamentals/03-types-of-scenarios",
+            "process-01-scenario-planning-fundamentals/04-the-scenario-planning-process",
+            "process-01-scenario-planning-fundamentals/05-setting-up-effective-scenarios",
+            "process-01-scenario-planning-fundamentals/06-supply-risks",
+            "process-01-scenario-planning-fundamentals/07-demand-uncertainty"
+          ]
+        },
+        {
+          "title": "Running Scenarios in Planning Software",
+          "description": "The end-to-end practical workflow — creating, adjusting, running, comparing, and promoting scenarios within Planning Software.",
+          "topics": [
+            "process-02-running-scenarios/01-creating-a-scenario",
+            "process-02-running-scenarios/02-adjusting-parameters-and-assumptions",
+            "process-02-running-scenarios/03-running-and-comparing-scenarios",
+            "process-02-running-scenarios/04-promoting-a-scenario-to-baseline",
+            "process-02-running-scenarios/05-communicating-scenario-findings"
+          ]
+        },
+        {
+          "title": "Planning Policy",
+          "description": "The documented decisions that govern system behaviour — service level targets, safety stock rules, allocation logic, and prioritisation frameworks.",
+          "topics": [
+            "process-04-planning-policy/01-service-level-targets",
+            "process-04-planning-policy/02-safety-stock",
+            "process-04-planning-policy/03-allocation",
+            "process-04-planning-policy/04-prioritization"
+          ]
+        },
+        {
+          "title": "Governance & KPIs",
+          "description": "Decision frameworks, escalation paths, exception-based working, and the KPI structure that connects performance measurement to the S&OP cycle.",
+          "topics": [
+            "process-05-governance-and-escalation/01-decision-framework",
+            "process-05-governance-and-escalation/02-escalation-paths",
+            "process-05-governance-and-escalation/03-management-by-exception",
+            "process-06-kpis/01-kpi-framework-overview",
+            "process-06-kpis/02-key-planning-kpis",
+            "process-06-kpis/03-kpi-ownership-and-review",
+            "process-06-kpis/04-kpis-and-exception-management"
+          ]
+        }
       ]
     }
   ]

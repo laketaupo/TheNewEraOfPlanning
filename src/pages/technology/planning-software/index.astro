@@ -183,9 +183,8 @@ const colorTextMap: Record<string, string> = {
     const idx = canvas.dataset.chapterIndex ?? '0';
     if (!count) return;
 
-    const chapterNum = slug.split('-')[0];
     const completed = Object.keys(progress).filter(
-      (k) => k.startsWith(`ch${parseInt(chapterNum, 10)}-`) && progress[k]
+      (k) => k.startsWith(`${slug}/`) && progress[k] === 'complete'
     ).length;
 
     const pct = count > 0 ? completed / count : 0;

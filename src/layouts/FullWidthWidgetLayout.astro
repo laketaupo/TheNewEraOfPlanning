@@ -10,6 +10,7 @@ export interface Props {
   chapterUrl: string;
   chapterColor: string;
   topicOrder: number;
+  topicSlug: string;
   chapterOrder: number;
   prevUrl?: string;
   nextUrl?: string;
@@ -29,6 +30,7 @@ const {
   chapterUrl,
   chapterColor,
   topicOrder,
+  topicSlug,
   chapterOrder,
   prevUrl,
   nextUrl,
@@ -108,7 +110,7 @@ const accentSubtle       = accentSubtleMap[chapterColor] ?? 'rgba(99,102,241,0.0
 const badgeBgClass       = badgeBgMap[chapterColor]      ?? badgeBgMap.indigo;
 const dotColorClass      = dotColorMap[chapterColor]     ?? dotColorMap.indigo;
 
-const topicId = `ch${chapterOrder}-t${topicOrder}`;
+const topicId = `${chapterSlug}/${topicSlug}`;
 ---
 
 <BaseLayout title={`${title} — ${back.label}`} description={description}>
@@ -131,7 +133,6 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
       {chapterTitle}
     </a>
     <div class="flex items-center gap-3">
-      <div id="topic-progress-display" class="text-xs text-gray-400 dark:text-gray-500"></div>
       <ThemeToggle />
     </div>
   </header>
@@ -199,16 +200,28 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
       )}
     </div>
 
-    <button
-      id="complete-btn"
-      data-topic-id={topicId}
-      class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
-    >
-      <svg id="complete-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-      </svg>
-      <span id="complete-label">Mark complete</span>
-    </button>
+    <div class="flex items-center gap-2">
+      <button
+        id="complete-btn"
+        data-topic-id={topicId}
+        class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-emerald-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span id="complete-label">Mark complete</span>
+      </button>
+      <button
+        id="unclear-btn"
+        data-topic-id={topicId}
+        class="flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-all"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span id="unclear-label">Mark unclear</span>
+      </button>
+    </div>
 
     <div class="flex-1 flex justify-end">
       {nextUrl ? (
@@ -288,36 +301,55 @@ const topicId = `ch${chapterOrder}-t${topicOrder}`;
   <script define:vars={{ topicId, totalTopics }}>
     const STORAGE_KEY = 'platform-progress';
     function getProgress() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
-      catch { return {}; }
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        const result = {};
+        for (const [k, v] of Object.entries(raw)) {
+          if (v === 'complete' || v === 'unclear') result[k] = v;
+          else if (v === true) result[k] = 'complete';
+        }
+        return result;
+      } catch { return {}; }
     }
     function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
-    const btn = document.getElementById('complete-btn');
-    const label = document.getElementById('complete-label');
-    function updateBtn(completed) {
-      if (completed) {
-        btn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
-        btn.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
-        label.textContent = 'Completed';
+    const completeBtn   = document.getElementById('complete-btn');
+    const completeLabel = document.getElementById('complete-label');
+    const unclearBtn    = document.getElementById('unclear-btn');
+    const unclearLabel  = document.getElementById('unclear-label');
+    function updateButtons(state) {
+      if (state === 'complete') {
+        completeBtn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        completeBtn.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        completeLabel.textContent = 'Completed';
       } else {
-        btn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
-        btn.classList.remove('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
-        label.textContent = 'Mark complete';
+        completeBtn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        completeBtn.classList.remove('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
+        completeLabel.textContent = 'Mark complete';
+      }
+      if (state === 'unclear') {
+        unclearBtn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        unclearBtn.classList.add('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
+        unclearLabel.textContent = 'Unclear';
+      } else {
+        unclearBtn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+        unclearBtn.classList.remove('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
+        unclearLabel.textContent = 'Mark unclear';
       }
     }
-    updateBtn(!!getProgress()[topicId]);
-    btn.addEventListener('click', () => {
+    updateButtons(getProgress()[topicId]);
+    completeBtn.addEventListener('click', () => {
       const p = getProgress();
-      p[topicId] = !p[topicId];
-      if (!p[topicId]) delete p[topicId];
+      if (p[topicId] === 'complete') delete p[topicId]; else p[topicId] = 'complete';
       saveProgress(p);
-      updateBtn(!!p[topicId]);
+      updateButtons(p[topicId]);
+      window.dispatchEvent(new CustomEvent('platform-progress-changed'));
     });
-    const display = document.getElementById('topic-progress-display');
-    if (display) {
-      const total = totalTopics ?? 21;
-      const done = Object.values(getProgress()).filter(Boolean).length;
-      display.textContent = `${done} / ${total} topics`;
-    }
+    unclearBtn.addEventListener('click', () => {
+      const p = getProgress();
+      if (p[topicId] === 'unclear') delete p[topicId]; else p[topicId] = 'unclear';
+      saveProgress(p);
+      updateButtons(p[topicId]);
+      window.dispatchEvent(new CustomEvent('platform-progress-changed'));
+    });
   </script>
 </BaseLayout>

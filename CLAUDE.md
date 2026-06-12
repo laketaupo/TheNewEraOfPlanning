@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev      # Start dev server at http://localhost:4321
-npm run build    # Build to dist/ — always run this to verify before considering a task done
+npm run build    # Build to .vercel/output/static/ — always run this to verify before considering a task done
 npm run preview  # Preview the built site
 ```
 
@@ -30,8 +30,8 @@ Current modules per pillar:
 |---|---|
 | `technology` | `planning-software`, `erp`, `architecture`, `mdm`, `fms` |
 | `data` | `data-driven-planning` |
-| `process` | `scenario-planning` |
-| `people` | `people-and-planning` |
+| `process` | `scenario-planning`, `sop-process`, `soe-process`, `execution-process`, `process-foundations` |
+| `people` | `organisation-and-roles`, `implementation-and-change` |
 
 The Configuration Manual (`/technology/configuration`) is a separate content type surfaced via the Planning Software module page — it does not use the pillar/module/chapter/topic system.
 
@@ -96,17 +96,9 @@ The module index pages for Technology each filter `getChapters('technology')` by
 
 ### Key Patterns
 
-**`moduleBackMap`** — used in `[chapter]/index.astro` to resolve the back-link for each module. When adding a new module, add an entry here:
+**`moduleBackMap`** — maps module slug → back-link href/label. Defined **inline in every topic layout file** (all 7 layouts in `src/layouts/`) and also in `src/pages/[pillar]/[module]/[chapter]/index.astro`. When adding a new module, add an entry to all of these plus `moduleLabels` in `SiteOverlay.astro`.
 
-```typescript
-const moduleBackMap: Record<string, { href: string; label: string }> = {
-  'planning-software': { href: `${BASE_URL}technology/planning-software`, label: 'Planning Software' },
-  'erp':              { href: `${BASE_URL}technology/erp`,                label: 'ERP' },
-  // ... all modules must be listed
-};
-```
-
-**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with `moduleBackMap`.
+**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with the `moduleBackMap` entries across layout files.
 
 **Layout prop flow** — `[topic].astro` builds a `sharedProps` object passed to whichever layout is selected. All layouts accept:
 ```
@@ -114,14 +106,22 @@ title, description, chapterTitle, chapterSlug, chapterColor, chapterUrl,
 topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
 pillar, totalTopics
 ```
-`pillar` drives the back-link in topic layouts (via a `pillarBackMap` inside each layout that maps pillar → module URL). **Note:** topic layouts currently map all `technology` topics back to Planning Software — ERP/Architecture/MDM/FMS topics inherit this; it's a known gap.
+`pillar` drives the back-link in topic layouts (via a `moduleBackMap` inside each layout). **Note:** topic layouts currently map all `technology` topics back to Planning Software — ERP/Architecture/MDM/FMS topics inherit this; it's a known gap.
 
 **Tailwind class safety** — color-specific classes must appear as complete strings in source. Never build them with string interpolation (e.g. `` `bg-${color}-500` ``) — Tailwind will purge them. Use lookup maps (`colorBgMap`, `colorTextMap`, etc.) defined inline per page.
 
-### Dark Mode & Persistence
+### Client-Side Persistence
 
-- Dark mode: class-based (`darkMode: 'class'`). `ThemeToggle` toggles `.dark` on `<html>` and persists to `localStorage` key `o9-theme`. `BaseLayout` applies it before first render to prevent flash.
-- Progress tracking: client-side only, `localStorage` key `o9-progress` as `{ [topicId]: boolean }`. Topic IDs: `ch{chapterOrder}-t{topicOrder}`. Chapter orders restart per module, so IDs can collide across modules — this is existing behaviour.
+Two `localStorage` keys:
+
+- **`platform-theme`** — `'dark'` or absent. `ThemeToggle.astro` writes it; `BaseLayout.astro` reads it inline before first render to prevent flash.
+- **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
+
+### Components
+
+- **`SiteOverlay.astro`** — full-site navigation palette, toggled by pressing `O`. Added to `BaseLayout`.
+- **`UserDashboard.astro`** — progress dashboard panel (slides in from right), toggled by a fixed person-icon button at `top-3 right-16`. Shows per-chapter completion bars, overall stats, and a list of topics marked unclear. Added to `BaseLayout`. Listens for the `platform-progress-changed` custom window event dispatched by topic layout scripts after each state change.
+- **`ThemeToggle.astro`** — light/dark toggle button, included individually in each layout and pillar index page.
 
 ### Adding Content
 
@@ -129,6 +129,6 @@ pillar, totalTopics
 
 **New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `pillar` and `module`) and topic files. No routing changes needed — the dynamic `[pillar]/[module]/[chapter]/` route picks it up automatically.
 
-**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in `[chapter]/index.astro` and `moduleLabels` in `SiteOverlay.astro`.
+**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in all 7 topic layout files and in `[chapter]/index.astro`, plus `moduleLabels` in `SiteOverlay.astro`.
 
 **New role course:** add `src/content/roles/{slug}.json`. Topic references use `"chapter-slug/topic-slug"` format; bad refs throw at build time.

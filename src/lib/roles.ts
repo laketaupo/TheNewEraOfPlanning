@@ -6,6 +6,12 @@ export interface RoleSectionConfig {
   topics: string[]; // "chapter-slug/topic-slug" references into src/content/chapters/
 }
 
+export interface RolePhaseConfig {
+  title: string;
+  description?: string;
+  sections: RoleSectionConfig[];
+}
+
 export interface RoleConfig {
   title: string;
   description: string;
@@ -14,7 +20,8 @@ export interface RoleConfig {
   order: number;
   department?: string;
   comingSoon?: boolean;
-  sections: RoleSectionConfig[];
+  sections?: RoleSectionConfig[];
+  phases?: RolePhaseConfig[];
   slug: string;
   url: string;
 }
@@ -30,6 +37,12 @@ export interface ResolvedRoleSection {
   title: string;
   description?: string;
   topics: RoleTopic[];
+}
+
+export interface ResolvedRolePhase {
+  title: string;
+  description?: string;
+  sections: ResolvedRoleSection[];
 }
 
 // Eagerly load all role config files
@@ -58,23 +71,24 @@ export function getRole(slug: string): RoleConfig | undefined {
  * Throws on bad references so `npm run build` fails loudly instead of silently
  * dropping topics from a course.
  *
- * Note: topicId uses the site-wide `ch{chapterOrder}-t{topicOrder}` scheme.
- * Chapter orders restart per module, so IDs collide across pillars (e.g. two
- * different topics can both be `ch1-t1`) — completing one ticks both. That is
- * existing site-wide behavior of the platform-progress store; migrating to
- * collision-free IDs is intentionally out of scope here.
+ * Note: topicId is the site-wide `chapter-slug/topic-slug` key used by the
+ * platform-progress store. Chapter slugs are globally unique (content folder
+ * names) and topic slugs are unique within a chapter, so these IDs never
+ * collide across pillars.
  */
-export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
-  const allTopics = getTopics();
-  const allChapters = getChapters();
-  const seen = new Set<string>();
-
-  return role.sections.map((section) => ({
+function resolveSection(
+  section: RoleSectionConfig,
+  roleSlug: string,
+  allTopics: ReturnType<typeof getTopics>,
+  allChapters: ReturnType<typeof getChapters>,
+  seen: Set<string>,
+): ResolvedRoleSection {
+  return {
     title: section.title,
     description: section.description,
     topics: section.topics.map((ref) => {
       const fail = (reason: string): never => {
-        throw new Error(`[roles] Role "${role.slug}", section "${section.title}": ${reason}: "${ref}"`);
+        throw new Error(`[roles] Role "${roleSlug}", section "${section.title}": ${reason}: "${ref}"`);
       };
       if (seen.has(ref)) fail('duplicate topic reference');
       seen.add(ref);
@@ -92,12 +106,34 @@ export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
       const pillar = topic!.pillar ?? 'technology';
       return {
         ...topic!,
-        topicId: `ch${chapter!.order}-t${topic!.order}`,
+        topicId: `${chapterSlug}/${topicSlug}`,
         chapterTitle: chapter!.title,
         chapterColor: chapter!.color,
         pillarLabel: pillar.charAt(0).toUpperCase() + pillar.slice(1),
       } as RoleTopic;
     }),
+  };
+}
+
+export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
+  const allTopics = getTopics();
+  const allChapters = getChapters();
+  const seen = new Set<string>();
+  const allSections = role.phases
+    ? role.phases.flatMap((p) => p.sections)
+    : (role.sections ?? []);
+  return allSections.map((s) => resolveSection(s, role.slug, allTopics, allChapters, seen));
+}
+
+export function resolveRolePhases(role: RoleConfig): ResolvedRolePhase[] | null {
+  if (!role.phases) return null;
+  const allTopics = getTopics();
+  const allChapters = getChapters();
+  const seen = new Set<string>();
+  return role.phases.map((phase) => ({
+    title: phase.title,
+    description: phase.description,
+    sections: phase.sections.map((s) => resolveSection(s, role.slug, allTopics, allChapters, seen)),
   }));
 }
 
