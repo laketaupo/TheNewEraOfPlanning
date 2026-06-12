@@ -1,10 +1,8 @@
 {
   "title": "Daily Execution Management",
-  "description": "How to manage the operational day — order prioritisation, real-time decision-making, and the discipline that keeps execution aligned with the plan when reality does not cooperate.",
+  "description": "How to manage the operational day \u2014 order prioritisation, real-time decision-making, and the discipline that keeps execution aligned with the plan when reality does not cooperate.",
   "icon": "beaker",
   "color": "blue",
-  "order": 2,
   "pillar": "process",
-  "module": "execution-process",
-  "moduleOrder": 4
+  "module": "execution-process"
 }

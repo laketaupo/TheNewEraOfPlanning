@@ -3,8 +3,6 @@
   "description": "How the Planning software planning engine turns network data into optimized, constrained supply plans.",
   "icon": "cpu",
   "color": "emerald",
-  "order": 5,
   "pillar": "technology",
-  "module": "planning-software",
-  "moduleOrder": 1
+  "module": "planning-software"
 }

@@ -1,10 +1,8 @@
 {
   "title": "The Logic",
-  "description": "The business rules that govern how ERP processes orders, manages inventory, and posts transactions — what happens automatically and why.",
+  "description": "The business rules that govern how ERP processes orders, manages inventory, and posts transactions \u2014 what happens automatically and why.",
   "icon": "office-building",
   "color": "emerald",
-  "order": 5,
   "pillar": "technology",
-  "module": "erp",
-  "moduleOrder": 2
+  "module": "erp"
 }

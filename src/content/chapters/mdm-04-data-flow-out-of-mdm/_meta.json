@@ -1,10 +1,8 @@
 {
   "title": "Data Flow: Out of MDM",
-  "description": "How MDM distributes master data to Planning software, ERP, FMS, and other systems — and what to do when systems fall out of sync.",
+  "description": "How MDM distributes master data to Planning software, ERP, FMS, and other systems \u2014 and what to do when systems fall out of sync.",
   "icon": "database",
   "color": "emerald",
-  "order": 4,
   "pillar": "technology",
-  "module": "mdm",
-  "moduleOrder": 4
+  "module": "mdm"
 }

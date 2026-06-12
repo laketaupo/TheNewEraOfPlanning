@@ -1,10 +1,8 @@
 {
   "title": "Data Flow: Out of ERP",
-  "description": "What ERP sends to Planning software and other systems — the actuals, confirmations, and inventory signals that keep the plan grounded in reality.",
+  "description": "What ERP sends to Planning software and other systems \u2014 the actuals, confirmations, and inventory signals that keep the plan grounded in reality.",
   "icon": "office-building",
   "color": "emerald",
-  "order": 4,
   "pillar": "technology",
-  "module": "erp",
-  "moduleOrder": 2
+  "module": "erp"
 }

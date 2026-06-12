@@ -1,10 +1,8 @@
 {
   "title": "The Planning Team",
-  "description": "The roles, responsibilities, and structure of a supply chain planning team — who does what and how they work together.",
+  "description": "The roles, responsibilities, and structure of a supply chain planning team \u2014 who does what and how they work together.",
   "icon": "users",
   "color": "red",
-  "order": 1,
   "pillar": "people",
-  "module": "organisation-and-roles",
-  "moduleOrder": 1
+  "module": "organisation-and-roles"
 }

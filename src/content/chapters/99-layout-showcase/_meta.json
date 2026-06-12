@@ -1,11 +1,9 @@
 {
   "title": "Layout Showcase",
-  "description": "A preview of every available topic layout — card grid, data table, comparison, full-width widget, and standard prose.",
+  "description": "A preview of every available topic layout \u2014 card grid, data table, comparison, full-width widget, and standard prose.",
   "icon": "cube",
   "color": "emerald",
-  "order": 99,
   "hidden": true,
   "pillar": "technology",
-  "module": "planning-software",
-  "moduleOrder": 1
+  "module": "planning-software"
 }

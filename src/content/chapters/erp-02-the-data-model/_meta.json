@@ -1,10 +1,8 @@
 {
   "title": "The Data Model",
-  "description": "How ERP organises data into items, locations, and transactions — the structures that planning relies on to execute confirmed orders.",
+  "description": "How ERP organises data into items, locations, and transactions \u2014 the structures that planning relies on to execute confirmed orders.",
   "icon": "database",
   "color": "emerald",
-  "order": 2,
   "pillar": "technology",
-  "module": "erp",
-  "moduleOrder": 2
+  "module": "erp"
 }

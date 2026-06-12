@@ -3,8 +3,6 @@
   "description": "Understand what Sales & Operations Planning is, why it exists, who participates, and how it creates a single agreed plan for the business.",
   "icon": "calendar",
   "color": "blue",
-  "order": 1,
   "pillar": "process",
-  "module": "sop-process",
-  "moduleOrder": 2
+  "module": "sop-process"
 }

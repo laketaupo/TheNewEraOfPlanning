@@ -1,10 +1,11 @@
+import siteOrder from '../content/order.json';
+
 export interface ChapterMeta {
   title: string;
   description: string;
   icon: string;
   color: string;
   order: number;
-  moduleOrder?: number;
   slug: string;
   pillar?: string;
   module?: string;
@@ -67,23 +68,59 @@ const topicFiles = import.meta.glob('../content/chapters/*/*.md', { eager: true 
 
 function slugFromPath(path: string): string {
   const parts = path.split('/');
-  return parts[parts.length - 1].replace(/\.md$/, '');
+  return parts[parts.length - 1].replace(/\.md$/, '').replace(/^\d+-/, '');
 }
 
 function chapterSlugFromPath(path: string): string {
   const parts = path.split('/');
-  // path looks like: ../content/chapters/01-understanding-basics/01-items.md
   return parts[parts.length - 2];
+}
+
+function chapterOrderIndex(chapterSlug: string, module: string): number {
+  const list = (siteOrder.chapters as Record<string, string[]>)[module] ?? [];
+  const idx = list.indexOf(chapterSlug);
+  return idx >= 0 ? idx : 9999;
+}
+
+function moduleOrderIndex(module: string, pillar: string): number {
+  const list = (siteOrder.modules as Record<string, string[]>)[pillar] ?? [];
+  const idx = list.indexOf(module);
+  return idx >= 0 ? idx : 9999;
+}
+
+function pillarOrderIndex(pillar: string): number {
+  const idx = siteOrder.pillars.indexOf(pillar);
+  return idx >= 0 ? idx : 9999;
+}
+
+export function getPillars(): string[] {
+  return siteOrder.pillars;
+}
+
+export function getModulesForPillar(pillar: string): string[] {
+  return (siteOrder.modules as Record<string, string[]>)[pillar] ?? [];
 }
 
 export function getChapters(pillar?: string): ChapterMeta[] {
   return Object.entries(chapterMetaFiles)
     .map(([path, mod]: [string, any]) => {
       const chapterSlug = path.split('/').slice(-2, -1)[0];
-      return { ...mod, slug: chapterSlug } as ChapterMeta;
+      const module = mod.module ?? 'planning-software';
+      const orderIdx = chapterOrderIndex(chapterSlug, module);
+      return { ...mod, slug: chapterSlug, order: orderIdx + 1 } as ChapterMeta;
     })
     .filter((ch) => !pillar || ch.pillar === pillar)
-    .sort((a, b) => a.order - b.order);
+    .sort((a, b) => {
+      const aPillar = a.pillar ?? 'technology';
+      const bPillar = b.pillar ?? 'technology';
+      const aModule = a.module ?? 'planning-software';
+      const bModule = b.module ?? 'planning-software';
+      const pillarDiff = pillarOrderIndex(aPillar) - pillarOrderIndex(bPillar);
+      if (pillarDiff !== 0) return pillarDiff;
+      const moduleDiff = moduleOrderIndex(aModule, aPillar) - moduleOrderIndex(bModule, bPillar);
+      if (moduleDiff !== 0) return moduleDiff;
+      return chapterOrderIndex(a.slug, aModule) - chapterOrderIndex(b.slug, bModule);
+    });
 }
 
 export function getChapterUrl(ch: ChapterMeta): string {
@@ -102,10 +139,13 @@ export function getTopics(): TopicMeta[] {
       const chapter = allChapters.find((c) => c.slug === chapterSlug);
       const pillar = chapter?.pillar ?? 'technology';
       const module = chapter?.module ?? 'planning-software';
+      const topicList = (siteOrder.topics as Record<string, string[]>)[chapterSlug] ?? [];
+      const topicIdx = topicList.indexOf(topicSlug);
+      const order = topicIdx >= 0 ? topicIdx + 1 : 9999;
       return {
         title: fm.title ?? '',
         description: fm.description ?? '',
-        order: fm.order ?? 0,
+        order,
         chapter: fm.chapter ?? chapterSlug,
         estimatedMinutes: fm.estimatedMinutes ?? 3,
         widget: fm.widget ?? '',
@@ -137,7 +177,16 @@ export function getTopics(): TopicMeta[] {
       } as TopicMeta;
     })
     .sort((a, b) => {
-      if (a.chapterSlug !== b.chapterSlug) return a.chapterSlug.localeCompare(b.chapterSlug);
+      const aPillar = a.pillar ?? 'technology';
+      const bPillar = b.pillar ?? 'technology';
+      const aModule = a.module ?? 'planning-software';
+      const bModule = b.module ?? 'planning-software';
+      const pillarDiff = pillarOrderIndex(aPillar) - pillarOrderIndex(bPillar);
+      if (pillarDiff !== 0) return pillarDiff;
+      const moduleDiff = moduleOrderIndex(aModule, aPillar) - moduleOrderIndex(bModule, bPillar);
+      if (moduleDiff !== 0) return moduleDiff;
+      const chapterDiff = chapterOrderIndex(a.chapterSlug, aModule) - chapterOrderIndex(b.chapterSlug, bModule);
+      if (chapterDiff !== 0) return chapterDiff;
       return a.order - b.order;
     });
 }

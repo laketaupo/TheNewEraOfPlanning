@@ -3,8 +3,6 @@
   "description": "Understand what good data looks like, where data problems come from, and how to build practices that keep planning data healthy over time.",
   "icon": "cpu",
   "color": "yellow",
-  "order": 4,
-  "moduleOrder": 2,
   "pillar": "data",
   "module": "data-driven-planning"
 }

@@ -1,10 +1,8 @@
 {
   "title": "The Network",
-  "description": "How the building blocks connect into a live supply chain graph — nodes, edges, and the Digital Brain.",
+  "description": "How the building blocks connect into a live supply chain graph \u2014 nodes, edges, and the Digital Brain.",
   "icon": "network",
   "color": "emerald",
-  "order": 2,
   "pillar": "technology",
-  "module": "planning-software",
-  "moduleOrder": 1
+  "module": "planning-software"
 }

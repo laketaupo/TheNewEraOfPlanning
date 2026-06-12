@@ -1,10 +1,8 @@
 {
   "title": "Navigation & User Interface",
-  "description": "How to move around ERP efficiently — the interface structure, search, filters, and the key pages planners return to every day.",
+  "description": "How to move around ERP efficiently \u2014 the interface structure, search, filters, and the key pages planners return to every day.",
   "icon": "office-building",
   "color": "emerald",
-  "order": 7,
   "pillar": "technology",
-  "module": "erp",
-  "moduleOrder": 2
+  "module": "erp"
 }

@@ -1,10 +1,8 @@
 {
   "title": "Data Flow: Into ERP",
-  "description": "Where operational data originates and how it enters ERP — from manual entry to system-generated transactions and integration feeds.",
+  "description": "Where operational data originates and how it enters ERP \u2014 from manual entry to system-generated transactions and integration feeds.",
   "icon": "office-building",
   "color": "emerald",
-  "order": 3,
   "pillar": "technology",
-  "module": "erp",
-  "moduleOrder": 2
+  "module": "erp"
 }

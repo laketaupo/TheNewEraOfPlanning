@@ -3,8 +3,6 @@
   "description": "How ERP, Planning software, FMS, and MDM system connect: the interfaces, batch runs, and data upload processes that keep the system landscape in sync.",
   "icon": "arrows-expand",
   "color": "emerald",
-  "order": 1,
   "pillar": "technology",
-  "module": "architecture",
-  "moduleOrder": 3
+  "module": "architecture"
 }

@@ -1,10 +1,8 @@
 {
   "title": "Accountability & Governance",
-  "description": "How responsibility is assigned across the S&OP cycle — who owns each step, who supports, and who needs to be kept informed.",
+  "description": "How responsibility is assigned across the S&OP cycle \u2014 who owns each step, who supports, and who needs to be kept informed.",
   "icon": "network",
   "color": "red",
-  "order": 2,
   "pillar": "people",
-  "module": "organisation-and-roles",
-  "moduleOrder": 1
+  "module": "organisation-and-roles"
 }

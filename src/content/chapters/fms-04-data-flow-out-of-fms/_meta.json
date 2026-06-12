@@ -1,10 +1,8 @@
 {
   "title": "Data Flow: Out of FMS",
-  "description": "The supply signals that flow from FMS into Planning software — yield forecasts, harvest schedules, and the actuals that close the loop on planned supply.",
+  "description": "The supply signals that flow from FMS into Planning software \u2014 yield forecasts, harvest schedules, and the actuals that close the loop on planned supply.",
   "icon": "globe",
   "color": "emerald",
-  "order": 4,
   "pillar": "technology",
-  "module": "fms",
-  "moduleOrder": 5
+  "module": "fms"
 }
