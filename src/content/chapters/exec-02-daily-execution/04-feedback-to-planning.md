@@ -34,3 +34,9 @@ Planners need to understand the lag in their system: if the planning model only 
 ## Continuous improvement through feedback
 
 Beyond the immediate planning cycle, execution actuals are the raw material for continuous improvement. Systematic analysis of why the plan was not met — reasons codes from deviation events, supplier performance trends, production yield variability — feeds back into better planning parameters, more accurate forecasts, and more realistic supply plans.
+
+## The full cycle
+
+You have now seen the complete operating model: S&OP sets the monthly plan, S&OE manages the weekly reality, and execution delivers the daily actions — feeding actuals back upstream to keep the cycle honest.
+
+One capability runs across all three horizons: scenario planning. When demand is uncertain, when supply is disrupted, or when leadership needs to stress-test a strategy before committing, scenario planning is the tool that explores the options. The Scenario Planning module shows how to build, run, and communicate what-if analyses inside the planning model.

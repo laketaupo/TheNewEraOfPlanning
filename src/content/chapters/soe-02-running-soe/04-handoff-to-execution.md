@@ -35,3 +35,9 @@ Execution teams need clarity, not ambiguity. A handoff that works well gives exe
 ## When execution finds a problem
 
 Execution teams will sometimes encounter issues that were not visible in S&OE: a machinery breakdown, a transport failure, a customer rejection. These need to feed back into S&OE quickly. A feedback channel — whether a direct call to the planner on duty, a system-generated exception, or a daily operational call — is essential to keeping S&OE informed of what is actually happening on the ground.
+
+## What comes next
+
+S&OE hands off a feasible plan. Execution's job is to deliver it — and to keep the planning model honest when reality diverges from the plan.
+
+The Execution Process module covers the daily layer: how execution teams prioritise orders under constraint, maintain real-time visibility, enforce execution discipline, and feed actuals back to planning so the S&OE and S&OP models stay current.

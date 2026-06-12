@@ -36,3 +36,9 @@ When the S&OP calendar is flexible — when the demand review moves because a ke
 ## The plan is not published
 
 S&OP decisions that are made but not loaded into operating systems and communicated to execution teams have no effect on the business. The cycle is only complete when the agreed plan updates inventory targets, procurement positions, and capacity commitments in the systems that people actually work in.
+
+## What comes next
+
+S&OP sets the plan — but the plan starts drifting from reality the moment it is published. The S&OE process is the weekly discipline that keeps supply and demand aligned between monthly S&OP cycles. It manages the exceptions, absorbs the disruptions, and escalates back to S&OP only when a deviation is too large to resolve tactically.
+
+If S&OE is working well, it is the reason your S&OP meetings stay focused on the long-term plan rather than last week's fires. The next module explores how it works.
