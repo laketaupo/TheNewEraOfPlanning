@@ -29,7 +29,7 @@ Current modules per pillar:
 | Pillar | Modules |
 |---|---|
 | `technology` | `planning-software`, `erp`, `architecture`, `mdm`, `fms` |
-| `data` | `data-driven-planning` |
+| `data` | `data-fundamentals`, `data-driven-planning`, `data-governance` |
 | `process` | `scenario-planning`, `sop-process`, `soe-process`, `execution-process`, `process-foundations` |
 | `people` | `organisation-and-roles`, `implementation-and-change` |
 
@@ -71,8 +71,12 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
   - `getTopicsForChapter(slug)` — topics for one chapter
   - `getAdjacentTopics(url)` — `[prev, next]` scoped to same pillar
   - `getChapterUrl(ch)` — builds `/{pillar}/{module}/{slug}`
+  - `getPillars()` — ordered list of pillars from `order.json`
+  - `getModulesForPillar(pillar)` — ordered module list for a pillar from `order.json`
 - `src/lib/configuration.ts` — loads configuration manual entries.
 - `src/lib/roles.ts` — loads role JSON files; `resolveRoleSections()` validates and hydrates topic references.
+
+**`src/content/order.json`** is the authoritative source for ordering. It defines `pillars` (array), `modules` (per-pillar arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
 
 ### Routing
 
@@ -87,7 +91,8 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 | `/technology/mdm` | `src/pages/technology/mdm/index.astro` |
 | `/technology/fms` | `src/pages/technology/fms/index.astro` |
 | `/technology/configuration` | `src/pages/technology/configuration/index.astro` |
-| `/{pillar}/{module}` (data/process/people) | `src/pages/{pillar}/{module}/index.astro` |
+| `/data/data-fundamentals`, `/data/data-driven-planning`, `/data/data-governance` | `src/pages/data/{module}/index.astro` |
+| `/{pillar}/{module}` (process/people) | `src/pages/{pillar}/{module}/index.astro` |
 | `/{pillar}/{module}/{chapter}/` | `src/pages/[pillar]/[module]/[chapter]/index.astro` |
 | `/{pillar}/{module}/{chapter}/{topic}` | `src/pages/[pillar]/[module]/[chapter]/[topic].astro` |
 | `/roles/{role}` | `src/pages/roles/[role].astro` |
@@ -119,15 +124,19 @@ Two `localStorage` keys:
 
 ### Components
 
+All shared components live in `src/components/`:
+
 - **`SiteOverlay.astro`** — full-site navigation palette, toggled by pressing `O`. Added to `BaseLayout`.
 - **`UserDashboard.astro`** — progress dashboard panel (slides in from right), toggled by a fixed person-icon button at `top-3 right-16`. Shows per-chapter completion bars, overall stats, and a list of topics marked unclear. Added to `BaseLayout`. Listens for the `platform-progress-changed` custom window event dispatched by topic layout scripts after each state change.
 - **`ThemeToggle.astro`** — light/dark toggle button, included individually in each layout and pillar index page.
+- **`src/components/sim/`** — interactive simulation components (demand/supply flow graphs, demand shock sim, slicing/disaggregation widgets, step walkthrough). Used by the `full-widget` layout and embedded in topic prose.
+- **`src/components/widgets/`** — `OrgChart.astro` and `OrgTreeNode.astro`, used by the org-chart frontmatter field on people-pillar topics.
 
 ### Adding Content
 
-**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above.
+**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `src/content/order.json` under the chapter key to control its position.
 
-**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `pillar` and `module`) and topic files. No routing changes needed — the dynamic `[pillar]/[module]/[chapter]/` route picks it up automatically.
+**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `pillar` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. No routing changes needed — the dynamic `[pillar]/[module]/[chapter]/` route picks it up automatically.
 
 **New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in all 7 topic layout files and in `[chapter]/index.astro`, plus `moduleLabels` in `SiteOverlay.astro`.
 
