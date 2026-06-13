@@ -4,5 +4,5 @@
   "icon": "beaker",
   "color": "blue",
   "pillar": "process",
-  "module": "execution-process"
+  "module": "process-foundations"
 }

@@ -4,5 +4,5 @@
   "icon": "beaker",
   "color": "blue",
   "pillar": "process",
-  "module": "sop-process"
+  "module": "process-foundations"
 }
