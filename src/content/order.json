@@ -197,6 +197,14 @@
     "sop-sop-review": [
       "pre-sop-alignment", "financial-reconciliation", "executive-sop-review", "plan-distribution"
     ],
+    "soe-demand-monitoring": [],
+    "soe-supply-monitoring": [],
+    "soe-exception-management": [],
+    "soe-integrated-review": [],
+    "exec-order-prioritisation": [],
+    "exec-execution-monitoring": [],
+    "exec-actuals-capture": [],
+    "exec-feedback-to-planning": [],
     "soe-01-soe-fundamentals": [
       "what-is-soe", "weekly-cadence", "soe-roles", "exception-management", "escalating-to-sop"
     ],
