@@ -120,7 +120,7 @@
       "what-is-a-workflow-simulation", "setting-up-a-simulation", "running-the-simulation",
       "reading-simulation-results", "promoting-a-simulation"
     ],
-    "05-navigation-and-ui": ["navigating-planning-software", "the-user-interface", "reading-plan-output"],
+    "05-navigation-and-ui": ["navigating-planning-software", "the-user-interface", "reading-plan-output", "the-user-interface-walkthrough"],
     "08-configuration-manual": [
       "getting-started", "configuring-items", "configuring-boms",
       "configuring-bods", "configuring-resources", "planning-parameters"
