@@ -55,6 +55,7 @@ Both `pillar` and `module` are required in every `_meta.json`. Omitting either c
 | `data-table` | `DataTableLayout.astro` — tabular data |
 | `full-widget` | `FullWidthWidgetLayout.astro` — interactive simulation |
 | `rasci-table` | `RasciTableLayout.astro` — RASCI responsibility matrix |
+| `ui-training` | `UiTrainingLayout.astro` — full-viewport screenshot + description + static steps sidebar |
 | `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
 
 **Configuration manual** lives in `src/content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
