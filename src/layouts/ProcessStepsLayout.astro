@@ -204,7 +204,7 @@ const stepCount = processSteps.length;
       <!-- Step panels -->
       <div class="max-w-5xl mx-auto px-6">
         {processSteps.map((step, i) => (
-          <div class="ps-panel" data-step={i}>
+          <div class="ps-panel" data-step={i} style={i !== 0 ? 'display:none' : ''}>
             <div class="py-10">
 
               <!-- Description -->
@@ -435,6 +435,6 @@ const stepCount = processSteps.length;
     prevBtn.addEventListener('click', () => { if (current > 0) showStep(current - 1); });
     nextBtn.addEventListener('click', () => { if (current < stepCount - 1) showStep(current + 1); });
 
-    showStep(0);
+    if (stepCount > 0) showStep(0);
   </script>
 </BaseLayout>
