@@ -1,0 +1,8 @@
+{
+  "title": "Demand Forecasting",
+  "description": "Turning raw sales history into a single consensus demand number — from data cleansing through statistical modelling, commercial review, and final lock.",
+  "icon": "network",
+  "color": "blue",
+  "pillar": "process",
+  "module": "sop-process"
+}
