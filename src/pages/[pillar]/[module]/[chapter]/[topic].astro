@@ -6,7 +6,7 @@ import DataTableLayout from '../../../../layouts/DataTableLayout.astro';
 import ComparisonLayout from '../../../../layouts/ComparisonLayout.astro';
 import FullWidthWidgetLayout from '../../../../layouts/FullWidthWidgetLayout.astro';
 import RasciTableLayout from '../../../../layouts/RasciTableLayout.astro';
-import ProcessStepsLayout from '../../../../layouts/ProcessStepsLayout.astro';
+import ProcessStepDetailLayout from '../../../../layouts/ProcessStepDetailLayout.astro';
 import WhatIfWidget from '../../../../components/sim/WhatIfWidget.astro';
 import DemandSlicingWidget from '../../../../components/sim/DemandSlicingWidget.astro';
 import VarietyDisaggWidget from '../../../../components/sim/VarietyDisaggWidget.astro';
@@ -120,10 +120,14 @@ const sharedProps = {
       {topic.widget === 'seasonal-disagg' && <SeasonalDisaggWidget />}
     </Fragment>
   </FullWidthWidgetLayout>
-) : layout === 'process-steps' ? (
-  <ProcessStepsLayout
+) : layout === 'process-step-detail' ? (
+  <ProcessStepDetailLayout
     {...sharedProps}
-    processSteps={topic.processSteps}
+    inputs={topic.inputs}
+    outputs={topic.outputs}
+    roles={topic.roles}
+    systems={topic.systems}
+    tasks={topic.tasks}
   />
 ) : layout === 'rasci-table' ? (
   <RasciTableLayout
