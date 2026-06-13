@@ -72,7 +72,8 @@
     ],
     "sop-process": [
       "sop-01-sop-fundamentals",
-      "sop-02-running-sop"
+      "sop-02-running-sop",
+      "sop-03-sop-process-steps"
     ],
     "soe-process": [
       "soe-01-soe-fundamentals",
@@ -357,6 +358,13 @@
       "pre-sop",
       "executive-sop",
       "sop-failure-modes"
+    ],
+    "sop-03-sop-process-steps": [
+      "demand-forecasting",
+      "inventory-planning",
+      "supply-planning",
+      "resource-planning",
+      "sop-review"
     ],
     "soe-01-soe-fundamentals": [
       "what-is-soe",
