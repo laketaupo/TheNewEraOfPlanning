@@ -64,24 +64,36 @@
       "process-03-operating-model",
       "process-04-planning-policy",
       "process-05-governance-and-escalation",
-      "process-06-kpis"
+      "process-06-kpis",
+      "sop-01-sop-fundamentals",
+      "sop-02-running-sop",
+      "soe-01-soe-fundamentals",
+      "soe-02-running-soe",
+      "exec-01-execution-fundamentals",
+      "exec-02-daily-execution"
     ],
     "scenario-planning": [
       "process-01-scenario-planning-fundamentals",
       "process-02-running-scenarios"
     ],
     "sop-process": [
-      "sop-01-sop-fundamentals",
-      "sop-02-running-sop",
-      "sop-03-sop-process-steps"
+      "sop-demand-forecasting",
+      "sop-inventory-planning",
+      "sop-supply-planning",
+      "sop-resource-planning",
+      "sop-sop-review"
     ],
     "soe-process": [
-      "soe-01-soe-fundamentals",
-      "soe-02-running-soe"
+      "soe-demand-monitoring",
+      "soe-supply-monitoring",
+      "soe-exception-management",
+      "soe-integrated-review"
     ],
     "execution-process": [
-      "exec-01-execution-fundamentals",
-      "exec-02-daily-execution"
+      "exec-order-prioritisation",
+      "exec-execution-monitoring",
+      "exec-actuals-capture",
+      "exec-feedback-to-planning"
     ],
     "organisation-and-roles": [
       "people-01-planning-team",
@@ -91,321 +103,118 @@
   },
   "topics": {
     "01-understanding-basics": [
-      "item",
-      "item-at-location",
-      "bom",
-      "bom-input-output",
-      "bom-lead-time",
-      "bod",
-      "bod-transport-mode",
-      "bod-transport-lead-time",
-      "resource",
-      "resource-consumed"
+      "item", "item-at-location", "bom", "bom-input-output", "bom-lead-time",
+      "bod", "bod-transport-mode", "bod-transport-lead-time", "resource", "resource-consumed"
     ],
     "02-the-network": [
-      "starting-items",
-      "shipping-items-to-grower",
-      "seed-production",
-      "shipping-seeds-back",
-      "cleaning",
-      "calibrating",
-      "priming",
-      "coating",
-      "packing",
-      "final-shipment",
-      "full-network"
+      "starting-items", "shipping-items-to-grower", "seed-production", "shipping-seeds-back",
+      "cleaning", "calibrating", "priming", "coating", "packing", "final-shipment", "full-network"
     ],
-    "03-demand-data-flow": [
-      "demand-signal",
-      "forecast-origin",
-      "upstream-cascade",
-      "timing-and-netting"
-    ],
-    "04-supply-data-flow": [
-      "supply-signal",
-      "inventory-netting",
-      "parent-line-items",
-      "downstream-cascade"
-    ],
+    "03-demand-data-flow": ["demand-signal", "forecast-origin", "upstream-cascade", "timing-and-netting"],
+    "04-supply-data-flow": ["supply-signal", "inventory-netting", "parent-line-items", "downstream-cascade"],
     "03-the-logic": [
-      "disaggregation-variety-to-item",
-      "disaggregation-year-to-month",
-      "backward-consumption",
-      "scheduled-receipt",
-      "push",
-      "pull",
-      "safety-stock",
-      "demand-slicing"
+      "disaggregation-variety-to-item", "disaggregation-year-to-month", "backward-consumption",
+      "scheduled-receipt", "push", "pull", "safety-stock", "demand-slicing"
     ],
     "04-the-simulation": [
-      "what-is-a-workflow-simulation",
-      "setting-up-a-simulation",
-      "running-the-simulation",
-      "reading-simulation-results",
-      "promoting-a-simulation"
+      "what-is-a-workflow-simulation", "setting-up-a-simulation", "running-the-simulation",
+      "reading-simulation-results", "promoting-a-simulation"
     ],
-    "05-navigation-and-ui": [
-      "navigating-planning-software",
-      "the-user-interface",
-      "reading-plan-output"
-    ],
+    "05-navigation-and-ui": ["navigating-planning-software", "the-user-interface", "reading-plan-output"],
     "08-configuration-manual": [
-      "getting-started",
-      "configuring-items",
-      "configuring-boms",
-      "configuring-bods",
-      "configuring-resources",
-      "planning-parameters"
+      "getting-started", "configuring-items", "configuring-boms",
+      "configuring-bods", "configuring-resources", "planning-parameters"
     ],
     "99-layout-showcase": [
-      "prose-topic",
-      "card-grid",
-      "data-table",
-      "comparison",
-      "full-widget",
-      "node-topic",
-      "topic-with-widget"
+      "prose-topic", "card-grid", "data-table", "comparison",
+      "full-widget", "node-topic", "topic-with-widget"
     ],
-    "erp-01-erp-basics": [
-      "what-is-erp",
-      "erp-vs-legacy-erp",
-      "core-erp-concepts"
-    ],
-    "erp-02-the-data-model": [
-      "how-erp-structures-data",
-      "key-master-data-in-erp",
-      "key-transactional-data-in-erp"
-    ],
-    "erp-03-data-flow-into-erp": [
-      "where-data-originates",
-      "how-operational-data-enters-erp",
-      "data-validation-and-posting"
-    ],
-    "erp-04-data-flow-out-of-erp": [
-      "what-erp-sends-to-planning",
-      "erp-output-to-other-systems",
-      "reconciling-erp-and-planning-data"
-    ],
-    "erp-05-the-logic": [
-      "erp-business-rules",
-      "order-management-logic",
-      "inventory-management-logic"
-    ],
-    "erp-06-key-erp-workflows": [
-      "creating-and-managing-orders",
-      "goods-receipt-and-issue",
-      "reporting-and-extraction"
-    ],
-    "erp-07-navigation-and-ui": [
-      "navigating-erp",
-      "the-erp-interface",
-      "reading-erp-output"
-    ],
-    "arch-01-end-to-end": [
-      "interfaces",
-      "batchrun",
-      "data-upload"
-    ],
-    "arch-02-integration": [
-      "erp-planning-software-integration",
-      "planning-software-fms-mdm"
-    ],
-    "mdm-01-understanding-basics": [
-      "what-is-mdm",
-      "why-mdm-matters",
-      "core-mdm-concepts"
-    ],
-    "mdm-02-the-data-model": [
-      "how-mdm-structures-data",
-      "key-master-data-entities",
-      "data-hierarchies-and-relationships"
-    ],
-    "mdm-03-data-flow-into-mdm": [
-      "where-master-data-originates",
-      "how-data-enters-mdm",
-      "data-validation-in-mdm"
-    ],
-    "mdm-04-data-flow-out-of-mdm": [
-      "what-mdm-sends-to-planning",
-      "mdm-output-to-other-systems",
-      "keeping-master-data-in-sync"
-    ],
-    "mdm-05-the-logic": [
-      "mdm-governance-rules",
-      "data-matching-and-deduplication",
-      "approval-workflows"
-    ],
-    "mdm-06-key-mdm-workflows": [
-      "creating-and-maintaining-records",
-      "managing-data-changes",
-      "auditing-and-reporting"
-    ],
-    "mdm-07-navigation-and-ui": [
-      "navigating-mdm",
-      "the-mdm-interface",
-      "reading-mdm-output"
-    ],
-    "fms-01-understanding-basics": [
-      "what-is-fms",
-      "why-field-management-matters",
-      "core-fms-concepts"
-    ],
-    "fms-02-the-data-model": [
-      "how-fms-structures-data",
-      "key-field-data-entities",
-      "field-to-plan-data-mapping"
-    ],
-    "fms-03-data-flow-into-fms": [
-      "where-field-data-originates",
-      "how-field-activity-enters-fms",
-      "data-capture-and-validation"
-    ],
-    "fms-04-data-flow-out-of-fms": [
-      "what-fms-sends-to-planning",
-      "fms-output-to-other-systems",
-      "reconciling-field-data-with-the-plan"
-    ],
-    "fms-05-the-logic": [
-      "fms-business-rules",
-      "field-assignment-logic",
-      "yield-and-activity-tracking"
-    ],
-    "fms-06-key-fms-workflows": [
-      "managing-field-activities",
-      "recording-actuals",
-      "reporting-and-extraction"
-    ],
-    "fms-07-navigation-and-ui": [
-      "navigating-fms",
-      "the-fms-interface",
-      "reading-fms-output"
-    ],
-    "data-03-data-types": [
-      "master-data",
-      "transactional-data",
-      "planning-parameters"
-    ],
-    "data-05-data-sources-and-model": [
-      "data-model-overview",
-      "where-data-comes-from"
-    ],
+    "erp-01-erp-basics": ["what-is-erp", "erp-vs-legacy-erp", "core-erp-concepts"],
+    "erp-02-the-data-model": ["how-erp-structures-data", "key-master-data-in-erp", "key-transactional-data-in-erp"],
+    "erp-03-data-flow-into-erp": ["where-data-originates", "how-operational-data-enters-erp", "data-validation-and-posting"],
+    "erp-04-data-flow-out-of-erp": ["what-erp-sends-to-planning", "erp-output-to-other-systems", "reconciling-erp-and-planning-data"],
+    "erp-05-the-logic": ["erp-business-rules", "order-management-logic", "inventory-management-logic"],
+    "erp-06-key-erp-workflows": ["creating-and-managing-orders", "goods-receipt-and-issue", "reporting-and-extraction"],
+    "erp-07-navigation-and-ui": ["navigating-erp", "the-erp-interface", "reading-erp-output"],
+    "arch-01-end-to-end": ["interfaces", "batchrun", "data-upload"],
+    "arch-02-integration": ["erp-planning-software-integration", "planning-software-fms-mdm"],
+    "mdm-01-understanding-basics": ["what-is-mdm", "why-mdm-matters", "core-mdm-concepts"],
+    "mdm-02-the-data-model": ["how-mdm-structures-data", "key-master-data-entities", "data-hierarchies-and-relationships"],
+    "mdm-03-data-flow-into-mdm": ["where-master-data-originates", "how-data-enters-mdm", "data-validation-in-mdm"],
+    "mdm-04-data-flow-out-of-mdm": ["what-mdm-sends-to-planning", "mdm-output-to-other-systems", "keeping-master-data-in-sync"],
+    "mdm-05-the-logic": ["mdm-governance-rules", "data-matching-and-deduplication", "approval-workflows"],
+    "mdm-06-key-mdm-workflows": ["creating-and-maintaining-records", "managing-data-changes", "auditing-and-reporting"],
+    "mdm-07-navigation-and-ui": ["navigating-mdm", "the-mdm-interface", "reading-mdm-output"],
+    "fms-01-understanding-basics": ["what-is-fms", "why-field-management-matters", "core-fms-concepts"],
+    "fms-02-the-data-model": ["how-fms-structures-data", "key-field-data-entities", "field-to-plan-data-mapping"],
+    "fms-03-data-flow-into-fms": ["where-field-data-originates", "how-field-activity-enters-fms", "data-capture-and-validation"],
+    "fms-04-data-flow-out-of-fms": ["what-fms-sends-to-planning", "fms-output-to-other-systems", "reconciling-field-data-with-the-plan"],
+    "fms-05-the-logic": ["fms-business-rules", "field-assignment-logic", "yield-and-activity-tracking"],
+    "fms-06-key-fms-workflows": ["managing-field-activities", "recording-actuals", "reporting-and-extraction"],
+    "fms-07-navigation-and-ui": ["navigating-fms", "the-fms-interface", "reading-fms-output"],
+    "data-03-data-types": ["master-data", "transactional-data", "planning-parameters"],
+    "data-05-data-sources-and-model": ["data-model-overview", "where-data-comes-from"],
     "data-01-planning-data-fundamentals": [
-      "what-is-data-driven-planning",
-      "how-data-flows-into-a-plan",
-      "the-cost-of-bad-data"
+      "what-is-data-driven-planning", "how-data-flows-into-a-plan", "the-cost-of-bad-data"
     ],
     "data-02-data-quality-and-impact": [
-      "what-makes-data-good-enough",
-      "common-data-problems",
-      "how-data-quality-shows-up-in-plans",
-      "improving-data-quality-over-time"
+      "what-makes-data-good-enough", "common-data-problems",
+      "how-data-quality-shows-up-in-plans", "improving-data-quality-over-time"
     ],
-    "data-04-data-governance": [
-      "data-confidence",
-      "data-ownership",
-      "data-definitions",
-      "data-governance-basics"
-    ],
-    "process-03-operating-model": [
-      "what-is-sop",
-      "what-is-soe",
-      "execution",
-      "the-cadence"
-    ],
-    "process-04-planning-policy": [
-      "service-level-targets",
-      "safety-stock",
-      "allocation",
-      "prioritization"
-    ],
-    "process-05-governance-and-escalation": [
-      "decision-framework",
-      "escalation-paths",
-      "management-by-exception"
-    ],
+    "data-04-data-governance": ["data-confidence", "data-ownership", "data-definitions", "data-governance-basics"],
+    "process-03-operating-model": ["what-is-sop", "what-is-soe", "execution", "the-cadence"],
+    "process-04-planning-policy": ["service-level-targets", "safety-stock", "allocation", "prioritization"],
+    "process-05-governance-and-escalation": ["decision-framework", "escalation-paths", "management-by-exception"],
     "process-06-kpis": [
-      "kpi-framework-overview",
-      "key-planning-kpis",
-      "kpi-ownership-and-review",
-      "kpis-and-exception-management"
+      "kpi-framework-overview", "key-planning-kpis", "kpi-ownership-and-review", "kpis-and-exception-management"
     ],
     "process-01-scenario-planning-fundamentals": [
-      "what-is-scenario-planning",
-      "when-to-use-scenario-planning",
-      "types-of-scenarios",
-      "the-scenario-planning-process",
-      "setting-up-effective-scenarios",
-      "supply-risks",
-      "demand-uncertainty"
+      "what-is-scenario-planning", "when-to-use-scenario-planning", "types-of-scenarios",
+      "the-scenario-planning-process", "setting-up-effective-scenarios", "supply-risks", "demand-uncertainty"
     ],
     "process-02-running-scenarios": [
-      "creating-a-scenario",
-      "adjusting-parameters-and-assumptions",
-      "running-and-comparing-scenarios",
-      "promoting-a-scenario-to-baseline",
-      "communicating-scenario-findings"
+      "creating-a-scenario", "adjusting-parameters-and-assumptions", "running-and-comparing-scenarios",
+      "promoting-a-scenario-to-baseline", "communicating-scenario-findings"
     ],
     "sop-01-sop-fundamentals": [
-      "what-is-sop",
-      "the-sop-cycle",
-      "sop-roles",
-      "sop-outputs",
-      "sop-in-planning-software"
+      "what-is-sop", "the-sop-cycle", "sop-roles", "sop-outputs", "sop-in-planning-software"
     ],
     "sop-02-running-sop": [
-      "demand-review",
-      "supply-review",
-      "pre-sop",
-      "executive-sop",
-      "sop-failure-modes"
+      "demand-review", "supply-review", "pre-sop", "executive-sop", "sop-failure-modes"
     ],
-    "sop-03-sop-process-steps": [
-      "demand-forecasting",
-      "inventory-planning",
-      "supply-planning",
-      "resource-planning",
-      "sop-review"
+    "sop-demand-forecasting": [
+      "data-collection", "statistical-baseline", "commercial-overlay", "consensus-review", "forecast-lock"
+    ],
+    "sop-inventory-planning": [
+      "coverage-analysis", "safety-stock-review", "inventory-target-setting", "exception-resolution"
+    ],
+    "sop-supply-planning": [
+      "capacity-assessment", "constrained-supply-run", "gap-identification", "option-development", "supply-plan-submission"
+    ],
+    "sop-resource-planning": [
+      "resource-demand-projection", "capacity-mapping", "constraint-identification", "resource-allocation"
+    ],
+    "sop-sop-review": [
+      "pre-sop-alignment", "financial-reconciliation", "executive-sop-review", "plan-distribution"
     ],
     "soe-01-soe-fundamentals": [
-      "what-is-soe",
-      "weekly-cadence",
-      "soe-roles",
-      "exception-management",
-      "escalating-to-sop"
+      "what-is-soe", "weekly-cadence", "soe-roles", "exception-management", "escalating-to-sop"
     ],
     "soe-02-running-soe": [
-      "monitoring-the-plan",
-      "adjustments-and-resets",
-      "integrated-soe-review",
-      "handoff-to-execution"
+      "monitoring-the-plan", "adjustments-and-resets", "integrated-soe-review", "handoff-to-execution"
     ],
     "exec-01-execution-fundamentals": [
-      "what-is-execution",
-      "from-plan-to-action",
-      "execution-exceptions",
-      "execution-kpis",
-      "execution-and-erp"
+      "what-is-execution", "from-plan-to-action", "execution-exceptions", "execution-kpis", "execution-and-erp"
     ],
     "exec-02-daily-execution": [
-      "order-prioritisation",
-      "real-time-visibility",
-      "execution-discipline",
-      "feedback-to-planning"
+      "order-prioritisation", "real-time-visibility", "execution-discipline", "feedback-to-planning"
     ],
     "people-01-planning-team": [
-      "who-is-in-the-planning-team",
-      "planning-roles-overview",
-      "the-planning-org-chart",
-      "role-competencies",
-      "building-an-effective-planning-team",
-      "broader-org-structure"
+      "who-is-in-the-planning-team", "planning-roles-overview", "the-planning-org-chart",
+      "role-competencies", "building-an-effective-planning-team", "broader-org-structure"
     ],
     "people-02-accountability": [
-      "what-is-rasci",
-      "demand-review-rasci",
-      "supply-review-rasci",
-      "executive-sop-rasci",
-      "making-rasci-work"
+      "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
     ]
   }
 }
