@@ -1,0 +1,8 @@
+{
+  "title": "Supply Planning",
+  "description": "Translating the consensus demand plan into a feasible, constrained production and procurement schedule — identifying gaps and preparing costed options for resolution.",
+  "icon": "network",
+  "color": "blue",
+  "pillar": "process",
+  "module": "sop-process"
+}

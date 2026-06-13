@@ -1,0 +1,8 @@
+{
+  "title": "Resource Planning",
+  "description": "Translating the supply plan into labour, equipment, and capacity requirements — identifying binding constraints and allocating available resource to the plan.",
+  "icon": "network",
+  "color": "blue",
+  "pillar": "process",
+  "module": "sop-process"
+}
