@@ -7,6 +7,7 @@ import ComparisonLayout from '../../../../layouts/ComparisonLayout.astro';
 import FullWidthWidgetLayout from '../../../../layouts/FullWidthWidgetLayout.astro';
 import RasciTableLayout from '../../../../layouts/RasciTableLayout.astro';
 import ProcessStepDetailLayout from '../../../../layouts/ProcessStepDetailLayout.astro';
+import UiTrainingLayout from '../../../../layouts/UiTrainingLayout.astro';
 import WhatIfWidget from '../../../../components/sim/WhatIfWidget.astro';
 import DemandSlicingWidget from '../../../../components/sim/DemandSlicingWidget.astro';
 import VarietyDisaggWidget from '../../../../components/sim/VarietyDisaggWidget.astro';
@@ -135,6 +136,14 @@ const sharedProps = {
     roles={topic.roles}
     steps={topic.steps}
   />
+) : layout === 'ui-training' ? (
+  <UiTrainingLayout
+    {...sharedProps}
+    screenshot={topic.screenshot ?? ''}
+    steps={topic.steps ?? []}
+  >
+    {Content && <Content />}
+  </UiTrainingLayout>
 ) : (
   <TopicLayout
     {...sharedProps}
