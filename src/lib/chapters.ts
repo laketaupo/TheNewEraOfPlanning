@@ -52,15 +52,10 @@ export interface TopicMeta {
     label: string;
     assignments: Record<string, string>;
   }>;
-  processSteps?: Array<{
-    title: string;
-    description: string;
-    inputs: string[];
-    outputs: string[];
-    roles: string[];
-    systems: string[];
-    tasks: string[];
-  }>;
+  inputs?: string[];
+  outputs?: string[];
+  systems?: string[];
+  tasks?: string[];
   slug: string;
   chapterSlug: string;
   url: string;
@@ -177,7 +172,10 @@ export function getTopics(): TopicMeta[] {
         orgChart: fm.orgChart ?? undefined,
         roles: fm.roles ?? undefined,
         steps: fm.steps ?? undefined,
-        processSteps: fm.processSteps ?? undefined,
+        inputs: fm.inputs ?? undefined,
+        outputs: fm.outputs ?? undefined,
+        systems: fm.systems ?? undefined,
+        tasks: fm.tasks ?? undefined,
         slug: topicSlug,
         chapterSlug,
         url: `${import.meta.env.BASE_URL}${pillar}/${module}/${chapterSlug}/${topicSlug}`,
