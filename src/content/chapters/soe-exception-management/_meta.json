@@ -1,0 +1,8 @@
+{
+  "title": "Exception Management",
+  "description": "Identifying, prioritising, and resolving exceptions in the near-term plan — the discipline that separates reactive firefighting from structured weekly execution.",
+  "icon": "network",
+  "color": "teal",
+  "pillar": "process",
+  "module": "soe-process"
+}

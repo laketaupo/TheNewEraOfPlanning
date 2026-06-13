@@ -1,0 +1,8 @@
+{
+  "title": "Execution Monitoring",
+  "description": "Tracking daily operational performance against the short-term plan — production throughput, shipment status, and inventory movements — and flagging deviations in time to act.",
+  "icon": "network",
+  "color": "amber",
+  "pillar": "process",
+  "module": "execution-process"
+}

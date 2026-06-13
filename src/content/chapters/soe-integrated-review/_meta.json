@@ -1,0 +1,8 @@
+{
+  "title": "Integrated S&OE Review",
+  "description": "The weekly cross-functional review that aligns demand, supply, and operations on the near-term plan — the S&OE equivalent of the executive S&OP meeting.",
+  "icon": "network",
+  "color": "teal",
+  "pillar": "process",
+  "module": "soe-process"
+}

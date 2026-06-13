@@ -1,0 +1,8 @@
+{
+  "title": "Actuals Capture",
+  "description": "Recording what actually happened — production completions, shipments, receipts, and stock movements — into ERP and FMS so the planning system has accurate starting positions.",
+  "icon": "network",
+  "color": "amber",
+  "pillar": "process",
+  "module": "execution-process"
+}
