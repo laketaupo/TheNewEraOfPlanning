@@ -1,0 +1,275 @@
+<h2>How should L3 process steps appear on a topic page?</h2>
+<p class="subtitle">Example: <strong>Demand Forecasting</strong> — 5 process steps. Pick the layout that feels right.</p>
+
+<style>
+  /* Option card overrides for wider mockups */
+  .options { flex-direction: column; gap: 24px; }
+  .option { flex-direction: column; align-items: flex-start; padding: 0; overflow: hidden; }
+  .option .letter { position: absolute; top: 12px; left: 12px; z-index: 1; }
+  .option .content { width: 100%; padding: 12px 12px 0 12px; }
+  .option h3 { margin-bottom: 2px; }
+  .option p { margin-bottom: 8px; }
+
+  /* Mockup chrome */
+  .page-chrome {
+    background: #0f1117;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 0 0 4px 0;
+    font-family: system-ui, sans-serif;
+  }
+  .page-chrome .chapter-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+  .page-chrome .topic-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 16px;
+  }
+
+  /* --- A: Horizontal flow --- */
+  .flow-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 110px;
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    border-radius: 8px;
+    padding: 12px 10px;
+    position: relative;
+  }
+  .flow-step .step-num {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #6366f1;
+    margin-bottom: 4px;
+  }
+  .flow-step .step-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #e5e7eb;
+    line-height: 1.3;
+  }
+  .flow-step .step-desc {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: #4b5563;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* --- B: Vertical cards --- */
+  .step-list { display: flex; flex-direction: column; gap: 8px; }
+  .step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .step-badge {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #312e81;
+    color: #a5b4fc;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-card .step-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e5e7eb;
+    margin-bottom: 2px;
+  }
+  .step-card .step-desc {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.4;
+  }
+
+  /* --- C: Step walkthrough / tabs --- */
+  .walkthrough {
+    background: #1e2330;
+    border: 1px solid #2d3448;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wt-tabs {
+    display: flex;
+    background: #161922;
+    border-bottom: 1px solid #2d3448;
+    overflow-x: auto;
+  }
+  .wt-tab {
+    padding: 8px 14px;
+    font-size: 11px;
+    color: #6b7280;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+  }
+  .wt-tab.active {
+    color: #a5b4fc;
+    border-bottom-color: #6366f1;
+    background: #1e2330;
+  }
+  .wt-body {
+    padding: 16px;
+  }
+  .wt-step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 6px;
+  }
+  .wt-step-desc {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+  .wt-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #2d3448;
+  }
+  .wt-btn {
+    font-size: 11px;
+    color: #6366f1;
+    background: none;
+    border: 1px solid #4338ca;
+    border-radius: 4px;
+    padding: 4px 12px;
+    cursor: pointer;
+  }
+  .wt-progress {
+    font-size: 11px;
+    color: #6b7280;
+    align-self: center;
+  }
+</style>
+
+<div class="options">
+
+  <!-- Option A -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)" style="position:relative;">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Horizontal process flow</h3>
+      <p>Steps flow left to right with arrows — reads like a real process map.</p>
+    </div>
+    <div class="page-chrome" style="width:100%;box-sizing:border-box;padding:20px 24px 20px 24px;">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="flow-row">
+        <div class="flow-step">
+          <div class="step-num">Step 1</div>
+          <div class="step-title">Data Collection &amp; Cleansing</div>
+          <div class="step-desc">Gather actuals, remove anomalies, validate completeness.</div>
+        </div>
+        <div class="flow-arrow">›</div>
+        <div class="flow-step">
+          <div class="step-num">Step 2</div>
+          <div class="step-title">Statistical Baseline</div>
+          <div class="step-desc">Run forecasting model and review statistical output.</div>
+        </div>
+        <div class="flow-arrow">›</div>
+        <div class="flow-step">
+          <div class="step-num">Step 3</div>
+          <div class="step-title">Commercial Overlay</div>
+          <div class="step-desc">Apply market intelligence and sales adjustments.</div>
+        </div>
+        <div class="flow-arrow">›</div>
+        <div class="flow-step">
+          <div class="step-num">Step 4</div>
+          <div class="step-title">Consensus Review</div>
+          <div class="step-desc">Align commercial and operations on one number.</div>
+        </div>
+        <div class="flow-arrow">›</div>
+        <div class="flow-step">
+          <div class="step-num">Step 5</div>
+          <div class="step-title">Forecast Lock</div>
+          <div class="step-desc">Lock and distribute the agreed forecast.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)" style="position:relative;">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Vertical step cards</h3>
+      <p>Each step is a card with a number badge, title, and description — easy to read top to bottom.</p>
+    </div>
+    <div class="page-chrome" style="width:100%;box-sizing:border-box;">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="step-list">
+        <div class="step-card"><div class="step-badge">1</div><div><div class="step-title">Data Collection &amp; Cleansing</div><div class="step-desc">Gather actuals, remove anomalies, validate completeness.</div></div></div>
+        <div class="step-card"><div class="step-badge">2</div><div><div class="step-title">Statistical Baseline Generation</div><div class="step-desc">Run forecasting model and review statistical output.</div></div></div>
+        <div class="step-card"><div class="step-badge">3</div><div><div class="step-title">Commercial Overlay</div><div class="step-desc">Apply market intelligence and sales adjustments.</div></div></div>
+        <div class="step-card"><div class="step-badge">4</div><div><div class="step-title">Consensus Review</div><div class="step-desc">Align commercial and operations on one number.</div></div></div>
+        <div class="step-card"><div class="step-badge">5</div><div><div class="step-title">Forecast Lock &amp; Distribution</div><div class="step-desc">Lock and distribute the agreed forecast downstream.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)" style="position:relative;">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tabbed step walkthrough</h3>
+      <p>One step at a time — tabs across the top, detailed content below, with next/previous navigation.</p>
+    </div>
+    <div class="page-chrome" style="width:100%;box-sizing:border-box;">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="walkthrough">
+        <div class="wt-tabs">
+          <div class="wt-tab active">1. Data Collection</div>
+          <div class="wt-tab">2. Statistical Baseline</div>
+          <div class="wt-tab">3. Commercial Overlay</div>
+          <div class="wt-tab">4. Consensus Review</div>
+          <div class="wt-tab">5. Forecast Lock</div>
+        </div>
+        <div class="wt-body">
+          <div class="wt-step-title">Data Collection &amp; Cleansing</div>
+          <div class="wt-step-desc">Pull actuals from the ERP and FMS. Remove outliers caused by one-off events (promotions, supply failures). Validate that all required data feeds are complete before running the model. Flag any gaps for manual review.</div>
+          <div class="wt-nav">
+            <button class="wt-btn" disabled style="opacity:.3;">← Previous</button>
+            <span class="wt-progress">Step 1 of 5</span>
+            <button class="wt-btn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,239 @@
+<h2>What should each step show?</h2>
+<p class="subtitle">All options use the tabbed walkthrough. The difference is what's inside each step panel. Example: Step 1 — Data Collection & Cleansing.</p>
+
+<style>
+  .options { flex-direction: column; gap: 24px; }
+  .option { flex-direction: column; align-items: flex-start; padding: 0; overflow: hidden; position: relative; }
+  .option .letter { position: absolute; top: 12px; left: 12px; z-index: 1; }
+  .option .content { width: 100%; padding: 12px 12px 0 12px; box-sizing: border-box; }
+  .option h3 { margin-bottom: 2px; }
+  .option p { margin-bottom: 8px; }
+
+  .page-chrome {
+    background: #0f1117;
+    border-radius: 0 0 6px 6px;
+    padding: 16px 20px;
+    font-family: system-ui, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .chapter-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #6b7280; margin-bottom: 3px; }
+  .topic-title { font-size: 17px; font-weight: 700; color: #f3f4f6; margin-bottom: 12px; }
+
+  .walkthrough { background: #1e2330; border: 1px solid #2d3448; border-radius: 8px; overflow: hidden; }
+  .wt-tabs { display: flex; background: #161922; border-bottom: 1px solid #2d3448; }
+  .wt-tab { padding: 7px 12px; font-size: 11px; color: #6b7280; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .wt-tab.active { color: #a5b4fc; border-bottom-color: #6366f1; background: #1e2330; }
+  .wt-body { padding: 16px; }
+  .wt-step-title { font-size: 14px; font-weight: 700; color: #f3f4f6; margin-bottom: 8px; }
+
+  /* Detail layout helpers */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .detail-full { margin-top: 10px; }
+  .detail-block { background: #161922; border: 1px solid #2d3448; border-radius: 6px; padding: 10px 12px; }
+  .detail-label { font-size: 10px; text-transform: uppercase; letter-spacing: .07em; color: #6366f1; margin-bottom: 5px; }
+  .detail-text { font-size: 12px; color: #d1d5db; line-height: 1.5; }
+  .detail-list { margin: 0; padding: 0 0 0 14px; font-size: 12px; color: #d1d5db; line-height: 1.7; }
+  .detail-desc { font-size: 12px; color: #9ca3af; line-height: 1.6; margin-bottom: 10px; }
+
+  .tag { display: inline-block; font-size: 10px; background: #1e2e1e; color: #86efac; border: 1px solid #166534; border-radius: 12px; padding: 2px 8px; margin: 2px 2px 0 0; }
+  .tag.role { background: #1e1e2e; color: #a5b4fc; border-color: #3730a3; }
+  .tag.tool { background: #2e1e1e; color: #fca5a5; border-color: #991b1b; }
+
+  .task-row { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px solid #1e2330; }
+  .task-row:last-child { border-bottom: none; }
+  .task-num { font-size: 10px; color: #6b7280; min-width: 18px; margin-top: 1px; }
+  .task-text { font-size: 12px; color: #d1d5db; line-height: 1.4; }
+
+  .wt-nav { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 10px; border-top: 1px solid #2d3448; }
+  .wt-btn { font-size: 11px; color: #6366f1; background: none; border: 1px solid #4338ca; border-radius: 4px; padding: 4px 12px; }
+  .wt-progress { font-size: 11px; color: #6b7280; align-self: center; }
+</style>
+
+<div class="options">
+
+  <!-- Option A: Description + Inputs + Outputs -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Description · Inputs · Outputs</h3>
+      <p>Classic process step format — what happens, what goes in, what comes out.</p>
+    </div>
+    <div class="page-chrome">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="walkthrough">
+        <div class="wt-tabs">
+          <div class="wt-tab active">1. Data Collection</div>
+          <div class="wt-tab">2. Statistical Baseline</div>
+          <div class="wt-tab">3. Commercial Overlay</div>
+          <div class="wt-tab">4. Consensus Review</div>
+          <div class="wt-tab">5. Forecast Lock</div>
+        </div>
+        <div class="wt-body">
+          <div class="wt-step-title">Data Collection &amp; Cleansing</div>
+          <div class="detail-desc">Pull actuals from ERP and FMS. Remove outliers caused by one-off events. Validate all required data feeds are complete before running the forecasting model.</div>
+          <div class="detail-grid">
+            <div class="detail-block">
+              <div class="detail-label">Inputs</div>
+              <ul class="detail-list">
+                <li>Sales actuals (ERP)</li>
+                <li>Field actuals (FMS)</li>
+                <li>Promotion calendar</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Outputs</div>
+              <ul class="detail-list">
+                <li>Cleansed demand history</li>
+                <li>Anomaly log</li>
+                <li>Data completeness report</li>
+              </ul>
+            </div>
+          </div>
+          <div class="wt-nav">
+            <button class="wt-btn" disabled style="opacity:.3;">← Previous</button>
+            <span class="wt-progress">Step 1 of 5</span>
+            <button class="wt-btn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Description + Inputs + Outputs + Roles + Tools -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Description · Inputs · Outputs · Roles · Tools</h3>
+      <p>Adds who is responsible and which systems are used — more complete picture.</p>
+    </div>
+    <div class="page-chrome">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="walkthrough">
+        <div class="wt-tabs">
+          <div class="wt-tab active">1. Data Collection</div>
+          <div class="wt-tab">2. Statistical Baseline</div>
+          <div class="wt-tab">3. Commercial Overlay</div>
+          <div class="wt-tab">4. Consensus Review</div>
+          <div class="wt-tab">5. Forecast Lock</div>
+        </div>
+        <div class="wt-body">
+          <div class="wt-step-title">Data Collection &amp; Cleansing</div>
+          <div class="detail-desc">Pull actuals from ERP and FMS. Remove outliers caused by one-off events. Validate all required data feeds are complete before running the forecasting model.</div>
+          <div class="detail-grid">
+            <div class="detail-block">
+              <div class="detail-label">Inputs</div>
+              <ul class="detail-list">
+                <li>Sales actuals (ERP)</li>
+                <li>Field actuals (FMS)</li>
+                <li>Promotion calendar</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Outputs</div>
+              <ul class="detail-list">
+                <li>Cleansed demand history</li>
+                <li>Anomaly log</li>
+                <li>Data completeness report</li>
+              </ul>
+            </div>
+          </div>
+          <div class="detail-full">
+            <div class="detail-block">
+              <div class="detail-label">Roles</div>
+              <span class="tag role">Demand Planner</span>
+              <span class="tag role">Data Analyst</span>
+            </div>
+          </div>
+          <div class="detail-full" style="margin-top:8px;">
+            <div class="detail-block">
+              <div class="detail-label">Systems</div>
+              <span class="tag tool">ERP</span>
+              <span class="tag tool">FMS</span>
+              <span class="tag tool">Planning Software</span>
+            </div>
+          </div>
+          <div class="wt-nav">
+            <button class="wt-btn" disabled style="opacity:.3;">← Previous</button>
+            <span class="wt-progress">Step 1 of 5</span>
+            <button class="wt-btn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: Description + Inputs + Outputs + Roles + Tools + L4 Tasks -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Description · Inputs · Outputs · Roles · Tools · L4 Tasks</h3>
+      <p>Full drill-down — everything above plus the individual tasks that make up this step.</p>
+    </div>
+    <div class="page-chrome">
+      <div class="chapter-label">S&OP Process Steps · Demand Forecasting</div>
+      <div class="topic-title">Demand Forecasting</div>
+      <div class="walkthrough">
+        <div class="wt-tabs">
+          <div class="wt-tab active">1. Data Collection</div>
+          <div class="wt-tab">2. Statistical Baseline</div>
+          <div class="wt-tab">3. Commercial Overlay</div>
+          <div class="wt-tab">4. Consensus Review</div>
+          <div class="wt-tab">5. Forecast Lock</div>
+        </div>
+        <div class="wt-body">
+          <div class="wt-step-title">Data Collection &amp; Cleansing</div>
+          <div class="detail-desc">Pull actuals from ERP and FMS. Remove outliers caused by one-off events. Validate all required data feeds are complete before running the forecasting model.</div>
+          <div class="detail-grid">
+            <div class="detail-block">
+              <div class="detail-label">Inputs</div>
+              <ul class="detail-list">
+                <li>Sales actuals (ERP)</li>
+                <li>Field actuals (FMS)</li>
+                <li>Promotion calendar</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Outputs</div>
+              <ul class="detail-list">
+                <li>Cleansed demand history</li>
+                <li>Anomaly log</li>
+                <li>Data completeness report</li>
+              </ul>
+            </div>
+          </div>
+          <div class="detail-full" style="margin-top:8px;">
+            <div class="detail-block">
+              <div class="detail-label">Roles</div>
+              <span class="tag role">Demand Planner</span>
+              <span class="tag role">Data Analyst</span>
+              &nbsp;&nbsp;
+              <span class="detail-label" style="display:inline;margin-left:12px;">Systems</span>&nbsp;
+              <span class="tag tool">ERP</span>
+              <span class="tag tool">FMS</span>
+              <span class="tag tool">Planning Software</span>
+            </div>
+          </div>
+          <div class="detail-full" style="margin-top:8px;">
+            <div class="detail-block">
+              <div class="detail-label">Tasks (L4)</div>
+              <div class="task-row"><span class="task-num">4.1</span><span class="task-text">Extract sales history from ERP for the past 24 months</span></div>
+              <div class="task-row"><span class="task-num">4.2</span><span class="task-text">Extract field actuals from FMS and reconcile against ERP</span></div>
+              <div class="task-row"><span class="task-num">4.3</span><span class="task-text">Identify and flag statistical outliers for manual review</span></div>
+              <div class="task-row"><span class="task-num">4.4</span><span class="task-text">Apply promotion calendar adjustments to baseline history</span></div>
+              <div class="task-row"><span class="task-num">4.5</span><span class="task-text">Sign off data completeness checklist</span></div>
+            </div>
+          </div>
+          <div class="wt-nav">
+            <button class="wt-btn" disabled style="opacity:.3;">← Previous</button>
+            <span class="wt-progress">Step 1 of 5</span>
+            <button class="wt-btn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
