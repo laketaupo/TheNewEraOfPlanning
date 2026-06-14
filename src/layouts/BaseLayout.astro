@@ -62,12 +62,12 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
       try { terms = JSON.parse(dataEl.textContent); } catch { return; }
       if (!terms || terms.length === 0) return;
 
-      // Build a flat list of { matchStr, slug, definition } covering term + aliases
+      // Build a flat list of { matchStr, slug, definition, term } covering term + aliases
       const matchers = [];
       for (const t of terms) {
-        matchers.push({ matchStr: t.term, slug: t.slug, definition: t.definition });
+        matchers.push({ matchStr: t.term, slug: t.slug, definition: t.definition, term: t.term });
         for (const alias of (t.aliases || [])) {
-          matchers.push({ matchStr: alias, slug: t.slug, definition: t.definition });
+          matchers.push({ matchStr: alias, slug: t.slug, definition: t.definition, term: t.term });
         }
       }
       // Sort longest match first so multi-word strings win over abbreviations
@@ -122,6 +122,7 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
             span.className = 'glossary-term';
             span.dataset.slug = termDef.slug;
             span.dataset.def = termDef.definition;
+            span.dataset.term = termDef.term;
             span.textContent = matched;
             frag.appendChild(span);
             last = match.index + matched.length;
