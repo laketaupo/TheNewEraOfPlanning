@@ -1,6 +1,7 @@
 ---
 import SiteOverlay from '../components/SiteOverlay.astro';
 import UserDashboard from '../components/UserDashboard.astro';
+import Search from '../components/Search.astro';
 
 export interface Props {
   title?: string;
@@ -33,5 +34,6 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
     <slot />
     <SiteOverlay />
     <UserDashboard />
+    <Search />
   </body>
 </html>
