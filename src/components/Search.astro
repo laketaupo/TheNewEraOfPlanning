@@ -127,6 +127,12 @@
     padding-right: 92px;
     background: transparent;
   }
+  /* Suppress the browser's blue focus ring on the (auto-focused) input */
+  #search-container .pagefind-ui__search-input:focus,
+  #search-container .pagefind-ui__search-input:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
   /* Keep Pagefind's clear (×) button left of the ESC pill */
   #search-container .pagefind-ui__search-clear {
     right: 60px;
