@@ -138,34 +138,58 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
       const paragraphs = body.querySelectorAll('p, li');
       paragraphs.forEach(wrapTermsInParagraph);
 
-      // Tooltip show/hide logic
+      // Tooltip show/hide logic (hover-intent: stays open while moving to the card)
       const tooltip = document.getElementById('glossary-tooltip');
+      const tooltipTerm = document.getElementById('glossary-tooltip-term');
       const tooltipDef = document.getElementById('glossary-tooltip-def');
       const tooltipLink = document.getElementById('glossary-tooltip-link');
+      let hideTimer = null;
 
-      body.addEventListener('mouseover', function (e) {
-        const target = e.target.closest('.glossary-term');
-        if (!target) return;
+      function showTooltip(target) {
+        clearTimeout(hideTimer);
+        tooltipTerm.textContent = target.dataset.term || '';
         tooltipDef.textContent = target.dataset.def;
         tooltipLink.href = '/glossary#' + target.dataset.slug;
         tooltip.classList.remove('hidden');
         positionTooltip(target);
+      }
+
+      function scheduleHide() {
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(function () { tooltip.classList.add('hidden'); }, 150);
+      }
+
+      body.addEventListener('mouseover', function (e) {
+        const target = e.target.closest('.glossary-term');
+        if (!target) return;
+        showTooltip(target);
       });
 
       body.addEventListener('mouseout', function (e) {
-        if (!e.relatedTarget || !e.relatedTarget.closest('.glossary-term')) {
-          tooltip.classList.add('hidden');
-        }
+        const rel = e.relatedTarget;
+        const toTerm = rel && rel.closest && rel.closest('.glossary-term');
+        const toTooltip = rel && rel.closest && rel.closest('#glossary-tooltip');
+        if (!toTerm && !toTooltip) scheduleHide();
       });
+
+      // Keep open while the pointer is over the card; dismiss when it leaves.
+      tooltip.addEventListener('mouseenter', function () { clearTimeout(hideTimer); });
+      tooltip.addEventListener('mouseleave', function () { scheduleHide(); });
 
       function positionTooltip(el) {
         const rect = el.getBoundingClientRect();
-        const ttWidth = tooltip.offsetWidth || 288;
-        const ttHeight = tooltip.offsetHeight || 80;
+        const ttWidth = tooltip.offsetWidth || 340;
+        const ttHeight = tooltip.offsetHeight || 100;
         let left = rect.left;
-        let top = rect.bottom + 6;
+        let top = rect.bottom + 8;
+        let placement = 'bottom';
         if (left + ttWidth > window.innerWidth - 12) left = window.innerWidth - ttWidth - 12;
-        if (top + ttHeight > window.innerHeight - 12) top = rect.top - ttHeight - 6;
+        if (left < 12) left = 12;
+        if (top + ttHeight > window.innerHeight - 12) {
+          top = rect.top - ttHeight - 8;
+          placement = 'top';
+        }
+        tooltip.dataset.placement = placement;
         tooltip.style.left = left + 'px';
         tooltip.style.top = top + 'px';
       }
@@ -180,6 +204,25 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
       }
       .glossary-term:hover {
         opacity: 1;
+      }
+      #glossary-tooltip::before {
+        content: '';
+        position: absolute;
+        left: 18px;
+        width: 12px;
+        height: 12px;
+        background-color: inherit;
+        border-top: 1px solid;
+        border-left: 1px solid;
+        border-color: inherit;
+      }
+      #glossary-tooltip[data-placement='bottom']::before {
+        top: -7px;
+        transform: rotate(45deg);
+      }
+      #glossary-tooltip[data-placement='top']::before {
+        bottom: -7px;
+        transform: rotate(225deg);
       }
     </style>
   </body>
