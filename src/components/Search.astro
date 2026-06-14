@@ -118,10 +118,13 @@
     --pagefind-ui-border-radius: 10px;
     --pagefind-ui-font: inherit;
   }
-  /* Larger input, with right padding so text clears the ESC pill */
+  /* Larger input. Keep left padding clear of Pagefind's magnifier icon
+     (its ::before sits at left:20px), and right padding clear of the
+     clear button + the ESC pill. */
   #search-container .pagefind-ui__search-input {
-    font-size: 17px;
-    padding: 14px 92px 14px 16px;
+    font-size: 18px;
+    padding-left: 52px;
+    padding-right: 92px;
     background: transparent;
   }
   /* Keep Pagefind's clear (×) button left of the ESC pill */
