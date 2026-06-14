@@ -1,0 +1,186 @@
+[
+  {
+    "slug": "bill-of-materials",
+    "term": "Bill of Materials",
+    "aliases": ["BOM", "bills of materials"],
+    "definition": "A structured list of components, subassemblies, and raw materials required to produce a finished product, including quantities and lead times. In planning software, the BOM drives how demand is exploded upstream through the supply chain.",
+    "related": ["bill-of-distribution"],
+    "seeAlso": []
+  },
+  {
+    "slug": "bill-of-distribution",
+    "term": "Bill of Distribution",
+    "aliases": ["BOD", "bills of distribution"],
+    "definition": "Defines the distribution network: which locations supply which other locations, in what quantities, and with what lead times. The BOD drives how supply signals cascade downstream to distribution centres and customers.",
+    "related": ["bill-of-materials"],
+    "seeAlso": []
+  },
+  {
+    "slug": "sop",
+    "term": "Sales & Operations Planning",
+    "aliases": ["S&OP"],
+    "definition": "A monthly cross-functional process that aligns demand, supply, inventory, and financial plans into a single agreed business plan. Typically runs over a multi-week cycle culminating in an executive review meeting.",
+    "related": ["soe", "demand-review", "supply-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "soe",
+    "term": "Sales & Operations Execution",
+    "aliases": ["S&OE"],
+    "definition": "A weekly operational process that monitors execution against the agreed S&OP plan, identifies short-term deviations, and triggers corrective actions. Sits between S&OP and day-to-day execution.",
+    "related": ["sop"],
+    "seeAlso": []
+  },
+  {
+    "slug": "safety-stock",
+    "term": "Safety Stock",
+    "aliases": [],
+    "definition": "A buffer of inventory held above the expected demand to protect against variability in demand or supply lead times. Calculated per item-at-location and configured as a planning parameter.",
+    "related": ["item-at-location"],
+    "seeAlso": []
+  },
+  {
+    "slug": "item-at-location",
+    "term": "Item-at-Location",
+    "aliases": [],
+    "definition": "The combination of a product (item) and a specific supply chain node (location). Most planning parameters — safety stock, lead time, reorder policies — are set at the item-at-location level rather than globally per item.",
+    "related": ["safety-stock"],
+    "seeAlso": []
+  },
+  {
+    "slug": "demand-signal",
+    "term": "Demand Signal",
+    "aliases": [],
+    "definition": "The input that drives the planning engine: typically customer orders, forecasts, or a combination of both. The demand signal is the starting point for all downstream supply calculations.",
+    "related": ["forecast", "supply-signal"],
+    "seeAlso": []
+  },
+  {
+    "slug": "supply-signal",
+    "term": "Supply Signal",
+    "aliases": [],
+    "definition": "The output of the planning engine that tells each node in the supply chain what to produce, purchase, or transfer. Supply signals cascade upstream through the BOM and BOD in response to the demand signal.",
+    "related": ["demand-signal"],
+    "seeAlso": []
+  },
+  {
+    "slug": "forecast",
+    "term": "Forecast",
+    "aliases": [],
+    "definition": "A statistical or judgement-based estimate of future demand used as an input to the planning engine. Forecasts can be generated at different levels of aggregation (variety, item, location) and disaggregated for planning.",
+    "related": ["demand-signal", "disaggregation"],
+    "seeAlso": []
+  },
+  {
+    "slug": "disaggregation",
+    "term": "Disaggregation",
+    "aliases": [],
+    "definition": "The process of splitting a high-level plan (e.g. an annual variety forecast) into lower-level detail (e.g. monthly item-at-location quantities). Planning software handles disaggregation automatically using configured ratios.",
+    "related": ["forecast"],
+    "seeAlso": []
+  },
+  {
+    "slug": "demand-slicing",
+    "term": "Demand Slicing",
+    "aliases": [],
+    "definition": "Splitting a single demand quantity across multiple time buckets or sources based on configured rules. Used to spread a lump-sum order or forecast across the planning horizon.",
+    "related": ["disaggregation"],
+    "seeAlso": []
+  },
+  {
+    "slug": "backward-consumption",
+    "term": "Backward Consumption",
+    "aliases": [],
+    "definition": "A netting logic where actual sales consume forecast in prior periods before consuming future forecast. Prevents double-counting of demand when orders arrive earlier than the forecast period.",
+    "related": ["demand-signal"],
+    "seeAlso": []
+  },
+  {
+    "slug": "scheduled-receipt",
+    "term": "Scheduled Receipt",
+    "aliases": [],
+    "definition": "An expected incoming supply — a purchase order, production order, or transfer order — that is already confirmed and dated. The planning engine nets scheduled receipts against demand before generating new supply proposals.",
+    "related": ["supply-signal"],
+    "seeAlso": []
+  },
+  {
+    "slug": "push-planning",
+    "term": "Push Planning",
+    "aliases": [],
+    "definition": "A supply strategy where production or procurement is triggered by a forecast, pushing supply down the chain before demand materialises. Suitable for long-lead-time items where waiting for actual orders is too late.",
+    "related": ["pull-planning"],
+    "seeAlso": []
+  },
+  {
+    "slug": "pull-planning",
+    "term": "Pull Planning",
+    "aliases": [],
+    "definition": "A supply strategy where production or procurement is triggered only by actual demand signals (orders). Reduces inventory risk but requires short enough lead times to respond in time.",
+    "related": ["push-planning"],
+    "seeAlso": []
+  },
+  {
+    "slug": "simulation",
+    "term": "Simulation",
+    "aliases": [],
+    "definition": "A what-if version of the plan created by copying the current plan and applying changes. Simulations allow planners to explore scenarios without affecting the live plan, then promote the best outcome.",
+    "related": [],
+    "seeAlso": []
+  },
+  {
+    "slug": "erp",
+    "term": "Enterprise Resource Planning",
+    "aliases": ["ERP"],
+    "definition": "The system of record for transactional business data: purchase orders, production orders, inventory movements, and financials. The planning tool reads master data and actuals from the ERP and writes supply proposals back to it.",
+    "related": ["mdm"],
+    "seeAlso": []
+  },
+  {
+    "slug": "mdm",
+    "term": "Master Data Management",
+    "aliases": ["MDM"],
+    "definition": "The process and tooling for creating, maintaining, and governing the core reference data used across systems — items, locations, BOMs, BODs, and resources. Clean master data is a prerequisite for accurate planning.",
+    "related": ["erp"],
+    "seeAlso": []
+  },
+  {
+    "slug": "rasci",
+    "term": "RASCI",
+    "aliases": [],
+    "definition": "A responsibility assignment matrix defining who is Responsible, Accountable, Supporting, Consulted, and Informed for each activity in a process. Used in S&OP and S&OE to clarify cross-functional ownership.",
+    "related": ["sop"],
+    "seeAlso": []
+  },
+  {
+    "slug": "demand-review",
+    "term": "Demand Review",
+    "aliases": [],
+    "definition": "The S&OP meeting (or pre-meeting) where commercial teams align on the consensus demand forecast. Output is a single agreed demand number used as the basis for supply planning.",
+    "related": ["sop", "supply-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "supply-review",
+    "term": "Supply Review",
+    "aliases": [],
+    "definition": "The S&OP meeting where supply teams assess capacity and inventory against the agreed demand plan, identify gaps, and propose resolution options before the executive S&OP meeting.",
+    "related": ["sop", "demand-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "kpi",
+    "term": "Key Performance Indicator",
+    "aliases": ["KPI", "KPIs"],
+    "definition": "A quantitative measure used to evaluate planning performance. Common planning KPIs include forecast accuracy, inventory days-of-supply, service level (fill rate), and planning cycle adherence.",
+    "related": [],
+    "seeAlso": []
+  },
+  {
+    "slug": "resource",
+    "term": "Resource",
+    "aliases": [],
+    "definition": "A constrained capacity entity — typically a machine, line, or team — that the planning engine must schedule against. Resources have available capacity per time bucket and are consumed by production BOMs.",
+    "related": ["bill-of-materials"],
+    "seeAlso": []
+  }
+]
