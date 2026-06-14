@@ -1,0 +1,98 @@
+<h2>How should the steps panel behave?</h2>
+<p class="subtitle">All options show the same steps — the difference is how the user interacts with them.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="static" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:12px; background:#0f172a; border-radius:6px;">
+      <div style="display:flex; gap:8px; height:130px; font-size:9px; font-family:monospace;">
+        <!-- Main area -->
+        <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+          <div style="background:#1e3a5f; border:1px solid #3b82f6; border-radius:4px; flex:1; display:flex; align-items:center; justify-content:center; color:#93c5fd; font-size:9px;">🖼 Screenshot</div>
+          <div style="background:#1e293b; border-radius:4px; padding:5px; color:#94a3b8; font-size:8px; line-height:1.4;">Description text goes here...</div>
+        </div>
+        <!-- Static steps -->
+        <div style="width:90px; background:#1e293b; border-radius:4px; padding:8px; flex-shrink:0;">
+          <div style="color:#e2e8f0; font-weight:600; font-size:8px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Steps</div>
+          <div style="color:#94a3b8; font-size:8px; margin-bottom:5px; line-height:1.3;">1. Open the workspace</div>
+          <div style="color:#94a3b8; font-size:8px; margin-bottom:5px; line-height:1.3;">2. Apply location filter</div>
+          <div style="color:#94a3b8; font-size:8px; margin-bottom:5px; line-height:1.3;">3. Review the grid</div>
+          <div style="color:#94a3b8; font-size:8px; line-height:1.3;">4. Save your view</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Static list — read only</h3>
+      <p>Steps are plain text, no interaction. Simple, zero complexity. Good if the steps are just reference material alongside the screenshot.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="checkable" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:12px; background:#0f172a; border-radius:6px;">
+      <div style="display:flex; gap:8px; height:130px; font-size:9px; font-family:monospace;">
+        <!-- Main area -->
+        <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+          <div style="background:#1e3a5f; border:1px solid #3b82f6; border-radius:4px; flex:1; display:flex; align-items:center; justify-content:center; color:#93c5fd; font-size:9px;">🖼 Screenshot</div>
+          <div style="background:#1e293b; border-radius:4px; padding:5px; color:#94a3b8; font-size:8px; line-height:1.4;">Description text goes here...</div>
+        </div>
+        <!-- Checkable steps -->
+        <div style="width:90px; background:#1e293b; border-radius:4px; padding:8px; flex-shrink:0;">
+          <div style="color:#e2e8f0; font-weight:600; font-size:8px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Steps</div>
+          <div style="display:flex; gap:4px; align-items:start; margin-bottom:5px;">
+            <div style="width:10px; height:10px; border-radius:2px; background:#22c55e; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center;">
+              <span style="color:white; font-size:7px;">✓</span>
+            </div>
+            <div style="color:#6b7280; font-size:8px; text-decoration:line-through; line-height:1.3;">Open workspace</div>
+          </div>
+          <div style="display:flex; gap:4px; align-items:start; margin-bottom:5px;">
+            <div style="width:10px; height:10px; border-radius:2px; background:#22c55e; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center;">
+              <span style="color:white; font-size:7px;">✓</span>
+            </div>
+            <div style="color:#6b7280; font-size:8px; text-decoration:line-through; line-height:1.3;">Apply filter</div>
+          </div>
+          <div style="display:flex; gap:4px; align-items:start; margin-bottom:5px;">
+            <div style="width:10px; height:10px; border-radius:2px; border:1px solid #3b82f6; flex-shrink:0; margin-top:1px;"></div>
+            <div style="color:#e2e8f0; font-size:8px; font-weight:500; line-height:1.3;">Review grid</div>
+          </div>
+          <div style="display:flex; gap:4px; align-items:start;">
+            <div style="width:10px; height:10px; border-radius:2px; border:1px solid #475569; flex-shrink:0; margin-top:1px;"></div>
+            <div style="color:#475569; font-size:8px; line-height:1.3;">Save view</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Checkable — track your progress</h3>
+      <p>Users tick off each step as they go. Completed steps get a strikethrough. Uses the existing <code>platform-progress</code> localStorage pattern.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="clickable" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:12px; background:#0f172a; border-radius:6px;">
+      <div style="display:flex; gap:8px; height:130px; font-size:9px; font-family:monospace;">
+        <!-- Main area with highlighted screenshot -->
+        <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+          <div style="position:relative; background:#1e3a5f; border:1px solid #3b82f6; border-radius:4px; flex:1; display:flex; align-items:center; justify-content:center; color:#93c5fd; font-size:9px;">
+            🖼 Screenshot
+            <!-- Highlight overlay -->
+            <div style="position:absolute; top:8px; right:10px; width:24px; height:14px; border:2px solid #f59e0b; border-radius:2px; background:rgba(245,158,11,0.15);"></div>
+          </div>
+          <div style="background:#1e293b; border-radius:4px; padding:5px; color:#94a3b8; font-size:8px; line-height:1.4;">Description text for the active step...</div>
+        </div>
+        <!-- Clickable steps -->
+        <div style="width:90px; background:#1e293b; border-radius:4px; padding:8px; flex-shrink:0;">
+          <div style="color:#e2e8f0; font-weight:600; font-size:8px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">Steps</div>
+          <div style="color:#6b7280; font-size:8px; margin-bottom:4px; padding:3px 4px; border-radius:3px; line-height:1.2;">1. Open workspace</div>
+          <div style="color:#6b7280; font-size:8px; margin-bottom:4px; padding:3px 4px; border-radius:3px; line-height:1.2;">2. Apply filter</div>
+          <div style="background:#1e3a5f; border-left:2px solid #3b82f6; color:#93c5fd; font-size:8px; margin-bottom:4px; padding:3px 4px; border-radius:0 3px 3px 0; font-weight:600; line-height:1.2;">3. Review grid →</div>
+          <div style="color:#475569; font-size:8px; padding:3px 4px; border-radius:3px; line-height:1.2;">4. Save view</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Clickable — step-by-step walkthrough</h3>
+      <p>Clicking a step highlights the relevant area of the screenshot and updates the description. Like a guided tour. Most complex to build — requires annotating the image.</p>
+    </div>
+  </div>
+
+</div>

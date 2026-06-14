@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#030712; color:#f1f5f9; font-family: system-ui, -apple-system, sans-serif; margin:0;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI Training Layout — Full Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #030712; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; font-size: 14px; }
+
+  /* ── Top nav ── */
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 24px;
+    background: rgba(3,7,18,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #1e293b;
+  }
+  .topnav-left { display: flex; align-items: center; gap: 16px; }
+  .topnav-left a { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #64748b; text-decoration: none; }
+  .topnav-left a:hover { color: #f1f5f9; }
+  .chapter-badge-nav { font-size: 13px; font-weight: 500; color: #818cf8; border-bottom: 1px solid #818cf8; }
+  .theme-btn { width: 28px; height: 28px; border-radius: 6px; background: #1e293b; border: none; cursor: pointer; color: #94a3b8; display: flex; align-items: center; justify-content: center; }
+
+  /* ── Hero header ── */
+  .hero {
+    background: #030712;
+    border-bottom: 1px solid #1e293b;
+  }
+  .accent-line {
+    height: 3px;
+    background: linear-gradient(90deg, #818cf8, rgba(129,140,248,0.3) 60%, transparent);
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; padding: 20px 24px 24px; }
+  .chapter-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+    background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.25);
+    color: #818cf8; border-radius: 999px; padding: 4px 12px; margin-bottom: 10px;
+  }
+  .chapter-dot { width: 6px; height: 6px; border-radius: 50%; background: #818cf8; }
+  .hero h1 { font-size: 22px; font-weight: 700; color: #f8fafc; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .hero p { font-size: 13px; color: #94a3b8; line-height: 1.6; max-width: 680px; }
+
+  /* ── Main content ── */
+  .content-wrap { max-width: 1100px; margin: 0 auto; padding: 28px 24px 80px; display: flex; gap: 24px; align-items: flex-start; }
+  .main-col { flex: 1; min-width: 0; }
+  .steps-col { width: 220px; flex-shrink: 0; }
+
+  /* ── Screenshot ── */
+  .screenshot-frame {
+    width: 100%; border-radius: 10px; overflow: hidden;
+    border: 1px solid #1e293b;
+    background: #0f172a;
+    margin-bottom: 20px;
+  }
+  .screenshot-bar {
+    background: #1e293b; padding: 8px 12px; display: flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid #334155;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .screenshot-img {
+    width: 100%;
+    height: 340px;
+    background: linear-gradient(135deg, #0f172a 0%, #1a2744 40%, #0f172a 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 24px;
+  }
+
+  /* Simulated planning software UI inside screenshot */
+  .sim-toolbar { width: 100%; display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: rgba(30,41,59,0.8); border-radius: 5px; }
+  .sim-tab { font-size: 10px; padding: 3px 10px; border-radius: 3px; color: #94a3b8; background: transparent; cursor: default; }
+  .sim-tab.active { background: rgba(99,102,241,0.15); color: #818cf8; font-weight: 600; }
+  .sim-grid-wrap { width: 100%; flex: 1; background: rgba(15,23,42,0.8); border-radius: 5px; border: 1px solid #1e293b; overflow: hidden; }
+  .sim-grid-header { display: flex; background: #1e293b; border-bottom: 1px solid #334155; }
+  .sim-grid-header div { padding: 4px 8px; font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; flex: 1; text-align: right; }
+  .sim-grid-header div:first-child { text-align: left; flex: 2; }
+  .sim-grid-row { display: flex; border-bottom: 1px solid rgba(30,41,59,0.5); }
+  .sim-grid-row div { padding: 4px 8px; font-size: 9px; color: #94a3b8; flex: 1; text-align: right; }
+  .sim-grid-row div:first-child { text-align: left; color: #e2e8f0; flex: 2; }
+  .sim-grid-row div.green { color: #34d399; }
+  .sim-grid-row div.amber { color: #fbbf24; }
+  .sim-grid-row div.red { color: #f87171; }
+  .sim-filter { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .sim-filter-pill { font-size: 9px; background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #818cf8; border-radius: 4px; padding: 2px 8px; }
+  .sim-filter-clear { font-size: 9px; color: #475569; }
+
+  /* ── Description block ── */
+  .description-block {
+    background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .description-block h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 8px; }
+  .description-block p { font-size: 13px; color: #94a3b8; line-height: 1.7; }
+
+  /* ── Steps sidebar ── */
+  .steps-panel {
+    background: #0f172a; border: 1px solid #1e293b; border-radius: 10px;
+    padding: 16px 18px; position: sticky; top: 58px;
+  }
+  .steps-panel h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 14px; }
+  .step-item {
+    display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;
+  }
+  .step-num {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.3);
+    color: #818cf8; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-label { font-size: 12px; color: #cbd5e1; line-height: 1.4; padding-top: 2px; }
+  .step-divider { width: 1px; height: 10px; background: #1e293b; margin: 0 0 12px 9px; }
+
+  /* ── Bottom nav ── */
+  .bottomnav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(3,7,18,0.95); backdrop-filter: blur(8px);
+    border-top: 1px solid #1e293b;
+  }
+  .nav-btn { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #64748b; text-decoration: none; }
+  .nav-btn:hover { color: #f1f5f9; }
+  .progress-pill { font-size: 11px; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); color: #6366f1; border-radius: 999px; padding: 3px 12px; }
+
+  /* Label */
+  .annotation { font-size: 10px; color: #334155; text-align: right; margin-top: 6px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- Top nav -->
+<div class="topnav">
+  <div class="topnav-left">
+    <a href="#">⌂</a>
+    <a href="#">← Planning Software</a>
+  </div>
+  <span class="chapter-badge-nav">Navigation &amp; UI · Topic 3</span>
+  <div class="theme-btn">☀</div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="accent-line"></div>
+  <div class="hero-inner">
+    <div class="chapter-pill">
+      <span class="chapter-dot"></span>
+      Navigation &amp; UI · Topic 3
+    </div>
+    <h1>The Demand Workspace</h1>
+    <p>The Demand workspace is your daily starting point for reviewing demand signals. This walkthrough shows you how to open it, apply your location filter, and navigate the grid.</p>
+  </div>
+</div>
+
+<!-- Main two-column content -->
+<div class="content-wrap">
+
+  <!-- Left: screenshot + description -->
+  <div class="main-col">
+
+    <!-- Screenshot frame -->
+    <div class="screenshot-frame">
+      <div class="screenshot-bar">
+        <span class="dot" style="background:#f87171"></span>
+        <span class="dot" style="background:#fbbf24"></span>
+        <span class="dot" style="background:#34d399"></span>
+        <span style="font-size:10px; color:#475569; margin-left:8px;">Planning Software — Demand · Grid view</span>
+      </div>
+      <div class="screenshot-img">
+        <!-- Simulated planning software screen -->
+        <div class="sim-toolbar">
+          <span class="sim-tab active">Demand</span>
+          <span class="sim-tab">Supply</span>
+          <span class="sim-tab">Inventory</span>
+          <span class="sim-tab">Exceptions</span>
+          <span style="flex:1"></span>
+          <span style="font-size:10px; color:#475569;">Grid | Chart</span>
+        </div>
+        <div class="sim-filter">
+          <span style="font-size:9px; color:#64748b;">Filters:</span>
+          <span class="sim-filter-pill">Location: Cape Town DC</span>
+          <span class="sim-filter-pill">Horizon: 13 wks</span>
+          <span class="sim-filter-clear">✕ Clear</span>
+        </div>
+        <div class="sim-grid-wrap">
+          <div class="sim-grid-header">
+            <div>Item / SKU</div>
+            <div>Wk 24</div>
+            <div>Wk 25</div>
+            <div>Wk 26</div>
+            <div>Wk 27</div>
+          </div>
+          <div class="sim-grid-row">
+            <div>▶ Beverages</div>
+            <div class="green">1,240</div>
+            <div class="green">1,190</div>
+            <div class="amber">980</div>
+            <div class="green">1,340</div>
+          </div>
+          <div class="sim-grid-row" style="background:rgba(99,102,241,0.04)">
+            <div>&nbsp;&nbsp;Cola 330ml</div>
+            <div class="green">640</div>
+            <div class="green">620</div>
+            <div class="red">390</div>
+            <div class="green">710</div>
+          </div>
+          <div class="sim-grid-row">
+            <div>&nbsp;&nbsp;Water 500ml</div>
+            <div>600</div>
+            <div>570</div>
+            <div>590</div>
+            <div>630</div>
+          </div>
+          <div class="sim-grid-row">
+            <div>▶ Snacks</div>
+            <div>880</div>
+            <div class="amber">740</div>
+            <div>900</div>
+            <div>920</div>
+          </div>
+          <div class="sim-grid-row">
+            <div>▶ Dairy</div>
+            <div class="green">1,100</div>
+            <div class="green">1,080</div>
+            <div class="green">1,150</div>
+            <div class="amber">970</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="annotation">Sample screenshot — replace with actual /public/ui-training/*.png</div>
+
+    <!-- Description block -->
+    <div class="description-block">
+      <h3>What you're looking at</h3>
+      <p>This is the Demand workspace in grid view, filtered to Cape Town DC over a 13-week horizon. Rows group items by product family — click the triangle to expand. Columns are time periods. Cell colour indicates status: green is on-target, amber is at risk, red is an active exception requiring review.</p>
+    </div>
+  </div>
+
+  <!-- Right: steps panel -->
+  <div class="steps-col">
+    <div class="steps-panel">
+      <h3>Steps</h3>
+
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-label">Open the Demand workspace from the left menu</div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-label">Set the Location filter to your site</div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-label">Set the Horizon to 13 weeks</div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-label">Expand a product family row to see SKU-level data</div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-label">Review any red cells — these are exceptions</div>
+      </div>
+      <div class="step-divider"></div>
+
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-label">Save the view with your filter settings</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom nav -->
+<div class="bottomnav">
+  <a class="nav-btn" href="#">← The Grid View</a>
+  <span class="progress-pill">3 of 8</span>
+  <a class="nav-btn" href="#">Filters &amp; Slicers →</a>
+</div>
+
+</body>
+</html>

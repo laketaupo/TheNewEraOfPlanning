@@ -1,0 +1,13 @@
+{"type":"server-started","port":50944,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:50944","screen_dir":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content","state_dir":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/state"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/layout-options.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/steps-interactivity.html"}
+{"source":"user-event","type":"click","text":"🖼 Screenshot\n          Description text goes here...\n        \n        \n        \n          Steps\n          1. Open the workspace\n          2. Apply location filter\n          3. Review the grid\n          4. Save your view\n        \n      \n    \n    \n      Static list — read only\n      Steps are plain text, no interaction. Simple, zero complexity. Good if the steps are just reference material alongside the screenshot.","choice":"static","id":null,"timestamp":1781377517910}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/waiting.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/full-design.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/full-design-v2.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/full-design-v3.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/full-design-v4.html"}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/border-options.html"}
+{"source":"user-event","type":"click","text":"24 px gap\n    \n    \n      A — 24 px (1.5 cm)\n      A modest inset. Slightly more breathing room than the current 16px.","choice":"a","id":null,"timestamp":1781378240541}
+{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/79971-1781377376/content/full-design-v5.html"}
+{"type":"server-stopped","reason":"owner process exited"}
