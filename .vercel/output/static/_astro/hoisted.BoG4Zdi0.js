@@ -1,1 +1,0 @@
-import"./hoisted.npP3oBLd.js";document.getElementById("theme-toggle")?.addEventListener("click",()=>{const t=document.documentElement.classList.toggle("dark");localStorage.setItem("platform-theme",t?"dark":"light")});
