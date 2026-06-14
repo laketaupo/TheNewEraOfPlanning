@@ -146,7 +146,12 @@ const topicId = `${chapterSlug}/${topicSlug}`;
   </header>
 
   <!-- Main content -->
-  <main class="min-h-screen pt-16 pb-32 flex flex-col items-center">
+  <main
+    class="min-h-screen pt-16 pb-32 flex flex-col items-center"
+    data-pagefind-body
+    data-pagefind-filter={`pillar:${pillar ?? 'technology'}`}
+  >
+    <span class="sr-only" data-pagefind-meta="chapter">{chapterTitle}</span>
     <article class="w-full max-w-5xl px-6 py-7 animate-slide-up">
 
       <!-- Breadcrumb -->
