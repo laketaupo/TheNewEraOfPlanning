@@ -82,6 +82,7 @@
   }
 
   trigger.addEventListener('click', openModal);
+  window.openSearch = openModal;
 
   document.addEventListener('keydown', function (e) {
     const tag = document.activeElement && document.activeElement.tagName;
