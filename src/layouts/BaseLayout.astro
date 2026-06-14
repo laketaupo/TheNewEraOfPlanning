@@ -2,6 +2,8 @@
 import SiteOverlay from '../components/SiteOverlay.astro';
 import UserDashboard from '../components/UserDashboard.astro';
 import Search from '../components/Search.astro';
+import { getGlossaryTerms } from '../lib/glossary';
+const glossaryTerms = getGlossaryTerms().map(t => ({ term: t.term, aliases: t.aliases, slug: t.slug, definition: t.definition }));
 
 export interface Props {
   title?: string;
@@ -35,5 +37,147 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
     <SiteOverlay />
     <UserDashboard />
     <Search />
+
+    <!-- Glossary tooltip data (injected at build time) -->
+    <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossaryTerms)}></script>
+
+    <!-- Tooltip container -->
+    <div
+      id="glossary-tooltip"
+      role="tooltip"
+      class="pointer-events-none fixed z-[300] hidden max-w-xs rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 shadow-lg"
+    >
+      <p id="glossary-tooltip-def" class="leading-relaxed"></p>
+      <a id="glossary-tooltip-link" href="/glossary" class="pointer-events-auto mt-1 block text-indigo-300 hover:text-indigo-200">→ Glossary</a>
+    </div>
+
+    <script is:inline>
+    (function () {
+      const dataEl = document.getElementById('glossary-data');
+      if (!dataEl) return;
+
+      let terms;
+      try { terms = JSON.parse(dataEl.textContent); } catch { return; }
+      if (!terms || terms.length === 0) return;
+
+      // Build a flat list of { matchStr, slug, definition } covering term + aliases
+      const matchers = [];
+      for (const t of terms) {
+        matchers.push({ matchStr: t.term, slug: t.slug, definition: t.definition });
+        for (const alias of (t.aliases || [])) {
+          matchers.push({ matchStr: alias, slug: t.slug, definition: t.definition });
+        }
+      }
+      // Sort longest match first so multi-word strings win over abbreviations
+      matchers.sort((a, b) => b.matchStr.length - a.matchStr.length);
+
+      // Build a single regex that matches any term or alias (case-insensitive, word-boundary)
+      const escaped = matchers.map(m => m.matchStr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const pattern = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
+
+      // Only process [data-pagefind-body] content
+      const body = document.querySelector('[data-pagefind-body]');
+      if (!body) return;
+
+      function wrapTermsInParagraph(el) {
+        const seen = new Set();
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        const nodes = [];
+        let node;
+        while ((node = walker.nextNode())) nodes.push(node);
+
+        for (const textNode of nodes) {
+          // Skip inside links, code, headings, buttons, or data-no-gloss elements
+          let parent = textNode.parentElement;
+          while (parent && parent !== el) {
+            const tag = parent.tagName;
+            if (tag === 'A' || tag === 'CODE' || tag === 'PRE' || tag === 'H1' || tag === 'H2' || tag === 'H3' || tag === 'BUTTON' || parent.hasAttribute('data-no-gloss')) {
+              parent = null;
+              break;
+            }
+            parent = parent.parentElement;
+          }
+          if (parent === null) continue;
+
+          const text = textNode.textContent;
+          if (!pattern.test(text)) { pattern.lastIndex = 0; continue; }
+          pattern.lastIndex = 0;
+
+          const frag = document.createDocumentFragment();
+          let last = 0;
+          let match;
+          while ((match = pattern.exec(text)) !== null) {
+            const matched = match[0];
+            const matchedLower = matched.toLowerCase();
+            const termDef = matchers.find(m => m.matchStr.toLowerCase() === matchedLower);
+            if (!termDef || seen.has(termDef.slug)) continue;
+            seen.add(termDef.slug);
+
+            if (match.index > last) {
+              frag.appendChild(document.createTextNode(text.slice(last, match.index)));
+            }
+            const span = document.createElement('span');
+            span.className = 'glossary-term';
+            span.dataset.slug = termDef.slug;
+            span.dataset.def = termDef.definition;
+            span.textContent = matched;
+            frag.appendChild(span);
+            last = match.index + matched.length;
+          }
+          pattern.lastIndex = 0;
+          if (last === 0) continue;
+          if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+          textNode.parentNode.replaceChild(frag, textNode);
+        }
+      }
+
+      // Process each paragraph and list item separately (first-occurrence-per-paragraph)
+      const paragraphs = body.querySelectorAll('p, li');
+      paragraphs.forEach(wrapTermsInParagraph);
+
+      // Tooltip show/hide logic
+      const tooltip = document.getElementById('glossary-tooltip');
+      const tooltipDef = document.getElementById('glossary-tooltip-def');
+      const tooltipLink = document.getElementById('glossary-tooltip-link');
+
+      body.addEventListener('mouseover', function (e) {
+        const target = e.target.closest('.glossary-term');
+        if (!target) return;
+        tooltipDef.textContent = target.dataset.def;
+        tooltipLink.href = '/glossary#' + target.dataset.slug;
+        tooltip.classList.remove('hidden');
+        positionTooltip(target);
+      });
+
+      body.addEventListener('mouseout', function (e) {
+        if (!e.relatedTarget || !e.relatedTarget.closest('.glossary-term')) {
+          tooltip.classList.add('hidden');
+        }
+      });
+
+      function positionTooltip(el) {
+        const rect = el.getBoundingClientRect();
+        const ttWidth = tooltip.offsetWidth || 288;
+        const ttHeight = tooltip.offsetHeight || 80;
+        let left = rect.left;
+        let top = rect.bottom + 6;
+        if (left + ttWidth > window.innerWidth - 12) left = window.innerWidth - ttWidth - 12;
+        if (top + ttHeight > window.innerHeight - 12) top = rect.top - ttHeight - 6;
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+      }
+    })();
+    </script>
+
+    <style is:global>
+      .glossary-term {
+        border-bottom: 1px dotted currentColor;
+        cursor: help;
+        opacity: 0.9;
+      }
+      .glossary-term:hover {
+        opacity: 1;
+      }
+    </style>
   </body>
 </html>
