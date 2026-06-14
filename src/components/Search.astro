@@ -19,11 +19,18 @@
   id="search-modal"
   class="fixed inset-0 z-[200] w-full h-full m-0 max-w-none max-h-none bg-black/60 backdrop-blur-sm p-4 flex items-start justify-center pt-[15vh]"
 >
-  <div class="w-full max-w-[75vw] bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-    <div id="search-container" class="p-2"></div>
-    <p id="search-dev-notice" class="hidden text-sm text-gray-500 dark:text-gray-400 px-4 py-3">
-      Search is only available after running <code class="font-mono bg-gray-100 dark:bg-gray-800 px-1 rounded">npm run build</code>.
+  <div class="relative w-full max-w-[760px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <span class="pointer-events-none absolute right-3 top-3 z-10 rounded-md border border-b-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-2 py-1 text-[11px] font-semibold text-gray-400 dark:text-gray-500">ESC</span>
+    <div id="search-container" class="px-2 pt-2"></div>
+    <p id="search-dev-notice" class="hidden text-center text-sm text-gray-500 dark:text-gray-400 px-6 py-10">
+      Search is available after running <code class="font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">npm run build</code>.
     </p>
+    <div class="flex items-center gap-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-950/60 px-4 py-2.5 text-xs text-gray-400 dark:text-gray-500">
+      <span class="flex items-center gap-1.5">
+        <kbd class="rounded border border-b-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-1.5 py-0.5 font-semibold">esc</kbd>
+        to close
+      </span>
+    </div>
   </div>
 </dialog>
 
