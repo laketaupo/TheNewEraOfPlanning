@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { getGlossaryTerms, validateGlossary } from '../lib/glossary';
 import { getTopics } from '../lib/chapters';
 
@@ -22,7 +23,7 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
       </a>
     </div>
     <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">Glossary</span>
-    <div class="w-8"></div>
+    <ThemeToggle />
   </header>
 
   <main class="max-w-3xl mx-auto px-6 pt-24 pb-32">
