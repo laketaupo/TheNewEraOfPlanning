@@ -3,7 +3,7 @@
   "description": "Run the end-to-end S&OP cycle: cadence, governance, and decision-making across functions.",
   "icon": "beaker",
   "color": "indigo",
-  "order": 10,
+  "order": 4,
   "department": "Supply Chain",
   "comingSoon": true,
   "sections": []

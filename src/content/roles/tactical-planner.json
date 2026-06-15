@@ -1,0 +1,93 @@
+{
+  "title": "Tactical Planner",
+  "description": "Own the S&OE horizon — monitor near-term plans, manage exceptions in real time, and use planning software and ERP to keep supply and demand aligned week by week.",
+  "icon": "truck",
+  "color": "teal",
+  "order": 2,
+  "department": "Supply Chain",
+  "phases": [
+    {
+      "phaseId": "awareness",
+      "keyAreas": [
+        "The end-to-end operating model: where S&OE sits between monthly S&OP and daily execution, and why the tactical horizon matters",
+        "Who is in the planning team and how the tactical planner connects to demand, supply, and commercial functions",
+        "Why data quality matters in the near-term plan — and what poor data costs when managing live exceptions",
+        "What ERP is, what planning software is, and how they work together to support tactical decision-making"
+      ],
+      "chapters": [
+        "process-03-operating-model",
+        "people-01-planning-team",
+        "data-01-planning-data-fundamentals",
+        "erp-01-erp-basics"
+      ]
+    },
+    {
+      "phaseId": "conceptual",
+      "keyAreas": [
+        "S&OE fundamentals: the weekly cadence, what triggers exception-based working, and how the integrated review drives decisions",
+        "How S&OP outputs set the planning horizon the tactical planner works within",
+        "Planning software data objects, the network model, and how demand and supply signals flow through the system",
+        "Planning logic: push/pull, safety stock, disaggregation, and how the system nets inventory against demand",
+        "ERP data model: how master and transactional data are structured and how they feed into near-term planning",
+        "How data flows into and out of ERP and back to planning software — and what the tactical planner depends on",
+        "RASCI accountability across S&OE demand, supply, and integrated reviews",
+        "Data types and quality standards that make near-term plan data reliable enough to act on",
+        "End-to-end system integration: how planning software, ERP, and the wider landscape connect"
+      ],
+      "chapters": [
+        "soe-01-soe-fundamentals",
+        "sop-01-sop-fundamentals",
+        "01-understanding-basics",
+        "02-the-network",
+        "03-data-flow",
+        "03-the-logic",
+        "erp-02-the-data-model",
+        "erp-03-data-flow-into-erp",
+        "erp-04-data-flow-out-of-erp",
+        "people-02-accountability",
+        "data-03-data-types",
+        "data-02-data-quality-and-impact",
+        "arch-01-end-to-end"
+      ]
+    },
+    {
+      "phaseId": "practical",
+      "keyAreas": [
+        "Running S&OE: demand monitoring, supply monitoring, exception management, and the integrated weekly review",
+        "Hands-on planning software: reading the near-term plan, running simulations, and managing exceptions in the tool",
+        "ERP workflows: creating and releasing orders, processing goods receipts and issues, and reading execution output",
+        "Navigating planning software and ERP side by side — knowing when to act in which system"
+      ],
+      "chapters": [
+        "soe-02-running-soe",
+        "soe-demand-monitoring",
+        "soe-supply-monitoring",
+        "soe-exception-management",
+        "soe-integrated-review",
+        "04-the-simulation",
+        "05-navigation-and-ui",
+        "erp-05-the-logic",
+        "erp-06-key-erp-workflows",
+        "erp-07-navigation-and-ui",
+        "people-03-planning-cadences"
+      ]
+    },
+    {
+      "phaseId": "embedded",
+      "keyAreas": [
+        "Applying planning policy in the S&OE window: service level priorities, safety stock, and allocation rules",
+        "Governance and escalation: when to surface exceptions and how to resolve them without disrupting the monthly plan",
+        "KPI ownership: near-term metrics, exception resolution rates, and how tactical performance feeds S&OP review",
+        "Data governance: ownership of near-term plan data and maintaining data quality through the S&OE cycle",
+        "Integration discipline: keeping planning software and ERP in sync through the tactical horizon"
+      ],
+      "chapters": [
+        "process-04-planning-policy",
+        "process-05-governance-and-escalation",
+        "process-06-kpis",
+        "data-04-data-governance",
+        "arch-02-integration"
+      ]
+    }
+  ]
+}

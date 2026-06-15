@@ -3,7 +3,7 @@
   "description": "Bring the market view into planning: demand reviews, commercial assumptions, and trade-offs.",
   "icon": "briefcase",
   "color": "violet",
-  "order": 7,
+  "order": 40,
   "department": "Sales",
   "comingSoon": true,
   "sections": []

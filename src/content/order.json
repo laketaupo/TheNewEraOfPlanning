@@ -96,7 +96,8 @@
     ],
     "organisation-and-roles": [
       "people-01-planning-team",
-      "people-02-accountability"
+      "people-02-accountability",
+      "people-03-planning-cadences"
     ],
     "implementation-and-change": []
   },
@@ -221,6 +222,11 @@
     ],
     "people-02-accountability": [
       "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
+    ],
+    "people-03-planning-cadences": [
+      "week-in-the-life",
+      "month-in-the-life",
+      "quarter-in-the-life"
     ]
   }
 }

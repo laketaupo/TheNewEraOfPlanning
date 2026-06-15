@@ -3,7 +3,7 @@
   "description": "Bridge plan and execution: capacity, resources, fulfilment performance, and the operational view that keeps the supply chain moving.",
   "icon": "truck",
   "color": "sky",
-  "order": 5,
+  "order": 30,
   "department": "Operations",
   "comingSoon": true,
   "sections": []

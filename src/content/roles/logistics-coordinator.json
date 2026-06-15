@@ -3,7 +3,7 @@
   "description": "Manage the physical flow: warehousing, transport, and the execution layer that turns supply orders into delivered goods.",
   "icon": "truck",
   "color": "sky",
-  "order": 6,
+  "order": 31,
   "department": "Operations",
   "comingSoon": true,
   "sections": []

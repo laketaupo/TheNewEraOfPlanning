@@ -3,7 +3,7 @@
   "description": "Manage product categories as business units — range decisions, promotional planning, and supply chain consequences of category strategy.",
   "icon": "trending-up",
   "color": "violet",
-  "order": 4,
+  "order": 21,
   "department": "Product Management",
   "comingSoon": true,
   "sections": []

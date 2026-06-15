@@ -3,7 +3,7 @@
   "description": "Connect plans to money: financial impact, scenario trade-offs, and the integrated reconciliation step.",
   "icon": "currency",
   "color": "emerald",
-  "order": 1,
+  "order": 10,
   "department": "Finance / Business Control",
   "comingSoon": true,
   "sections": []

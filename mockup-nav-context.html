@@ -3,618 +3,808 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Navigation Context Mockup</title>
+  <title>Platform Overview</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
       background: #f1f5f9;
-      min-height: 100vh;
-      padding: 48px 24px;
       color: #1e293b;
+      padding: 48px 24px 80px;
     }
 
-    h1 {
+    /* ── Page title ── */
+    .page-title {
       text-align: center;
-      font-size: 1.125rem;
-      font-weight: 600;
-      color: #64748b;
-      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    .page-heading {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .page-sub {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
       margin-bottom: 48px;
     }
 
-    /* ── Layout ── */
-    .diagram {
-      max-width: 960px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 80px 1fr 80px 1fr;
+    /* ── Section header ── */
+    .section-header {
+      max-width: 1040px;
+      margin: 0 auto 16px;
+      display: flex;
       align-items: center;
-      gap: 0;
+      gap: 10px;
+    }
+    .section-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+    .section-desc {
+      font-size: 0.72rem;
+      color: #94a3b8;
     }
 
     /* ── Cards ── */
     .card {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1.5px solid #e2e8f0;
-      padding: 20px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
     }
 
-    .card-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    /* ── SECTION 1: Content Hierarchy ── */
+    .hierarchy-wrap {
+      max-width: 1040px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
     }
 
-    .card-title {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
+    .pillar-col {}
 
-    .card-sub {
-      font-size: 0.75rem;
-      color: #94a3b8;
-      margin-bottom: 14px;
-    }
-
-    /* ── Role card ── */
-    .role-card { border-color: #c7d2fe; }
-    .role-card .card-label { color: #6366f1; }
-    .role-card .card-title { color: #3730a3; }
-
-    .phase-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #6366f1;
-      background: #eef2ff;
-      border: 1px solid #c7d2fe;
-      border-radius: 999px;
-      padding: 3px 10px;
-      margin-bottom: 12px;
-    }
-    .phase-badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #6366f1;
-    }
-
-    .chapter-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border: 1px solid #e0e7ff;
+    .pillar-header {
       border-radius: 10px;
-      background: #f5f3ff;
-      margin-bottom: 6px;
-      font-size: 0.8rem;
-      color: #4338ca;
-      font-weight: 500;
-    }
-    .chapter-row.active {
-      border-color: #6366f1;
-      background: #eef2ff;
-      box-shadow: 0 0 0 3px rgba(99,102,241,.12);
-    }
-    .chapter-row .row-label { color: #a5b4fc; font-size: 0.68rem; }
-
-    .from-tag {
-      font-size: 0.62rem;
-      font-family: 'SF Mono', 'Fira Mono', monospace;
-      color: #6366f1;
-      background: #e0e7ff;
-      border-radius: 4px;
-      padding: 2px 6px;
-    }
-
-    /* ── Module card ── */
-    .module-card { border-color: #bfdbfe; }
-    .module-card .card-label { color: #3b82f6; }
-    .module-card .card-title { color: #1d4ed8; }
-
-    .module-chapter-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border: 1px solid #dbeafe;
-      border-radius: 10px;
-      background: #eff6ff;
-      margin-bottom: 6px;
-      font-size: 0.8rem;
-      color: #1d4ed8;
-      font-weight: 500;
-    }
-    .module-chapter-row.active {
-      border-color: #3b82f6;
-      background: #dbeafe;
-      box-shadow: 0 0 0 3px rgba(59,130,246,.12);
-    }
-    .module-chapter-row .row-label { color: #93c5fd; font-size: 0.68rem; }
-
-    /* ── Chapter card (center) ── */
-    .chapter-card {
-      border-color: #e2e8f0;
-      position: relative;
-    }
-    .chapter-card .card-label { color: #64748b; }
-    .chapter-card .card-title { color: #0f172a; }
-
-    .back-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 5px 10px;
-      border-radius: 7px;
-      border: 1.5px solid;
-      cursor: default;
-      width: fit-content;
-    }
-    .back-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-
-    .back-btn.from-role {
-      color: #6366f1;
-      border-color: #c7d2fe;
-      background: #eef2ff;
-    }
-    .back-btn.from-module {
-      color: #3b82f6;
-      border-color: #bfdbfe;
-      background: #eff6ff;
-    }
-
-    .topic-list {
-      list-style: none;
-      margin-top: 12px;
-    }
-    .topic-list li {
-      font-size: 0.78rem;
-      color: #475569;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: #f8fafc;
-      border: 1px solid #f1f5f9;
-      margin-bottom: 4px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .topic-list li span { color: #94a3b8; font-size: 0.68rem; font-family: monospace; }
-
-    .url-pill {
+    .pillar-icon {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .pillar-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .pillar-url {
       font-size: 0.62rem;
-      font-family: 'SF Mono', 'Fira Mono', monospace;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 3px 8px;
-      color: #475569;
-      margin-top: 10px;
-      display: block;
-      word-break: break-all;
+      font-family: monospace;
+      opacity: .6;
     }
-    .url-pill .qs { color: #6366f1; }
 
-    /* ── Arrows ── */
-    .arrow-col {
+    /* pillar colours */
+    .p-process  { border-color: #bfdbfe; background: #eff6ff; }
+    .p-process .pillar-icon  { background: #3b82f6; color: #fff; }
+    .p-process .pillar-name  { color: #1d4ed8; }
+
+    .p-people   { border-color: #c7d2fe; background: #eef2ff; }
+    .p-people .pillar-icon   { background: #6366f1; color: #fff; }
+    .p-people .pillar-name   { color: #4338ca; }
+
+    .p-tech     { border-color: #99f6e4; background: #f0fdfa; }
+    .p-tech .pillar-icon     { background: #14b8a6; color: #fff; }
+    .p-tech .pillar-name     { color: #0d9488; }
+
+    .p-data     { border-color: #fde68a; background: #fffbeb; }
+    .p-data .pillar-icon     { background: #f59e0b; color: #fff; }
+    .p-data .pillar-name     { color: #b45309; }
+
+    .module-block {
+      margin-bottom: 8px;
+    }
+    .module-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 8px 8px 0 0;
+      border: 1px solid;
+      border-bottom: none;
+    }
+    .chapter-list {
+      border: 1px solid;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    .chapter-item {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      padding: 5px 10px;
+      font-size: 0.72rem;
+      border-bottom: 1px solid;
+    }
+    .chapter-item:last-child { border-bottom: none; }
+    .chapter-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .topic-count {
+      margin-left: auto;
+      font-size: 0.6rem;
+      opacity: .5;
+      font-family: monospace;
     }
 
-    .arrow-line {
-      display: flex;
-      align-items: center;
-      width: 100%;
+    /* process blue */
+    .mod-process .module-label { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+    .mod-process .chapter-list { border-color: #bfdbfe; }
+    .mod-process .chapter-item { border-color: #dbeafe; color: #334155; background: #fff; }
+    .mod-process .chapter-dot  { background: #3b82f6; }
+
+    /* people indigo */
+    .mod-people .module-label  { background: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
+    .mod-people .chapter-list  { border-color: #c7d2fe; }
+    .mod-people .chapter-item  { border-color: #e0e7ff; color: #334155; background: #fff; }
+    .mod-people .chapter-dot   { background: #6366f1; }
+
+    /* tech teal */
+    .mod-tech .module-label    { background: #f0fdfa; border-color: #99f6e4; color: #0d9488; }
+    .mod-tech .chapter-list    { border-color: #99f6e4; }
+    .mod-tech .chapter-item    { border-color: #ccfbf1; color: #334155; background: #fff; }
+    .mod-tech .chapter-dot     { background: #14b8a6; }
+
+    /* data amber */
+    .mod-data .module-label    { background: #fffbeb; border-color: #fde68a; color: #b45309; }
+    .mod-data .chapter-list    { border-color: #fde68a; }
+    .mod-data .chapter-item    { border-color: #fef9c3; color: #334155; background: #fff; }
+    .mod-data .chapter-dot     { background: #f59e0b; }
+
+    /* ── SECTION 2: Role Learning Paths ── */
+    .roles-wrap {
+      max-width: 1040px;
+      margin: 0 auto 48px;
     }
 
-    .arrow-shaft {
-      flex: 1;
-      height: 2px;
-      position: relative;
-    }
-    .arrow-shaft::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+    .phase-track {
+      display: grid;
+      grid-template-columns: 160px repeat(5, 1fr);
+      gap: 0;
+      margin-bottom: 0;
     }
 
-    .arrow-head {
-      width: 0; height: 0;
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
+    .phase-header-row {
+      display: grid;
+      grid-template-columns: 160px repeat(5, 1fr);
+      gap: 0;
+      margin-bottom: 6px;
     }
-
-    /* Role arrow (indigo) */
-    .arrow-role .arrow-shaft::before { background: #6366f1; }
-    .arrow-role .arrow-head { border-left: 8px solid #6366f1; }
-
-    /* Module arrow (blue) */
-    .arrow-module .arrow-shaft::before { background: #3b82f6; }
-    .arrow-module .arrow-head { border-left: 8px solid #3b82f6; }
-
-    /* Both arrows (stacked) */
-    .arrows-both {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      padding: 0 4px;
-    }
-
-    .arrow-tag {
+    .phase-header-cell {
+      text-align: center;
+      padding: 6px 4px;
       font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
+    .ph-1 { color: #6366f1; }
+    .ph-2 { color: #3b82f6; }
+    .ph-3 { color: #0d9488; }
+    .ph-4 { color: #f59e0b; }
+    .ph-5 { color: #ec4899; }
 
-    /* ── Two-scenario section ── */
-    .scenarios {
-      max-width: 960px;
-      margin: 48px auto 0;
+    .role-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .scenario {
-      background: #fff;
-      border-radius: 16px;
-      border: 1.5px solid #e2e8f0;
-      padding: 20px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
-    }
-
-    .scenario-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    .scenario.role-scenario { border-color: #c7d2fe; }
-    .scenario.role-scenario .scenario-label { color: #6366f1; border-bottom-color: #e0e7ff; }
-
-    .scenario.module-scenario { border-color: #bfdbfe; }
-    .scenario.module-scenario .scenario-label { color: #3b82f6; border-bottom-color: #dbeafe; }
-
-    .nav-bar {
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .nav-bar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: #fff;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    .nav-back {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.72rem;
-      font-weight: 500;
-    }
-    .nav-back svg { width: 12px; height: 12px; }
-
-    .nav-bar-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      background: #f8fafc;
-      font-size: 0.72rem;
-    }
-    .nav-arrow {
-      display: flex;
-      align-items: center;
+      grid-template-columns: 160px repeat(5, 1fr);
       gap: 4px;
-      color: #94a3b8;
+      margin-bottom: 4px;
+      align-items: center;
+    }
+    .role-name-cell {
       font-size: 0.72rem;
+      font-weight: 600;
+      color: #334155;
+      padding-right: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .nav-arrow svg { width: 12px; height: 12px; }
-    .nav-arrow.active { color: #475569; font-weight: 500; }
-
-    .url-trace {
-      margin-top: 12px;
-      padding: 10px 12px;
-      background: #f8fafc;
-      border-radius: 8px;
-      border: 1px solid #f1f5f9;
+    .role-dept {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 400;
+      color: #94a3b8;
+      margin-top: 1px;
     }
-    .url-trace-step {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 0.7rem;
-      color: #64748b;
-      margin-bottom: 6px;
-    }
-    .url-trace-step:last-child { margin-bottom: 0; }
-    .step-num {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #e2e8f0;
-      color: #64748b;
-      font-size: 0.6rem;
-      font-weight: 700;
+    .phase-cell {
+      border-radius: 6px;
+      padding: 4px 6px;
+      min-height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
     }
-    .scenario.role-scenario .step-num { background: #e0e7ff; color: #6366f1; }
-    .scenario.module-scenario .step-num { background: #dbeafe; color: #3b82f6; }
+    .phase-cell-empty {
+      background: #f8fafc;
+      border: 1px dashed #e2e8f0;
+    }
+    .phase-cell-count {
+      font-size: 0.62rem;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .pc-1 { background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; }
+    .pc-2 { background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; }
+    .pc-3 { background: #f0fdfa; border: 1px solid #99f6e4; color: #0d9488; }
+    .pc-4 { background: #fffbeb; border: 1px solid #fde68a; color: #b45309; }
+    .pc-5 { background: #fdf2f8; border: 1px solid #fbcfe8; color: #9d174d; }
 
-    .url-code {
-      font-family: 'SF Mono', 'Fira Mono', monospace;
-      font-size: 0.68rem;
-      color: #334155;
+    /* ── SECTION 3: Navigation Context ── */
+    .nav-ctx-wrap {
+      max-width: 1040px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr 56px 1fr;
+      align-items: center;
+      gap: 0;
     }
-    .url-code .qs { color: #6366f1; }
-    .url-code .qs-blue { color: #3b82f6; }
+
+    .ctx-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    }
+    .ctx-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .ctx-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+    .ctx-url { font-size: 0.6rem; font-family: monospace; color: #94a3b8; margin-bottom: 10px; }
+
+    .ctx-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 8px; border-radius: 7px; margin-bottom: 4px;
+      font-size: 0.72rem; font-weight: 500;
+    }
+    .ctx-row-badge { font-size: 0.58rem; font-family: monospace; }
+
+    .ctx-role-card { border-color: #c7d2fe; }
+    .ctx-role-card .ctx-label { color: #6366f1; }
+    .ctx-role-card .ctx-title { color: #3730a3; }
+    .ctx-row-role { background: #f5f3ff; border: 1px solid #e0e7ff; color: #4338ca; }
+    .ctx-row-role.active { background: #eef2ff; border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99,102,241,.1); }
+    .ctx-row-role .ctx-row-badge { color: #6366f1; }
+
+    .ctx-mod-card { border-color: #bfdbfe; }
+    .ctx-mod-card .ctx-label { color: #3b82f6; }
+    .ctx-mod-card .ctx-title { color: #1d4ed8; }
+    .ctx-row-mod { background: #eff6ff; border: 1px solid #dbeafe; color: #1d4ed8; }
+    .ctx-row-mod.active { background: #dbeafe; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,.1); }
+
+    .ctx-ch-card { border-color: #e2e8f0; }
+    .ctx-ch-card .ctx-label { color: #64748b; }
+    .ctx-ch-card .ctx-title { color: #0f172a; }
+
+    .back-btns { margin-bottom: 10px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.67rem; font-weight: 600;
+      padding: 4px 9px; border-radius: 6px; border: 1.5px solid;
+      width: fit-content; margin-bottom: 5px;
+    }
+    .back-btn svg { width: 10px; height: 10px; }
+    .back-btn-role { color: #6366f1; border-color: #c7d2fe; background: #eef2ff; }
+    .back-btn-mod  { color: #3b82f6; border-color: #bfdbfe; background: #eff6ff; }
+
+    .ctx-topics { list-style: none; }
+    .ctx-topics li {
+      font-size: 0.7rem; color: #475569;
+      padding: 4px 8px; border-radius: 6px;
+      background: #f8fafc; border: 1px solid #f1f5f9;
+      margin-bottom: 3px;
+    }
+
+    .ctx-qs {
+      font-size: 0.58rem; font-family: monospace;
+      background: #f1f5f9; border: 1px solid #e2e8f0;
+      border-radius: 5px; padding: 3px 6px;
+      color: #475569; margin-top: 8px; display: block;
+    }
+    .qs-indigo { color: #6366f1; }
+
+    /* arrows */
+    .arr-col {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+    }
+    .arr-tag {
+      font-size: 0.56rem; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .arr-line { display: flex; align-items: center; width: 100%; }
+    .arr-shaft { flex: 1; height: 2px; position: relative; }
+    .arr-shaft::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+    .arr-head { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+    .arr-role .arr-shaft::before { background: #6366f1; }
+    .arr-role .arr-head { border-left: 7px solid #6366f1; }
+    .arr-mod .arr-shaft::before { background: #3b82f6; }
+    .arr-mod .arr-head { border-left: 7px solid #3b82f6; }
+
+    /* ── SECTION 4: URL anatomy ── */
+    .url-anatomy {
+      max-width: 1040px;
+      margin: 0 auto 48px;
+    }
+    .url-strip {
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .url-bar {
+      font-family: 'SF Mono', 'Fira Mono', monospace;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .url-seg {
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin: 2px;
+    }
+    .url-slash { color: #94a3b8; margin: 0 1px; font-weight: 400; }
+    .seg-pillar { background: #dbeafe; color: #1d4ed8; }
+    .seg-module { background: #d1fae5; color: #065f46; }
+    .seg-chapter { background: #ede9fe; color: #5b21b6; }
+    .seg-topic { background: #fce7f3; color: #9d174d; }
+    .seg-qs { background: #fef9c3; color: #92400e; font-weight: 400; }
+
+    .url-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; color: #475569;
+    }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* ── Spacing util ── */
+    .mt-section { margin-top: 48px; }
   </style>
 </head>
 <body>
 
-  <h1>Navigation Context — Chapter reached from Role vs Module</h1>
+  <div class="page-title">Platform Architecture</div>
+  <div class="page-heading">How the learning platform works</div>
+  <div class="page-sub">Content hierarchy · Role paths · Navigation context · URL anatomy</div>
 
-  <!-- ── Top diagram: shared chapter ── -->
-  <div class="diagram">
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 1 — Content Hierarchy
+  ═══════════════════════════════════════════════════════════ -->
 
-    <!-- Role (left) -->
-    <div class="card role-card">
-      <div class="card-label">Role · Phase page</div>
-      <div class="card-title">Supply Planner</div>
-      <div class="card-sub">/roles/supply-planner/1</div>
-      <div class="phase-badge">
-        <div class="phase-badge-dot"></div>
-        Phase 1 · Awareness
-      </div>
-      <div class="chapter-row">
-        <span>Process Foundations</span>
-        <span class="row-label">Ch 1</span>
-      </div>
-      <div class="chapter-row active">
-        <span>Planning Team</span>
-        <span class="from-tag">?from=roles/supply-planner/1</span>
-      </div>
-      <div class="chapter-row">
-        <span>Data Fundamentals</span>
-        <span class="row-label">Ch 3</span>
-      </div>
-    </div>
+  <div class="section-header">
+    <span class="section-tag" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">1</span>
+    <span style="font-size:0.8rem;font-weight:600;color:#334155;">Content hierarchy — Pillars → Modules → Chapters</span>
+    <div class="section-line"></div>
+    <span class="section-desc">4 pillars · 14 modules · ~40 chapters</span>
+  </div>
 
-    <!-- Arrow: role → chapter -->
-    <div class="arrow-col">
-      <div class="arrow-tag" style="color:#6366f1;">Role</div>
-      <div class="arrow-line arrow-role">
-        <div class="arrow-shaft"></div>
-        <div class="arrow-head"></div>
-      </div>
-    </div>
+  <div class="hierarchy-wrap">
 
-    <!-- Chapter (center) -->
-    <div class="card chapter-card">
-      <div class="card-label">Chapter · Index page</div>
-      <div class="card-title">Planning Team</div>
-      <div class="card-sub">/people/organisation-and-roles/people-01-planning-team/</div>
-
-      <div style="margin-bottom:10px;">
-        <div style="font-size:0.68rem;color:#94a3b8;margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Back button changes based on entry</div>
-        <div class="back-btn from-role" style="margin-bottom:6px;">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
-          Phase 1
-        </div>
-        <div class="back-btn from-module">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
-          Organisation &amp; Roles
+    <!-- PROCESS -->
+    <div class="pillar-col">
+      <div class="pillar-header p-process card" style="padding:10px 12px;margin-bottom:8px;">
+        <div class="pillar-icon">⚙️</div>
+        <div>
+          <div class="pillar-name">Process</div>
+          <div class="pillar-url">/process</div>
         </div>
       </div>
 
-      <ul class="topic-list">
-        <li>Who is in the planning team <span>01</span></li>
-        <li>Roles &amp; responsibilities <span>02</span></li>
-        <li>Planning team governance <span>03</span></li>
-      </ul>
+      <div class="module-block mod-process">
+        <div class="module-label">Process Foundations</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Operating Model<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Planning Policy<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Governance<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>KPIs<span class="topic-count">4t</span></div>
+        </div>
+      </div>
 
-      <code class="url-pill">
-        …/people-01-planning-team/<span class="qs">?from=roles/supply-planner/1</span>
-      </code>
+      <div class="module-block mod-process">
+        <div class="module-label">S&OP Process</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>S&OP Fundamentals<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Running S&OP<span class="topic-count">6t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Demand Forecasting<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Supply Planning<span class="topic-count">4t</span></div>
+          <div class="chapter-item" style="opacity:.5;font-style:italic;font-size:0.65rem;"><div class="chapter-dot"></div>+ 3 more chapters…</div>
+        </div>
+      </div>
+
+      <div class="module-block mod-process">
+        <div class="module-label">S&OE · Execution</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>S&OE Fundamentals<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Running S&OE<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Daily Execution<span class="topic-count">4t</span></div>
+          <div class="chapter-item" style="opacity:.5;font-style:italic;font-size:0.65rem;"><div class="chapter-dot"></div>+ 5 more chapters…</div>
+        </div>
+      </div>
+
+      <div class="module-block mod-process">
+        <div class="module-label">Scenario Planning</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Scenario Fundamentals<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Running Scenarios<span class="topic-count">4t</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Arrow: module → chapter -->
-    <div class="arrow-col">
-      <div class="arrow-line arrow-module" style="transform:scaleX(-1);">
-        <div class="arrow-shaft"></div>
-        <div class="arrow-head"></div>
+    <!-- PEOPLE -->
+    <div class="pillar-col">
+      <div class="pillar-header p-people card" style="padding:10px 12px;margin-bottom:8px;">
+        <div class="pillar-icon">👥</div>
+        <div>
+          <div class="pillar-name">People</div>
+          <div class="pillar-url">/people</div>
+        </div>
       </div>
-      <div class="arrow-tag" style="color:#3b82f6;">Module</div>
+
+      <div class="module-block mod-people">
+        <div class="module-label">Organisation & Roles</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Planning Team<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Accountability / RASCI<span class="topic-count">4t</span></div>
+        </div>
+      </div>
+
+      <div class="module-block mod-people">
+        <div class="module-label">Implementation & Change</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Change Fundamentals<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Adoption Strategy<span class="topic-count">4t</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Module (right) -->
-    <div class="card module-card">
-      <div class="card-label">Module · Index page</div>
-      <div class="card-title">Organisation &amp; Roles</div>
-      <div class="card-sub">/people/organisation-and-roles</div>
-      <div class="module-chapter-row">
-        <span>Org Overview</span>
-        <span class="row-label">Ch 1</span>
+    <!-- TECHNOLOGY -->
+    <div class="pillar-col">
+      <div class="pillar-header p-tech card" style="padding:10px 12px;margin-bottom:8px;">
+        <div class="pillar-icon">💻</div>
+        <div>
+          <div class="pillar-name">Technology</div>
+          <div class="pillar-url">/technology</div>
+        </div>
       </div>
-      <div class="module-chapter-row active">
-        <span>Planning Team</span>
-        <span class="row-label">no ?from=</span>
+
+      <div class="module-block mod-tech">
+        <div class="module-label">Planning Software</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Understanding Basics<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>The Network<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Flow<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>The Logic<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>The Simulation<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Navigation & UI<span class="topic-count">4t</span></div>
+        </div>
       </div>
-      <div class="module-chapter-row">
-        <span>Accountability &amp; RASCI</span>
-        <span class="row-label">Ch 3</span>
+
+      <div class="module-block mod-tech">
+        <div class="module-label">ERP</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>ERP Basics<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Model<span class="topic-count">3t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Flow In/Out<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Logic & Workflows<span class="topic-count">5t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Navigation & UI<span class="topic-count">3t</span></div>
+        </div>
+      </div>
+
+      <div class="module-block mod-tech">
+        <div class="module-label">Architecture</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>End-to-End<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Integration<span class="topic-count">3t</span></div>
+        </div>
+      </div>
+
+      <div class="module-block mod-tech">
+        <div class="module-label">MDM · FMS</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>MDM Basics → UI<span class="topic-count">7ch</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>FMS Basics → UI<span class="topic-count">7ch</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA -->
+    <div class="pillar-col">
+      <div class="pillar-header p-data card" style="padding:10px 12px;margin-bottom:8px;">
+        <div class="pillar-icon">📊</div>
+        <div>
+          <div class="pillar-name">Data</div>
+          <div class="pillar-url">/data</div>
+        </div>
+      </div>
+
+      <div class="module-block mod-data">
+        <div class="module-label">Data Fundamentals</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Types<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Sources & Model<span class="topic-count">3t</span></div>
+        </div>
+      </div>
+
+      <div class="module-block mod-data">
+        <div class="module-label">Data-Driven Planning</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Planning Data Fundamentals<span class="topic-count">4t</span></div>
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Quality & Impact<span class="topic-count">3t</span></div>
+        </div>
+      </div>
+
+      <div class="module-block mod-data">
+        <div class="module-label">Data Governance</div>
+        <div class="chapter-list">
+          <div class="chapter-item"><div class="chapter-dot"></div>Data Governance<span class="topic-count">4t</span></div>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- ── Two scenario walkthroughs ── -->
-  <div class="scenarios">
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 2 — Role Learning Paths
+  ═══════════════════════════════════════════════════════════ -->
 
-    <!-- Scenario A: from Role -->
-    <div class="scenario role-scenario">
-      <div class="scenario-label">Scenario A — entering from a Role</div>
+  <div class="section-header mt-section">
+    <span class="section-tag" style="background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;">2</span>
+    <span style="font-size:0.8rem;font-weight:600;color:#334155;">Role learning paths — 5-phase curriculum per role</span>
+    <div class="section-line"></div>
+    <span class="section-desc">ch = chapters assigned · — = coming soon</span>
+  </div>
 
-      <div class="url-trace">
-        <div class="url-trace-step">
-          <div class="step-num">1</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Phase page</div>
-            <div class="url-code">/roles/supply-planner/1</div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">2</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Chapter index</div>
-            <div class="url-code">…/people-01-planning-team/<span class="qs">?from=roles/supply-planner/1</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">3</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Topic page</div>
-            <div class="url-code">…/people-01-planning-team/01-who-is/<span class="qs">?from=roles/supply-planner/1</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">4</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Next topic (same chapter)</div>
-            <div class="url-code">…/people-01-planning-team/02-responsibilities/<span class="qs">?from=roles/supply-planner/1</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">5</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Cross-chapter next / back btn → returns to phase</div>
-            <div class="url-code">/roles/supply-planner/1</div>
-          </div>
-        </div>
-      </div>
+  <div class="roles-wrap">
+    <div class="phase-header-row">
+      <div></div>
+      <div class="phase-header-cell ph-1">Phase 1<br>Awareness</div>
+      <div class="phase-header-cell ph-2">Phase 2<br>Conceptual</div>
+      <div class="phase-header-cell ph-3">Phase 3<br>Practical</div>
+      <div class="phase-header-cell ph-4">Phase 4<br>Embedded</div>
+      <div class="phase-header-cell ph-5">Phase 5<br>Optimization</div>
+    </div>
 
-      <div style="margin-top:12px;">
-        <div style="font-size:0.68rem;color:#6366f1;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">How buttons appear</div>
-        <div class="nav-bar">
-          <div class="nav-bar-header">
-            <div class="nav-back" style="color:#6366f1;">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
-              Phase 1
-            </div>
-            <span style="font-size:0.72rem;color:#94a3b8;">Planning Team · Topic 1</span>
-          </div>
-          <div class="nav-bar-footer">
-            <div class="nav-arrow active">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-              Phase 1
-            </div>
-            <div style="font-size:0.68rem;color:#94a3b8;">← cross-chapter = phase</div>
-            <div class="nav-arrow active">
-              Next topic
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </div>
-          </div>
-        </div>
+    <!-- Tactical Planner -->
+    <div class="role-row">
+      <div class="role-name-cell">Tactical Planner<span class="role-dept">Supply Chain</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">4 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">16 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">22 ch</span></div>
+      <div class="phase-cell pc-4"><span class="phase-cell-count">5 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- Demand Planner -->
+    <div class="role-row">
+      <div class="role-name-cell">Demand Planner<span class="role-dept">Supply Chain</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">4 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">12 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">10 ch</span></div>
+      <div class="phase-cell pc-4"><span class="phase-cell-count">4 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- S&OP Lead -->
+    <div class="role-row">
+      <div class="role-name-cell">S&OP Lead<span class="role-dept">Supply Chain</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">8 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">6 ch</span></div>
+      <div class="phase-cell pc-4"><span class="phase-cell-count">5 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- Commercial Lead -->
+    <div class="role-row">
+      <div class="role-name-cell">Commercial Lead<span class="role-dept">Commercial</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">5 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">4 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- Finance BP -->
+    <div class="role-row">
+      <div class="role-name-cell">Finance BP<span class="role-dept">Finance</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">2 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">4 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- Operations Manager -->
+    <div class="role-row">
+      <div class="role-name-cell">Operations Manager<span class="role-dept">Operations</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">6 ch</span></div>
+      <div class="phase-cell pc-3"><span class="phase-cell-count">5 ch</span></div>
+      <div class="phase-cell pc-4"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- Country Manager -->
+    <div class="role-row">
+      <div class="role-name-cell">Country Manager<span class="role-dept">General Management</span></div>
+      <div class="phase-cell pc-1"><span class="phase-cell-count">2 ch</span></div>
+      <div class="phase-cell pc-2"><span class="phase-cell-count">3 ch</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+      <div class="phase-cell phase-cell-empty"><span class="phase-cell-count" style="color:#cbd5e1;">—</span></div>
+    </div>
+
+    <!-- + more roles hint -->
+    <div class="role-row" style="margin-top:4px;">
+      <div class="role-name-cell" style="font-size:0.65rem;color:#94a3b8;font-style:italic;">+ 10 more roles…</div>
+      <div class="phase-cell phase-cell-empty"></div>
+      <div class="phase-cell phase-cell-empty"></div>
+      <div class="phase-cell phase-cell-empty"></div>
+      <div class="phase-cell phase-cell-empty"></div>
+      <div class="phase-cell phase-cell-empty"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 3 — Navigation Context
+  ═══════════════════════════════════════════════════════════ -->
+
+  <div class="section-header mt-section">
+    <span class="section-tag" style="background:#f0fdfa;color:#0d9488;border:1px solid #99f6e4;">3</span>
+    <span style="font-size:0.8rem;font-weight:600;color:#334155;">Navigation context — chapter reached from Role vs Module</span>
+    <div class="section-line"></div>
+    <span class="section-desc">?from= query param controls back-link & cross-chapter navigation</span>
+  </div>
+
+  <div class="nav-ctx-wrap">
+
+    <!-- Role card -->
+    <div class="ctx-card ctx-role-card">
+      <div class="ctx-label">Role · Phase page</div>
+      <div class="ctx-title">Tactical Planner</div>
+      <div class="ctx-url">/roles/tactical-planner/1</div>
+      <div class="ctx-row ctx-row-role"><span>Process Foundations</span><span style="color:#a5b4fc;font-size:0.62rem;">Ch 1</span></div>
+      <div class="ctx-row ctx-row-role active"><span>Planning Team</span><span class="ctx-row-badge">?from=roles/tactical-planner/1</span></div>
+      <div class="ctx-row ctx-row-role"><span>Data Fundamentals</span><span style="color:#a5b4fc;font-size:0.62rem;">Ch 3</span></div>
+    </div>
+
+    <!-- Arrow role→chapter -->
+    <div class="arr-col">
+      <div class="arr-tag" style="color:#6366f1;">Role</div>
+      <div class="arr-line arr-role">
+        <div class="arr-shaft"></div>
+        <div class="arr-head"></div>
       </div>
     </div>
 
-    <!-- Scenario B: from Module -->
-    <div class="scenario module-scenario">
-      <div class="scenario-label">Scenario B — entering from a Module</div>
+    <!-- Chapter card -->
+    <div class="ctx-card ctx-ch-card">
+      <div class="ctx-label">Chapter · Index page</div>
+      <div class="ctx-title">Planning Team</div>
+      <div class="ctx-url">/people/organisation-and-roles/people-01-planning-team/</div>
 
-      <div class="url-trace">
-        <div class="url-trace-step">
-          <div class="step-num">1</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Module page</div>
-            <div class="url-code">/people/organisation-and-roles</div>
-          </div>
+      <div class="back-btns">
+        <div style="font-size:0.58rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:5px;">Back button adapts to entry point</div>
+        <div class="back-btn back-btn-role">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
+          Phase 1
         </div>
-        <div class="url-trace-step">
-          <div class="step-num">2</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Chapter index</div>
-            <div class="url-code">…/people-01-planning-team/<span class="qs-blue">(no ?from=)</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">3</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Topic page</div>
-            <div class="url-code">…/people-01-planning-team/01-who-is/<span class="qs-blue">(no ?from=)</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">4</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Next topic (same chapter)</div>
-            <div class="url-code">…/people-01-planning-team/02-responsibilities/<span class="qs-blue">(no ?from=)</span></div>
-          </div>
-        </div>
-        <div class="url-trace-step">
-          <div class="step-num">5</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:1px;">Back btn → returns to module</div>
-            <div class="url-code">/people/organisation-and-roles</div>
-          </div>
+        <div class="back-btn back-btn-mod">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
+          Organisation &amp; Roles
         </div>
       </div>
 
-      <div style="margin-top:12px;">
-        <div style="font-size:0.68rem;color:#3b82f6;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">How buttons appear</div>
-        <div class="nav-bar">
-          <div class="nav-bar-header">
-            <div class="nav-back" style="color:#3b82f6;">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M3 12l7-7M3 12l7 7"/></svg>
-              Organisation &amp; Roles
-            </div>
-            <span style="font-size:0.72rem;color:#94a3b8;">Planning Team · Topic 1</span>
-          </div>
-          <div class="nav-bar-footer">
-            <div class="nav-arrow active">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-              Organisation &amp; Roles
-            </div>
-            <div style="font-size:0.68rem;color:#94a3b8;">← cross-chapter = module</div>
-            <div class="nav-arrow active">
-              Next topic
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ul class="ctx-topics">
+        <li>Who is in the planning team</li>
+        <li>Roles &amp; responsibilities</li>
+        <li>Planning team governance</li>
+      </ul>
+
+      <code class="ctx-qs">…/people-01-planning-team/<span class="qs-indigo">?from=roles/tactical-planner/1</span></code>
     </div>
 
+    <!-- Arrow module→chapter -->
+    <div class="arr-col">
+      <div class="arr-line arr-mod" style="transform:scaleX(-1);">
+        <div class="arr-shaft"></div>
+        <div class="arr-head"></div>
+      </div>
+      <div class="arr-tag" style="color:#3b82f6;">Module</div>
+    </div>
+
+    <!-- Module card -->
+    <div class="ctx-card ctx-mod-card">
+      <div class="ctx-label">Module · Index page</div>
+      <div class="ctx-title">Organisation &amp; Roles</div>
+      <div class="ctx-url">/people/organisation-and-roles</div>
+      <div class="ctx-row ctx-row-mod"><span>Org Overview</span><span style="color:#93c5fd;font-size:0.62rem;">Ch 1</span></div>
+      <div class="ctx-row ctx-row-mod active"><span>Planning Team</span><span style="color:#93c5fd;font-size:0.62rem;">no ?from=</span></div>
+      <div class="ctx-row ctx-row-mod"><span>Accountability &amp; RASCI</span><span style="color:#93c5fd;font-size:0.62rem;">Ch 3</span></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 4 — URL Anatomy
+  ═══════════════════════════════════════════════════════════ -->
+
+  <div class="section-header mt-section">
+    <span class="section-tag" style="background:#fce7f3;color:#9d174d;border:1px solid #fbcfe8;">4</span>
+    <span style="font-size:0.8rem;font-weight:600;color:#334155;">URL anatomy — every content URL follows the same shape</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="url-anatomy">
+    <div class="url-strip">
+      <div class="url-bar">
+        <span class="url-slash">/</span>
+        <span class="url-seg seg-pillar">people</span>
+        <span class="url-slash">/</span>
+        <span class="url-seg seg-module">organisation-and-roles</span>
+        <span class="url-slash">/</span>
+        <span class="url-seg seg-chapter">people-01-planning-team</span>
+        <span class="url-slash">/</span>
+        <span class="url-seg seg-topic">01-who-is</span>
+        <span class="url-seg seg-qs">?from=roles/tactical-planner/1</span>
+      </div>
+      <div class="url-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;border:1px solid #93c5fd;"></div>Pillar — one of 4</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#d1fae5;border:1px solid #6ee7b7;"></div>Module — one of 14</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ede9fe;border:1px solid #c4b5fd;"></div>Chapter — folder in /chapters/</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fce7f3;border:1px solid #fbcfe8;"></div>Topic — markdown file NN-slug.md</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fef9c3;border:1px solid #fde68a;"></div>?from — optional; controls back-link &amp; cross-chapter nav</div>
+      </div>
+    </div>
   </div>
 
 </body>

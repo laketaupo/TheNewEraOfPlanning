@@ -3,7 +3,7 @@
   "description": "Shape the portfolio and its supply chain implications: launches, ramp-ups, phase-outs, and the planning signals each lifecycle stage generates.",
   "icon": "beaker",
   "color": "violet",
-  "order": 3,
+  "order": 20,
   "department": "Product Management",
   "comingSoon": true,
   "sections": []

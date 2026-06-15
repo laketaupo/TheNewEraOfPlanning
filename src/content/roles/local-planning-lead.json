@@ -3,7 +3,7 @@
   "description": "Drive planning in the local market — the bridge between subsidiary requirements, ground-level constraints, and the central planning team.",
   "icon": "chart",
   "color": "indigo",
-  "order": 15,
+  "order": 61,
   "department": "Subsidiary",
   "comingSoon": true,
   "sections": []

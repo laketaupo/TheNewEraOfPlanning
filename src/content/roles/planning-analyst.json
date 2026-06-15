@@ -3,7 +3,7 @@
   "description": "Keep the engine honest: data quality, planning parameters, and the analytics behind the plan.",
   "icon": "chart",
   "color": "sky",
-  "order": 13,
+  "order": 6,
   "department": "Supply Chain",
   "comingSoon": true,
   "sections": []

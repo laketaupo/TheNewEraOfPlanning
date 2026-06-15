@@ -1,0 +1,88 @@
+{
+  "title": "Strategic Planner",
+  "description": "Lead long-term planning excellence — master the full S&OP cycle and the planning software that drives it, from demand and supply scenarios through to executive decision-making.",
+  "icon": "chart-bar",
+  "color": "violet",
+  "order": 1,
+  "department": "Supply Chain",
+  "phases": [
+    {
+      "phaseId": "awareness",
+      "keyAreas": [
+        "The end-to-end operating model: where S&OP sits relative to S&OE and execution, and how the three horizons connect",
+        "Who owns strategic planning in the organisation and how it interfaces with commercial, finance, and supply functions",
+        "Why data quality is the foundation of credible long-range plans",
+        "What planning software is and how it enables structured, data-driven S&OP"
+      ],
+      "chapters": [
+        "process-03-operating-model",
+        "people-01-planning-team",
+        "data-01-planning-data-fundamentals",
+        "erp-01-erp-basics"
+      ]
+    },
+    {
+      "phaseId": "conceptual",
+      "keyAreas": [
+        "The S&OP cycle in depth: phases, key decisions, outputs, and cross-functional ownership",
+        "Scenario planning fundamentals: what scenarios are, when to use them, and how they feed S&OP",
+        "Planning software data objects, the network model, and the demand/supply/inventory logic that underpins plans",
+        "RASCI accountability across demand, supply, and executive S&OP reviews",
+        "Data types, quality standards, and the data model from source systems through to plan",
+        "How planning software, ERP, and other systems integrate end-to-end"
+      ],
+      "chapters": [
+        "sop-01-sop-fundamentals",
+        "process-01-scenario-planning-fundamentals",
+        "people-02-accountability",
+        "01-understanding-basics",
+        "02-the-network",
+        "03-data-flow",
+        "03-the-logic",
+        "data-03-data-types",
+        "data-02-data-quality-and-impact",
+        "data-05-data-sources-and-model",
+        "erp-02-the-data-model",
+        "erp-04-data-flow-out-of-erp",
+        "arch-01-end-to-end"
+      ]
+    },
+    {
+      "phaseId": "practical",
+      "keyAreas": [
+        "Running the full S&OP cycle: demand review, supply review, inventory review, resource review, and executive S&OP",
+        "Hands-on scenario building and comparison in planning software",
+        "Simulating constrained plans, running what-if scenarios, and promoting the right plan",
+        "Navigating planning software to read and challenge plan output",
+        "Demand forecasting: statistical baselines, commercial overlays, and consensus building"
+      ],
+      "chapters": [
+        "sop-02-running-sop",
+        "sop-demand-forecasting",
+        "sop-supply-planning",
+        "sop-inventory-planning",
+        "sop-resource-planning",
+        "sop-sop-review",
+        "process-02-running-scenarios",
+        "04-the-simulation",
+        "05-navigation-and-ui",
+        "people-03-planning-cadences"
+      ]
+    },
+    {
+      "phaseId": "embedded",
+      "keyAreas": [
+        "Setting and owning planning policy: safety stock targets, service level agreements, and allocation rules",
+        "Governance and escalation: how strategic planning decisions are surfaced, challenged, and closed",
+        "KPI ownership: which long-horizon metrics you own and how to steer on them in S&OP reviews",
+        "Data governance: maintaining master data quality as the foundation of credible long-range plans"
+      ],
+      "chapters": [
+        "process-04-planning-policy",
+        "process-05-governance-and-escalation",
+        "process-06-kpis",
+        "data-04-data-governance"
+      ]
+    }
+  ]
+}

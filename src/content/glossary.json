@@ -180,7 +180,191 @@
     "term": "Resource",
     "aliases": [],
     "definition": "A constrained capacity entity — typically a machine, line, or team — that the planning engine must schedule against. Resources have available capacity per time bucket and are consumed by production BOMs.",
-    "related": ["bill-of-materials"],
+    "related": ["bill-of-materials", "capacity"],
+    "seeAlso": []
+  },
+  {
+    "slug": "capacity",
+    "term": "Capacity",
+    "aliases": [],
+    "definition": "The maximum output a resource can produce within a given time bucket. The planning engine compares required load against available capacity to decide whether a demand plan is achievable, and flags overloads where it is not.",
+    "related": ["resource", "constrained-plan", "bottleneck"],
+    "seeAlso": []
+  },
+  {
+    "slug": "constrained-plan",
+    "term": "Constrained Plan",
+    "aliases": ["constrained planning", "constrained run"],
+    "definition": "A supply plan calculated within the limits of available capacity and material, as opposed to an unconstrained plan that assumes infinite supply. The gap between the two reveals where capacity must be added or demand re-prioritised.",
+    "related": ["capacity", "bottleneck", "supply-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "bottleneck",
+    "term": "Bottleneck",
+    "aliases": [],
+    "definition": "The resource or step with the least capacity relative to demand, which limits the throughput of the whole supply chain. Identifying and protecting the bottleneck is central to constrained planning.",
+    "related": ["capacity", "constrained-plan", "resource"],
+    "seeAlso": []
+  },
+  {
+    "slug": "lead-time",
+    "term": "Lead Time",
+    "aliases": ["lead times"],
+    "definition": "The elapsed time between initiating a supply action — a purchase, production, or transfer — and that supply becoming available. Lead times are configured per item-at-location and drive how far ahead the engine must plan to meet demand on time.",
+    "related": ["item-at-location", "safety-stock", "scheduled-receipt"],
+    "seeAlso": []
+  },
+  {
+    "slug": "planning-parameter",
+    "term": "Planning Parameter",
+    "aliases": ["planning parameters"],
+    "definition": "A configurable setting that governs how the planning engine behaves for a given item-at-location — for example safety stock, lead time, reorder policy, lot size, or service-level target. Maintaining clean parameters is essential for trustworthy plan output.",
+    "related": ["item-at-location", "safety-stock", "lead-time", "service-level"],
+    "seeAlso": []
+  },
+  {
+    "slug": "service-level",
+    "term": "Service Level",
+    "aliases": ["fill rate"],
+    "definition": "The target probability of meeting demand from available stock without a stockout, often expressed as a percentage. Higher service-level targets require more safety stock, making this a key lever in the cost-versus-availability trade-off.",
+    "related": ["safety-stock", "planning-parameter", "kpi"],
+    "seeAlso": []
+  },
+  {
+    "slug": "inventory-coverage",
+    "term": "Inventory Coverage",
+    "aliases": ["days of supply", "days of cover"],
+    "definition": "How long current inventory will last given projected demand, usually expressed in days or weeks of supply. Coverage analysis highlights where stock is at risk of running out or building up beyond target.",
+    "related": ["safety-stock", "kpi", "item-at-location"],
+    "seeAlso": []
+  },
+  {
+    "slug": "inventory-netting",
+    "term": "Inventory Netting",
+    "aliases": ["netting", "net requirements"],
+    "definition": "The calculation that subtracts on-hand inventory and scheduled receipts from gross demand to produce the net requirement the engine must plan new supply for. Netting is what turns a demand signal into actionable supply orders.",
+    "related": ["demand-signal", "supply-signal", "scheduled-receipt"],
+    "seeAlso": []
+  },
+  {
+    "slug": "statistical-baseline",
+    "term": "Statistical Baseline",
+    "aliases": ["baseline forecast", "statistical forecast"],
+    "definition": "A forecast generated automatically from historical demand using statistical algorithms, before any human judgement is applied. It serves as the neutral starting point that commercial teams adjust during demand review.",
+    "related": ["forecast", "consensus-forecast", "demand-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "consensus-forecast",
+    "term": "Consensus Forecast",
+    "aliases": ["consensus demand", "commercial overlay"],
+    "definition": "The single agreed demand forecast produced when commercial teams overlay market intelligence — promotions, new products, customer plans — onto the statistical baseline. It is the demand number that drives supply planning.",
+    "related": ["statistical-baseline", "forecast", "demand-review"],
+    "seeAlso": []
+  },
+  {
+    "slug": "planning-horizon",
+    "term": "Planning Horizon",
+    "aliases": ["time horizon"],
+    "definition": "How far into the future a plan extends. S&OP typically plans over a multi-month to multi-year horizon in monthly buckets, while S&OE works a short near-term horizon in weekly or daily buckets.",
+    "related": ["time-bucket", "sop", "soe"],
+    "seeAlso": []
+  },
+  {
+    "slug": "time-bucket",
+    "term": "Time Bucket",
+    "aliases": ["time buckets", "planning bucket"],
+    "definition": "The unit of time into which a plan is divided — typically days, weeks, or months. Demand, supply, and capacity are aggregated per bucket; finer buckets give more precision at the cost of more data and volatility.",
+    "related": ["planning-horizon", "resource"],
+    "seeAlso": []
+  },
+  {
+    "slug": "allocation",
+    "term": "Allocation",
+    "aliases": [],
+    "definition": "The rules that decide how constrained supply is distributed across competing demands — by customer priority, channel, region, or fair-share logic — when there is not enough to satisfy everyone.",
+    "related": ["constrained-plan", "service-level"],
+    "seeAlso": []
+  },
+  {
+    "slug": "exception-management",
+    "term": "Exception Management",
+    "aliases": ["management by exception", "exception-based working"],
+    "definition": "An operating style where planners act only on items the system flags as outside tolerance — stockouts, overloads, plan deviations — rather than reviewing every record. It is the core working pattern of S&OE.",
+    "related": ["soe", "escalation"],
+    "seeAlso": []
+  },
+  {
+    "slug": "escalation",
+    "term": "Escalation",
+    "aliases": [],
+    "definition": "The defined path for raising a planning issue to a higher level of authority when it cannot be resolved within the normal process — for example a capacity shortfall that needs an executive decision on customer prioritisation.",
+    "related": ["exception-management", "soe", "rasci"],
+    "seeAlso": []
+  },
+  {
+    "slug": "scenario-planning",
+    "term": "Scenario Planning",
+    "aliases": ["what-if analysis", "what-if"],
+    "definition": "Creating and comparing alternative versions of a plan under different assumptions — a demand surge, a supply disruption, a new capacity investment — to understand the impact before committing. Promising scenarios can be promoted to the operating plan.",
+    "related": ["simulation", "sop"],
+    "seeAlso": []
+  },
+  {
+    "slug": "master-data",
+    "term": "Master Data",
+    "aliases": [],
+    "definition": "The relatively stable reference data that describes the entities a business plans against — items, locations, BOMs, BODs, resources, and their parameters. Distinct from transactional data, it changes infrequently but underpins every calculation.",
+    "related": ["transactional-data", "mdm", "single-source-of-truth"],
+    "seeAlso": []
+  },
+  {
+    "slug": "transactional-data",
+    "term": "Transactional Data",
+    "aliases": [],
+    "definition": "The high-volume, fast-changing records of business events — sales orders, purchase orders, goods movements, production confirmations. Transactional data flows from ERP into planning to reflect what is actually happening.",
+    "related": ["master-data", "erp", "purchase-order"],
+    "seeAlso": []
+  },
+  {
+    "slug": "single-source-of-truth",
+    "term": "Single Source of Truth",
+    "aliases": ["SSOT"],
+    "definition": "The principle that each data element has one authoritative, governed home that all systems and people reference, eliminating conflicting copies. It is the goal of master data management and a prerequisite for trusted plans.",
+    "related": ["master-data", "mdm"],
+    "seeAlso": []
+  },
+  {
+    "slug": "purchase-order",
+    "term": "Purchase Order",
+    "aliases": ["PO", "purchase orders"],
+    "definition": "A commitment to a supplier to deliver a specified quantity of an item by a date. Once raised it becomes a scheduled receipt that the planning engine counts as incoming supply.",
+    "related": ["scheduled-receipt", "transactional-data", "erp"],
+    "seeAlso": []
+  },
+  {
+    "slug": "production-order",
+    "term": "Production Order",
+    "aliases": ["work order", "manufacturing order"],
+    "definition": "An instruction to manufacture a specified quantity of an item by a date, consuming components per the BOM and capacity on a resource. It converts a planned supply recommendation into an executable shop-floor activity.",
+    "related": ["bill-of-materials", "resource", "scheduled-receipt"],
+    "seeAlso": []
+  },
+  {
+    "slug": "goods-receipt",
+    "term": "Goods Receipt",
+    "aliases": ["goods issue", "goods movement"],
+    "definition": "The transaction that records physical stock entering (goods receipt) or leaving (goods issue) a location, updating on-hand inventory in ERP. These movements feed the actuals that planning nets against.",
+    "related": ["transactional-data", "inventory-netting", "erp"],
+    "seeAlso": []
+  },
+  {
+    "slug": "fms",
+    "term": "Field Management System",
+    "aliases": ["FMS"],
+    "definition": "A system that manages field-based operations — assignments, activities, yields, and actuals captured in the field — and feeds that data back into planning. Relevant where physical field work (e.g. agriculture or service) drives supply.",
+    "related": ["erp", "mdm", "transactional-data"],
     "seeAlso": []
   }
 ]

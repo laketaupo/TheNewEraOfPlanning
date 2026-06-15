@@ -1,0 +1,88 @@
+{
+  "title": "Operational Planner",
+  "description": "Own the short-term horizon — keep daily execution on track using ERP and S&OE processes, from order prioritisation and actuals capture through to exception management and feedback to planning.",
+  "icon": "clipboard-list",
+  "color": "sky",
+  "order": 3,
+  "department": "Supply Chain",
+  "phases": [
+    {
+      "phaseId": "awareness",
+      "keyAreas": [
+        "How execution fits into the broader operating model and what it means to be the bridge between plan and reality",
+        "Who is in the planning team and how the operational planner role connects to supply, demand, and commercial functions",
+        "Why data quality at the point of execution is critical — and what happens to the plan when actuals are poor",
+        "What ERP is, why it is the system of record for execution, and how it differs from planning software"
+      ],
+      "chapters": [
+        "process-03-operating-model",
+        "people-01-planning-team",
+        "data-01-planning-data-fundamentals",
+        "erp-01-erp-basics"
+      ]
+    },
+    {
+      "phaseId": "conceptual",
+      "keyAreas": [
+        "Execution fundamentals: what moves from plan to action, and how orders, actuals, and exceptions are managed",
+        "The S&OE cadence: near-term monitoring, exception-based working, and the integrated review",
+        "ERP data model: how master and transactional data are structured and how they drive execution logic",
+        "How data flows into and out of ERP and back to planning software",
+        "Data types and quality: what makes execution data reliable enough to plan from",
+        "End-to-end system integration: how planning software, ERP, and the wider landscape connect"
+      ],
+      "chapters": [
+        "exec-01-execution-fundamentals",
+        "soe-01-soe-fundamentals",
+        "erp-02-the-data-model",
+        "erp-03-data-flow-into-erp",
+        "erp-04-data-flow-out-of-erp",
+        "data-03-data-types",
+        "data-02-data-quality-and-impact",
+        "arch-01-end-to-end"
+      ]
+    },
+    {
+      "phaseId": "practical",
+      "keyAreas": [
+        "Daily execution: order prioritisation, real-time visibility, and maintaining execution discipline",
+        "Capturing actuals accurately and on time so planning has a reliable baseline to work from",
+        "Exception management: identifying, triaging, and resolving near-term disruptions",
+        "Running S&OE: demand and supply monitoring, the integrated review, and escalation triggers",
+        "Navigating ERP: creating orders, processing goods receipts and issues, and reading execution output"
+      ],
+      "chapters": [
+        "exec-02-daily-execution",
+        "exec-actuals-capture",
+        "exec-order-prioritisation",
+        "exec-execution-monitoring",
+        "exec-feedback-to-planning",
+        "soe-02-running-soe",
+        "soe-demand-monitoring",
+        "soe-supply-monitoring",
+        "soe-exception-management",
+        "soe-integrated-review",
+        "erp-05-the-logic",
+        "erp-06-key-erp-workflows",
+        "erp-07-navigation-and-ui",
+        "people-03-planning-cadences"
+      ]
+    },
+    {
+      "phaseId": "embedded",
+      "keyAreas": [
+        "Applying planning policy in execution: service level priorities, allocation rules, and order release logic",
+        "Governance and escalation: when to surface execution exceptions and how to resolve them without disrupting the plan",
+        "KPI ownership: execution metrics, on-time delivery, and how short-term performance feeds S&OP review",
+        "Data governance in execution: ownership of transactional data quality and integration with ERP"
+      ],
+      "chapters": [
+        "process-04-planning-policy",
+        "process-05-governance-and-escalation",
+        "process-06-kpis",
+        "data-04-data-governance",
+        "arch-02-integration"
+      ]
+    }
+  ]
+}
