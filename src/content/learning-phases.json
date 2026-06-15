@@ -1,78 +1,78 @@
 [
   {
-    "id": "understand",
-    "title": "Understand",
-    "goal": "Build fundamental understanding of planning principles and context",
+    "id": "awareness",
+    "title": "Awareness & Context Setting",
+    "goal": "Create shared understanding and urgency for change",
     "keyAreas": [
-      "Understanding end-to-end processes (S&OP, Demand, Supply)",
-      "Insight into roles, responsibilities and governance",
-      "Foundational knowledge of data (sources, definitions, limitations)",
-      "Introduction to tools and systems used",
-      "Understanding the 'why' behind processes and decisions"
+      "High-level end-to-end process overview and what is changing vs. staying the same",
+      "Business drivers: service, cost, and efficiency",
+      "Importance of data in decision-making and awareness of current data challenges",
+      "Purpose of the new tool(s) and their role in the system landscape",
+      "Introduction to the new operating model and high-level role changes"
     ],
     "behaviors": [
-      "Listens, learns and asks questions",
-      "Follows training and documentation"
+      "Builds context and shared understanding",
+      "Asks 'why are we doing this?' and listens actively"
     ]
   },
   {
-    "id": "apply",
-    "title": "Apply",
-    "goal": "Correctly execute standard processes and activities",
+    "id": "conceptual",
+    "title": "Conceptual Understanding",
+    "goal": "Build foundational knowledge across process, data, tools, and organization",
     "keyAreas": [
-      "Executing operational planning activities",
-      "Working with systems and standard templates",
-      "Using data in day-to-day work",
-      "Following established processes and guidelines"
+      "L2/L3 process flows, key decisions, outputs, and cross-functional dependencies",
+      "Key data objects, data flows across systems, and data ownership",
+      "Core tool functionalities, system integrations, and input/output logic",
+      "Roles and responsibilities (RASCI), governance structure, and planning cadence"
     ],
     "behaviors": [
-      "Works according to instructions",
-      "Delivers consistent output within set boundaries"
+      "Connects process, data, tools, and roles into a coherent picture",
+      "Asks 'what does this mean?' and forms a clear mental model"
     ]
   },
   {
-    "id": "control",
-    "title": "Control",
-    "goal": "Execute independently and reliably with a focus on control",
+    "id": "practical",
+    "title": "Practical Application",
+    "goal": "Enable execution in real-life scenarios through role-based, hands-on learning",
     "keyAreas": [
-      "Monitoring KPIs and performance",
-      "Identifying and analysing deviations",
-      "Understanding dependencies within the chain",
-      "Actively steering within existing processes"
+      "Detailed L4 activities, step-by-step execution, and exception handling",
+      "Data entry, validation, quality checks, and impact of incorrect data",
+      "Hands-on system training, role-based workflows, and scenario simulations",
+      "Role-specific responsibilities, cross-functional collaboration, and escalation paths"
     ],
     "behaviors": [
-      "Takes ownership",
-      "Steers on performance and quality"
+      "Learns by doing in role-based and scenario-driven exercises",
+      "Asks 'how do I do this correctly?' and practices execution"
     ]
   },
   {
-    "id": "improve",
-    "title": "Improve",
-    "goal": "Continuously improve processes, data and decision-making",
+    "id": "embedded",
+    "title": "Embedded Adoption",
+    "goal": "Anchor new ways of working in daily operations as business as usual",
     "keyAreas": [
-      "Identifying inefficiencies and improvement opportunities",
-      "Applying scenario analysis and trade-offs",
-      "Optimising data use and process flows",
-      "Initiating and implementing improvements"
+      "Standardised execution, KPI tracking linked to process steps, and fixed planning cadence",
+      "Trusted and standardised data with governance embedded in daily work",
+      "Tool as system of truth, integrated into daily workflows, reducing workarounds",
+      "Role ownership, performance management alignment, and active governance"
     ],
     "behaviors": [
-      "Thinks proactively",
-      "Uses data for evidence-based improvements"
+      "Works consistently and independently within new ways of working",
+      "Takes ownership and steers on performance"
     ]
   },
   {
-    "id": "innovate",
-    "title": "Innovate",
-    "goal": "Develop new ways of working and drive change",
+    "id": "optimization",
+    "title": "Optimization & Continuous Improvement",
+    "goal": "Drive continuous improvement and move from adoption to best practice",
     "keyAreas": [
-      "Designing advanced planning concepts",
-      "Implementing predictive and scenario-driven planning",
-      "Stimulating innovation in tools and processes",
-      "Coaching teams and acting as Subject Matter Expert (SME)"
+      "Continuous improvement loops, scenario planning integration, and cross-functional optimisation",
+      "Advanced data usage (predictive, prescriptive) and data-driven decision-making culture",
+      "Advanced tool features (AI, automation, simulations), model tuning, and increased utilisation",
+      "Development of SME capabilities, community of practice, and continuous learning culture"
     ],
     "behaviors": [
-      "Leads change",
-      "Thinks strategically and future-oriented"
+      "Identifies and drives improvements proactively",
+      "Coaches others and leads continuous learning"
     ]
   }
 ]

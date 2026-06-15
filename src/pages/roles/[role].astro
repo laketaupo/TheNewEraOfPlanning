@@ -181,10 +181,10 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
                 <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">{phase.goal}</p>
 
                 <ul class="space-y-2 mb-6">
-                  {phase.sections.map((s) => (
-                    <li class="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-300">
-                      <span class={`w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
-                      {s.title}
+                  {phase.keyAreas.map((area) => (
+                    <li class="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
+                      <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
+                      {area}
                     </li>
                   ))}
                 </ul>
@@ -277,6 +277,9 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
 </style>
 
 <script>
+  // Clear role context when returning to the role overview
+  try { localStorage.removeItem('platform-role-context'); } catch {}
+
   const STORAGE_KEY = 'platform-progress';
   function getProgress(): Record<string, boolean> {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }

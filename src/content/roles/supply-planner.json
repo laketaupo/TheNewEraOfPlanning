@@ -7,42 +7,98 @@
   "department": "Supply Chain",
   "phases": [
     {
-      "phaseId": "understand",
+      "phaseId": "awareness",
+      "keyAreas": [
+        "The end-to-end operating model: what S&OP, S&OE, and execution look like and how they connect",
+        "Who is in the planning team and how supply planning fits into the broader organisation",
+        "Why data quality matters and what poor data costs in a planning context",
+        "What ERP is and its role in the system landscape alongside planning software"
+      ],
       "chapters": [
         "process-03-operating-model",
+        "people-01-planning-team",
+        "data-01-planning-data-fundamentals",
+        "erp-01-erp-basics"
+      ]
+    },
+    {
+      "phaseId": "conceptual",
+      "keyAreas": [
+        "S&OP and S&OE process cycles, key decisions, outputs, and cross-functional dependencies",
+        "Planning software data objects, the network model, and demand/supply/inventory logic",
+        "ERP data model and the flow of master and transactional data into and out of planning",
+        "RASCI accountability across demand, supply, and executive S&OP reviews",
+        "Data types, quality standards, and the end-to-end data model from source to plan",
+        "Scenario planning fundamentals and how all systems integrate end-to-end"
+      ],
+      "chapters": [
         "sop-01-sop-fundamentals",
-        "sop-02-running-sop",
         "soe-01-soe-fundamentals",
-        "soe-02-running-soe",
         "exec-01-execution-fundamentals",
-        "exec-02-daily-execution",
+        "people-02-accountability",
         "01-understanding-basics",
         "02-the-network",
-        "erp-01-erp-basics",
-        "erp-02-the-data-model",
-        "erp-04-data-flow-out-of-erp"
-      ]
-    },
-    {
-      "phaseId": "apply",
-      "chapters": [
         "03-data-flow",
         "03-the-logic",
-        "04-the-simulation",
-        "05-navigation-and-ui",
-        "erp-05-the-logic",
-        "erp-06-key-erp-workflows",
-        "erp-07-navigation-and-ui",
-        "process-02-running-scenarios"
+        "data-03-data-types",
+        "data-02-data-quality-and-impact",
+        "data-05-data-sources-and-model",
+        "erp-02-the-data-model",
+        "erp-03-data-flow-into-erp",
+        "erp-04-data-flow-out-of-erp",
+        "arch-01-end-to-end",
+        "process-01-scenario-planning-fundamentals"
       ]
     },
     {
-      "phaseId": "control",
+      "phaseId": "practical",
+      "keyAreas": [
+        "Running demand forecasting, supply planning, inventory, resource, and S&OP review meetings",
+        "Executing S&OE monitoring: tracking the near-term plan, managing exceptions, and the integrated review",
+        "Daily execution: order prioritisation, actuals capture, and feeding outcomes back to planning",
+        "Hands-on planning software: simulations, scenario runs, and reading plan output",
+        "ERP workflows: creating orders, goods receipt and issue, and navigating ERP screens"
+      ],
       "chapters": [
-        "process-01-scenario-planning-fundamentals",
+        "sop-02-running-sop",
+        "sop-demand-forecasting",
+        "sop-supply-planning",
+        "sop-inventory-planning",
+        "sop-resource-planning",
+        "sop-sop-review",
+        "soe-02-running-soe",
+        "soe-demand-monitoring",
+        "soe-supply-monitoring",
+        "soe-exception-management",
+        "soe-integrated-review",
+        "exec-02-daily-execution",
+        "exec-actuals-capture",
+        "exec-order-prioritisation",
+        "exec-execution-monitoring",
+        "exec-feedback-to-planning",
+        "04-the-simulation",
+        "05-navigation-and-ui",
+        "process-02-running-scenarios",
+        "erp-05-the-logic",
+        "erp-06-key-erp-workflows",
+        "erp-07-navigation-and-ui"
+      ]
+    },
+    {
+      "phaseId": "embedded",
+      "keyAreas": [
+        "Applying safety stock policy, service level targets, and allocation rules day-to-day",
+        "Governance and escalation: how planning exceptions are managed and decisions are surfaced",
+        "KPI ownership: which metrics you own, how they're reviewed, and how to steer on them",
+        "Data governance: ownership, definitions, and maintaining a single source of truth",
+        "Integration patterns: how ERP, planning software, and other systems stay in sync"
+      ],
+      "chapters": [
         "process-04-planning-policy",
         "process-05-governance-and-escalation",
-        "process-06-kpis"
+        "process-06-kpis",
+        "data-04-data-governance",
+        "arch-02-integration"
       ]
     }
   ]

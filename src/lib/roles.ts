@@ -3,6 +3,7 @@ import { getChapters, getTopics, getTopicsForChapter, type TopicMeta } from './c
 export interface RolePhaseConfig {
   phaseId: string;
   chapters: string[]; // chapter slugs, e.g. "sop-01-sop-fundamentals"
+  keyAreas?: string[]; // role-specific overrides; falls back to global learning-phases.json
 }
 
 export interface RoleConfig {
@@ -139,7 +140,7 @@ export function resolveRolePhases(role: RoleConfig): ResolvedRolePhase[] | null 
       phaseId: lp.id,
       title: lp.title,
       goal: lp.goal,
-      keyAreas: lp.keyAreas,
+      keyAreas: rolePhase.keyAreas ?? lp.keyAreas,
       behaviors: lp.behaviors,
       sections: rolePhase.chapters.map((slug) =>
         resolveChapter(slug, role.slug, allChapters, seen),

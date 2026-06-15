@@ -181,50 +181,58 @@ const topicIds = phaseTopics.map((t) => t.topicId);
       <p id="phase-progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">0 of {phaseTopics.length} topics completed</p>
     </div>
 
-    <!-- Sections and topics -->
+    <!-- Chapter cards -->
     <main class="relative z-10 max-w-3xl mx-auto px-6 pb-20 animate-slide-up">
-      {phase.sections.map((section, si) => (
-        <section class={si > 0 ? 'mt-12' : ''}>
-          <div class="flex items-baseline gap-3 mb-1">
-            <span class={`text-sm font-mono font-bold ${accentText}`}>{String(si + 1).padStart(2, '0')}</span>
-            <h2 class={`text-xs font-bold uppercase tracking-widest ${accentText}`}>{section.title}</h2>
-          </div>
-          {section.description && (
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 ml-8">{section.description}</p>
-          )}
-          <ol class="space-y-3">
-            {section.topics.map((topic) => (
-              <li>
-                <a
-                  href={`${topic.url}?role=${role.slug}&phase=${phaseIndex + 1}`}
-                  class={`group flex items-start gap-4 p-4 rounded-xl border ${colorBorderMap[topic.chapterColor] ?? colorBorderMap.indigo} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
-                >
-                  <div class="flex-1 min-w-0">
-                    <p class="text-gray-900 dark:text-white font-medium">{topic.title}</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-500 mt-0.5">{topic.description}</p>
-                  </div>
-                  <div class="flex items-center gap-3 shrink-0 mt-0.5">
-                    <span class={`hidden sm:inline text-xs ${colorTextMap[topic.chapterColor] ?? colorTextMap.indigo} ${colorBgMap[topic.chapterColor] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full whitespace-nowrap`}>
-                      {topic.pillarLabel} · {topic.chapterTitle}
-                    </span>
-                    <span class="text-xs text-gray-400 dark:text-gray-600">{topic.estimatedMinutes} min</span>
-                    <span
-                      class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
-                      data-topic-id={topic.topicId}
-                    ></span>
-                  </div>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </section>
-      ))}
+      <div class="space-y-3">
+        {phase.sections.map((section, si) => {
+          const firstTopic = section.topics[0];
+          const chapterUrl = firstTopic?.chapterUrl;
+          const cc = firstTopic?.chapterColor ?? role.color;
+          const pillarLabel = firstTopic?.pillarLabel ?? '';
+          const totalMins = section.topics.reduce((s: number, t: any) => s + t.estimatedMinutes, 0);
+          const halfH = Math.round(totalMins / 30) * 0.5;
+          const time = totalMins >= 60 ? `~${halfH} hrs` : `~${totalMins} min`;
+          const chapterTopicIds = section.topics.map((t: any) => t.topicId).join(',');
+          return (
+            <a
+              href={`${chapterUrl}?from=roles/${role.slug}/${phaseIndex + 1}`}
+              class={`block p-5 rounded-2xl border ${colorBorderMap[cc] ?? colorBorderMap.indigo} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
+              data-chapter-topic-ids={chapterTopicIds}
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-mono font-bold text-gray-400 dark:text-gray-600">{String(si + 1).padStart(2, '0')}</span>
+                  <span class={`text-xs font-medium ${colorTextMap[cc] ?? colorTextMap.indigo} ${colorBgMap[cc] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full`}>
+                    {pillarLabel}
+                  </span>
+                </div>
+                <span class="text-xs text-gray-400 dark:text-gray-500">{section.topics.length} topics · {time}</span>
+              </div>
+              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-1">{section.title}</h2>
+              {section.description && (
+                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{section.description}</p>
+              )}
+              <div class="flex items-center gap-3 mt-4">
+                <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                  <div class={`chapter-progress-bar h-full rounded-full ${colorBarMap[cc] ?? colorBarMap.indigo} transition-all duration-500`} style="width:0%"></div>
+                </div>
+                <span class="chapter-progress-text text-xs text-gray-400 dark:text-gray-500 shrink-0 w-12 text-right">
+                  0 / {section.topics.length}
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${colorTextMap[cc] ?? colorTextMap.indigo} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </a>
+          );
+        })}
+      </div>
 
       <!-- Navigation -->
       <div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
         <div class="flex items-center gap-4">
           <a
-            href={phaseTopics[0]?.url ?? BASE_URL}
+            href={`${phase.sections[0]?.topics[0]?.chapterUrl ?? BASE_URL}?from=roles/${role.slug}/${phaseIndex + 1}`}
             class={`inline-flex items-center gap-2 ${accentBg} ${accentText} font-semibold px-5 py-2.5 rounded-xl border ${accentBorder} hover:opacity-90 transition-opacity`}
           >
             Start phase
@@ -273,18 +281,21 @@ const topicIds = phaseTopics.map((t) => t.topicId);
     catch { return {}; }
   }
   const progress = getProgress();
-  const dots = document.querySelectorAll('.topic-completion-dot');
-  let done = 0;
-  dots.forEach((dot) => {
-    const id = dot.dataset.topicId ?? '';
-    if (progress[id]) {
-      done++;
-      dot.classList.remove('bg-gray-200', 'dark:bg-gray-700');
-      dot.classList.add('bg-emerald-500');
-    }
-  });
+
+  // Overall phase progress bar
+  const done = topicIds.filter((id) => progress[id]).length;
   const fill = document.getElementById('phase-progress-fill');
   const text = document.getElementById('phase-progress-text');
-  if (fill && dots.length > 0) fill.style.width = `${Math.round((done / dots.length) * 100)}%`;
-  if (text) text.textContent = `${done} of ${dots.length} topics completed`;
+  if (fill && topicIds.length > 0) fill.style.width = `${Math.round((done / topicIds.length) * 100)}%`;
+  if (text) text.textContent = `${done} of ${topicIds.length} topics completed`;
+
+  // Per-chapter progress bars
+  document.querySelectorAll('[data-chapter-topic-ids]').forEach((card) => {
+    const ids = (card.dataset.chapterTopicIds ?? '').split(',').filter(Boolean);
+    const chapterDone = ids.filter((id) => progress[id]).length;
+    const bar = card.querySelector('.chapter-progress-bar');
+    const label = card.querySelector('.chapter-progress-text');
+    if (bar && ids.length > 0) bar.style.width = `${Math.round((chapterDone / ids.length) * 100)}%`;
+    if (label) label.textContent = `${chapterDone} / ${ids.length}`;
+  });
 </script>

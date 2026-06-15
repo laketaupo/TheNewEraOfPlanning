@@ -240,48 +240,91 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
     </style>
 
   <script define:vars={{ BASE_URL: import.meta.env.BASE_URL }}>
-    (() => {
-      const params = new URLSearchParams(window.location.search);
-      const role = params.get('role');
-      const phase = params.get('phase');
-      if (!role || !phase) return;
+    (function () {
+      const searchParams = new URLSearchParams(window.location.search);
+      const fromParam = searchParams.get('from');
+      if (!fromParam) return;
 
-      const nav = document.querySelector('[data-role-nav]');
-      if (!nav) return;
-
-      const pathParts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
-      const currentChapter = pathParts.at(-2);
-      if (!currentChapter) return;
-
-      const backUrl = (BASE_URL + 'roles/' + role + '/' + phase).replace(/\/\//g, '/');
-      const roleQuery = 'role=' + role + '&phase=' + phase;
       const basePath = (BASE_URL || '/').replace(/\/$/, '');
+      const fromUrl = basePath + '/' + fromParam.replace(/^\//, '');
 
-      nav.querySelectorAll('a[href]').forEach(function(a) {
-        const href = a.getAttribute('href');
-        if (!href) return;
+      // "roles/supply-planner/1" → "Phase 1"
+      const rolesMatch = fromParam.match(/^roles\/[^/]+\/(\d+)$/);
+      const fromLabel = rolesMatch ? 'Phase ' + rolesMatch[1] : 'Back';
 
-        const cleanHref = href.split('?')[0].replace(/\/$/, '');
-
-        // Home/finish fallback link → replace with "Back to course"
-        if (cleanHref === basePath || cleanHref === '' || cleanHref === '/') {
-          a.setAttribute('href', backUrl);
-          a.textContent = 'Back to course';
-          return;
-        }
-
-        const linkParts = cleanHref.split('/').filter(Boolean);
-        const linkChapter = linkParts.at(-2);
-
-        if (linkChapter === currentChapter) {
-          // Same chapter → propagate role context
-          a.setAttribute('href', href + (href.includes('?') ? '&' : '?') + roleQuery);
+      function setNavLabel(a, longLabel, shortLabel) {
+        const spans = a.querySelectorAll('span');
+        if (spans.length > 0) {
+          spans.forEach(function(s) {
+            const cls = s.className.split(' ');
+            if (cls.includes('hidden')) s.textContent = longLabel;
+            else s.textContent = shortLabel;
+          });
         } else {
-          // Different chapter → end of chapter, go back to role course
-          a.setAttribute('href', backUrl);
-          a.textContent = 'Back to course';
+          const textNodes = Array.from(a.childNodes).filter(function(n) { return n.nodeType === Node.TEXT_NODE; });
+          if (textNodes.length > 0) textNodes[0].textContent = longLabel;
+          else a.textContent = longLabel;
         }
-      });
+      }
+
+      // Override header back link
+      const backLink = document.getElementById('nav-back-link');
+      if (backLink) {
+        backLink.setAttribute('href', fromUrl);
+        const textNode = Array.from(backLink.childNodes).find(function(n) {
+          return n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0;
+        });
+        if (textNode) textNode.textContent = ' ' + fromLabel;
+      }
+
+      // Override chapter index "Back to overview" link
+      const chapterBackOverview = document.getElementById('chapter-back-overview');
+      if (chapterBackOverview) {
+        chapterBackOverview.setAttribute('href', fromUrl);
+        chapterBackOverview.textContent = 'Back to ' + fromLabel;
+      }
+
+      // Handle [data-role-nav] prev/next links on topic pages
+      const nav = document.querySelector('[data-role-nav]');
+      if (nav) {
+        const pathParts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+        const currentChapter = pathParts.at(-2);
+
+        nav.querySelectorAll('a[href]').forEach(function(a) {
+          const href = a.getAttribute('href');
+          if (!href) return;
+          const cleanHref = href.split('?')[0].replace(/\/$/, '');
+
+          // Home / finish fallback links → back to from
+          if (cleanHref === basePath || cleanHref === '' || cleanHref === '/') {
+            a.setAttribute('href', fromUrl);
+            setNavLabel(a, fromLabel, fromLabel);
+            return;
+          }
+
+          const linkChapter = cleanHref.split('/').filter(Boolean).at(-2);
+          if (currentChapter && linkChapter !== currentChapter) {
+            // Cross-chapter link → back to from
+            a.setAttribute('href', fromUrl);
+            setNavLabel(a, fromLabel, fromLabel);
+          } else {
+            // Same-chapter → propagate ?from= so the next topic also knows where to go back
+            a.setAttribute('href', cleanHref + '?from=' + encodeURIComponent(fromParam));
+          }
+        });
+      }
+
+      // On chapter index page: propagate ?from= to all topic/start links in main
+      const main = document.querySelector('main');
+      if (main && !nav) {
+        main.querySelectorAll('a[href]').forEach(function(a) {
+          if (a.id === 'chapter-back-overview') return;
+          const href = a.getAttribute('href');
+          if (!href || href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) return;
+          const cleanHref = href.split('?')[0];
+          a.setAttribute('href', cleanHref + '?from=' + encodeURIComponent(fromParam));
+        });
+      }
     })();
   </script>
   </body>

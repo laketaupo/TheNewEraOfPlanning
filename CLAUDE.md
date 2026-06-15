@@ -141,4 +141,119 @@ All shared components live in `src/components/`:
 
 **New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in all 7 topic layout files and in `[chapter]/index.astro`, plus `moduleLabels` in `SiteOverlay.astro`.
 
-**New role course:** add `src/content/roles/{slug}.json`. Topic references use `"chapter-slug/topic-slug"` format; bad refs throw at build time.
+**New role course:** add `src/content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
+
+### Role JSON Structure
+
+Each role JSON file at `src/content/roles/{slug}.json` has these fields:
+
+```json
+{
+  "title": "Role Display Name",
+  "description": "One-sentence description shown on the role card and course page.",
+  "icon": "icon-name",
+  "color": "teal",
+  "order": 10,
+  "department": "Supply Chain",
+  "comingSoon": true,
+  "phases": [
+    { "phaseId": "awareness",    "chapters": ["chapter-slug-1", "chapter-slug-2"] },
+    { "phaseId": "conceptual",   "chapters": ["chapter-slug-3"] },
+    { "phaseId": "practical",    "chapters": ["chapter-slug-4"] },
+    { "phaseId": "embedded",     "chapters": [] },
+    { "phaseId": "optimization", "chapters": [] }
+  ]
+}
+```
+
+- `comingSoon: true` hides the role from the learning paths (omit when the role is ready).
+- Phases with an empty `chapters` array (or absent from the array) render as "Coming soon" on the role page.
+- Phase order in the JSON does not matter — phases always display in the global order defined in `learning-phases.json`.
+- Chapter slugs must exist and must not be hidden — bad references throw at build time.
+
+### Learning Phases
+
+The global phase definitions live in `src/content/learning-phases.json`. There are five phases, in order:
+
+| Phase ID | Title | Purpose |
+|---|---|---|
+| `awareness` | Awareness & Context Setting | Understand the "why" — high-level overview, what is changing, business drivers |
+| `conceptual` | Conceptual Understanding | Understand the "what" — process flows, data objects, tool functionality, RASCI |
+| `practical` | Practical Application | Learn the "how" — role-based execution, step-by-step workflows, hands-on tool use |
+| `embedded` | Embedded Adoption | Make it business as usual — governance, KPIs, policy, data ownership |
+| `optimization` | Optimization & Continuous Improvement | Drive best practice — advanced features, scenario analysis, SME development |
+
+### Chapter-to-Phase Assignment Guide
+
+Use the table below when building or reviewing a role. Chapters not relevant to a role are simply omitted.
+
+**Phase 1 — Awareness** (what exists and why it matters)
+- `process-03-operating-model` — S&OP / S&OE / Execution overview
+- `people-01-planning-team` — who is in the planning team, high-level roles
+- `data-01-planning-data-fundamentals` — why data matters, cost of bad data
+- `erp-01-erp-basics` — what ERP is, its place in the system landscape
+- `mdm-01-understanding-basics` — what MDM is and why it matters *(for MDM-adjacent roles)*
+- `fms-01-understanding-basics` — what FMS is and why it matters *(for field-facing roles)*
+
+**Phase 2 — Conceptual** (what things are and how they connect)
+- `sop-01-sop-fundamentals` — S&OP cycle, roles, outputs
+- `soe-01-soe-fundamentals` — S&OE cadence, roles, exception-based working
+- `exec-01-execution-fundamentals` — execution fundamentals, from plan to action
+- `people-02-accountability` — RASCI for demand/supply/exec S&OP reviews
+- `01-understanding-basics` — planning software data objects (BOD, BOM, Item, Resource)
+- `02-the-network` — the network/graph data model
+- `03-data-flow` — demand/supply signals, inventory netting
+- `03-the-logic` — push/pull, safety stock, disaggregation, backward consumption
+- `data-03-data-types` — master data, transactional data, planning parameters
+- `data-02-data-quality-and-impact` — what makes data good enough
+- `data-05-data-sources-and-model` — where data comes from, the data model overview
+- `erp-02-the-data-model` — how ERP structures master and transactional data
+- `erp-03-data-flow-into-erp` — where data originates and how it enters ERP
+- `erp-04-data-flow-out-of-erp` — what ERP sends to planning
+- `arch-01-end-to-end` — system interfaces overview, batch runs, data upload
+- `process-01-scenario-planning-fundamentals` — what scenario planning is, types
+- `mdm-02-the-data-model` — MDM data structure *(MDM-adjacent roles)*
+- `mdm-03-data-flow-into-mdm` — how master data enters MDM *(MDM-adjacent roles)*
+- `mdm-04-data-flow-out-of-mdm` — what MDM sends to planning *(MDM-adjacent roles)*
+- `fms-02-the-data-model` — FMS data structure *(field-facing roles)*
+- `fms-03-data-flow-into-fms` — how field data enters FMS *(field-facing roles)*
+- `fms-04-data-flow-out-of-fms` — what FMS sends to planning *(field-facing roles)*
+
+**Phase 3 — Practical** (how to execute, step by step)
+- `sop-02-running-sop` — running demand, supply, and executive S&OP reviews
+- `sop-demand-forecasting` — data collection, statistical baseline, commercial overlay
+- `sop-supply-planning` — capacity assessment, constrained run, gap identification
+- `sop-inventory-planning` — target setting, coverage analysis, safety stock review
+- `sop-resource-planning` — resource demand projection, capacity mapping
+- `sop-sop-review` — pre-S&OP, financial reconciliation, executive review, plan close
+- `soe-02-running-soe` — monitoring the near-term plan, integrated S&OE review
+- `soe-demand-monitoring` — demand monitoring process
+- `soe-supply-monitoring` — supply monitoring process
+- `soe-exception-management` — exception identification and resolution
+- `soe-integrated-review` — integrated S&OE review steps
+- `exec-02-daily-execution` — order prioritisation, real-time visibility, execution discipline
+- `exec-actuals-capture` — capturing actuals
+- `exec-order-prioritisation` — order prioritisation workflow
+- `exec-execution-monitoring` — monitoring execution
+- `exec-feedback-to-planning` — feeding actuals back to planning
+- `04-the-simulation` — setting up and running workflow simulations
+- `05-navigation-and-ui` — navigating planning software, reading plan output
+- `process-02-running-scenarios` — creating, comparing, and promoting scenarios
+- `erp-05-the-logic` — ERP business rules, inventory and order management logic
+- `erp-06-key-erp-workflows` — creating orders, goods receipt/issue, reporting
+- `erp-07-navigation-and-ui` — navigating ERP, reading ERP output
+- `mdm-05-the-logic` — MDM governance rules, deduplication, approval workflows *(MDM-adjacent roles)*
+- `mdm-06-key-mdm-workflows` — creating/maintaining records, managing changes *(MDM-adjacent roles)*
+- `mdm-07-navigation-and-ui` — navigating MDM *(MDM-adjacent roles)*
+- `fms-05-the-logic` — FMS business rules, field assignment, yield tracking *(field-facing roles)*
+- `fms-06-key-fms-workflows` — managing field activities, recording actuals *(field-facing roles)*
+- `fms-07-navigation-and-ui` — navigating FMS *(field-facing roles)*
+
+**Phase 4 — Embedded** (making new ways of working stick)
+- `process-04-planning-policy` — safety stock policy, service levels, allocation, prioritisation
+- `process-05-governance-and-escalation` — escalation paths, management by exception
+- `process-06-kpis` — KPI framework, ownership, review cadence
+- `data-04-data-governance` — data ownership, definitions, single source of truth
+- `arch-02-integration` — ERP↔Planning Software↔FMS/MDM integration patterns
+
+**Phase 5 — Optimization** (reserved for advanced/SME-level content; often empty for initial role builds)
