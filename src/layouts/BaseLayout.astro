@@ -238,5 +238,51 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
         transform: rotate(225deg);
       }
     </style>
+
+  <script define:vars={{ BASE_URL: import.meta.env.BASE_URL }}>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const role = params.get('role');
+      const phase = params.get('phase');
+      if (!role || !phase) return;
+
+      const nav = document.querySelector('[data-role-nav]');
+      if (!nav) return;
+
+      const pathParts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+      const currentChapter = pathParts.at(-2);
+      if (!currentChapter) return;
+
+      const backUrl = (BASE_URL + 'roles/' + role + '/' + phase).replace(/\/\//g, '/');
+      const roleQuery = 'role=' + role + '&phase=' + phase;
+      const basePath = (BASE_URL || '/').replace(/\/$/, '');
+
+      nav.querySelectorAll('a[href]').forEach(function(a) {
+        const href = a.getAttribute('href');
+        if (!href) return;
+
+        const cleanHref = href.split('?')[0].replace(/\/$/, '');
+
+        // Home/finish fallback link → replace with "Back to course"
+        if (cleanHref === basePath || cleanHref === '' || cleanHref === '/') {
+          a.setAttribute('href', backUrl);
+          a.textContent = 'Back to course';
+          return;
+        }
+
+        const linkParts = cleanHref.split('/').filter(Boolean);
+        const linkChapter = linkParts.at(-2);
+
+        if (linkChapter === currentChapter) {
+          // Same chapter → propagate role context
+          a.setAttribute('href', href + (href.includes('?') ? '&' : '?') + roleQuery);
+        } else {
+          // Different chapter → end of chapter, go back to role course
+          a.setAttribute('href', backUrl);
+          a.textContent = 'Back to course';
+        }
+      });
+    })();
+  </script>
   </body>
 </html>

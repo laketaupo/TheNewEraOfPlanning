@@ -1,0 +1,78 @@
+[
+  {
+    "id": "understand",
+    "title": "Understand",
+    "goal": "Build fundamental understanding of planning principles and context",
+    "keyAreas": [
+      "Understanding end-to-end processes (S&OP, Demand, Supply)",
+      "Insight into roles, responsibilities and governance",
+      "Foundational knowledge of data (sources, definitions, limitations)",
+      "Introduction to tools and systems used",
+      "Understanding the 'why' behind processes and decisions"
+    ],
+    "behaviors": [
+      "Listens, learns and asks questions",
+      "Follows training and documentation"
+    ]
+  },
+  {
+    "id": "apply",
+    "title": "Apply",
+    "goal": "Correctly execute standard processes and activities",
+    "keyAreas": [
+      "Executing operational planning activities",
+      "Working with systems and standard templates",
+      "Using data in day-to-day work",
+      "Following established processes and guidelines"
+    ],
+    "behaviors": [
+      "Works according to instructions",
+      "Delivers consistent output within set boundaries"
+    ]
+  },
+  {
+    "id": "control",
+    "title": "Control",
+    "goal": "Execute independently and reliably with a focus on control",
+    "keyAreas": [
+      "Monitoring KPIs and performance",
+      "Identifying and analysing deviations",
+      "Understanding dependencies within the chain",
+      "Actively steering within existing processes"
+    ],
+    "behaviors": [
+      "Takes ownership",
+      "Steers on performance and quality"
+    ]
+  },
+  {
+    "id": "improve",
+    "title": "Improve",
+    "goal": "Continuously improve processes, data and decision-making",
+    "keyAreas": [
+      "Identifying inefficiencies and improvement opportunities",
+      "Applying scenario analysis and trade-offs",
+      "Optimising data use and process flows",
+      "Initiating and implementing improvements"
+    ],
+    "behaviors": [
+      "Thinks proactively",
+      "Uses data for evidence-based improvements"
+    ]
+  },
+  {
+    "id": "innovate",
+    "title": "Innovate",
+    "goal": "Develop new ways of working and drive change",
+    "keyAreas": [
+      "Designing advanced planning concepts",
+      "Implementing predictive and scenario-driven planning",
+      "Stimulating innovation in tools and processes",
+      "Coaching teams and acting as Subject Matter Expert (SME)"
+    ],
+    "behaviors": [
+      "Leads change",
+      "Thinks strategically and future-oriented"
+    ]
+  }
+]

@@ -1,8 +1,0 @@
-{
-  "title": "Data Flow: Supply",
-  "description": "How planned orders and inventory flow downstream through the network \u2014 from raw material inputs to the customer.",
-  "icon": "arrow-down",
-  "color": "emerald",
-  "pillar": "technology",
-  "module": "planning-software"
-}

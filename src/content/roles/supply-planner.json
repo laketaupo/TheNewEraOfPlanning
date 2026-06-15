@@ -7,188 +7,42 @@
   "department": "Supply Chain",
   "phases": [
     {
-      "title": "Process Foundation",
-      "description": "Understand how S&OP, S&OE, and Execution connect into a single planning operating model — and what your role looks like inside each cycle.",
-      "sections": [
-        {
-          "title": "The Planning Operating Model",
-          "description": "How S&OP, S&OE, and Execution relate to each other — the three planning horizons and the cadence that connects them.",
-          "topics": [
-            "process-03-operating-model/what-is-sop",
-            "process-03-operating-model/what-is-soe",
-            "process-03-operating-model/execution",
-            "process-03-operating-model/the-cadence"
-          ]
-        },
-        {
-          "title": "S&OP — Monthly Planning",
-          "description": "The full monthly S&OP cycle — what it produces, who participates, and how to run each step from demand review through executive sign-off.",
-          "topics": [
-            "sop-01-sop-fundamentals/what-is-sop",
-            "sop-01-sop-fundamentals/the-sop-cycle",
-            "sop-01-sop-fundamentals/sop-roles",
-            "sop-01-sop-fundamentals/sop-outputs",
-            "sop-01-sop-fundamentals/sop-in-planning-software",
-            "sop-02-running-sop/demand-review",
-            "sop-02-running-sop/supply-review",
-            "sop-02-running-sop/pre-sop",
-            "sop-02-running-sop/executive-sop"
-          ]
-        },
-        {
-          "title": "S&OE — Weekly Execution",
-          "description": "The weekly S&OE cycle — monitoring the near-term plan, resolving exceptions, and handing off cleanly to execution.",
-          "topics": [
-            "soe-01-soe-fundamentals/what-is-soe",
-            "soe-01-soe-fundamentals/weekly-cadence",
-            "soe-01-soe-fundamentals/soe-roles",
-            "soe-01-soe-fundamentals/exception-management",
-            "soe-01-soe-fundamentals/escalating-to-sop",
-            "soe-02-running-soe/monitoring-the-plan",
-            "soe-02-running-soe/adjustments-and-resets",
-            "soe-02-running-soe/integrated-soe-review",
-            "soe-02-running-soe/handoff-to-execution"
-          ]
-        },
-        {
-          "title": "Execution — Daily Operations",
-          "description": "How confirmed plans become shipped orders — order prioritisation, real-time visibility, execution discipline, and feeding actuals back to planning.",
-          "topics": [
-            "exec-01-execution-fundamentals/what-is-execution",
-            "exec-01-execution-fundamentals/from-plan-to-action",
-            "exec-01-execution-fundamentals/execution-exceptions",
-            "exec-01-execution-fundamentals/execution-and-erp",
-            "exec-02-daily-execution/order-prioritisation",
-            "exec-02-daily-execution/real-time-visibility",
-            "exec-02-daily-execution/execution-discipline",
-            "exec-02-daily-execution/feedback-to-planning"
-          ]
-        }
+      "phaseId": "understand",
+      "chapters": [
+        "process-03-operating-model",
+        "sop-01-sop-fundamentals",
+        "sop-02-running-sop",
+        "soe-01-soe-fundamentals",
+        "soe-02-running-soe",
+        "exec-01-execution-fundamentals",
+        "exec-02-daily-execution",
+        "01-understanding-basics",
+        "02-the-network",
+        "erp-01-erp-basics",
+        "erp-02-the-data-model",
+        "erp-04-data-flow-out-of-erp"
       ]
     },
     {
-      "title": "Understanding the Tools",
-      "description": "Learn how Planning Software and ERP support the processes from Phase 1 — from how the planning engine models your supply chain to how you work in both systems day-to-day.",
-      "sections": [
-        {
-          "title": "Planning Software — Building Blocks",
-          "description": "The core objects the planning engine uses to model your supply chain: items, locations, BOMs, BODs, resources, and how they form a network.",
-          "topics": [
-            "01-understanding-basics/item",
-            "01-understanding-basics/item-at-location",
-            "01-understanding-basics/bom",
-            "01-understanding-basics/bod",
-            "01-understanding-basics/resource",
-            "02-the-network/full-network"
-          ]
-        },
-        {
-          "title": "Planning Software — Data Flow & Logic",
-          "description": "How demand propagates upstream and supply flows downstream through the network, and the key planning logic rules that shape the output.",
-          "topics": [
-            "03-demand-data-flow/demand-signal",
-            "03-demand-data-flow/forecast-origin",
-            "03-demand-data-flow/upstream-cascade",
-            "03-demand-data-flow/timing-and-netting",
-            "04-supply-data-flow/supply-signal",
-            "04-supply-data-flow/inventory-netting",
-            "04-supply-data-flow/downstream-cascade",
-            "03-the-logic/backward-consumption",
-            "03-the-logic/pull",
-            "03-the-logic/safety-stock"
-          ]
-        },
-        {
-          "title": "Planning Software — Simulations & Navigation",
-          "description": "How to run workflow simulations in Planning Software and navigate the interface to read and act on plan output.",
-          "topics": [
-            "04-the-simulation/what-is-a-workflow-simulation",
-            "04-the-simulation/setting-up-a-simulation",
-            "04-the-simulation/running-the-simulation",
-            "04-the-simulation/reading-simulation-results",
-            "04-the-simulation/promoting-a-simulation",
-            "05-navigation-and-ui/navigating-planning-software",
-            "05-navigation-and-ui/the-user-interface",
-            "05-navigation-and-ui/reading-plan-output"
-          ]
-        },
-        {
-          "title": "ERP — Understanding the System",
-          "description": "What ERP is, how it structures data, and what it sends back to Planning Software — the signals that keep the plan grounded in reality.",
-          "topics": [
-            "erp-01-erp-basics/what-is-erp",
-            "erp-01-erp-basics/core-erp-concepts",
-            "erp-02-the-data-model/how-erp-structures-data",
-            "erp-02-the-data-model/key-master-data-in-erp",
-            "erp-02-the-data-model/key-transactional-data-in-erp",
-            "erp-04-data-flow-out-of-erp/what-erp-sends-to-planning"
-          ]
-        },
-        {
-          "title": "ERP — Working in ERP",
-          "description": "The business logic, key workflows, and navigation a supply planner uses in ERP — releasing orders, managing inventory, and reading output.",
-          "topics": [
-            "erp-05-the-logic/order-management-logic",
-            "erp-05-the-logic/inventory-management-logic",
-            "erp-06-key-erp-workflows/creating-and-managing-orders",
-            "erp-06-key-erp-workflows/goods-receipt-and-issue",
-            "erp-07-navigation-and-ui/navigating-erp",
-            "erp-07-navigation-and-ui/reading-erp-output"
-          ]
-        }
+      "phaseId": "apply",
+      "chapters": [
+        "03-data-flow",
+        "03-the-logic",
+        "04-the-simulation",
+        "05-navigation-and-ui",
+        "erp-05-the-logic",
+        "erp-06-key-erp-workflows",
+        "erp-07-navigation-and-ui",
+        "process-02-running-scenarios"
       ]
     },
     {
-      "title": "Advanced Planning",
-      "description": "Go beyond the baseline plan — use scenario planning to stress-test supply risks and demand uncertainty, set the policies that govern system behaviour, and measure planning performance.",
-      "sections": [
-        {
-          "title": "Scenario Planning Fundamentals",
-          "description": "What scenario planning is, when to use it, and how to set up scenarios that surface the decisions worth making.",
-          "topics": [
-            "process-01-scenario-planning-fundamentals/what-is-scenario-planning",
-            "process-01-scenario-planning-fundamentals/when-to-use-scenario-planning",
-            "process-01-scenario-planning-fundamentals/types-of-scenarios",
-            "process-01-scenario-planning-fundamentals/the-scenario-planning-process",
-            "process-01-scenario-planning-fundamentals/setting-up-effective-scenarios",
-            "process-01-scenario-planning-fundamentals/supply-risks",
-            "process-01-scenario-planning-fundamentals/demand-uncertainty"
-          ]
-        },
-        {
-          "title": "Running Scenarios in Planning Software",
-          "description": "The end-to-end practical workflow — creating, adjusting, running, comparing, and promoting scenarios within Planning Software.",
-          "topics": [
-            "process-02-running-scenarios/creating-a-scenario",
-            "process-02-running-scenarios/adjusting-parameters-and-assumptions",
-            "process-02-running-scenarios/running-and-comparing-scenarios",
-            "process-02-running-scenarios/promoting-a-scenario-to-baseline",
-            "process-02-running-scenarios/communicating-scenario-findings"
-          ]
-        },
-        {
-          "title": "Planning Policy",
-          "description": "The documented decisions that govern system behaviour — service level targets, safety stock rules, allocation logic, and prioritisation frameworks.",
-          "topics": [
-            "process-04-planning-policy/service-level-targets",
-            "process-04-planning-policy/safety-stock",
-            "process-04-planning-policy/allocation",
-            "process-04-planning-policy/prioritization"
-          ]
-        },
-        {
-          "title": "Governance & KPIs",
-          "description": "Decision frameworks, escalation paths, exception-based working, and the KPI structure that connects performance measurement to the S&OP cycle.",
-          "topics": [
-            "process-05-governance-and-escalation/decision-framework",
-            "process-05-governance-and-escalation/escalation-paths",
-            "process-05-governance-and-escalation/management-by-exception",
-            "process-06-kpis/kpi-framework-overview",
-            "process-06-kpis/key-planning-kpis",
-            "process-06-kpis/kpi-ownership-and-review",
-            "process-06-kpis/kpis-and-exception-management"
-          ]
-        }
+      "phaseId": "control",
+      "chapters": [
+        "process-01-scenario-planning-fundamentals",
+        "process-04-planning-policy",
+        "process-05-governance-and-escalation",
+        "process-06-kpis"
       ]
     }
   ]

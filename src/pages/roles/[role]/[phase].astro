@@ -8,10 +8,12 @@ export async function getStaticPaths() {
   for (const role of getRoles().filter((r) => !r.comingSoon && r.phases)) {
     const phases = resolveRolePhases(role)!;
     phases.forEach((phase, pi) => {
-      paths.push({
-        params: { role: role.slug, phase: String(pi + 1) },
-        props: { role, phase, phaseIndex: pi, totalPhases: phases.length, phases },
-      });
+      if (!phase.isEmpty) {
+        paths.push({
+          params: { role: role.slug, phase: String(pi + 1) },
+          props: { role, phase, phaseIndex: pi, totalPhases: phases.length, phases },
+        });
+      }
     });
   }
   return paths;
@@ -32,9 +34,18 @@ const phaseMins = phaseTopics.reduce((sum, t) => sum + t.estimatedMinutes, 0);
 const phaseHalfHours = Math.round(phaseMins / 30) * 0.5;
 const phaseTime = phaseMins >= 60 ? `~${phaseHalfHours} hrs` : `~${phaseMins} min`;
 
-const prevPhaseUrl = phaseIndex > 0 ? `${import.meta.env.BASE_URL}roles/${role.slug}/${phaseIndex}` : null;
-const nextPhaseUrl = phaseIndex < totalPhases - 1 ? `${import.meta.env.BASE_URL}roles/${role.slug}/${phaseIndex + 2}` : null;
-const nextPhaseTitle = phaseIndex < totalPhases - 1 ? phases[phaseIndex + 1].title : null;
+// Navigate only among non-empty phases
+const nonEmptyIndices = phases.map((p, i) => (!p.isEmpty ? i : -1)).filter((i) => i >= 0);
+const posInNonEmpty = nonEmptyIndices.indexOf(phaseIndex);
+const prevPhaseIdx = posInNonEmpty > 0 ? nonEmptyIndices[posInNonEmpty - 1] : null;
+const nextPhaseIdx =
+  posInNonEmpty < nonEmptyIndices.length - 1 ? nonEmptyIndices[posInNonEmpty + 1] : null;
+
+const BASE_URL = import.meta.env.BASE_URL;
+const prevPhaseUrl = prevPhaseIdx !== null ? `${BASE_URL}roles/${role.slug}/${prevPhaseIdx + 1}` : null;
+const nextPhaseUrl = nextPhaseIdx !== null ? `${BASE_URL}roles/${role.slug}/${nextPhaseIdx + 1}` : null;
+const nextPhaseTitle = nextPhaseIdx !== null ? phases[nextPhaseIdx].title : null;
+const nextPhaseNumber = nextPhaseIdx !== null ? nextPhaseIdx + 1 : null;
 
 const colorTextMap: Record<string, string> = {
   indigo: 'text-indigo-600 dark:text-indigo-400',
@@ -92,12 +103,11 @@ const accentDot      = colorDotMap[role.color]    ?? colorDotMap.indigo;
 const accentBar      = colorBarMap[role.color]    ?? colorBarMap.indigo;
 const accentGradient = colorGradientMap[role.color] ?? colorGradientMap.indigo;
 
-const BASE_URL = import.meta.env.BASE_URL;
 const topicIds = phaseTopics.map((t) => t.topicId);
 ---
 <BaseLayout
   title={`Phase ${phaseIndex + 1}: ${phase.title} — ${role.title}`}
-  description={phase.description ?? role.description}
+  description={phase.goal}
 >
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
     <div class="flex items-center gap-3">
@@ -121,7 +131,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <!-- Hero -->
-    <div class="relative z-10 px-6 pt-12 pb-10 max-w-3xl mx-auto text-center animate-fade-in">
+    <div class="relative z-10 px-6 pt-12 pb-8 max-w-3xl mx-auto text-center animate-fade-in">
       <div class={`inline-flex items-center gap-2 text-xs font-medium ${accentText} ${accentBg} border ${accentBorder} rounded-full px-3 py-1 mb-6`}>
         <span class={`w-1.5 h-1.5 rounded-full ${accentDot} animate-pulse`}></span>
         Phase {phaseIndex + 1} of {totalPhases}
@@ -129,12 +139,38 @@ const topicIds = phaseTopics.map((t) => t.topicId);
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
         <span class={`text-transparent bg-clip-text bg-gradient-to-r ${accentGradient}`}>{phase.title}</span>
       </h1>
-      {phase.description && (
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-          {phase.description}
-        </p>
-      )}
+      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+        {phase.goal}
+      </p>
       <p class="text-sm text-gray-400 dark:text-gray-500 mt-4">{phaseTopics.length} topics · {phaseTime}</p>
+    </div>
+
+    <!-- Phase meta: key areas + behaviors -->
+    <div class="relative z-10 px-6 pb-8 max-w-3xl mx-auto animate-fade-in">
+      <div class={`rounded-2xl border ${accentBorder} ${accentBg} p-5 grid sm:grid-cols-2 gap-6`}>
+        <div>
+          <p class={`text-xs font-bold uppercase tracking-widest ${accentText} mb-3`}>Key areas</p>
+          <ul class="space-y-2">
+            {phase.keyAreas.map((area) => (
+              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
+                {area}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class={`text-xs font-bold uppercase tracking-widest ${accentText} mb-3`}>Characteristic behavior</p>
+          <ul class="space-y-2">
+            {phase.behaviors.map((b) => (
+              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Phase progress bar -->
@@ -160,7 +196,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
             {section.topics.map((topic) => (
               <li>
                 <a
-                  href={topic.url}
+                  href={`${topic.url}?role=${role.slug}&phase=${phaseIndex + 1}`}
                   class={`group flex items-start gap-4 p-4 rounded-xl border ${colorBorderMap[topic.chapterColor] ?? colorBorderMap.indigo} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
                 >
                   <div class="flex-1 min-w-0">
@@ -206,7 +242,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
             href={nextPhaseUrl}
             class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
-            <span>Phase {phaseIndex + 2}: {nextPhaseTitle}</span>
+            <span>Phase {nextPhaseNumber}: {nextPhaseTitle}</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>

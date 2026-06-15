@@ -147,9 +147,23 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
 
       {phases ? (
         /* Phase card overview */
-        <div class="space-y-5">
+        <div class="space-y-4">
           {phases.map((phase, pi) => {
             const ps = phaseStats![pi];
+            if (phase.isEmpty) {
+              return (
+                <div class="block p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/20 opacity-60">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2.5 py-0.5">
+                      Phase {pi + 1}
+                    </span>
+                    <span class="text-xs text-gray-400 dark:text-gray-600 italic">Coming soon</span>
+                  </div>
+                  <h2 class="text-xl font-semibold text-gray-400 dark:text-gray-600 mb-1">{phase.title}</h2>
+                  <p class="text-sm text-gray-400 dark:text-gray-600 leading-relaxed">{phase.goal}</p>
+                </div>
+              );
+            }
             return (
               <a
                 href={`${BASE_URL}roles/${role.slug}/${pi + 1}`}
@@ -163,8 +177,8 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
                   <span class="text-xs text-gray-400 dark:text-gray-500">{ps.topicCount} topics · {ps.time}</span>
                 </div>
 
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{phase.title}</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">{phase.description}</p>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">{phase.title}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">{phase.goal}</p>
 
                 <ul class="space-y-2 mb-6">
                   {phase.sections.map((s) => (

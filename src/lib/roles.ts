@@ -1,15 +1,8 @@
-import { getChapters, getTopics, type TopicMeta } from './chapters';
-
-export interface RoleSectionConfig {
-  title: string;
-  description?: string;
-  topics: string[]; // "chapter-slug/topic-slug" references into src/content/chapters/
-}
+import { getChapters, getTopics, getTopicsForChapter, type TopicMeta } from './chapters';
 
 export interface RolePhaseConfig {
-  title: string;
-  description?: string;
-  sections: RoleSectionConfig[];
+  phaseId: string;
+  chapters: string[]; // chapter slugs, e.g. "sop-01-sop-fundamentals"
 }
 
 export interface RoleConfig {
@@ -20,10 +13,18 @@ export interface RoleConfig {
   order: number;
   department?: string;
   comingSoon?: boolean;
-  sections?: RoleSectionConfig[];
+  sections?: never; // removed; kept as never to catch stale JSON
   phases?: RolePhaseConfig[];
   slug: string;
   url: string;
+}
+
+export interface LearningPhase {
+  id: string;
+  title: string;
+  goal: string;
+  keyAreas: string[];
+  behaviors: string[];
 }
 
 export interface RoleTopic extends TopicMeta {
@@ -40,13 +41,25 @@ export interface ResolvedRoleSection {
 }
 
 export interface ResolvedRolePhase {
+  phaseId: string;
   title: string;
-  description?: string;
+  goal: string;
+  keyAreas: string[];
+  behaviors: string[];
   sections: ResolvedRoleSection[];
+  isEmpty: boolean;
 }
 
 // Eagerly load all role config files
 const roleFiles = import.meta.glob('../content/roles/*.json', { eager: true });
+
+// Eagerly load the global learning phases definition
+const learningPhasesFile = import.meta.glob('../content/learning-phases.json', { eager: true });
+
+export function getLearningPhases(): LearningPhase[] {
+  const mod = Object.values(learningPhasesFile)[0] as any;
+  return (mod?.default ?? mod) as LearningPhase[];
+}
 
 export function getRoles(): RoleConfig[] {
   return Object.entries(roleFiles)
@@ -67,74 +80,79 @@ export function getRole(slug: string): RoleConfig | undefined {
 }
 
 /**
- * Resolves a role's "chapter-slug/topic-slug" references to full topic metadata.
- * Throws on bad references so `npm run build` fails loudly instead of silently
- * dropping topics from a course.
- *
- * Note: topicId is the site-wide `chapter-slug/topic-slug` key used by the
- * platform-progress store. Chapter slugs are globally unique (content folder
- * names) and topic slugs are unique within a chapter, so these IDs never
- * collide across pillars.
+ * Resolves a chapter slug to a ResolvedRoleSection.
+ * Throws at build time if the chapter slug is unknown or hidden.
+ * All topics in the chapter are included in order.json order.
  */
-function resolveSection(
-  section: RoleSectionConfig,
+function resolveChapter(
+  chapterSlug: string,
   roleSlug: string,
-  allTopics: ReturnType<typeof getTopics>,
   allChapters: ReturnType<typeof getChapters>,
   seen: Set<string>,
 ): ResolvedRoleSection {
-  return {
-    title: section.title,
-    description: section.description,
-    topics: section.topics.map((ref) => {
-      const fail = (reason: string): never => {
-        throw new Error(`[roles] Role "${roleSlug}", section "${section.title}": ${reason}: "${ref}"`);
-      };
-      if (seen.has(ref)) fail('duplicate topic reference');
-      seen.add(ref);
-
-      const slashIdx = ref.indexOf('/');
-      if (slashIdx === -1) fail('malformed topic reference (expected "chapter-slug/topic-slug")');
-      const chapterSlug = ref.slice(0, slashIdx);
-      const topicSlug = ref.slice(slashIdx + 1);
-
-      const chapter = allChapters.find((c) => c.slug === chapterSlug);
-      const topic = allTopics.find((t) => t.chapterSlug === chapterSlug && t.slug === topicSlug);
-      if (!chapter || !topic) fail('unknown topic reference');
-      if (chapter!.hidden) fail('reference into hidden chapter');
-
-      const pillar = topic!.pillar ?? 'technology';
-      return {
-        ...topic!,
-        topicId: `${chapterSlug}/${topicSlug}`,
-        chapterTitle: chapter!.title,
-        chapterColor: chapter!.color,
-        pillarLabel: pillar.charAt(0).toUpperCase() + pillar.slice(1),
-      } as RoleTopic;
-    }),
+  const fail = (reason: string): never => {
+    throw new Error(`[roles] Role "${roleSlug}", chapter "${chapterSlug}": ${reason}`);
   };
-}
+  if (seen.has(chapterSlug)) fail('duplicate chapter reference');
+  seen.add(chapterSlug);
 
-export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
-  const allTopics = getTopics();
-  const allChapters = getChapters();
-  const seen = new Set<string>();
-  const allSections = role.phases
-    ? role.phases.flatMap((p) => p.sections)
-    : (role.sections ?? []);
-  return allSections.map((s) => resolveSection(s, role.slug, allTopics, allChapters, seen));
+  const chapter = allChapters.find((c) => c.slug === chapterSlug);
+  if (!chapter) fail('unknown chapter slug');
+  if (chapter!.hidden) fail('reference into hidden chapter');
+
+  const pillar = chapter!.pillar ?? 'technology';
+  const topics = getTopicsForChapter(chapterSlug).map((topic) => ({
+    ...topic,
+    topicId: `${chapterSlug}/${topic.slug}`,
+    chapterTitle: chapter!.title,
+    chapterColor: chapter!.color,
+    pillarLabel: pillar.charAt(0).toUpperCase() + pillar.slice(1),
+  })) as RoleTopic[];
+
+  return {
+    title: chapter!.title,
+    description: chapter!.description,
+    topics,
+  };
 }
 
 export function resolveRolePhases(role: RoleConfig): ResolvedRolePhase[] | null {
   if (!role.phases) return null;
-  const allTopics = getTopics();
+  const allLearningPhases = getLearningPhases();
   const allChapters = getChapters();
   const seen = new Set<string>();
-  return role.phases.map((phase) => ({
-    title: phase.title,
-    description: phase.description,
-    sections: phase.sections.map((s) => resolveSection(s, role.slug, allTopics, allChapters, seen)),
-  }));
+
+  return allLearningPhases.map((lp) => {
+    const rolePhase = role.phases!.find((rp) => rp.phaseId === lp.id);
+    if (!rolePhase || rolePhase.chapters.length === 0) {
+      return {
+        phaseId: lp.id,
+        title: lp.title,
+        goal: lp.goal,
+        keyAreas: lp.keyAreas,
+        behaviors: lp.behaviors,
+        sections: [],
+        isEmpty: true,
+      };
+    }
+    return {
+      phaseId: lp.id,
+      title: lp.title,
+      goal: lp.goal,
+      keyAreas: lp.keyAreas,
+      behaviors: lp.behaviors,
+      sections: rolePhase.chapters.map((slug) =>
+        resolveChapter(slug, role.slug, allChapters, seen),
+      ),
+      isEmpty: false,
+    };
+  });
+}
+
+export function resolveRoleSections(role: RoleConfig): ResolvedRoleSection[] {
+  const phases = resolveRolePhases(role);
+  if (phases) return phases.flatMap((p) => p.sections);
+  return [];
 }
 
 export function getRoleStats(sections: ResolvedRoleSection[]): { topicCount: number; totalMinutes: number } {

@@ -10,8 +10,7 @@
     "planning-software": [
       "01-understanding-basics",
       "02-the-network",
-      "03-demand-data-flow",
-      "04-supply-data-flow",
+      "03-data-flow",
       "03-the-logic",
       "04-the-simulation",
       "05-navigation-and-ui",
@@ -110,8 +109,7 @@
       "starting-items", "shipping-items-to-grower", "seed-production", "shipping-seeds-back",
       "cleaning", "calibrating", "priming", "coating", "packing", "final-shipment", "full-network"
     ],
-    "03-demand-data-flow": ["demand-signal", "forecast-origin", "upstream-cascade", "timing-and-netting"],
-    "04-supply-data-flow": ["supply-signal", "inventory-netting", "parent-line-items", "downstream-cascade"],
+    "03-data-flow": ["demand-signal", "forecast-origin", "upstream-cascade", "timing-and-netting", "supply-signal", "inventory-netting", "parent-line-items", "downstream-cascade"],
     "03-the-logic": [
       "disaggregation-variety-to-item", "disaggregation-year-to-month", "backward-consumption",
       "scheduled-receipt", "push", "pull", "safety-stock", "demand-slicing"
