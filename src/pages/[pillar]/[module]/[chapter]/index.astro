@@ -2,6 +2,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import ThemeToggle from '../../../../components/ThemeToggle.astro';
 import { getChapters, getTopicsForChapter, getChapterUrl } from '../../../../lib/chapters';
+import { getRoles, resolveRolePhases } from '../../../../lib/roles';
 
 export async function getStaticPaths() {
   const chapters = getChapters();
@@ -60,7 +61,7 @@ const moduleBackMap: Record<string, { href: string; label: string }> = {
   'data-fundamentals':    { href: `${BASE_URL}data/data-fundamentals`,          label: 'Data Fundamentals' },
   'data-governance':      { href: `${BASE_URL}data/data-governance`,            label: 'Data Governance' },
   'reporting':            { href: `${BASE_URL}technology/reporting`,            label: 'Reporting' },
-  'process-foundations':  { href: `${BASE_URL}process/process-foundations`,     label: 'Process Foundations' },
+  'process-fundamentals': { href: `${BASE_URL}process/process-fundamentals`,     label: 'Process Fundamentals' },
   'scenario-planning':    { href: `${BASE_URL}process/scenario-planning`,       label: 'Scenario Planning' },
   'sop-process':          { href: `${BASE_URL}process/sop-process`,             label: 'S&OP' },
   'soe-process':          { href: `${BASE_URL}process/soe-process`,             label: 'S&OE' },
@@ -75,6 +76,29 @@ const pillarChapters = getChapters(pillar).filter(c => !c.hidden && c.module ===
 const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
 const borderClass = colorBorderMap[chapter.color] ?? 'border-brand-200 dark:border-brand-500/40';
 const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
+
+// Build per-role-phase chapter lists so the client can swap the tab bar when ?from=roles/...
+const chapterPhaseCtxMap: Record<string, { roleTitle: string; roleUrl: string; chapters: { slug: string; title: string; url: string }[] }> = {};
+for (const role of getRoles().filter(r => !r.comingSoon && r.phases)) {
+  const phases = resolveRolePhases(role);
+  if (!phases) continue;
+  phases.forEach((phase, pi) => {
+    if (phase.isEmpty) return;
+    const slugsInPhase = phase.sections.map(s => s.topics[0]?.chapterSlug).filter(Boolean);
+    if (!slugsInPhase.includes(chapterSlug)) return;
+    const key = `${role.slug}/${pi + 1}`;
+    chapterPhaseCtxMap[key] = {
+      roleTitle: role.title,
+      roleUrl: role.url,
+      chapters: phase.sections.map(s => ({
+        slug: s.topics[0]?.chapterSlug ?? '',
+        title: s.title,
+        url: (s.topics[0]?.chapterUrl ?? '') + `?from=roles/${key}`,
+      })),
+    };
+  });
+}
+const chapterPhaseCtxJson = JSON.stringify({ currentChapterSlug: chapterSlug, bgClass, textClass, map: chapterPhaseCtxMap });
 ---
 <BaseLayout title={`${chapter.title} — ${back.label}`} description={chapter.description}>
   <!-- Top nav -->
@@ -94,7 +118,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
     </div>
 
     <!-- Chapter switcher -->
-    <nav class="hidden sm:flex items-center gap-1">
+    <nav id="chapter-tab-bar" class="hidden sm:flex items-center gap-1">
       {pillarChapters.map((ch) => (
         <a
           href={getChapterUrl(ch)}
@@ -162,6 +186,7 @@ const bgClass = colorBgMap[chapter.color] ?? 'bg-brand-50 dark:bg-brand-500/10';
       <a id="chapter-back-overview" href={back.href} class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Back to overview</a>
     </div>
   </main>
+  <script is:inline define:vars={{ chapterPhaseCtxJson }}>window.__chapterPhaseCtx = JSON.parse(chapterPhaseCtxJson);</script>
 </BaseLayout>
 
 <script>

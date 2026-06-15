@@ -19,6 +19,7 @@ import InteractiveGraph from '../../../../components/sim/InteractiveGraph.astro'
 import DemandFlowGraph from '../../../../components/sim/DemandFlowGraph.astro';
 import SupplyFlowGraph from '../../../../components/sim/SupplyFlowGraph.astro';
 import { getChapters, getTopics, getAdjacentTopics } from '../../../../lib/chapters';
+import { getRoles, resolveRolePhases } from '../../../../lib/roles';
 
 // Build static paths for all topics
 export async function getStaticPaths() {
@@ -42,6 +43,34 @@ export async function getStaticPaths() {
 }
 
 const { topic, chapter, prev, next, totalTopics } = Astro.props;
+
+// Compute per-role-phase context (prev/next scoped to phase) for client-side nav override
+const topicRoleCtxMap: Record<string, {
+  roleTitle: string; roleUrl: string;
+  prevUrl: string | null; prevTitle: string | null;
+  nextUrl: string | null; nextTitle: string | null;
+}> = {};
+for (const role of getRoles().filter(r => !r.comingSoon && r.phases)) {
+  const phases = resolveRolePhases(role);
+  if (!phases) continue;
+  phases.forEach((phase, pi) => {
+    if (phase.isEmpty) return;
+    const phaseTopics = phase.sections.flatMap(s => s.topics);
+    const idx = phaseTopics.findIndex(t => t.url === topic.url);
+    if (idx === -1) return;
+    const key = `${role.slug}/${pi + 1}`;
+    const from = `?from=roles/${key}`;
+    topicRoleCtxMap[key] = {
+      roleTitle: role.title,
+      roleUrl: role.url,
+      prevUrl:  idx > 0 ? phaseTopics[idx - 1].url + from : null,
+      prevTitle: idx > 0 ? phaseTopics[idx - 1].title : null,
+      nextUrl:  idx < phaseTopics.length - 1 ? phaseTopics[idx + 1].url + from : null,
+      nextTitle: idx < phaseTopics.length - 1 ? phaseTopics[idx + 1].title : null,
+    };
+  });
+}
+const roleCtxJson = JSON.stringify(topicRoleCtxMap);
 
 // Dynamically import the MDX file for this topic
 const mdxFiles = import.meta.glob('../../../../content/chapters/**/*.md', { eager: false });
@@ -69,6 +98,7 @@ const sharedProps = {
   pillar: topic.pillar ?? 'technology',
   module: topic.module ?? 'planning-software',
   totalTopics,
+  roleCtxJson,
 };
 ---
 

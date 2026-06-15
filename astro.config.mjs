@@ -8,4 +8,5 @@ export default defineConfig({
   base: '/',
   adapter: vercel(),
   integrations: [tailwind(), mdx()],
+  devToolbar: { enabled: false },
 });

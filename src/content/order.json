@@ -3,7 +3,7 @@
   "modules": {
     "technology": ["planning-software", "erp", "architecture", "mdm", "fms"],
     "data": ["data-fundamentals", "data-driven-planning", "data-governance"],
-    "process": ["process-foundations", "scenario-planning", "sop-process", "soe-process", "execution-process"],
+    "process": ["process-fundamentals", "scenario-planning", "sop-process", "soe-process", "execution-process"],
     "people": ["organisation-and-roles", "implementation-and-change"]
   },
   "chapters": {
@@ -59,7 +59,7 @@
     "data-governance": [
       "data-04-data-governance"
     ],
-    "process-foundations": [
+    "process-fundamentals": [
       "process-03-operating-model",
       "process-04-planning-policy",
       "process-05-governance-and-escalation",

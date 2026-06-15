@@ -1,0 +1,358 @@
+---
+import { getChapters } from '../lib/chapters';
+import { getRoles } from '../lib/roles';
+
+const allChapters = getChapters().filter(c => !c.hidden);
+const allRoles = getRoles();
+
+// Build role → chapter slug set
+const roleChapterSets = new Map<string, Set<string>>();
+for (const role of allRoles) {
+  const set = new Set<string>();
+  role.phases?.forEach(phase => phase.chapters.forEach((slug: string) => set.add(slug)));
+  roleChapterSets.set(role.slug, set);
+}
+
+// Derive pillar order directly from the already-sorted getChapters() output,
+// which uses order.json internally — so this matches order.json exactly.
+const pillarOrder: string[] = [];
+for (const ch of allChapters) {
+  const p = ch.pillar ?? 'technology';
+  if (!pillarOrder.includes(p)) pillarOrder.push(p);
+}
+
+const pillarMeta: Record<string, { label: string; bg: string; color: string }> = {
+  technology: { label: 'Technology', bg: '#f0fdf4', color: '#15803d' },
+  process:    { label: 'Process',    bg: '#eff6ff', color: '#1d4ed8' },
+  data:       { label: 'Data',       bg: '#fffbeb', color: '#b45309' },
+  people:     { label: 'People',     bg: '#fff1f2', color: '#be123c' },
+};
+
+const moduleLabels: Record<string, string> = {
+  'planning-software':         'Planning Software',
+  'erp':                       'ERP',
+  'architecture':              'Architecture & Integration',
+  'mdm':                       'MDM Tool',
+  'fms':                       'FMS Tool',
+  'data-driven-planning':      'Data-Driven Planning',
+  'data-fundamentals':         'Data Fundamentals',
+  'data-governance':           'Data Governance',
+  'reporting':                 'Reporting',
+  'process-fundamentals':       'Process Fundamentals',
+  'scenario-planning':         'Scenario Planning',
+  'sop-process':               'S&OP',
+  'soe-process':               'S&OE',
+  'execution-process':         'Execution',
+  'organisation-and-roles':    'Organisation & Roles',
+  'implementation-and-change': 'Implementation & Change',
+};
+
+type ModuleGroup = { key: string; label: string; chapters: typeof allChapters };
+type PillarGroup = { key: string; label: string; bg: string; color: string; modules: ModuleGroup[] };
+
+const pillars: PillarGroup[] = [];
+for (const pillarKey of pillarOrder) {
+  const pChapters = allChapters.filter(c => (c.pillar ?? 'technology') === pillarKey);
+  if (!pChapters.length) continue;
+
+  const seenMods = new Set<string>();
+  const modsOrdered: string[] = [];
+  for (const ch of pChapters) {
+    const m = ch.module ?? 'planning-software';
+    if (!seenMods.has(m)) { seenMods.add(m); modsOrdered.push(m); }
+  }
+
+  const meta = pillarMeta[pillarKey] ?? { label: pillarKey, bg: '#f9fafb', color: '#374151' };
+  pillars.push({
+    key: pillarKey,
+    ...meta,
+    modules: modsOrdered.map(mod => ({
+      key: mod,
+      label: moduleLabels[mod] ?? mod,
+      chapters: pChapters.filter(c => (c.module ?? 'planning-software') === mod),
+    })),
+  });
+}
+
+const FIRST_COL_W = 220;
+const ROLE_COL_W = 100;
+---
+
+<style is:global>
+  /* CSS variables scoped to the matrix overlay */
+  #role-matrix {
+    --rm-bg:           white;
+    --rm-surface:      #f9fafb;
+    --rm-border:       #e5e7eb;
+    --rm-border-strong:#d1d5db;
+    --rm-border-light: #f3f4f6;
+    --rm-text:         #374151;
+    --rm-text-muted:   #6b7280;
+    --rm-text-faint:   #9ca3af;
+    --rm-dot:          #6366f1;
+  }
+  .dark #role-matrix {
+    --rm-bg:           #0f172a;
+    --rm-surface:      #1e293b;
+    --rm-border:       #334155;
+    --rm-border-strong:#475569;
+    --rm-border-light: #1e293b;
+    --rm-text:         #f1f5f9;
+    --rm-text-muted:   #94a3b8;
+    --rm-text-faint:   #64748b;
+    --rm-dot:          #818cf8;
+  }
+
+  /* Pillar row backgrounds — light mode */
+  #role-matrix .rm-pillar-row[data-pillar="technology"] { background: #f0fdf4; }
+  #role-matrix .rm-pillar-row[data-pillar="process"]    { background: #eff6ff; }
+  #role-matrix .rm-pillar-row[data-pillar="data"]       { background: #fffbeb; }
+  #role-matrix .rm-pillar-row[data-pillar="people"]     { background: #fff1f2; }
+
+  /* Sticky first-column cell in pillar rows — light mode */
+  #role-matrix .rm-pillar-row[data-pillar="technology"] .rm-pillar-sticky { background: #f0fdf4; color: #15803d; }
+  #role-matrix .rm-pillar-row[data-pillar="process"]    .rm-pillar-sticky { background: #eff6ff; color: #1d4ed8; }
+  #role-matrix .rm-pillar-row[data-pillar="data"]       .rm-pillar-sticky { background: #fffbeb; color: #b45309; }
+  #role-matrix .rm-pillar-row[data-pillar="people"]     .rm-pillar-sticky { background: #fff1f2; color: #be123c; }
+
+  /* Pillar row backgrounds — dark mode */
+  .dark #role-matrix .rm-pillar-row[data-pillar="technology"] { background: #052e16; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="process"]    { background: #172554; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="data"]       { background: #431407; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="people"]     { background: #4c0519; }
+
+  /* Sticky first-column cell in pillar rows — dark mode */
+  .dark #role-matrix .rm-pillar-row[data-pillar="technology"] .rm-pillar-sticky { background: #052e16; color: #4ade80; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="process"]    .rm-pillar-sticky { background: #172554; color: #60a5fa; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="data"]       .rm-pillar-sticky { background: #431407; color: #fbbf24; }
+  .dark #role-matrix .rm-pillar-row[data-pillar="people"]     .rm-pillar-sticky { background: #4c0519; color: #fb7185; }
+</style>
+
+<div
+  id="role-matrix"
+  class="fixed inset-0 z-[9997] hidden flex-col bg-white dark:bg-gray-900"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Role chapter matrix"
+>
+  <!-- Header bar -->
+  <div class="flex items-center justify-between px-5 py-3 border-b border-gray-200 dark:border-gray-700 shrink-0 bg-white dark:bg-gray-900">
+    <div class="flex items-center gap-3">
+      <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Role &times; Chapter Matrix</h2>
+      <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
+        {allRoles.filter(r => !r.comingSoon).length} active &nbsp;·&nbsp; {allRoles.filter(r => r.comingSoon).length} coming soon
+      </span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
+        <kbd class="font-mono bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-gray-500 dark:text-gray-400">M</kbd> toggle
+        &nbsp;·&nbsp;
+        <kbd class="font-mono bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-gray-500 dark:text-gray-400">Esc</kbd> close
+      </span>
+      <button
+        id="role-matrix-close"
+        class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors p-1 rounded"
+        aria-label="Close"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable table area -->
+  <div class="flex-1 overflow-auto" id="role-matrix-scroll">
+    <table style={`border-collapse: separate; border-spacing: 0; min-width: ${FIRST_COL_W + allRoles.length * ROLE_COL_W}px;`}>
+
+      <!-- Role header row -->
+      <thead>
+        <tr>
+          <!-- Corner -->
+          <th style={`position: sticky; left: 0; top: 0; z-index: 30; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; height: 128px; padding: 0; vertical-align: bottom; border-right: 1px solid var(--rm-border); border-bottom: 2px solid var(--rm-border);`}>
+            <div style="padding: 6px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rm-text-faint);">
+              Chapter
+            </div>
+          </th>
+          <!-- Role columns -->
+          {allRoles.map(role => (
+            <th
+              title={role.title}
+              style={`position: sticky; top: 0; z-index: 20; background: var(--rm-bg); width: ${ROLE_COL_W}px; min-width: ${ROLE_COL_W}px; height: 128px; padding: 0; vertical-align: bottom; border-right: 1px solid var(--rm-border-light); border-bottom: 2px solid var(--rm-border); opacity: ${role.comingSoon ? 0.45 : 1};`}
+            >
+              <div style={`position: relative; height: 128px; width: ${ROLE_COL_W}px; overflow: visible;`}>
+                <span style={`position: absolute; bottom: 8px; left: ${ROLE_COL_W / 2}px; white-space: nowrap; font-size: 11px; font-weight: 500; color: var(--rm-text); display: block; transform-origin: left bottom; transform: rotate(-50deg);`}>
+                  {role.title}
+                </span>
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+
+      <!-- Body rows -->
+      <tbody>
+        {pillars.map(pillar => (
+          <>
+            {/* Pillar header row */}
+            <tr class="rm-pillar-row" data-pillar={pillar.key} style="cursor: pointer;">
+              <td
+                class="rm-pillar-sticky"
+                style={`position: sticky; left: 0; z-index: 10; width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 5px 10px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border-strong); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; user-select: none;`}
+              >
+                <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
+                {pillar.label}
+              </td>
+              {allRoles.map(() => (
+                <td style={`border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-strong);`}></td>
+              ))}
+            </tr>
+
+            {/* Module and chapter rows */}
+            {pillar.modules.map(mod => (
+              <>
+                <tr class="rm-module-row" data-pillar={pillar.key} data-module={mod.key} style="background: var(--rm-surface); cursor: pointer;">
+                  <td
+                    style={`position: sticky; left: 0; z-index: 10; background: var(--rm-surface); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 4px 10px 4px 24px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border); font-weight: 600; font-size: 11px; color: var(--rm-text-muted); white-space: nowrap; user-select: none;`}
+                  >
+                    <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
+                    {mod.label}
+                  </td>
+                  {allRoles.map(() => (
+                    <td style={`background: var(--rm-surface); border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border);`}></td>
+                  ))}
+                </tr>
+
+                {mod.chapters.map(ch => {
+                  return (
+                    <tr class="rm-chapter-row" data-pillar={pillar.key} data-module={mod.key}>
+                      <td
+                        title={ch.title}
+                        style={`position: sticky; left: 0; z-index: 10; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; max-width: ${FIRST_COL_W}px; padding: 3px 10px 3px 36px; border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-light); font-size: 12px; color: var(--rm-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`}
+                      >
+                        {ch.title}
+                      </td>
+                      {allRoles.map(role => {
+                        const assigned = roleChapterSets.get(role.slug)?.has(ch.slug) ?? false;
+                        return (
+                          <td style={`border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border-light); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                            {assigned && (
+                              <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </>
+            ))}
+          </>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="border-t border-gray-200 dark:border-gray-700 px-5 py-2 shrink-0 flex items-center gap-5 bg-white dark:bg-gray-900">
+    <div class="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); display: inline-block;"></div>
+      Chapter assigned to role
+    </div>
+    <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
+    <span class="text-xs text-gray-400 dark:text-gray-500">Dimmed columns = coming soon roles</span>
+    <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
+    <span class="text-xs text-gray-400 dark:text-gray-500">Click pillar or module labels to collapse</span>
+  </div>
+</div>
+
+<script>
+  const overlay  = document.getElementById('role-matrix')!;
+  const closeBtn = document.getElementById('role-matrix-close')!;
+
+  function open() {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  function toggle() {
+    overlay.classList.contains('hidden') ? open() : close();
+  }
+
+  // Pillar row toggle
+  overlay.querySelectorAll<HTMLElement>('.rm-pillar-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const pillar = row.dataset.pillar!;
+      const isCollapsed = row.hasAttribute('data-collapsed');
+      const chevron = row.querySelector<HTMLElement>('.rm-chevron');
+
+      if (isCollapsed) {
+        row.removeAttribute('data-collapsed');
+        // Show module rows; chapter rows only if their module isn't also collapsed
+        overlay.querySelectorAll<HTMLElement>('.rm-module-row').forEach(r => {
+          if (r.dataset.pillar === pillar) r.style.display = '';
+        });
+        overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
+          if (r.dataset.pillar === pillar) {
+            const modRow = overlay.querySelector<HTMLElement>(
+              `.rm-module-row[data-pillar="${pillar}"][data-module="${r.dataset.module}"]`
+            );
+            if (!modRow?.hasAttribute('data-collapsed')) r.style.display = '';
+          }
+        });
+        if (chevron) chevron.style.transform = 'rotate(90deg)';
+      } else {
+        row.setAttribute('data-collapsed', '');
+        overlay.querySelectorAll<HTMLElement>('.rm-module-row, .rm-chapter-row').forEach(r => {
+          if (r.dataset.pillar === pillar) r.style.display = 'none';
+        });
+        if (chevron) chevron.style.transform = '';
+      }
+    });
+  });
+
+  // Module row toggle (stop bubbling to pillar row)
+  overlay.querySelectorAll<HTMLElement>('.rm-module-row').forEach(row => {
+    row.addEventListener('click', e => {
+      e.stopPropagation();
+      const pillar = row.dataset.pillar!;
+      const mod = row.dataset.module!;
+      const isCollapsed = row.hasAttribute('data-collapsed');
+      const chevron = row.querySelector<HTMLElement>('.rm-chevron');
+
+      if (isCollapsed) {
+        row.removeAttribute('data-collapsed');
+        overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
+          if (r.dataset.pillar === pillar && r.dataset.module === mod) r.style.display = '';
+        });
+        if (chevron) chevron.style.transform = 'rotate(90deg)';
+      } else {
+        row.setAttribute('data-collapsed', '');
+        overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
+          if (r.dataset.pillar === pillar && r.dataset.module === mod) r.style.display = 'none';
+        });
+        if (chevron) chevron.style.transform = '';
+      }
+    });
+  });
+
+  // Keyboard handler
+  document.addEventListener('keydown', e => {
+    const tag = (e.target as HTMLElement).tagName;
+    const inInput = tag === 'INPUT' || tag === 'TEXTAREA' || (e.target as HTMLElement).isContentEditable;
+    if (e.key === 'Escape') { close(); return; }
+    if ((e.key === 'm' || e.key === 'M') && !inInput && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      toggle();
+    }
+  });
+
+  closeBtn.addEventListener('click', close);
+</script>

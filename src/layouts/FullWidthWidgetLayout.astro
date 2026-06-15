@@ -20,6 +20,7 @@ export interface Props {
   pillar?: string;
   module?: string;
   totalTopics?: number;
+  roleCtxJson?: string;
 }
 
 const {
@@ -40,27 +41,10 @@ const {
   pillar,
   module,
   totalTopics,
+  roleCtxJson = '{}',
 } = Astro.props;
 
 const BASE_URL = import.meta.env.BASE_URL;
-const moduleBackMap: Record<string, { href: string; label: string }> = {
-  'planning-software':         { href: `${BASE_URL}technology/planning-software`,         label: 'Planning Software' },
-  'erp':                       { href: `${BASE_URL}technology/erp`,                       label: 'ERP' },
-  'architecture':              { href: `${BASE_URL}technology/architecture`,              label: 'Architecture & Integration' },
-  'mdm':                       { href: `${BASE_URL}technology/mdm`,                       label: 'MDM Tool' },
-  'fms':                       { href: `${BASE_URL}technology/fms`,                       label: 'FMS Tool' },
-  'data-driven-planning':      { href: `${BASE_URL}data/data-driven-planning`,            label: 'Data-Driven Planning' },
-  'data-fundamentals':         { href: `${BASE_URL}data/data-fundamentals`,               label: 'Data Fundamentals' },
-  'data-governance':           { href: `${BASE_URL}data/data-governance`,                 label: 'Data Governance' },
-  'reporting':                 { href: `${BASE_URL}technology/reporting`,                 label: 'Reporting' },
-  'scenario-planning':         { href: `${BASE_URL}process/scenario-planning`,            label: 'Scenario Planning' },
-  'sop-process':               { href: `${BASE_URL}process/sop-process`,                  label: 'S&OP' },
-  'soe-process':               { href: `${BASE_URL}process/soe-process`,                  label: 'S&OE' },
-  'execution-process':         { href: `${BASE_URL}process/execution-process`,            label: 'Execution' },
-  'process-foundations':       { href: `${BASE_URL}process/process-foundations`,          label: 'Process Foundations' },
-  'organisation-and-roles':    { href: `${BASE_URL}people/organisation-and-roles`,        label: 'Organisation & Roles' },
-};
-const back = moduleBackMap[module ?? 'planning-software'] ?? { href: BASE_URL, label: 'Home' };
 
 const colorMap: Record<string, string> = {
   indigo:  'text-indigo-600 dark:text-indigo-400 border-indigo-400 dark:border-indigo-500',
@@ -130,8 +114,8 @@ const dotColorClass      = dotColorMap[chapterColor]     ?? dotColorMap.indigo;
 
 const topicId = `${chapterSlug}/${topicSlug}`;
 ---
-
-<BaseLayout title={`${title} — ${back.label}`} description={description}>
+<script is:inline define:vars={{ roleCtxJson }}>window.__topicRoleCtx = JSON.parse(roleCtxJson);</script>
+<BaseLayout title={`${title} — ${chapterTitle}`} description={description}>
   <!-- Top navigation bar -->
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
     <div class="flex items-center gap-3">
@@ -140,11 +124,11 @@ const topicId = `${chapterSlug}/${topicSlug}`;
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a id="nav-back-link" href={back.href} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a id="nav-back-link" href={chapterUrl} class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7"/>
         </svg>
-        {back.label}
+        {chapterTitle}
       </a>
     </div>
     <a href={chapterUrl} class={`text-sm font-medium border-b ${chapterColorClass} hover:opacity-80 transition-opacity`}>

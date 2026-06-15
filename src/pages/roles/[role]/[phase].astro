@@ -145,34 +145,6 @@ const topicIds = phaseTopics.map((t) => t.topicId);
       <p class="text-sm text-gray-400 dark:text-gray-500 mt-4">{phaseTopics.length} topics · {phaseTime}</p>
     </div>
 
-    <!-- Phase meta: key areas + behaviors -->
-    <div class="relative z-10 px-6 pb-8 max-w-3xl mx-auto animate-fade-in">
-      <div class={`rounded-2xl border ${accentBorder} ${accentBg} p-5 grid sm:grid-cols-2 gap-6`}>
-        <div>
-          <p class={`text-xs font-bold uppercase tracking-widest ${accentText} mb-3`}>Key areas</p>
-          <ul class="space-y-2">
-            {phase.keyAreas.map((area) => (
-              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
-                {area}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p class={`text-xs font-bold uppercase tracking-widest ${accentText} mb-3`}>Characteristic behavior</p>
-          <ul class="space-y-2">
-            {phase.behaviors.map((b) => (
-              <li class="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
-                {b}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-
     <!-- Phase progress bar -->
     <div class="relative z-10 px-6 pb-10 max-w-3xl mx-auto">
       <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
