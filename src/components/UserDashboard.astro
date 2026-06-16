@@ -477,22 +477,41 @@ const totalTopics = allTopics.length;
   // Update counts/dots in the (already-built) role view
   function updateRoleView(role, progress) {
     role.phases.forEach((phase, pi) => {
-      let phaseDone = 0, phaseTotal = 0;
+      let phaseDone = 0, phaseTotal = 0, phaseMatch = 0;
       phase.sections.forEach((section, si) => {
-        let secDone = 0;
+        let secDone = 0, secMatch = 0;
         const rows = section.topics.map(t => {
           const state = progress[t.id] ?? 'none';
           if (state === 'complete') secDone++;
-          return topicRow(t, state);
+          if (matchesFilter(state)) secMatch++;
+          return matchesFilter(state) ? topicRow(t, state) : '';
         }).join('');
         const cont = roleView.querySelector(`[data-rolesec-topics="${pi}-${si}"]`);
         if (cont) cont.innerHTML = rows;
         const cnt = roleView.querySelector(`[data-rolesec-count="${pi}-${si}"]`);
         if (cnt) cnt.textContent = `${secDone}/${section.topics.length}`;
-        phaseDone += secDone; phaseTotal += section.topics.length;
+        const secNode = roleView.querySelector(`[data-rolesec-node="${pi}-${si}"]`);
+        if (secNode) {
+          if (activeFilter) {
+            secNode.classList.toggle('hidden', secMatch === 0);
+            if (secMatch > 0) secNode.open = true;
+          } else {
+            secNode.classList.remove('hidden');
+          }
+        }
+        phaseDone += secDone; phaseTotal += section.topics.length; phaseMatch += secMatch;
       });
       const pCnt = roleView.querySelector(`[data-rolephase-count="${pi}"]`);
       if (pCnt) pCnt.textContent = `${phaseDone}/${phaseTotal}`;
+      const phaseNode = roleView.querySelector(`[data-rolephase-node="${pi}"]`);
+      if (phaseNode) {
+        if (activeFilter) {
+          phaseNode.classList.toggle('hidden', phaseMatch === 0);
+          if (phaseMatch > 0) phaseNode.open = true;
+        } else {
+          phaseNode.classList.remove('hidden');
+        }
+      }
     });
   }
 
