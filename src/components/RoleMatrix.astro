@@ -126,6 +126,27 @@ const ROLE_COL_W = 100;
   .dark #role-matrix .rm-pillar-row[data-pillar="process"]    .rm-pillar-sticky { background: #172554; color: #60a5fa; }
   .dark #role-matrix .rm-pillar-row[data-pillar="data"]       .rm-pillar-sticky { background: #431407; color: #fbbf24; }
   .dark #role-matrix .rm-pillar-row[data-pillar="people"]     .rm-pillar-sticky { background: #4c0519; color: #fb7185; }
+
+  /* Module roll-up dot — only visible while the module row is collapsed */
+  #role-matrix .rm-module-dot { display: none; }
+  #role-matrix .rm-module-row[data-collapsed] .rm-module-dot { display: block; }
+
+  /* Depth selector — segmented control in the header */
+  #role-matrix .rm-depth-seg { display: inline-flex; align-items: center; border: 1px solid var(--rm-border); border-radius: 6px; overflow: hidden; }
+  #role-matrix .rm-depth-btn {
+    background: transparent;
+    color: var(--rm-text-muted);
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 4px 9px;
+    transition: background 0.12s, color 0.12s;
+  }
+  #role-matrix .rm-depth-btn + .rm-depth-btn { border-left: 1px solid var(--rm-border); }
+  #role-matrix .rm-depth-btn:hover { background: var(--rm-surface); color: var(--rm-text); }
+  #role-matrix .rm-depth-btn.rm-depth-active { background: var(--rm-dot); color: #fff; }
 </style>
 
 <div
@@ -142,6 +163,10 @@ const ROLE_COL_W = 100;
       <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
         {allRoles.filter(r => !r.comingSoon).length} active &nbsp;·&nbsp; {allRoles.filter(r => r.comingSoon).length} coming soon
       </span>
+      <div class="rm-depth-seg" role="group" aria-label="Collapse depth">
+        <button type="button" class="rm-depth-btn" data-depth="modules">Modules</button>
+        <button type="button" class="rm-depth-btn rm-depth-active" data-depth="chapters">Chapters</button>
+      </div>
     </div>
     <div class="flex items-center gap-3">
       <span class="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
@@ -218,9 +243,16 @@ const ROLE_COL_W = 100;
                     <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
                     {mod.label}
                   </td>
-                  {allRoles.map(() => (
-                    <td style={`background: var(--rm-surface); border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border);`}></td>
-                  ))}
+                  {allRoles.map(role => {
+                    const moduleAssigned = mod.chapters.some(ch => roleChapterSets.get(role.slug)?.has(ch.slug));
+                    return (
+                      <td style={`background: var(--rm-surface); border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                        {moduleAssigned && (
+                          <div class="rm-module-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
 
                 {mod.chapters.map(ch => {
@@ -269,6 +301,47 @@ const ROLE_COL_W = 100;
 <script>
   const overlay  = document.getElementById('role-matrix')!;
   const closeBtn = document.getElementById('role-matrix-close')!;
+  const depthBtns = overlay.querySelectorAll<HTMLElement>('.rm-depth-btn');
+
+  // Sync a row's collapsed attribute + chevron to a target state
+  function setRowCollapsed(row: HTMLElement, collapsed: boolean) {
+    const chevron = row.querySelector<HTMLElement>('.rm-chevron');
+    if (collapsed) {
+      row.setAttribute('data-collapsed', '');
+      if (chevron) chevron.style.transform = '';
+    } else {
+      row.removeAttribute('data-collapsed');
+      if (chevron) chevron.style.transform = 'rotate(90deg)';
+    }
+  }
+
+  // Re-level the entire matrix to a single depth
+  function setDepth(level: string) {
+    const pillarRows  = overlay.querySelectorAll<HTMLElement>('.rm-pillar-row');
+    const moduleRows  = overlay.querySelectorAll<HTMLElement>('.rm-module-row');
+    const chapterRows = overlay.querySelectorAll<HTMLElement>('.rm-chapter-row');
+
+    if (level === 'modules') {
+      pillarRows.forEach(r => setRowCollapsed(r, false));
+      moduleRows.forEach(r => { setRowCollapsed(r, true); r.style.display = ''; });
+      chapterRows.forEach(r => { r.style.display = 'none'; });
+    } else {
+      pillarRows.forEach(r => setRowCollapsed(r, false));
+      moduleRows.forEach(r => { setRowCollapsed(r, false); r.style.display = ''; });
+      chapterRows.forEach(r => { r.style.display = ''; });
+    }
+
+    depthBtns.forEach(b => b.classList.toggle('rm-depth-active', b.dataset.depth === level));
+  }
+
+  // De-highlight the selector once the matrix is no longer at a uniform depth
+  function clearDepth() {
+    depthBtns.forEach(b => b.classList.remove('rm-depth-active'));
+  }
+
+  depthBtns.forEach(btn => {
+    btn.addEventListener('click', () => setDepth(btn.dataset.depth ?? 'chapters'));
+  });
 
   function open() {
     overlay.classList.remove('hidden');
@@ -289,6 +362,7 @@ const ROLE_COL_W = 100;
   // Pillar row toggle
   overlay.querySelectorAll<HTMLElement>('.rm-pillar-row').forEach(row => {
     row.addEventListener('click', () => {
+      clearDepth();
       const pillar = row.dataset.pillar!;
       const isCollapsed = row.hasAttribute('data-collapsed');
       const chevron = row.querySelector<HTMLElement>('.rm-chevron');
@@ -322,6 +396,7 @@ const ROLE_COL_W = 100;
   overlay.querySelectorAll<HTMLElement>('.rm-module-row').forEach(row => {
     row.addEventListener('click', e => {
       e.stopPropagation();
+      clearDepth();
       const pillar = row.dataset.pillar!;
       const mod = row.dataset.module!;
       const isCollapsed = row.hasAttribute('data-collapsed');
