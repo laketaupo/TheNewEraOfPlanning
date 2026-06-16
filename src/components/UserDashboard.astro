@@ -331,6 +331,46 @@ const totalTopics = allTopics.length;
     none:     'bg-gray-300 dark:bg-gray-600',
   };
 
+  // Session-only state filter: '' (all) | 'complete' | 'unclear' | 'none' (remaining).
+  let activeFilter = '';
+  let openSnapshot = null; // <details> open states captured when entering filter mode
+
+  const filterLabels = { complete: 'Complete', unclear: 'Unclear', none: 'Remaining' };
+  const filterEmptyText = {
+    complete: 'No completed topics yet',
+    unclear:  'No unclear topics 🎉',
+    none:     'Nothing remaining — all done! 🎉',
+  };
+
+  function matchesFilter(state) {
+    return !activeFilter || state === activeFilter;
+  }
+
+  // The currently visible tree root (role view or pillar view).
+  function currentTreeRoot() {
+    return roleView.classList.contains('hidden') ? pillarView : roleView;
+  }
+
+  // Capture each <details> open state so clearing the filter restores the
+  // user's own expand/collapse layout instead of leaving everything expanded.
+  function snapshotOpen() {
+    openSnapshot = new Map();
+    currentTreeRoot().querySelectorAll('details').forEach(d => openSnapshot.set(d, d.open));
+  }
+  function restoreOpen() {
+    if (openSnapshot) {
+      openSnapshot.forEach((wasOpen, d) => { if (d.isConnected) d.open = wasOpen; });
+      openSnapshot = null;
+    }
+  }
+
+  function setFilter(next) {
+    if (activeFilter === '' && next !== '')      snapshotOpen();
+    else if (activeFilter !== '' && next === '') restoreOpen();
+    activeFilter = next;
+    refreshDashboard();
+  }
+
   function esc(s) {
     return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   }
@@ -361,6 +401,11 @@ const totalTopics = allTopics.length;
   const roleSelect = document.getElementById('dash-role-select');
   const pillarView = document.getElementById('dash-pillar-view');
   const roleView   = document.getElementById('dash-role-view');
+  const filterChip   = document.getElementById('dash-filter-chip');
+  const filterLabel  = document.getElementById('dash-filter-label');
+  const filterClear  = document.getElementById('dash-filter-clear');
+  const filterEmpty  = document.getElementById('dash-filter-empty');
+  const statTiles    = Array.from(document.querySelectorAll('.dash-stat-tile'));
 
   function closeDashboard() {
     panel.classList.add('hidden');
@@ -368,6 +413,8 @@ const totalTopics = allTopics.length;
   }
 
   function openDashboard() {
+    activeFilter = '';
+    openSnapshot = null;
     refreshDashboard();
     panel.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
@@ -537,6 +584,35 @@ const totalTopics = allTopics.length;
       updatePillarView(progress);
     }
 
+    // Active-filter chip + tile highlight
+    if (activeFilter) {
+      filterChip.classList.remove('hidden');
+      filterChip.classList.add('flex');
+      filterLabel.textContent = filterLabels[activeFilter];
+    } else {
+      filterChip.classList.add('hidden');
+      filterChip.classList.remove('flex');
+    }
+    statTiles.forEach(btn =>
+      btn.classList.toggle('dash-stat-tile-active', btn.dataset.statFilter === activeFilter)
+    );
+
+    // Filtered-empty state: hide the tree and show a friendly line when the
+    // active filter matches nothing in scope.
+    const filterMatchCount =
+      activeFilter === 'complete' ? completedCount :
+      activeFilter === 'unclear'  ? unclearCount   :
+      activeFilter === 'none'     ? remainingCount : scopeTotal;
+    const showFilterEmpty = !!activeFilter && scopeTotal > 0 && filterMatchCount === 0;
+    if (showFilterEmpty) {
+      filterEmpty.textContent = filterEmptyText[activeFilter];
+      filterEmpty.classList.remove('hidden');
+      pillarView.classList.add('hidden');
+      roleView.classList.add('hidden');
+    } else {
+      filterEmpty.classList.add('hidden');
+    }
+
     document.getElementById('dash-empty').classList.toggle('hidden', scopeTotal > 0);
     updateBadge();
   }
@@ -548,6 +624,8 @@ const totalTopics = allTopics.length;
     if (activeRole) buildRoleView(roleBySlug[activeRole]); // restore persisted role
     roleSelect.addEventListener('change', () => {
       activeRole = roleSelect.value;
+      activeFilter = '';
+      openSnapshot = null;
       if (activeRole) {
         localStorage.setItem(ROLE_KEY, activeRole);
         buildRoleView(roleBySlug[activeRole]); // rebuild structure, collapsed, on role change
@@ -557,6 +635,14 @@ const totalTopics = allTopics.length;
       refreshDashboard();
     });
   }
+
+  statTiles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.statFilter;
+      setFilter(activeFilter === f ? '' : f);
+    });
+  });
+  filterClear.addEventListener('click', () => setFilter(''));
 
   triggerBtn.addEventListener('click', () =>
     panel.classList.contains('hidden') ? openDashboard() : closeDashboard()
