@@ -76,6 +76,51 @@ for (const pillarKey of pillarOrder) {
 
 const FIRST_COL_W = 220;
 const ROLE_COL_W = 100;
+const BAND_H = 26; // height of the department band tier above role names
+const ROLE_HEADER_H = 180; // height of the rotated role-name tier (tall enough for long titles)
+
+// Department bands — roles are already sorted by `order`, so each department
+// forms a contiguous block of columns. Group consecutive roles by department.
+type DeptGroup = { label: string; roles: typeof allRoles };
+const deptGroups: DeptGroup[] = [];
+for (const role of allRoles) {
+  const dep = role.department ?? 'Other';
+  const last = deptGroups[deptGroups.length - 1];
+  if (last && last.label === dep) last.roles.push(role);
+  else deptGroups.push({ label: dep, roles: [role] });
+}
+
+// Stable colour per department name (re-used if a department recurs).
+const deptColorIdx = new Map<string, number>();
+function colorIdxFor(dep: string): number {
+  if (!deptColorIdx.has(dep)) deptColorIdx.set(dep, deptColorIdx.size % deptPalette.length);
+  return deptColorIdx.get(dep)!;
+}
+
+// Slug of the last role in each department block — used to draw the stronger
+// vertical separator that runs down through the matrix body.
+const groupBoundarySlugs = new Set(deptGroups.map(g => g.roles[g.roles.length - 1].slug));
+
+// Light/dark tints per department, assigned by order of first appearance.
+const deptPalette = [
+  { light: { bg: '#eef2ff', fg: '#4338ca' }, dark: { bg: '#1e1b4b', fg: '#a5b4fc' } }, // indigo
+  { light: { bg: '#ecfdf5', fg: '#047857' }, dark: { bg: '#022c22', fg: '#6ee7b7' } }, // emerald
+  { light: { bg: '#fffbeb', fg: '#b45309' }, dark: { bg: '#451a03', fg: '#fcd34d' } }, // amber
+  { light: { bg: '#fff1f2', fg: '#be123c' }, dark: { bg: '#4c0519', fg: '#fda4af' } }, // rose
+  { light: { bg: '#f0f9ff', fg: '#0369a1' }, dark: { bg: '#082f49', fg: '#7dd3fc' } }, // sky
+  { light: { bg: '#f5f3ff', fg: '#6d28d9' }, dark: { bg: '#2e1065', fg: '#c4b5fd' } }, // violet
+  { light: { bg: '#f0fdfa', fg: '#0f766e' }, dark: { bg: '#042f2e', fg: '#5eead4' } }, // teal
+  { light: { bg: '#fff7ed', fg: '#c2410c' }, dark: { bg: '#431407', fg: '#fdba74' } }, // orange
+  { light: { bg: '#f7fee7', fg: '#4d7c0f' }, dark: { bg: '#1a2e05', fg: '#bef264' } }, // lime
+  { light: { bg: '#fdf4ff', fg: '#a21caf' }, dark: { bg: '#4a044e', fg: '#f0abfc' } }, // fuchsia
+];
+
+// Generated CSS so each band index gets the right light + dark tint.
+let deptCss = '';
+deptPalette.forEach((p, i) => {
+  deptCss += `#role-matrix .rm-dept-band[data-dept-idx="${i}"]{background:${p.light.bg};color:${p.light.fg};}`;
+  deptCss += `.dark #role-matrix .rm-dept-band[data-dept-idx="${i}"]{background:${p.dark.bg};color:${p.dark.fg};}`;
+});
 ---
 
 <style is:global>
@@ -149,6 +194,8 @@ const ROLE_COL_W = 100;
   #role-matrix .rm-depth-btn.rm-depth-active { background: var(--rm-dot); color: #fff; }
 </style>
 
+<style is:global set:html={deptCss}></style>
+
 <div
   id="role-matrix"
   class="fixed inset-0 z-[9997] hidden flex-col bg-white dark:bg-gray-900"
@@ -190,23 +237,37 @@ const ROLE_COL_W = 100;
   <div class="flex-1 overflow-auto" id="role-matrix-scroll">
     <table style={`border-collapse: separate; border-spacing: 0; min-width: ${FIRST_COL_W + allRoles.length * ROLE_COL_W}px;`}>
 
-      <!-- Role header row -->
+      <!-- Role header rows: department band on top, rotated role names below -->
       <thead>
         <tr>
-          <!-- Corner -->
-          <th style={`position: sticky; left: 0; top: 0; z-index: 30; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; height: 128px; padding: 0; vertical-align: bottom; border-right: 1px solid var(--rm-border); border-bottom: 2px solid var(--rm-border);`}>
+          <!-- Corner (spans both header tiers) -->
+          <th rowspan={2} style={`position: sticky; left: 0; top: 0; z-index: 40; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; height: ${ROLE_HEADER_H + BAND_H}px; padding: 0; vertical-align: bottom; border-right: 1px solid var(--rm-border); border-bottom: 2px solid var(--rm-border);`}>
             <div style="padding: 6px 10px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rm-text-faint);">
               Chapter
             </div>
           </th>
+          <!-- Department band -->
+          {deptGroups.map(g => (
+            <th
+              class="rm-dept-band"
+              data-dept-idx={colorIdxFor(g.label)}
+              colspan={g.roles.length}
+              title={g.label}
+              style={`position: sticky; top: 0; z-index: 30; height: ${BAND_H}px; padding: 0 8px; text-align: center; vertical-align: middle; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-right: 2px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border);`}
+            >
+              {g.label}
+            </th>
+          ))}
+        </tr>
+        <tr>
           <!-- Role columns -->
           {allRoles.map(role => (
             <th
               title={role.title}
-              style={`position: sticky; top: 0; z-index: 20; background: var(--rm-bg); width: ${ROLE_COL_W}px; min-width: ${ROLE_COL_W}px; height: 128px; padding: 0; vertical-align: bottom; border-right: 1px solid var(--rm-border-light); border-bottom: 2px solid var(--rm-border); opacity: ${role.comingSoon ? 0.45 : 1};`}
+              style={`position: sticky; top: ${BAND_H}px; z-index: 20; background: var(--rm-bg); width: ${ROLE_COL_W}px; min-width: ${ROLE_COL_W}px; height: ${ROLE_HEADER_H}px; padding: 0; vertical-align: bottom; border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border-light)'}; border-bottom: 2px solid var(--rm-border); opacity: ${role.comingSoon ? 0.45 : 1};`}
             >
-              <div style={`position: relative; height: 128px; width: ${ROLE_COL_W}px; overflow: visible;`}>
-                <span style={`position: absolute; bottom: 8px; left: ${ROLE_COL_W / 2}px; white-space: nowrap; font-size: 11px; font-weight: 500; color: var(--rm-text); display: block; transform-origin: left bottom; transform: rotate(-50deg);`}>
+              <div style={`position: relative; height: ${ROLE_HEADER_H}px; width: ${ROLE_COL_W}px; overflow: visible;`}>
+                <span style={`position: absolute; bottom: 8px; left: ${ROLE_COL_W / 2}px; white-space: nowrap; font-size: 11px; font-weight: 500; color: var(--rm-text); display: block; transform-origin: left bottom; transform: rotate(-70deg);`}>
                   {role.title}
                 </span>
               </div>
@@ -228,8 +289,8 @@ const ROLE_COL_W = 100;
                 <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
                 {pillar.label}
               </td>
-              {allRoles.map(() => (
-                <td style={`border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-strong);`}></td>
+              {allRoles.map(role => (
+                <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border)'}; border-bottom: 1px solid var(--rm-border-strong);`}></td>
               ))}
             </tr>
 
@@ -246,7 +307,7 @@ const ROLE_COL_W = 100;
                   {allRoles.map(role => {
                     const moduleAssigned = mod.chapters.some(ch => roleChapterSets.get(role.slug)?.has(ch.slug));
                     return (
-                      <td style={`background: var(--rm-surface); border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                      <td style={`background: var(--rm-surface); border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border-light)'}; border-bottom: 1px solid var(--rm-border); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
                         {moduleAssigned && (
                           <div class="rm-module-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
                         )}
@@ -267,7 +328,7 @@ const ROLE_COL_W = 100;
                       {allRoles.map(role => {
                         const assigned = roleChapterSets.get(role.slug)?.has(ch.slug) ?? false;
                         return (
-                          <td style={`border-right: 1px solid var(--rm-border-light); border-bottom: 1px solid var(--rm-border-light); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                          <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border-light)'}; border-bottom: 1px solid var(--rm-border-light); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
                             {assigned && (
                               <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
                             )}
@@ -291,6 +352,8 @@ const ROLE_COL_W = 100;
       <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); display: inline-block;"></div>
       Chapter assigned to role
     </div>
+    <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
+    <span class="text-xs text-gray-400 dark:text-gray-500">Coloured top bands group roles by department</span>
     <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
     <span class="text-xs text-gray-400 dark:text-gray-500">Dimmed columns = coming soon roles</span>
     <span class="text-xs text-gray-300 dark:text-gray-600">|</span>
