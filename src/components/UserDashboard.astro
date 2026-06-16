@@ -500,6 +500,7 @@ const totalTopics = allTopics.length;
     const chapterComplete = {}, chapterUnclear = {};
     const moduleComplete  = {}, pillarComplete = {};
     const chapterTotal    = {}, moduleTotal    = {}, pillarTotal = {};
+    const chapterMatch    = {}, moduleMatch    = {}, pillarMatch = {};
     const byChapter = {};
 
     topicsForClient.forEach(t => {
@@ -515,17 +516,34 @@ const totalTopics = allTopics.length;
       } else if (state === 'unclear') {
         chapterUnclear[t.chapterSlug] = (chapterUnclear[t.chapterSlug] ?? 0) + 1;
       }
+      if (matchesFilter(state ?? 'none')) {
+        chapterMatch[t.chapterSlug] = (chapterMatch[t.chapterSlug] ?? 0) + 1;
+        moduleMatch[t.moduleKey]    = (moduleMatch[t.moduleKey]    ?? 0) + 1;
+        pillarMatch[t.pillarKey]    = (pillarMatch[t.pillarKey]    ?? 0) + 1;
+      }
     });
 
     pillarView.querySelectorAll('[data-pillar-node]').forEach(node => {
       const key = node.dataset.pillarNode;
       const countEl = node.querySelector('[data-pillar-count]');
       if (countEl) countEl.textContent = `${pillarComplete[key] ?? 0}/${pillarTotal[key] ?? 0}`;
+      if (activeFilter) {
+        node.classList.toggle('hidden', (pillarMatch[key] ?? 0) === 0);
+        if ((pillarMatch[key] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
+      }
     });
     pillarView.querySelectorAll('[data-module-node]').forEach(node => {
       const key = node.dataset.moduleNode;
       const countEl = node.querySelector('[data-module-count]');
       if (countEl) countEl.textContent = `${moduleComplete[key] ?? 0}/${moduleTotal[key] ?? 0}`;
+      if (activeFilter) {
+        node.classList.toggle('hidden', (moduleMatch[key] ?? 0) === 0);
+        if ((moduleMatch[key] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
+      }
     });
     pillarView.querySelectorAll('[data-chapter-node]').forEach(node => {
       const slug    = node.dataset.chapterNode;
@@ -542,7 +560,14 @@ const totalTopics = allTopics.length;
       if (container) {
         container.innerHTML = (byChapter[slug] ?? [])
           .sort((a, b) => a.order - b.order)
+          .filter(t => matchesFilter(progress[t.id] ?? 'none'))
           .map(t => topicRow(t, progress[t.id] ?? 'none')).join('');
+      }
+      if (activeFilter) {
+        node.classList.toggle('hidden', (chapterMatch[slug] ?? 0) === 0);
+        if ((chapterMatch[slug] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
       }
     });
   }
