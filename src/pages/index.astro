@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 import { getRoles, resolveRoleSections, getRoleStats } from '../lib/roles';
 import { getPillars, getModulesForPillar } from '../lib/chapters';
 
@@ -93,7 +92,7 @@ const roleIconMap: Record<string, string> = {
 <BaseLayout title="The New Era of Planning">
   <!-- Floating theme toggle -->
   <div class="fixed top-3 right-4 z-50">
-    <ThemeToggle />
+    
   </div>
 
   <!-- Page wrapper -->

@@ -2,15 +2,16 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getChapters, getTopics, getChapterUrl } from '../../../lib/chapters';
 
-const chapters = getChapters('data').filter(c => c.module === 'data-driven-planning');
+const chapters = getChapters('people').filter(c => c.module === 'organisation');
 const allTopics = getTopics();
 
 const iconMap: Record<string, string> = {
-  cube: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/></svg>`,
-  cpu: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="6" y="6" width="12" height="12" rx="1" stroke-width="1.5"/><path stroke-linecap="round" stroke-width="1.5" d="M9 6V4M12 6V4M15 6V4M9 20v-2M12 20v-2M15 20v-2M6 9H4M6 12H4M6 15H4M20 9h-2M20 12h-2M20 15h-2"/></svg>`,
+  users: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+  network: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="5" r="2" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7v4m0 4l-5 2m10-2l-5 2"/></svg>`,
+  calendar: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`,
 };
 ---
-<BaseLayout title="Data-Driven Planning — Data">
+<BaseLayout title="Organisation — People">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
       <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -18,11 +19,11 @@ const iconMap: Record<string, string> = {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a href="/data/" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href="/people/" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
-        Data
+        People
       </a>
     </div>
     
@@ -33,15 +34,15 @@ const iconMap: Record<string, string> = {
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-12 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
-        Data
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+        People
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        Data-Driven <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-amber-500">Planning</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Organisation</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-        Understand how data quality and structure determine the quality of every plan your organisation produces.
+        How the supply chain planning function is structured — teams, reporting lines, governance, and operating cadences.
       </p>
     </div>
 
@@ -52,19 +53,19 @@ const iconMap: Record<string, string> = {
         return (
           <a
             href={getChapterUrl(chapter)}
-            class="group relative flex flex-col p-6 rounded-2xl border bg-yellow-50 dark:bg-yellow-500/5 border-yellow-200 dark:border-yellow-500/30 hover:border-yellow-400 dark:hover:border-yellow-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+            class="group relative flex flex-col p-6 rounded-2xl border bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/30 hover:border-red-400 dark:hover:border-red-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
-            <span class="text-xs font-mono font-bold text-yellow-600 dark:text-yellow-400 mb-4">0{chapter.order}</span>
+            <span class="text-xs font-mono font-bold text-red-600 dark:text-red-400 mb-4">0{chapter.order}</span>
             <div class="flex items-start gap-4 mb-4">
-              <div class="text-yellow-600 dark:text-yellow-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['cube']} />
+              <div class="text-red-600 dark:text-red-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['users']} />
               <div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{chapter.description}</p>
               </div>
             </div>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-yellow-100 dark:border-yellow-500/10">
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-red-100 dark:border-red-500/10">
               <span class="text-xs text-gray-400 dark:text-gray-500">{topics.length} topics</span>
-              <div class="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div class="flex items-center gap-1 text-xs text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
                 Open chapter
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -85,9 +86,9 @@ const iconMap: Record<string, string> = {
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(239,68,68,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(239,68,68,0.15), transparent);
   }
 </style>

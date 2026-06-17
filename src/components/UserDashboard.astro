@@ -19,7 +19,8 @@ const moduleLabels: Record<string, string> = {
   'sop-process':               'S&OP',
   'soe-process':               'S&OE',
   'execution-process':         'Execution',
-  'organisation-and-roles':    'Organisation & Roles',
+  'organisation':              'Organisation',
+  'roles-and-responsibilities': 'Roles & Responsibilities',
   'implementation-and-change': 'Implementation & Change',
 };
 
@@ -119,21 +120,6 @@ const totalTopics = allTopics.length;
   .dash-stat-tile-active[data-stat-filter="unclear"]  { box-shadow: inset 0 0 0 1.5px rgb(245 158 11); }
   .dash-stat-tile-active[data-stat-filter="none"]     { box-shadow: inset 0 0 0 1.5px rgb(148 163 184); }
 </style>
-
-<!-- Fixed user icon trigger button -->
-<button
-  id="user-dashboard-btn"
-  aria-label="Your progress dashboard"
-  class="fixed top-3 right-28 z-[55] p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
->
-  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-  </svg>
-  <span
-    id="dash-badge"
-    class="hidden absolute -top-1 -right-1 min-w-[16px] h-4 bg-emerald-500 rounded-full text-[9px] text-white font-bold flex items-center justify-center px-1 leading-none pointer-events-none"
-  ></span>
-</button>
 
 <!-- Dashboard panel overlay -->
 <div

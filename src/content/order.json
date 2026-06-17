@@ -4,7 +4,7 @@
     "technology": ["planning-software", "erp", "architecture", "mdm", "fms"],
     "data": ["data-fundamentals", "data-driven-planning", "data-governance"],
     "process": ["process-fundamentals", "scenario-planning", "sop-process", "soe-process", "execution-process"],
-    "people": ["organisation-and-roles", "implementation-and-change"]
+    "people": ["organisation", "roles-and-responsibilities", "implementation-and-change"]
   },
   "chapters": {
     "planning-software": [
@@ -94,10 +94,13 @@
       "exec-actuals-capture",
       "exec-feedback-to-planning"
     ],
-    "organisation-and-roles": [
+    "organisation": [
       "people-01-planning-team",
       "people-02-accountability",
       "people-03-planning-cadences"
+    ],
+    "roles-and-responsibilities": [
+      "people-04-roles-overview"
     ],
     "implementation-and-change": []
   },

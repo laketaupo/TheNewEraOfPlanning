@@ -3,6 +3,7 @@ import SiteOverlay from '../components/SiteOverlay.astro';
 import UserDashboard from '../components/UserDashboard.astro';
 import RoleMatrix from '../components/RoleMatrix.astro';
 import Search from '../components/Search.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { getGlossaryTerms } from '../lib/glossary';
 const glossaryTerms = getGlossaryTerms().map(t => ({ term: t.term, aliases: t.aliases, slug: t.slug, definition: t.definition }));
 
@@ -36,21 +37,57 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
   <body class="bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100 font-sans antialiased min-h-screen transition-colors duration-200">
     <slot />
     <SiteOverlay />
-    <UserDashboard />
     <RoleMatrix />
 
-    <!-- Fixed glossary link (open-book), sits right of the dashboard person icon -->
-    <a
-      href="/glossary"
-      aria-label="Open glossary"
-      title="Glossary"
-      class="fixed top-3 right-16 z-[55] p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.247m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.247"/>
-      </svg>
-    </a>
+    <!-- Fixed icon bar (top-right): search · glossary · theme · dashboard -->
+    <!-- Must come before <UserDashboard /> so #user-dashboard-btn exists when its inline script runs -->
+    <div class="fixed top-2 right-4 z-[55] flex items-center gap-0.5">
 
+      <!-- Search -->
+      <button
+        onclick="window.openSearch && window.openSearch()"
+        aria-label="Search"
+        title="Search (/)"
+        class="p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+      </button>
+
+      <!-- Glossary -->
+      <a
+        href="/glossary"
+        aria-label="Open glossary"
+        title="Glossary"
+        class="p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.247m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.247"/>
+        </svg>
+      </a>
+
+      <!-- Theme toggle -->
+      <ThemeToggle />
+
+      <!-- User dashboard (trigger button; panel rendered by UserDashboard.astro) -->
+      <button
+        id="user-dashboard-btn"
+        aria-label="Your progress dashboard"
+        class="relative p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        <span
+          id="dash-badge"
+          class="hidden absolute -top-1 -right-1 min-w-[16px] h-4 bg-emerald-500 rounded-full text-[9px] text-white font-bold flex items-center justify-center px-1 leading-none pointer-events-none"
+        ></span>
+      </button>
+
+    </div>
+
+    <UserDashboard />
     <Search />
 
     <!-- Glossary tooltip data (injected at build time) -->

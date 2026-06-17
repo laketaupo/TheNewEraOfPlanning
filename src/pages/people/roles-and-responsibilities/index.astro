@@ -1,18 +1,29 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import ThemeToggle from '../../../components/ThemeToggle.astro';
 import { getChapters, getTopics, getChapterUrl } from '../../../lib/chapters';
 
-const chapters = getChapters('people').filter(c => c.module === 'organisation-and-roles');
+const chapters = getChapters('people').filter(c => c.module === 'roles-and-responsibilities');
 const allTopics = getTopics();
 
 const iconMap: Record<string, string> = {
   users: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
-  network: `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="5" r="2" stroke-width="1.5"/><circle cx="5" cy="19" r="2" stroke-width="1.5"/><circle cx="19" cy="19" r="2" stroke-width="1.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7v4m0 4l-5 2m10-2l-5 2"/></svg>`,
 };
+
+const roles = [
+  { title: 'Demand Planner', icon: '📊', description: 'Forecasts future demand and manages the statistical baseline.' },
+  { title: 'Supply Planner', icon: '⚙️', description: 'Translates demand into constrained supply plans across the network.' },
+  { title: 'S&OP Lead', icon: '🎯', description: 'Orchestrates the monthly S&OP cycle and drives integrated decision-making.' },
+  { title: 'Operations Manager', icon: '🏭', description: 'Owns operational execution and day-to-day manufacturing output.' },
+  { title: 'Commercial Lead', icon: '💼', description: 'Represents the commercial view in S&OP, aligning sales targets with supply.' },
+  { title: 'Finance Business Partner', icon: '💰', description: 'Bridges financial planning and supply chain, ensuring P&L alignment.' },
+  { title: 'Logistics Coordinator', icon: '🚛', description: 'Manages inbound and outbound logistics execution.' },
+  { title: 'Planning Analyst', icon: '🔍', description: 'Provides analytical support across the planning cycle.' },
+  { title: 'Country Manager', icon: '🌍', description: 'Accountable for in-market performance and local demand shaping.' },
+  { title: 'Category Manager', icon: '📦', description: 'Owns the product portfolio and drives category-level demand signals.' },
+];
 ---
-<BaseLayout title="Organisation & Roles — People">
-  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+<BaseLayout title="Roles & Responsibilities — People">
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
       <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -26,7 +37,7 @@ const iconMap: Record<string, string> = {
         People
       </a>
     </div>
-    <ThemeToggle />
+    
   </header>
 
   <div class="relative overflow-hidden pt-12">
@@ -39,42 +50,38 @@ const iconMap: Record<string, string> = {
         People
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        Organisation &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Roles</span>
+        Roles &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Responsibilities</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-        The team behind supply chain planning — who fills each role, how they're structured, and who's accountable for what.
+        Every planning role explained — what they own, what they do day-to-day, and how they fit into the broader planning organisation.
       </p>
+      <div class="mt-4 inline-flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 rounded-full px-4 py-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Detailed content coming soon
+      </div>
     </div>
 
     <div class="relative z-10 px-6 pb-20 max-w-6xl mx-auto">
-      <div class="flex flex-col gap-4 max-w-3xl mx-auto">
-      {chapters.map((chapter) => {
-        const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
-        return (
-          <a
-            href={getChapterUrl(chapter)}
-            class="group relative flex flex-col p-6 rounded-2xl border bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/30 hover:border-red-400 dark:hover:border-red-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
-          >
-            <span class="text-xs font-mono font-bold text-red-600 dark:text-red-400 mb-4">0{chapter.order}</span>
-            <div class="flex items-start gap-4 mb-4">
-              <div class="text-red-600 dark:text-red-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['users']} />
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{chapter.description}</p>
-              </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        {roles.map((role) => (
+          <div class="flex flex-col p-5 rounded-2xl border bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 opacity-70">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">{role.icon}</span>
+              <h3 class="text-base font-semibold text-gray-900 dark:text-white leading-snug">{role.title}</h3>
             </div>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-red-100 dark:border-red-500/10">
-              <span class="text-xs text-gray-400 dark:text-gray-500">{topics.length} topics</span>
-              <div class="flex items-center gap-1 text-xs text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                Open chapter
+            <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed flex-1">{role.description}</p>
+            <div class="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+              <span class="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-              </div>
+                Coming soon
+              </span>
             </div>
-          </a>
-        );
-      })}
+          </div>
+        ))}
       </div>
     </div>
   </div>

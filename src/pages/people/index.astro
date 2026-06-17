@@ -1,13 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ThemeToggle from '../../components/ThemeToggle.astro';
 import { getChapters } from '../../lib/chapters';
 
 const allPeopleChapters = getChapters('people').filter(c => !c.hidden);
-const orgRolesCount = allPeopleChapters.filter(c => c.module === 'organisation-and-roles').length;
+const orgCount = allPeopleChapters.filter(c => c.module === 'organisation').length;
 ---
 <BaseLayout title="People">
-  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
       <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -21,7 +20,7 @@ const orgRolesCount = allPeopleChapters.filter(c => c.module === 'organisation-a
         The New Era of Planning
       </a>
     </div>
-    <ThemeToggle />
+    
   </header>
 
   <div class="relative min-h-screen overflow-hidden pt-12">
@@ -44,18 +43,35 @@ const orgRolesCount = allPeopleChapters.filter(c => c.module === 'organisation-a
     <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-        <!-- Organisation & Roles -->
-        <a href="/people/organisation-and-roles" class="group track-card track-org-roles">
+        <!-- Organisation -->
+        <a href="/people/organisation" class="group track-card track-org-roles">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
             </svg>
           </div>
-          <h2 class="track-title">Organisation &amp; Roles</h2>
-          <p class="track-desc">The team behind supply chain planning — who fills each role, how they're structured, and who's accountable for what.</p>
+          <h2 class="track-title">Organisation</h2>
+          <p class="track-desc">How the supply chain planning function is structured — teams, reporting lines, governance, and operating cadences.</p>
           <span class="track-badge track-badge-live">
             <span class="live-dot"></span>
-            {orgRolesCount} chapters available
+            {orgCount} chapters available
+          </span>
+        </a>
+
+        <!-- Roles & Responsibilities -->
+        <a href="/people/roles-and-responsibilities" class="group track-card track-org-roles">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Roles &amp; Responsibilities</h2>
+          <p class="track-desc">Every planning role explained — what they own, what they do day-to-day, and how they interact across the S&OP and S&OE cycles.</p>
+          <span class="track-badge track-badge-soon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Content coming soon
           </span>
         </a>
 
@@ -131,6 +147,15 @@ const orgRolesCount = allPeopleChapters.filter(c => c.module === 'organisation-a
   :global(.dark) .track-badge {
     background: rgba(239,68,68,0.12);
     color: #fca5a5;
+  }
+
+  .track-badge-soon {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  :global(.dark) .track-badge-soon {
+    background: rgba(245,158,11,0.12);
+    color: #fcd34d;
   }
 
   .live-dot {

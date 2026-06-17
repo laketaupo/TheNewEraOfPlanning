@@ -1,6 +1,5 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 
 export interface Card {
   title: string;
@@ -144,7 +143,7 @@ const iconPaths: Record<string, string> = {
 <script is:inline define:vars={{ roleCtxJson }}>window.__topicRoleCtx = JSON.parse(roleCtxJson);</script>
 <BaseLayout title={`${title} — ${chapterTitle}`} description={description}>
   <!-- Top navigation bar -->
-  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+  <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3">
     <div class="flex items-center gap-3">
       <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -158,27 +157,11 @@ const iconPaths: Record<string, string> = {
         {chapterTitle}
       </a>
     </div>
-    <a href={chapterUrl} class={`text-sm font-medium border-b ${chapterColorClass} hover:opacity-80 transition-opacity`}>
-      {chapterTitle}
-    </a>
-    <div class="flex items-center gap-3">
-      <button
-        onclick="window.openSearch?.()"
-        aria-label="Search"
-        title="Search (⌘K)"
-        class="flex items-center justify-center w-8 h-8 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-        </svg>
-      </button>
-      <ThemeToggle />
-    </div>
   </header>
 
   <!-- Main content -->
   <main
-    class="min-h-screen pt-16 pb-32"
+    class="min-h-screen pt-12 pb-32"
     style={`--accent: ${accentColor}; --accent-subtle: ${accentSubtle};`}
     data-pagefind-body
     data-pagefind-filter={`pillar:${pillar ?? 'technology'}`}
@@ -188,7 +171,7 @@ const iconPaths: Record<string, string> = {
     <!-- Hero -->
     <div class="bg-gray-50 dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800">
       <div class="h-[3px]" style={`background: linear-gradient(90deg, ${accentColor}, ${accentColor}44 60%, transparent)`}></div>
-      <div class="max-w-5xl mx-auto px-6 pt-12 pb-16 animate-fade-in">
+      <div class="max-w-5xl mx-auto px-6 pt-6 pb-6 animate-fade-in">
         <div class={`inline-flex items-center gap-2 text-xs font-medium border rounded-full px-3 py-1 mb-6 ${badgeBgClass}`}>
           <span class={`w-1.5 h-1.5 rounded-full animate-pulse ${dotColorClass}`}></span>
           {chapterTitle} · Topic {topicOrder}
@@ -200,7 +183,7 @@ const iconPaths: Record<string, string> = {
 
     <!-- Card grid -->
     <div class="bg-gray-50 dark:bg-gray-950">
-      <div class="max-w-5xl mx-auto px-6 py-14 animate-slide-up">
+      <div class="max-w-5xl mx-auto px-6 pt-6 pb-14 animate-slide-up">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {cards.map((card) => (
             <div class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 flex flex-col gap-4 hover:border-[var(--accent)] hover:shadow-md transition-all duration-200">
