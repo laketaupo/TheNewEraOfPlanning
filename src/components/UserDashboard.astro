@@ -302,6 +302,12 @@ const totalTopics = allTopics.length;
 <script define:vars={{ topicsForClient, totalTopics, rolesForClient }}>
   const STORAGE_KEY = 'platform-progress';
   const ROLE_KEY    = 'platform-dashboard-role';
+  const COMMENTS_KEY = 'platform-comments';
+
+  function getComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENTS_KEY) || '{}'); }
+    catch { return {}; }
+  }
 
   // Lookups: role slug -> Set of "chapterSlug/topicSlug" refs, and -> full role object
   const roleRefs = {};
@@ -419,13 +425,19 @@ const totalTopics = allTopics.length;
   }
 
   // A topic row used in both views
-  function topicRow(t, state) {
+  function topicRow(t, state, comment) {
     const dot = dotClass[state] ?? dotClass.none;
+    const commentLine = (state === 'unclear' && comment)
+      ? `<span class="block text-[10px] italic text-amber-600 dark:text-amber-400 truncate" title="${esc(comment)}">${esc(comment)}</span>`
+      : '';
     return `<a href="${esc(t.url)}"
-               class="flex items-center gap-2 py-0.5 group"
+               class="flex items-start gap-2 py-0.5 group"
                onclick="document.getElementById('user-dashboard').classList.add('hidden');document.body.style.overflow='';">
-              <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0"></span>
-              <span class="text-[11px] text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white leading-snug truncate">${esc(t.title)}</span>
+              <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0 mt-1"></span>
+              <span class="flex-1 min-w-0">
+                <span class="block text-[11px] text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white leading-snug truncate">${esc(t.title)}</span>
+                ${commentLine}
+              </span>
             </a>`;
   }
 
@@ -461,7 +473,7 @@ const totalTopics = allTopics.length;
   }
 
   // Update counts/dots in the (already-built) role view
-  function updateRoleView(role, progress) {
+  function updateRoleView(role, progress, comments) {
     role.phases.forEach((phase, pi) => {
       let phaseDone = 0, phaseTotal = 0, phaseMatch = 0;
       phase.sections.forEach((section, si) => {
@@ -470,7 +482,7 @@ const totalTopics = allTopics.length;
           const state = progress[t.id] ?? 'none';
           if (state === 'complete') secDone++;
           if (matchesFilter(state)) secMatch++;
-          return matchesFilter(state) ? topicRow(t, state) : '';
+          return matchesFilter(state) ? topicRow(t, state, comments[t.id]) : '';
         }).join('');
         const cont = roleView.querySelector(`[data-rolesec-topics="${pi}-${si}"]`);
         if (cont) cont.innerHTML = rows;
@@ -501,7 +513,7 @@ const totalTopics = allTopics.length;
     });
   }
 
-  function updatePillarView(progress) {
+  function updatePillarView(progress, comments) {
     const chapterComplete = {}, chapterUnclear = {};
     const moduleComplete  = {}, pillarComplete = {};
     const chapterTotal    = {}, moduleTotal    = {}, pillarTotal = {};
@@ -566,7 +578,7 @@ const totalTopics = allTopics.length;
         container.innerHTML = (byChapter[slug] ?? [])
           .sort((a, b) => a.order - b.order)
           .filter(t => matchesFilter(progress[t.id] ?? 'none'))
-          .map(t => topicRow(t, progress[t.id] ?? 'none')).join('');
+          .map(t => topicRow(t, progress[t.id] ?? 'none', comments[t.id])).join('');
       }
       if (activeFilter) {
         node.classList.toggle('hidden', (chapterMatch[slug] ?? 0) === 0);
@@ -579,6 +591,7 @@ const totalTopics = allTopics.length;
 
   function refreshDashboard() {
     const progress = getProgress();
+    const comments = getComments();
     const role = activeRole ? roleBySlug[activeRole] : null;
 
     // Topics in the active scope (role filter, or everything) drive the header stats
@@ -607,11 +620,11 @@ const totalTopics = allTopics.length;
     if (role) {
       pillarView.classList.add('hidden');
       roleView.classList.remove('hidden');
-      updateRoleView(role, progress);
+      updateRoleView(role, progress, comments);
     } else {
       roleView.classList.add('hidden');
       pillarView.classList.remove('hidden');
-      updatePillarView(progress);
+      updatePillarView(progress, comments);
     }
 
     // Active-filter chip + tile highlight
@@ -687,6 +700,7 @@ const totalTopics = allTopics.length;
   document.getElementById('dash-reset-btn').addEventListener('click', () => {
     if (confirm('Reset all progress? This cannot be undone.')) {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(COMMENTS_KEY);
       refreshDashboard();
       location.reload();
     }
