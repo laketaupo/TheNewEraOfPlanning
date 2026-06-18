@@ -55,6 +55,7 @@ function advanceToNext() {
 }
 
 let _modalEl: HTMLDivElement | null = null;
+let _modalOpen = false;
 
 function getModal(): HTMLDivElement {
   if (_modalEl) return _modalEl;
@@ -102,6 +103,8 @@ function getModal(): HTMLDivElement {
 //   ''           → skip clicked — mark unclear, no comment
 //   'some text'  → save clicked — mark unclear, save comment
 function openUnclearModal(): Promise<string | null> {
+  if (_modalOpen) return Promise.resolve(null);
+  _modalOpen = true;
   return new Promise(resolve => {
     const modal    = getModal();
     const textarea = modal.querySelector('[data-modal-textarea]') as HTMLTextAreaElement;
@@ -115,6 +118,7 @@ function openUnclearModal(): Promise<string | null> {
     textarea.focus();
 
     function cleanup() {
+      _modalOpen = false;
       modal.style.display = 'none';
       skipBtn.removeEventListener('click',    onSkip);
       saveBtn.removeEventListener('click',    onSave);
