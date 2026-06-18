@@ -56,6 +56,7 @@ function advanceToNext() {
 
 let _modalEl: HTMLDivElement | null = null;
 let _modalOpen = false;
+let _infoEl: HTMLButtonElement | null = null;
 
 function getModal(): HTMLDivElement {
   if (_modalEl) return _modalEl;
@@ -96,6 +97,19 @@ function getModal(): HTMLDivElement {
   document.body.appendChild(el);
   _modalEl = el;
   return el;
+}
+
+function getInfoIndicator(anchor: HTMLButtonElement): HTMLButtonElement {
+  if (_infoEl) return _infoEl;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'View note');
+  btn.style.display = 'none';
+  btn.className = 'relative group flex items-center py-1.5 px-2 rounded-full border border-amber-300 dark:border-amber-500/50 text-amber-500 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors';
+  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-info-tooltip class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block max-w-[180px] bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg px-2.5 py-1.5 shadow-lg pointer-events-none whitespace-normal text-left leading-snug z-[9998]"></span>`;
+  anchor.insertAdjacentElement('afterend', btn);
+  _infoEl = btn;
+  return btn;
 }
 
 // Resolves with:
@@ -169,6 +183,15 @@ function initTopicProgress() {
       unclearBtn!.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
       unclearBtn!.classList.remove('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
       unclearLabel!.textContent = 'Mark unclear';
+    }
+    const comment = getComments()[topicId!];
+    if (state === 'unclear' && comment) {
+      const infoBtn = getInfoIndicator(unclearBtn!);
+      const tip = infoBtn.querySelector('[data-info-tooltip]') as HTMLSpanElement | null;
+      if (tip) tip.textContent = comment;
+      infoBtn.style.display = 'inline-flex';
+    } else if (_infoEl) {
+      _infoEl.style.display = 'none';
     }
   }
 
