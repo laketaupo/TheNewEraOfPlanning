@@ -25,12 +25,12 @@ const roles = [
 <BaseLayout title="Roles & Responsibilities — People">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
-      <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a href="/people/" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href="/people/" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -41,7 +41,7 @@ const roles = [
   </header>
 
   <div class="relative overflow-hidden pt-12">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-12 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
@@ -52,7 +52,7 @@ const roles = [
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
         Roles &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Responsibilities</span>
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+      <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
         Every planning role explained — what they own, what they do day-to-day, and how they fit into the broader planning organisation.
       </p>
       <div class="mt-4 inline-flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/30 rounded-full px-4 py-1.5">
@@ -66,13 +66,13 @@ const roles = [
     <div class="relative z-10 px-6 pb-20 max-w-6xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         {roles.map((role) => (
-          <div class="flex flex-col p-5 rounded-2xl border bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 opacity-70">
+          <div class="flex flex-col p-5 rounded-2xl border bg-white dark:bg-neutral-900 border-gray-200 dark:border-neutral-800 opacity-70">
             <div class="flex items-center gap-3 mb-3">
               <span class="text-2xl">{role.icon}</span>
               <h3 class="text-base font-semibold text-gray-900 dark:text-white leading-snug">{role.title}</h3>
             </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed flex-1">{role.description}</p>
-            <div class="mt-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+            <p class="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed flex-1">{role.description}</p>
+            <div class="mt-3 pt-3 border-t border-gray-100 dark:border-neutral-800">
               <span class="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -86,7 +86,7 @@ const roles = [
     </div>
   </div>
 
-  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+  <footer class="border-t border-gray-200 dark:border-neutral-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-neutral-600">
     <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
   </footer>
 </BaseLayout>

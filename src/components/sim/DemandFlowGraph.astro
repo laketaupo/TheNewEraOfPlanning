@@ -2,7 +2,7 @@
 // Demand Flow Graph — animated upstream demand propagation (right → left)
 ---
 
-<div id="dfg-widget" class="rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-white dark:bg-gray-900/60 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
+<div id="dfg-widget" class="rounded-2xl border border-amber-200 dark:border-amber-500/20 bg-white dark:bg-neutral-900 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
 
   <!-- Header -->
   <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
@@ -13,7 +13,7 @@
         </svg>
         Demand Flow — Upstream Signal
       </h3>
-      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-gray-400">
+      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-neutral-400">
         <span class="flex items-center gap-1.5">
           <span class="inline-block w-3 h-3 rounded-full bg-amber-400 opacity-90"></span>
           Active demand node
@@ -25,15 +25,15 @@
           Demand signal direction
         </span>
         <span class="flex items-center gap-1.5">
-          <span class="inline-block w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 opacity-60"></span>
+          <span class="inline-block w-3 h-3 rounded-full bg-gray-300 dark:bg-neutral-600 opacity-60"></span>
           Not yet reached
         </span>
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <button id="dfg-prev" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">← Prev</button>
+      <button id="dfg-prev" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">← Prev</button>
       <button id="dfg-play" class="px-4 py-1.5 text-xs font-medium rounded-lg bg-amber-500 text-white hover:bg-amber-600 transition-colors">Play</button>
-      <button id="dfg-next" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">Next →</button>
+      <button id="dfg-next" class="px-3 py-1.5 text-xs rounded-lg border border-gray-300 dark:border-neutral-600 text-gray-600 dark:text-neutral-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed">Next →</button>
     </div>
   </div>
 
@@ -41,14 +41,14 @@
   <div class="flex items-center gap-2 mb-4">
     <div class="flex gap-1.5">
       {[0,1,2,3,4,5,6,7,8,9].map((i) => (
-        <div class="dfg-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors" data-idx={i}></div>
+        <div class="dfg-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 transition-colors" data-idx={i}></div>
       ))}
     </div>
-    <span id="dfg-step-label" class="text-xs text-gray-400 dark:text-gray-500 ml-1">Step 0 of 9</span>
+    <span id="dfg-step-label" class="text-xs text-gray-400 dark:text-neutral-500 ml-1">Step 0 of 9</span>
   </div>
 
   <!-- SVG Canvas -->
-  <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 bg-gray-50 dark:bg-gray-950/60">
+  <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 mb-4 bg-gray-50 dark:bg-neutral-950">
     <svg id="dfg-svg" viewBox="0 0 1660 360" class="w-full select-none" style="touch-action: none;">
       <defs>
         <marker id="dfg-arrow-demand" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -62,8 +62,8 @@
   </div>
 
   <!-- Description Panel -->
-  <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/40 px-5 py-4 min-h-[80px]">
-    <p id="dfg-desc" class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"></p>
+  <div class="rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800/40 px-5 py-4 min-h-[80px]">
+    <p id="dfg-desc" class="text-sm text-gray-700 dark:text-neutral-300 leading-relaxed"></p>
   </div>
 
 </div>
@@ -264,7 +264,7 @@
     const demandEdgeSet = new Set(step.demandEdges.map(e => `${e.from}::${e.to}`));
 
     const isDark = document.documentElement.classList.contains('dark');
-    const bgFill = isDark ? '#0f172a' : '#ffffff';
+    const bgFill = isDark ? '#222222' : '#ffffff';
 
     // ── Edges ────────────────────────────────────────────────────────────────
     const eg = document.getElementById('dfg-edges') as SVGGElement;

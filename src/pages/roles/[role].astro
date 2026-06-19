@@ -35,12 +35,12 @@ const colorTextMap: Record<string, string> = {
   teal:   'text-teal-600 dark:text-teal-400',
 };
 const colorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-indigo-500/10',
-  violet: 'bg-violet-50 dark:bg-violet-500/10',
-  sky:    'bg-sky-50 dark:bg-sky-500/10',
-  emerald:'bg-emerald-50 dark:bg-emerald-500/10',
-  amber:  'bg-amber-50 dark:bg-amber-500/10',
-  teal:   'bg-teal-50 dark:bg-teal-500/10',
+  indigo: 'bg-indigo-50 dark:bg-neutral-900',
+  violet: 'bg-violet-50 dark:bg-neutral-900',
+  sky:    'bg-sky-50 dark:bg-neutral-900',
+  emerald:'bg-emerald-50 dark:bg-neutral-900',
+  amber:  'bg-amber-50 dark:bg-neutral-900',
+  teal:   'bg-teal-50 dark:bg-neutral-900',
 };
 const colorBorderMap: Record<string, string> = {
   indigo: 'border-indigo-200 dark:border-indigo-500/30',
@@ -99,12 +99,12 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
 <BaseLayout title={`${role.title} — Role-based course`} description={role.description}>
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
-      <a href={BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a href={BASE_URL} class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={BASE_URL} class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -115,7 +115,7 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
   </header>
 
   <div class="relative overflow-hidden pt-12">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <!-- Hero -->
@@ -127,19 +127,19 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
         <span class={`text-transparent bg-clip-text bg-gradient-to-r ${accentGradient}`}>{role.title}</span>
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+      <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
         {role.description}
       </p>
-      <p class="text-sm text-gray-400 dark:text-gray-500 mt-4">{stats.topicCount} topics · {hours}</p>
+      <p class="text-sm text-gray-400 dark:text-neutral-500 mt-4">{stats.topicCount} topics · {hours}</p>
     </div>
 
     <!-- Overall progress bar -->
     <div class="relative z-10 px-6 pb-10 max-w-3xl mx-auto"
       data-all-topic-ids={allTopicIds.join(',')}>
-      <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+      <div class="h-2 rounded-full bg-gray-200 dark:bg-neutral-800 overflow-hidden">
         <div id="role-progress-fill" class={`h-full rounded-full ${accentBar} transition-all duration-500`} style="width:0%"></div>
       </div>
-      <p id="role-progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">0 of {stats.topicCount} topics completed</p>
+      <p id="role-progress-text" class="text-sm text-gray-500 dark:text-neutral-400 mt-2 text-center">0 of {stats.topicCount} topics completed</p>
     </div>
 
     <main class="relative z-10 max-w-3xl mx-auto px-6 pb-20 animate-slide-up">
@@ -151,37 +151,37 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
             const ps = phaseStats![pi];
             if (phase.isEmpty) {
               return (
-                <div class="block p-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/20 opacity-60">
+                <div class="block p-6 rounded-2xl border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900 opacity-60">
                   <div class="flex items-center justify-between mb-4">
-                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-2.5 py-0.5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-600 bg-gray-100 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-full px-2.5 py-0.5">
                       Phase {pi + 1}
                     </span>
-                    <span class="text-xs text-gray-400 dark:text-gray-600 italic">Coming soon</span>
+                    <span class="text-xs text-gray-400 dark:text-neutral-600 italic">Coming soon</span>
                   </div>
-                  <h2 class="text-xl font-semibold text-gray-400 dark:text-gray-600 mb-1">{phase.title}</h2>
-                  <p class="text-sm text-gray-400 dark:text-gray-600 leading-relaxed">{phase.goal}</p>
+                  <h2 class="text-xl font-semibold text-gray-400 dark:text-neutral-600 mb-1">{phase.title}</h2>
+                  <p class="text-sm text-gray-400 dark:text-neutral-600 leading-relaxed">{phase.goal}</p>
                 </div>
               );
             }
             return (
               <a
                 href={`${BASE_URL}roles/${role.slug}/${pi + 1}`}
-                class={`block p-6 rounded-2xl border ${accentBorder} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
+                class={`block p-6 rounded-2xl border ${accentBorder} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
                 data-phase-topic-ids={ps.topicIds.join(',')}
               >
                 <div class="flex items-center justify-between mb-4">
                   <span class={`text-xs font-bold uppercase tracking-widest ${accentText} ${accentBg} border ${accentBorder} rounded-full px-2.5 py-0.5`}>
                     Phase {pi + 1}
                   </span>
-                  <span class="text-xs text-gray-400 dark:text-gray-500">{ps.topicCount} topics · {ps.time}</span>
+                  <span class="text-xs text-gray-400 dark:text-neutral-500">{ps.topicCount} topics · {ps.time}</span>
                 </div>
 
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">{phase.title}</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-5">{phase.goal}</p>
+                <p class="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed mb-5">{phase.goal}</p>
 
                 <ul class="space-y-2 mb-6">
                   {phase.keyAreas.map((area) => (
-                    <li class="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
+                    <li class="flex items-start gap-2.5 text-sm text-gray-600 dark:text-neutral-300">
                       <span class={`mt-1.5 w-1.5 h-1.5 rounded-full ${accentDot} shrink-0`}></span>
                       {area}
                     </li>
@@ -189,10 +189,10 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
                 </ul>
 
                 <div class="flex items-center gap-3">
-                  <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                  <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-neutral-800 overflow-hidden">
                     <div class={`phase-progress-bar h-full rounded-full ${accentBar} transition-all duration-500`} style="width:0%"></div>
                   </div>
-                  <span class="phase-progress-text text-xs text-gray-400 dark:text-gray-500 shrink-0 w-16 text-right">
+                  <span class="phase-progress-text text-xs text-gray-400 dark:text-neutral-500 shrink-0 w-16 text-right">
                     0 / {ps.topicCount}
                   </span>
                   <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${accentText} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -213,26 +213,26 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
                 <h2 class={`text-xs font-bold uppercase tracking-widest ${accentText}`}>{section.title}</h2>
               </div>
               {section.description && (
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 ml-8">{section.description}</p>
+                <p class="text-sm text-gray-500 dark:text-neutral-400 mb-4 ml-8">{section.description}</p>
               )}
               <ol class="space-y-3">
                 {section.topics.map((topic) => (
                   <li>
                     <a
                       href={topic.url}
-                      class={`group flex items-start gap-4 p-4 rounded-xl border ${colorBorderMap[topic.chapterColor] ?? colorBorderMap.indigo} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
+                      class={`group flex items-start gap-4 p-4 rounded-xl border ${colorBorderMap[topic.chapterColor] ?? colorBorderMap.indigo} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
                     >
                       <div class="flex-1 min-w-0">
                         <p class="text-gray-900 dark:text-white font-medium">{topic.title}</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-500 mt-0.5">{topic.description}</p>
+                        <p class="text-sm text-gray-500 dark:text-neutral-500 mt-0.5">{topic.description}</p>
                       </div>
                       <div class="flex items-center gap-3 shrink-0 mt-0.5">
                         <span class={`hidden sm:inline text-xs ${colorTextMap[topic.chapterColor] ?? colorTextMap.indigo} ${colorBgMap[topic.chapterColor] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full whitespace-nowrap`}>
                           {topic.pillarLabel} · {topic.chapterTitle}
                         </span>
-                        <span class="text-xs text-gray-400 dark:text-gray-600">{topic.estimatedMinutes} min</span>
+                        <span class="text-xs text-gray-400 dark:text-neutral-600">{topic.estimatedMinutes} min</span>
                         <span
-                          class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
+                          class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 transition-colors"
                           data-topic-id={topic.topicId}
                         ></span>
                       </div>
@@ -253,7 +253,7 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
               </svg>
             </a>
-            <a href={BASE_URL} class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">Back to overview</a>
+            <a href={BASE_URL} class="text-sm text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-neutral-300 transition-colors">Back to overview</a>
           </div>
         </div>
       )}
@@ -261,7 +261,7 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
     </main>
   </div>
 
-  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+  <footer class="border-t border-gray-200 dark:border-neutral-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-neutral-600">
     <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
   </footer>
 </BaseLayout>
@@ -298,7 +298,7 @@ const allTopicIds = sections.flatMap((s) => s.topics.map((t) => t.topicId));
       const id = dot.dataset.topicId ?? '';
       if (progress[id]) {
         done++;
-        dot.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+        dot.classList.remove('bg-gray-200', 'dark:bg-neutral-700');
         dot.classList.add('bg-emerald-500');
       }
     });

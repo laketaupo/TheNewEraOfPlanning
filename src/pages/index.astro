@@ -64,20 +64,20 @@ const roleColorTextMap: Record<string, string> = {
   teal:   'text-teal-600 dark:text-teal-400',
 };
 const roleBadgeBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-indigo-500/10',
-  violet: 'bg-violet-50 dark:bg-violet-500/10',
-  sky:    'bg-sky-50 dark:bg-sky-500/10',
-  emerald:'bg-emerald-50 dark:bg-emerald-500/10',
-  amber:  'bg-amber-50 dark:bg-amber-500/10',
-  teal:   'bg-teal-50 dark:bg-teal-500/10',
+  indigo: 'bg-indigo-50 dark:bg-neutral-900',
+  violet: 'bg-violet-50 dark:bg-neutral-900',
+  sky:    'bg-sky-50 dark:bg-neutral-900',
+  emerald:'bg-emerald-50 dark:bg-neutral-900',
+  amber:  'bg-amber-50 dark:bg-neutral-900',
+  teal:   'bg-teal-50 dark:bg-neutral-900',
 };
 const roleColorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-400 dark:hover:border-indigo-400',
-  violet: 'bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400',
-  sky:    'bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30 hover:border-sky-400 dark:hover:border-sky-400',
-  emerald:'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-400',
-  amber:  'bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/30 hover:border-amber-400 dark:hover:border-amber-400',
-  teal:   'bg-teal-50 dark:bg-teal-500/10 border-teal-200 dark:border-teal-500/30 hover:border-teal-400 dark:hover:border-teal-400',
+  indigo: 'bg-indigo-50 dark:bg-neutral-900 border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-400 dark:hover:border-indigo-400',
+  violet: 'bg-violet-50 dark:bg-neutral-900 border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400',
+  sky:    'bg-sky-50 dark:bg-neutral-900 border-sky-200 dark:border-sky-500/30 hover:border-sky-400 dark:hover:border-sky-400',
+  emerald:'bg-emerald-50 dark:bg-neutral-900 border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-400',
+  amber:  'bg-amber-50 dark:bg-neutral-900 border-amber-200 dark:border-amber-500/30 hover:border-amber-400 dark:hover:border-amber-400',
+  teal:   'bg-teal-50 dark:bg-neutral-900 border-teal-200 dark:border-teal-500/30 hover:border-teal-400 dark:hover:border-teal-400',
 };
 
 const roleIconMap: Record<string, string> = {
@@ -98,7 +98,7 @@ const roleIconMap: Record<string, string> = {
   <!-- Page wrapper -->
   <div class="relative min-h-screen overflow-hidden">
     <!-- Background grid -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <!-- Radial gradient -->
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
@@ -108,7 +108,7 @@ const roleIconMap: Record<string, string> = {
         The New Era of<br>
         <span style="color:#635CFA">Planning</span>
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+      <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
         Explore the people, processes, technology, and data that power modern supply chain planning.
       </p>
     </div>
@@ -136,13 +136,13 @@ const roleIconMap: Record<string, string> = {
     <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
       <div class="text-center mb-10">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Learn by role</h2>
-        <p class="text-gray-500 dark:text-gray-400">A curated learning path with exactly what you need for your position.</p>
+        <p class="text-gray-500 dark:text-neutral-400">A curated learning path with exactly what you need for your position.</p>
       </div>
 
       <div class="space-y-10">
         {rolesByDepartment.map(({ name, roles: deptRoles }) => (
           <div>
-            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4">{name}</h3>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-4">{name}</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {deptRoles.map((role) => {
                 const textClass = roleColorTextMap[role.color] ?? roleColorTextMap.indigo;
@@ -152,7 +152,7 @@ const roleIconMap: Record<string, string> = {
                   <>
                     <div class={`${textClass} mb-3`} set:html={icon} />
                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1 leading-snug">{role.title}</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-4 flex-1">{role.description}</p>
+                    <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed mb-4 flex-1">{role.description}</p>
                     {role.stats ? (
                       <span class={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full self-start ${roleBadgeBgMap[role.color] ?? roleBadgeBgMap.indigo} ${textClass}`}>
                         <span class="role-live-dot"></span>
@@ -164,11 +164,11 @@ const roleIconMap: Record<string, string> = {
                   </>
                 );
                 return role.stats ? (
-                  <a href={role.url} class={`group flex flex-col p-5 rounded-2xl border ${bgClass} bg-white dark:bg-transparent transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl no-underline`}>
+                  <a href={role.url} class={`group flex flex-col p-5 rounded-2xl border ${bgClass} bg-white dark:bg-neutral-900 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl no-underline`}>
                     {cardInner}
                   </a>
                 ) : (
-                  <div class="flex flex-col p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-transparent opacity-60">
+                  <div class="flex flex-col p-5 rounded-2xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 opacity-60">
                     {cardInner}
                   </div>
                 );
@@ -181,7 +181,7 @@ const roleIconMap: Record<string, string> = {
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+  <footer class="border-t border-gray-200 dark:border-neutral-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-neutral-600">
     <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
   </footer>
 </BaseLayout>
@@ -214,15 +214,15 @@ const roleIconMap: Record<string, string> = {
   .pillar-data:hover       { box-shadow: 0 6px 24px rgba(234,179,8,0.16); }
 
   /* ── Dark mode ──────────────────────────────────── */
-  :global(.dark) .pillar-people     { background:rgba(239,68,68,0.06);  border-color:rgba(239,68,68,0.18);  border-top-color:rgba(252,165,165,0.5); }
-  :global(.dark) .pillar-process    { background:rgba(59,130,246,0.06); border-color:rgba(59,130,246,0.18); border-top-color:rgba(147,197,253,0.5); }
-  :global(.dark) .pillar-technology { background:rgba(34,197,94,0.06);  border-color:rgba(34,197,94,0.18);  border-top-color:rgba(134,239,172,0.5); }
-  :global(.dark) .pillar-data       { background:rgba(234,179,8,0.06);  border-color:rgba(234,179,8,0.18);  border-top-color:rgba(253,211,77,0.5); }
+  :global(.dark) .pillar-people     { background:#2c2c2c; border-color:rgba(239,68,68,0.18);  border-top-color:rgba(252,165,165,0.5); }
+  :global(.dark) .pillar-process    { background:#2c2c2c; border-color:rgba(59,130,246,0.18); border-top-color:rgba(147,197,253,0.5); }
+  :global(.dark) .pillar-technology { background:#2c2c2c; border-color:rgba(34,197,94,0.18);  border-top-color:rgba(134,239,172,0.5); }
+  :global(.dark) .pillar-data       { background:#2c2c2c; border-color:rgba(234,179,8,0.18);  border-top-color:rgba(253,211,77,0.5); }
 
-  :global(.dark) .pillar-people:hover     { background:rgba(239,68,68,0.09);  box-shadow:0 6px 28px rgba(239,68,68,0.12); }
-  :global(.dark) .pillar-process:hover    { background:rgba(59,130,246,0.09); box-shadow:0 6px 28px rgba(59,130,246,0.12); }
-  :global(.dark) .pillar-technology:hover { background:rgba(34,197,94,0.09);  box-shadow:0 6px 28px rgba(34,197,94,0.1); }
-  :global(.dark) .pillar-data:hover       { background:rgba(234,179,8,0.09);  box-shadow:0 6px 28px rgba(234,179,8,0.12); }
+  :global(.dark) .pillar-people:hover     { background:#363636; box-shadow:0 6px 28px rgba(239,68,68,0.12); }
+  :global(.dark) .pillar-process:hover    { background:#363636; box-shadow:0 6px 28px rgba(59,130,246,0.12); }
+  :global(.dark) .pillar-technology:hover { background:#363636; box-shadow:0 6px 28px rgba(34,197,94,0.1); }
+  :global(.dark) .pillar-data:hover       { background:#363636; box-shadow:0 6px 28px rgba(234,179,8,0.12); }
 
   /* ── Icon ───────────────────────────────────────── */
   .pillar-icon {
@@ -270,7 +270,7 @@ const roleIconMap: Record<string, string> = {
     animation: pulse 2s infinite;
   }
   .role-badge-soon {
-    @apply inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded-full self-start bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400;
+    @apply inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded-full self-start bg-gray-100 dark:bg-neutral-800 text-gray-500 dark:text-neutral-400;
   }
 
   @keyframes pulse {

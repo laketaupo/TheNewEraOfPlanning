@@ -1,7 +1,7 @@
 ---
 // What-If Simulator — no props, self-contained vanilla JS widget
 ---
-<div id="what-if-widget" class="rounded-2xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/50 dark:bg-gray-900/60 p-6">
+<div id="what-if-widget" class="rounded-2xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/50 dark:bg-neutral-900 p-6">
   <h3 class="text-sm font-semibold text-emerald-400 mb-6 flex items-center gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
@@ -13,56 +13,56 @@
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
     <!-- Demand lever -->
     <div>
-      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-neutral-400 mb-2">
         <span>Demand uplift</span>
         <span id="demand-val" class="font-mono text-gray-900 dark:text-white">+0%</span>
       </label>
       <input id="demand-slider" type="range" min="-30" max="60" value="0" step="5"
-        class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer accent-emerald-500" />
-      <div class="flex justify-between text-xs text-gray-400 dark:text-gray-600 mt-1"><span>-30%</span><span>+60%</span></div>
+        class="w-full h-2 bg-gray-200 dark:bg-neutral-700 rounded-full appearance-none cursor-pointer accent-emerald-500" />
+      <div class="flex justify-between text-xs text-gray-400 dark:text-neutral-600 mt-1"><span>-30%</span><span>+60%</span></div>
     </div>
 
     <!-- Capacity lever -->
     <div>
-      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-neutral-400 mb-2">
         <span>Capacity available</span>
         <span id="capacity-val" class="font-mono text-gray-900 dark:text-white">100%</span>
       </label>
       <input id="capacity-slider" type="range" min="50" max="100" value="100" step="5"
-        class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer accent-sky-500" />
-      <div class="flex justify-between text-xs text-gray-400 dark:text-gray-600 mt-1"><span>50%</span><span>100%</span></div>
+        class="w-full h-2 bg-gray-200 dark:bg-neutral-700 rounded-full appearance-none cursor-pointer accent-sky-500" />
+      <div class="flex justify-between text-xs text-gray-400 dark:text-neutral-600 mt-1"><span>50%</span><span>100%</span></div>
     </div>
 
     <!-- Lead time lever -->
     <div>
-      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <label class="flex items-center justify-between text-xs text-gray-500 dark:text-neutral-400 mb-2">
         <span>Supplier lead time</span>
         <span id="leadtime-val" class="font-mono text-gray-900 dark:text-white">4 wk</span>
       </label>
       <input id="leadtime-slider" type="range" min="2" max="12" value="4" step="1"
-        class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full appearance-none cursor-pointer accent-violet-500" />
-      <div class="flex justify-between text-xs text-gray-400 dark:text-gray-600 mt-1"><span>2 wk</span><span>12 wk</span></div>
+        class="w-full h-2 bg-gray-200 dark:bg-neutral-700 rounded-full appearance-none cursor-pointer accent-violet-500" />
+      <div class="flex justify-between text-xs text-gray-400 dark:text-neutral-600 mt-1"><span>2 wk</span><span>12 wk</span></div>
     </div>
   </div>
 
   <!-- KPI output cards -->
   <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-    <div class="rounded-xl bg-white dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700">
+    <div class="rounded-xl bg-white dark:bg-neutral-800/60 p-4 border border-gray-200 dark:border-neutral-700">
       <p class="text-xs text-gray-500 mb-1">Service level</p>
       <p id="kpi-service" class="text-2xl font-bold text-white">98.5%</p>
       <p id="kpi-service-delta" class="text-xs text-gray-500 mt-1"></p>
     </div>
-    <div class="rounded-xl bg-white dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700">
+    <div class="rounded-xl bg-white dark:bg-neutral-800/60 p-4 border border-gray-200 dark:border-neutral-700">
       <p class="text-xs text-gray-500 mb-1">Inventory days</p>
       <p id="kpi-inventory" class="text-2xl font-bold text-white">18</p>
       <p id="kpi-inventory-delta" class="text-xs text-gray-500 mt-1"></p>
     </div>
-    <div class="rounded-xl bg-white dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700">
+    <div class="rounded-xl bg-white dark:bg-neutral-800/60 p-4 border border-gray-200 dark:border-neutral-700">
       <p class="text-xs text-gray-500 mb-1">Capacity load</p>
       <p id="kpi-capacity" class="text-2xl font-bold text-white">72%</p>
       <p id="kpi-capacity-delta" class="text-xs text-gray-500 mt-1"></p>
     </div>
-    <div class="rounded-xl bg-white dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700">
+    <div class="rounded-xl bg-white dark:bg-neutral-800/60 p-4 border border-gray-200 dark:border-neutral-700">
       <p class="text-xs text-gray-500 mb-1">Plan status</p>
       <p id="kpi-feasible" class="text-sm font-semibold text-emerald-400 mt-1">Feasible</p>
     </div>

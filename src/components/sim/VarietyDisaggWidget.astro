@@ -5,7 +5,7 @@
 // Top: [key mix %  (bar chart)]  ×  [variety forecast = 1,000]
 // Bottom: forecast × key-share % = disaggregated item forecast
 ---
-<div id="vdw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-gray-900/60 p-6 select-none">
+<div id="vdw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-neutral-900 p-6 select-none">
 
   <!-- Header -->
   <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
@@ -26,7 +26,7 @@
   <div class="flex flex-col md:flex-row items-stretch gap-3 md:gap-4 mb-6">
 
     <!-- Card 1: key mix -->
-    <div class="flex-1 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4">
+    <div class="flex-1 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800/60 p-4">
       <p id="vdw-mix-title" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Sales volume mix</p>
       <div class="flex items-end justify-around gap-4 h-32" id="vdw-hist-chart"></div>
       <div class="flex justify-around gap-4 mt-2" id="vdw-hist-labels"></div>
@@ -34,13 +34,13 @@
 
     <!-- × operator -->
     <div class="flex items-center justify-center shrink-0">
-      <span class="text-3xl font-light text-gray-300 dark:text-gray-600">×</span>
+      <span class="text-3xl font-light text-gray-300 dark:text-neutral-600">×</span>
     </div>
 
     <!-- Card 2: variety forecast -->
     <div class="flex-1 rounded-xl border border-sky-200 dark:border-sky-500/30 bg-sky-50 dark:bg-sky-500/10 p-4 flex flex-col items-center justify-center text-center">
       <p class="text-xs font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wide mb-2">Variety forecast</p>
-      <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">🥕 Carrot</p>
+      <p class="text-sm font-semibold text-gray-700 dark:text-neutral-200">🥕 Carrot</p>
       <p class="text-4xl font-bold text-sky-500 tabular-nums leading-none mt-2">1,000</p>
       <p class="text-xs text-gray-400 mt-1.5">pieces · fixed</p>
     </div>
@@ -48,15 +48,15 @@
 
   <!-- Equals divider -->
   <div class="flex items-center gap-3 mb-5">
-    <span class="text-2xl font-light text-gray-300 dark:text-gray-600">=</span>
+    <span class="text-2xl font-light text-gray-300 dark:text-neutral-600">=</span>
     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Disaggregated forecast per item</p>
   </div>
 
   <!-- Bottom: results -->
   <div id="vdw-results" class="space-y-4"></div>
 
-  <div class="mt-5 pt-3 border-t border-gray-100 dark:border-gray-800 flex justify-between text-sm">
-    <span class="text-gray-400 dark:text-gray-500">Sum of items</span>
+  <div class="mt-5 pt-3 border-t border-gray-100 dark:border-neutral-800 flex justify-between text-sm">
+    <span class="text-gray-400 dark:text-neutral-500">Sum of items</span>
     <span id="vdw-check" class="font-bold tabular-nums text-emerald-600 dark:text-emerald-400">1,000 pcs</span>
   </div>
 </div>
@@ -127,16 +127,16 @@ if (document.getElementById('vdw')) {
       el.innerHTML += `
         <div>
           <div class="flex justify-between items-baseline mb-1 text-sm">
-            <span class="font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+            <span class="font-medium text-gray-700 dark:text-neutral-300 flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:${it.color}"></span>
               ${it.name} <span class="text-gray-400 font-normal text-xs">· ${it.pack}</span>
             </span>
             <span class="tabular-nums text-gray-400">
               1,000 × <span id="vdw-rpct-${it.id}" class="font-semibold" style="color:${it.color}">0%</span>
-              = <span id="vdw-units-${it.id}" class="font-bold text-gray-700 dark:text-gray-200">0</span> pcs
+              = <span id="vdw-units-${it.id}" class="font-bold text-gray-700 dark:text-neutral-200">0</span> pcs
             </span>
           </div>
-          <div class="h-4 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+          <div class="h-4 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden">
             <div id="vdw-bar-${it.id}" class="h-full rounded-full transition-all duration-300"
                  style="width:0%;background:${it.color}"></div>
           </div>
@@ -154,7 +154,7 @@ if (document.getElementById('vdw')) {
       const btn = document.getElementById(`vdw-key-${kk.id}`);
       btn.className = kk.id === activeKey
         ? 'rounded-lg border-2 border-sky-500 bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 px-3 py-2 text-sm font-medium transition-all'
-        : 'rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-sky-300 dark:hover:border-sky-600 px-3 py-2 text-sm font-medium transition-all';
+        : 'rounded-lg border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-gray-600 dark:text-neutral-300 hover:border-sky-300 dark:hover:border-sky-600 px-3 py-2 text-sm font-medium transition-all';
     });
 
     document.getElementById('vdw-key-desc').textContent = k.desc;
@@ -177,7 +177,7 @@ if (document.getElementById('vdw')) {
 
       const lbl = document.createElement('div');
       lbl.className = 'flex-1 max-w-[64px] text-center';
-      lbl.innerHTML = `<span class="text-xs font-medium text-gray-600 dark:text-gray-300">${it.name}</span>`;
+      lbl.innerHTML = `<span class="text-xs font-medium text-gray-600 dark:text-neutral-300">${it.name}</span>`;
       labels.appendChild(lbl);
     });
 

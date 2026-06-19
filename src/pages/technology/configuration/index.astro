@@ -7,12 +7,12 @@ const entries = getConfigurationEntries();
 <BaseLayout title="Configuration Manual — Technology">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
-      <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a href="/technology" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href="/technology" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -23,7 +23,7 @@ const entries = getConfigurationEntries();
   </header>
 
   <div class="relative overflow-hidden pt-12">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <!-- Header -->
@@ -35,7 +35,7 @@ const entries = getConfigurationEntries();
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
         Business Configuration
       </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-lg mx-auto leading-relaxed">
+      <p class="text-lg text-gray-600 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
         Step-by-step screenshots and explanations for configuring Planning software for your business.
       </p>
     </div>
@@ -43,8 +43,8 @@ const entries = getConfigurationEntries();
     <!-- Entries -->
     <div class="relative z-10 px-6 pb-24 max-w-3xl mx-auto">
       {entries.length === 0 ? (
-        <div class="text-center py-20 text-gray-400 dark:text-gray-600">
-          <p class="text-lg">No entries yet. Add Markdown files to <code class="text-sm bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">src/content/configuration/</code>.</p>
+        <div class="text-center py-20 text-gray-400 dark:text-neutral-600">
+          <p class="text-lg">No entries yet. Add Markdown files to <code class="text-sm bg-gray-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded">src/content/configuration/</code>.</p>
         </div>
       ) : (
         <div class="space-y-16">
@@ -56,14 +56,14 @@ const entries = getConfigurationEntries();
                 <div>
                   <h2 class="text-xl font-bold text-gray-900 dark:text-white leading-snug">{entry.title}</h2>
                   {entry.description && (
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{entry.description}</p>
+                    <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">{entry.description}</p>
                   )}
                 </div>
               </div>
 
               <!-- Screenshot -->
               {entry.screenshot ? (
-                <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-6 shadow-sm">
+                <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 mb-6 shadow-sm">
                   <img
                     src={entry.screenshot}
                     alt={`Screenshot: ${entry.title}`}
@@ -73,10 +73,10 @@ const entries = getConfigurationEntries();
                 </div>
               ) : (
                 <div class="screenshot-placeholder mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-300 dark:text-gray-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-300 dark:text-neutral-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                   </svg>
-                  <span class="text-sm text-gray-400 dark:text-gray-500">Screenshot coming soon</span>
+                  <span class="text-sm text-gray-400 dark:text-neutral-500">Screenshot coming soon</span>
                 </div>
               )}
 
@@ -86,7 +86,7 @@ const entries = getConfigurationEntries();
               )}
 
               {i < entries.length - 1 && (
-                <div class="mt-16 border-t border-gray-100 dark:border-gray-800"></div>
+                <div class="mt-16 border-t border-gray-100 dark:border-neutral-800"></div>
               )}
             </div>
           ))}
@@ -95,7 +95,7 @@ const entries = getConfigurationEntries();
     </div>
   </div>
 
-  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+  <footer class="border-t border-gray-200 dark:border-neutral-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-neutral-600">
     <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
   </footer>
 </BaseLayout>
@@ -114,7 +114,7 @@ const entries = getConfigurationEntries();
 
   .screenshot-placeholder {
     @apply flex flex-col items-center justify-center rounded-xl border-2 border-dashed
-           border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40
+           border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-900
            py-16 text-center;
   }
 
@@ -122,15 +122,15 @@ const entries = getConfigurationEntries();
     @apply text-gray-900 dark:text-white;
   }
   .prose p {
-    @apply text-gray-600 dark:text-gray-300;
+    @apply text-gray-600 dark:text-neutral-300;
   }
   .prose li {
-    @apply text-gray-600 dark:text-gray-300;
+    @apply text-gray-600 dark:text-neutral-300;
   }
   .prose strong {
     @apply text-gray-900 dark:text-white;
   }
   .prose code {
-    @apply bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 text-sm;
+    @apply bg-gray-100 dark:bg-neutral-800 rounded px-1 py-0.5 text-sm;
   }
 </style>

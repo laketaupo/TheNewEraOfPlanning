@@ -4,7 +4,7 @@ interface Props { step?: number; }
 const { step } = Astro.props;
 ---
 
-<div id="ig-widget" data-step={step ?? ''} class="rounded-2xl border border-indigo-200 dark:border-indigo-500/20 bg-white dark:bg-gray-900/60 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
+<div id="ig-widget" data-step={step ?? ''} class="rounded-2xl border border-indigo-200 dark:border-indigo-500/20 bg-white dark:bg-neutral-900 p-6" style="width:80vw; margin-left:calc(50% - 40vw);">
 
   <!-- Header + Legend -->
   <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
@@ -15,7 +15,7 @@ const { step } = Astro.props;
         </svg>
         Supply Chain Network Graph
       </h3>
-      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-gray-400">
+      <div class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500 dark:text-neutral-400">
         <span class="flex items-center gap-1.5">
           <svg width="12" height="11" viewBox="0 0 12 11" aria-hidden="true"><polygon points="6,0 12,11 0,11" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linejoin="round"/></svg>
           Item
@@ -38,11 +38,11 @@ const { step } = Astro.props;
         </span>
       </div>
     </div>
-    <span class="text-xs text-gray-400 dark:text-gray-600 shrink-0">Drag nodes to reposition</span>
+    <span class="text-xs text-gray-400 dark:text-neutral-600 shrink-0">Drag nodes to reposition</span>
   </div>
 
   <!-- SVG Canvas -->
-  <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 mb-4 bg-gray-50 dark:bg-gray-950/60">
+  <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 mb-4 bg-gray-50 dark:bg-neutral-950">
     <svg
       id="ig-svg"
       viewBox="0 0 1660 360"
@@ -345,7 +345,7 @@ const { step } = Astro.props;
     // Fill must be opaque so nodes always cover edges drawn beneath them.
     // Dimming is achieved via stroke/text colour only — never via group opacity.
     const isDark = document.documentElement.classList.contains('dark');
-    const bgFill = isDark ? '#0f172a' : '#ffffff';
+    const bgFill = isDark ? '#222222' : '#ffffff';
 
     for (const node of NODES) {
       if (STEP !== null && !visibleIds.has(node.id)) continue;

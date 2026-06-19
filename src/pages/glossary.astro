@@ -15,7 +15,7 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
 <BaseLayout title="Glossary — How Planning Software Works" description="Definitions of key planning terms used throughout this learning platform.">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3">
     <div class="flex items-center gap-3">
-      <a href="/" title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href="/" title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
@@ -25,14 +25,14 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
 
   <main class="max-w-3xl mx-auto px-6 pt-24 pb-32">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Glossary</h1>
-    <p class="text-gray-500 dark:text-gray-400 mb-8">{terms.length} planning terms defined.</p>
+    <p class="text-gray-500 dark:text-neutral-400 mb-8">{terms.length} planning terms defined.</p>
 
     <!-- A-Z jump links -->
     <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to letter">
       {letters.map(letter => (
         <a
           href={`#letter-${letter}`}
-          class="w-7 h-7 flex items-center justify-center rounded text-xs font-semibold text-gray-500 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          class="w-7 h-7 flex items-center justify-center rounded text-xs font-semibold text-gray-500 dark:text-neutral-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
           {letter}
         </a>
@@ -44,7 +44,7 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
       const group = terms.filter(t => t.term[0].toUpperCase() === letter);
       return (
         <section id={`letter-${letter}`} class="mb-10">
-          <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-600 mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">{letter}</h2>
+          <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-600 mb-4 border-b border-gray-100 dark:border-neutral-800 pb-2">{letter}</h2>
           <dl class="space-y-6">
             {group.map(term => {
               const seeAlsoTopics = term.seeAlso.map(ref => topicMap[ref]).filter(Boolean);
@@ -52,9 +52,9 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
               return (
                 <div id={term.slug} class="scroll-mt-20">
                   <dt class="text-base font-semibold text-gray-900 dark:text-white mb-1">{term.term}</dt>
-                  <dd class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-2">{term.definition}</dd>
+                  <dd class="text-sm text-gray-600 dark:text-neutral-400 leading-relaxed mb-2">{term.definition}</dd>
                   {seeAlsoTopics.length > 0 && (
-                    <p class="text-xs text-gray-400 dark:text-gray-600">
+                    <p class="text-xs text-gray-400 dark:text-neutral-600">
                       See:{' '}
                       {seeAlsoTopics.map((t, i) => (
                         <Fragment>
@@ -65,7 +65,7 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
                     </p>
                   )}
                   {relatedTerms.length > 0 && (
-                    <p class="text-xs text-gray-400 dark:text-gray-600 mt-0.5">
+                    <p class="text-xs text-gray-400 dark:text-neutral-600 mt-0.5">
                       Related:{' '}
                       {relatedTerms.map((t, i) => (
                         <Fragment>

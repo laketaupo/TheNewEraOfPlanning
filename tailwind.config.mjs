@@ -21,6 +21,11 @@ export default {
           800: '#3730a3',
           900: '#312e81',
         },
+        neutral: {
+          800: '#363636',
+          900: '#2c2c2c',
+          950: '#222222',
+        },
       },
       animation: {
         'fade-in': 'fadeIn 0.4s ease-out',

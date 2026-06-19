@@ -69,10 +69,10 @@ function getModal(): HTMLDivElement {
   el.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
   el.innerHTML = `
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" data-modal-backdrop></div>
-    <div class="relative w-full max-w-sm bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-5">
+    <div class="relative w-full max-w-sm bg-white dark:bg-neutral-900 rounded-xl shadow-2xl border border-gray-200 dark:border-neutral-700 p-5">
       <div class="flex items-center justify-between mb-4">
         <span data-modal-title class="text-sm font-semibold text-gray-900 dark:text-white">Add a note</span>
-        <button data-modal-close class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors" aria-label="Cancel">
+        <button data-modal-close class="text-gray-400 hover:text-gray-700 dark:hover:text-neutral-200 transition-colors" aria-label="Cancel">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -82,10 +82,10 @@ function getModal(): HTMLDivElement {
         data-modal-textarea
         rows="3"
         placeholder="What's on your mind? (optional)"
-        class="w-full text-sm text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2.5 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400/40 placeholder-gray-400 dark:placeholder-gray-500"
+        class="w-full text-sm text-gray-700 dark:text-neutral-200 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-lg px-3 py-2.5 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400/40 placeholder-gray-400 dark:placeholder-neutral-500"
       ></textarea>
       <div class="flex justify-end gap-2 mt-4">
-        <button data-modal-cancel class="text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+        <button data-modal-cancel class="text-xs font-medium px-3 py-1.5 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-500 dark:text-neutral-400 hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
           Cancel
         </button>
         <button data-modal-save class="text-xs font-medium px-3 py-1.5 rounded-full border border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-500/20 transition-colors">
@@ -147,8 +147,8 @@ function getNoteButton(anchor: HTMLButtonElement): HTMLButtonElement {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Add or edit note');
-  btn.className = 'relative flex items-center py-1.5 px-2 rounded-full border border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors';
-  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-note-tooltip style="display:none" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 max-w-[180px] bg-gray-900 dark:bg-gray-800 text-white text-xs rounded-lg px-2.5 py-1.5 shadow-lg pointer-events-none whitespace-normal text-left leading-snug z-[9998]"></span>`;
+  btn.className = 'relative flex items-center py-1.5 px-2 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-500 dark:text-neutral-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors';
+  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-note-tooltip style="display:none" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 max-w-[180px] bg-gray-900 dark:bg-neutral-800 text-white text-xs rounded-lg px-2.5 py-1.5 shadow-lg pointer-events-none whitespace-normal text-left leading-snug z-[9998]"></span>`;
   anchor.insertAdjacentElement('afterend', btn);
   btn.addEventListener('mouseenter', () => {
     const tip = btn.querySelector('[data-note-tooltip]') as HTMLSpanElement;
@@ -179,11 +179,11 @@ function initTopicProgress() {
     const comment = getComments()[topicId!];
     const tip = noteBtn.querySelector('[data-note-tooltip]') as HTMLSpanElement | null;
     if (comment) {
-      noteBtn.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      noteBtn.classList.remove('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       noteBtn.classList.add('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
       if (tip) tip.textContent = comment;
     } else {
-      noteBtn.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      noteBtn.classList.add('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       noteBtn.classList.remove('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
       if (tip) tip.textContent = '';
     }
@@ -191,20 +191,20 @@ function initTopicProgress() {
 
   function updateButtons(state: ProgressState | undefined) {
     if (state === 'complete') {
-      completeBtn!.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      completeBtn!.classList.remove('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       completeBtn!.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
       completeLabel!.textContent = 'Completed';
     } else {
-      completeBtn!.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      completeBtn!.classList.add('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       completeBtn!.classList.remove('border-emerald-500', 'text-emerald-600', 'bg-emerald-50', 'dark:bg-emerald-500/10', 'dark:text-emerald-400');
       completeLabel!.textContent = 'Mark complete';
     }
     if (state === 'unclear') {
-      unclearBtn!.classList.remove('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      unclearBtn!.classList.remove('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       unclearBtn!.classList.add('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
       unclearLabel!.textContent = 'Unclear';
     } else {
-      unclearBtn!.classList.add('border-gray-300', 'dark:border-gray-700', 'text-gray-500', 'dark:text-gray-400');
+      unclearBtn!.classList.add('border-gray-300', 'dark:border-neutral-700', 'text-gray-500', 'dark:text-neutral-400');
       unclearBtn!.classList.remove('border-amber-400', 'text-amber-600', 'bg-amber-50', 'dark:bg-amber-500/10', 'dark:text-amber-400');
       unclearLabel!.textContent = 'Mark unclear';
     }

@@ -55,12 +55,12 @@ const colorTextMap: Record<string, string> = {
   teal:   'text-teal-600 dark:text-teal-400',
 };
 const colorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-indigo-500/10',
-  violet: 'bg-violet-50 dark:bg-violet-500/10',
-  sky:    'bg-sky-50 dark:bg-sky-500/10',
-  emerald:'bg-emerald-50 dark:bg-emerald-500/10',
-  amber:  'bg-amber-50 dark:bg-amber-500/10',
-  teal:   'bg-teal-50 dark:bg-teal-500/10',
+  indigo: 'bg-indigo-50 dark:bg-neutral-900',
+  violet: 'bg-violet-50 dark:bg-neutral-900',
+  sky:    'bg-sky-50 dark:bg-neutral-900',
+  emerald:'bg-emerald-50 dark:bg-neutral-900',
+  amber:  'bg-amber-50 dark:bg-neutral-900',
+  teal:   'bg-teal-50 dark:bg-neutral-900',
 };
 const colorBorderMap: Record<string, string> = {
   indigo: 'border-indigo-200 dark:border-indigo-500/30',
@@ -110,12 +110,12 @@ const topicIds = phaseTopics.map((t) => t.topicId);
 >
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
-      <a href={BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
-      <a href={`${BASE_URL}roles/${role.slug}`} class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+      <a href={`${BASE_URL}roles/${role.slug}`} class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
@@ -126,7 +126,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
   </header>
 
   <div class="relative overflow-hidden pt-12">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <!-- Hero -->
@@ -138,18 +138,18 @@ const topicIds = phaseTopics.map((t) => t.topicId);
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
         <span class={`text-transparent bg-clip-text bg-gradient-to-r ${accentGradient}`}>{phase.title}</span>
       </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
+      <p class="text-lg text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
         {phase.goal}
       </p>
-      <p class="text-sm text-gray-400 dark:text-gray-500 mt-4">{phaseTopics.length} topics · {phaseTime}</p>
+      <p class="text-sm text-gray-400 dark:text-neutral-500 mt-4">{phaseTopics.length} topics · {phaseTime}</p>
     </div>
 
     <!-- Phase progress bar -->
     <div class="relative z-10 px-6 pb-10 max-w-3xl mx-auto">
-      <div class="h-2 rounded-full bg-gray-200 dark:bg-gray-800 overflow-hidden">
+      <div class="h-2 rounded-full bg-gray-200 dark:bg-neutral-800 overflow-hidden">
         <div id="phase-progress-fill" class={`h-full rounded-full ${accentBar} transition-all duration-500`} style="width:0%"></div>
       </div>
-      <p id="phase-progress-text" class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">0 of {phaseTopics.length} topics completed</p>
+      <p id="phase-progress-text" class="text-sm text-gray-500 dark:text-neutral-400 mt-2 text-center">0 of {phaseTopics.length} topics completed</p>
     </div>
 
     <!-- Chapter cards -->
@@ -167,27 +167,27 @@ const topicIds = phaseTopics.map((t) => t.topicId);
           return (
             <a
               href={`${chapterUrl}?from=roles/${role.slug}/${phaseIndex + 1}`}
-              class={`block p-5 rounded-2xl border ${colorBorderMap[cc] ?? colorBorderMap.indigo} bg-white dark:bg-gray-900/40 hover:bg-gray-50 dark:hover:bg-gray-900/70 transition-all`}
+              class={`block p-5 rounded-2xl border ${colorBorderMap[cc] ?? colorBorderMap.indigo} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
               data-chapter-topic-ids={chapterTopicIds}
             >
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
-                  <span class="text-xs font-mono font-bold text-gray-400 dark:text-gray-600">{String(si + 1).padStart(2, '0')}</span>
+                  <span class="text-xs font-mono font-bold text-gray-400 dark:text-neutral-600">{String(si + 1).padStart(2, '0')}</span>
                   <span class={`text-xs font-medium ${colorTextMap[cc] ?? colorTextMap.indigo} ${colorBgMap[cc] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full`}>
                     {pillarLabel}
                   </span>
                 </div>
-                <span class="text-xs text-gray-400 dark:text-gray-500">{section.topics.length} topics · {time}</span>
+                <span class="text-xs text-gray-400 dark:text-neutral-500">{section.topics.length} topics · {time}</span>
               </div>
               <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-1">{section.title}</h2>
               {section.description && (
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{section.description}</p>
+                <p class="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed">{section.description}</p>
               )}
               <div class="flex items-center gap-3 mt-4">
-                <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-neutral-800 overflow-hidden">
                   <div class={`chapter-progress-bar h-full rounded-full ${colorBarMap[cc] ?? colorBarMap.indigo} transition-all duration-500`} style="width:0%"></div>
                 </div>
-                <span class="chapter-progress-text text-xs text-gray-400 dark:text-gray-500 shrink-0 w-12 text-right">
+                <span class="chapter-progress-text text-xs text-gray-400 dark:text-neutral-500 shrink-0 w-12 text-right">
                   0 / {section.topics.length}
                 </span>
                 <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${colorTextMap[cc] ?? colorTextMap.indigo} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -211,7 +211,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </a>
-          <a href={`${BASE_URL}roles/${role.slug}`} class="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+          <a href={`${BASE_URL}roles/${role.slug}`} class="text-sm text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-neutral-300 transition-colors">
             All phases
           </a>
         </div>
@@ -219,7 +219,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
         {nextPhaseUrl && (
           <a
             href={nextPhaseUrl}
-            class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            class="flex items-center gap-2 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <span>Phase {nextPhaseNumber}: {nextPhaseTitle}</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -231,7 +231,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
     </main>
   </div>
 
-  <footer class="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-gray-600">
+  <footer class="border-t border-gray-200 dark:border-neutral-800 px-6 py-8 text-center text-sm text-gray-400 dark:text-neutral-600">
     <p>Built with Astro · Content in Markdown · Maintained with Claude</p>
   </footer>
 </BaseLayout>

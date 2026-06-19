@@ -4,7 +4,7 @@
 // profile. A country grid selects the profile; the single chart updates on click.
 // Northern vs Southern hemisphere profiles are phase-shifted ~6 months.
 ---
-<div id="sdw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-gray-900/60 p-6 select-none">
+<div id="sdw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-neutral-900 p-6 select-none">
 
   <!-- Header -->
   <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
@@ -22,12 +22,12 @@
   </div>
 
   <!-- Country selection grid -->
-  <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-3">Select a country</p>
+  <p class="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium mb-3">Select a country</p>
   <div id="sdw-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6"></div>
 
   <!-- Single monthly chart -->
   <div class="flex items-baseline justify-between mb-3">
-    <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium">
+    <p class="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium">
       Monthly split — <span id="sdw-active-name" class="text-sky-500 font-semibold normal-case">Netherlands</span>
     </p>
     <p class="text-xs text-gray-400">Peak: <span id="sdw-active-peak" class="font-semibold text-sky-500">—</span></p>
@@ -35,7 +35,7 @@
   <div class="flex items-end gap-1.5 h-48" id="sdw-chart"></div>
   <div class="flex gap-1.5 mt-1" id="sdw-labels"></div>
 
-  <p class="text-xs text-gray-400 mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
+  <p class="text-xs text-gray-400 mt-5 pt-4 border-t border-gray-100 dark:border-neutral-800">
     Northern and Southern hemisphere profiles are phase-shifted ~6 months — switch between a Northern and a Southern country and watch the peak jump to the opposite side of the year.
   </p>
 </div>
@@ -105,12 +105,12 @@ if (document.getElementById('sdw')) {
       const col = document.createElement('div');
       col.className = 'flex-1 flex flex-col justify-end items-center h-full';
       col.innerHTML = `
-        <span id="sdw-val-${p}" class="text-[9px] font-medium text-gray-500 dark:text-gray-400 mb-1 tabular-nums"></span>
+        <span id="sdw-val-${p}" class="text-[9px] font-medium text-gray-500 dark:text-neutral-400 mb-1 tabular-nums"></span>
         <div id="sdw-bar-${p}" class="w-full rounded-t transition-all duration-500" style="height:0%;background:${ACCENT}"></div>`;
       chart.appendChild(col);
 
       const lbl = document.createElement('span');
-      lbl.className = 'flex-1 text-center text-[10px] text-gray-400 dark:text-gray-500';
+      lbl.className = 'flex-1 text-center text-[10px] text-gray-400 dark:text-neutral-500';
       lbl.textContent = MONTHS[ORDER[p]][0];
       labels.appendChild(lbl);
     }
@@ -138,7 +138,7 @@ if (document.getElementById('sdw')) {
       if (c.id === selected) {
         card.className = 'text-left rounded-xl border-2 border-sky-500 bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300 px-3 py-2.5 transition-all';
       } else {
-        card.className = 'text-left rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-sky-300 dark:hover:border-sky-600 px-3 py-2.5 transition-all';
+        card.className = 'text-left rounded-xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-gray-600 dark:text-neutral-300 hover:border-sky-300 dark:hover:border-sky-600 px-3 py-2.5 transition-all';
       }
     });
   }

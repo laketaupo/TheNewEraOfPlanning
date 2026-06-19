@@ -77,10 +77,10 @@ const totalTopics = allTopics.length;
 
   <!-- Panel -->
   <div class="relative z-10 flex flex-col h-full max-w-2xl mx-auto px-4 py-6 pointer-events-none">
-    <div class="flex flex-col bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto max-h-full">
+    <div class="flex flex-col bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto max-h-full">
 
       <!-- Search bar -->
-      <div class="flex items-center gap-3 px-5 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 111 11a6 6 0 0116 0z"/>
         </svg>
@@ -90,12 +90,12 @@ const totalTopics = allTopics.length;
           placeholder="Filter pagina's…"
           autocomplete="off"
           spellcheck="false"
-          class="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none"
+          class="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-neutral-500 outline-none"
         />
-        <span class="text-xs text-gray-400 dark:text-gray-500 shrink-0 tabular-nums">{totalTopics} topics</span>
+        <span class="text-xs text-gray-400 dark:text-neutral-500 shrink-0 tabular-nums">{totalTopics} topics</span>
         <button
           id="site-overlay-close"
-          class="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors shrink-0 ml-1"
+          class="text-gray-400 hover:text-gray-700 dark:hover:text-neutral-200 transition-colors shrink-0 ml-1"
           aria-label="Sluiten"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,8 +122,8 @@ const totalTopics = allTopics.length;
                 {/* ── Module row (only when >1 module per pillar) ── */}
                 {pillar.multiModule && (
                   <div class="flex items-center gap-2 pl-8 pr-5 py-1.5">
-                    <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{mod.label}</span>
-                    <div class="flex-1 h-px bg-gray-100 dark:bg-gray-800"></div>
+                    <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-neutral-500">{mod.label}</span>
+                    <div class="flex-1 h-px bg-gray-100 dark:bg-neutral-800"></div>
                   </div>
                 )}
 
@@ -137,18 +137,18 @@ const totalTopics = allTopics.length;
                       tabindex="0"
                       aria-expanded="false"
                     >
-                      <svg class="chapter-chevron w-3 h-3 shrink-0 text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <svg class="chapter-chevron w-3 h-3 shrink-0 text-gray-300 dark:text-neutral-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M9 18l6-6-6-6"/>
                       </svg>
                       <a
                         href={ch.url}
-                        class="chapter-link flex-1 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors leading-snug py-0.5"
+                        class="chapter-link flex-1 text-sm font-semibold text-gray-700 dark:text-neutral-200 hover:text-gray-900 dark:hover:text-white transition-colors leading-snug py-0.5"
                         data-search={ch.title.toLowerCase()}
                       >
                         {ch.title}
                       </a>
                       {ch.topics.length > 0 && (
-                        <span class="text-[10px] text-gray-300 dark:text-gray-700 shrink-0 tabular-nums">{ch.topics.length}</span>
+                        <span class="text-[10px] text-gray-300 dark:text-neutral-700 shrink-0 tabular-nums">{ch.topics.length}</span>
                       )}
                     </div>
 
@@ -160,8 +160,8 @@ const totalTopics = allTopics.length;
                             href={t.url}
                             class="flex items-center gap-2 pl-16 pr-5 py-0.5 group"
                           >
-                            <span class="w-0.5 h-0.5 rounded-full bg-gray-200 dark:bg-gray-700 shrink-0"></span>
-                            <span class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors leading-snug truncate">
+                            <span class="w-0.5 h-0.5 rounded-full bg-gray-200 dark:bg-neutral-700 shrink-0"></span>
+                            <span class="text-xs text-gray-500 dark:text-neutral-400 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors leading-snug truncate">
                               {t.title}
                             </span>
                           </a>
@@ -191,8 +191,8 @@ const totalTopics = allTopics.length;
                     class="chapter-link flex items-center gap-2 pl-12 pr-5 py-1 group"
                     data-search={role.title.toLowerCase()}
                   >
-                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600 shrink-0 group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></span>
-                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">
+                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-neutral-600 shrink-0 group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></span>
+                    <span class="text-sm font-semibold text-gray-700 dark:text-neutral-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">
                       {role.title}
                     </span>
                   </a>
@@ -203,16 +203,16 @@ const totalTopics = allTopics.length;
         )}
 
         <!-- Empty state -->
-        <p id="site-overlay-empty" class="hidden text-sm text-gray-400 dark:text-gray-500 text-center py-10">Geen pagina's gevonden.</p>
+        <p id="site-overlay-empty" class="hidden text-sm text-gray-400 dark:text-neutral-500 text-center py-10">Geen pagina's gevonden.</p>
 
       </div>
 
       <!-- Footer hint -->
-      <div class="px-5 py-2.5 border-t border-gray-100 dark:border-gray-800 shrink-0 flex items-center justify-between">
-        <span class="text-xs text-gray-400 dark:text-gray-600">
-          <kbd class="font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">O</kbd> openen/sluiten
+      <div class="px-5 py-2.5 border-t border-gray-100 dark:border-neutral-800 shrink-0 flex items-center justify-between">
+        <span class="text-xs text-gray-400 dark:text-neutral-600">
+          <kbd class="font-mono bg-gray-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-neutral-400">O</kbd> openen/sluiten
           &nbsp;·&nbsp;
-          <kbd class="font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-gray-400">Esc</kbd> sluiten
+          <kbd class="font-mono bg-gray-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-gray-500 dark:text-neutral-400">Esc</kbd> sluiten
         </span>
         <a href="/glossary" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Glossary</a>
       </div>

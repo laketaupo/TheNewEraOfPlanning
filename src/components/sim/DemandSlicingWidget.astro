@@ -1,7 +1,7 @@
 ---
 // Demand Slicing Widget — step-by-step inventory allocation simulator
 ---
-<div id="dsw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-gray-900/60 p-6 select-none">
+<div id="dsw" class="rounded-2xl border border-sky-200 dark:border-sky-500/20 bg-white dark:bg-neutral-900 p-6 select-none">
 
   <!-- Header -->
   <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
@@ -12,25 +12,25 @@
       Demand Slicing Simulator
     </h3>
     <div class="flex items-center gap-2">
-      <button id="dsw-step-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+      <button id="dsw-step-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-700 text-gray-600 dark:text-neutral-300 transition-colors">
         Step →
       </button>
       <button id="dsw-play-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white transition-colors">
         ▶ Play
       </button>
-      <button id="dsw-reset-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-500 dark:text-gray-300 transition-colors">
+      <button id="dsw-reset-btn" class="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-neutral-700 hover:bg-gray-300 dark:hover:bg-neutral-600 text-gray-500 dark:text-neutral-300 transition-colors">
         Reset
       </button>
     </div>
   </div>
 
   <!-- Slicing factor control -->
-  <div class="bg-gray-50 dark:bg-gray-800/60 rounded-xl px-5 py-4 mb-6">
+  <div class="bg-gray-50 dark:bg-neutral-800/60 rounded-xl px-5 py-4 mb-6">
     <div class="flex items-center gap-4 mb-2">
       <span class="text-xs font-medium text-gray-500 uppercase tracking-wide whitespace-nowrap">Slicing factor</span>
       <input id="dsw-slider" type="range" min="1" max="10" value="5"
         class="flex-1 h-1.5 rounded-full appearance-none cursor-pointer accent-sky-500
-               bg-gray-200 dark:bg-gray-700" />
+               bg-gray-200 dark:bg-neutral-700" />
       <span id="dsw-n-display" class="text-2xl font-bold text-sky-500 tabular-nums w-7 text-right leading-none">5</span>
     </div>
     <div class="flex justify-between text-xs text-gray-400 mt-1">
@@ -45,7 +45,7 @@
 
     <!-- Sequence grid (left, 3 cols) -->
     <div class="md:col-span-3">
-      <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-3">
+      <p class="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium mb-3">
         Allocation sequence
       </p>
       <div id="dsw-grid" class="space-y-1.5 max-h-72 overflow-y-auto pr-1"></div>
@@ -57,21 +57,21 @@
       <!-- Inventory gauge -->
       <div>
         <div class="flex justify-between text-xs font-medium mb-2">
-          <span class="text-gray-400 dark:text-gray-500 uppercase tracking-wide">Inventory</span>
-          <span id="dsw-inv-text" class="text-gray-600 dark:text-gray-300 tabular-nums">130 / 300 units</span>
+          <span class="text-gray-400 dark:text-neutral-500 uppercase tracking-wide">Inventory</span>
+          <span id="dsw-inv-text" class="text-gray-600 dark:text-neutral-300 tabular-nums">130 / 300 units</span>
         </div>
-        <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-5 bg-gray-200 dark:bg-neutral-700 rounded-full overflow-hidden">
           <div id="dsw-inv-bar" class="h-full rounded-full transition-all duration-500"
                style="width:43.3%;background:linear-gradient(90deg,#0ea5e9,#38bdf8)"></div>
         </div>
-        <div class="text-xs text-gray-400 dark:text-gray-500 mt-1.5">
+        <div class="text-xs text-gray-400 dark:text-neutral-500 mt-1.5">
           Fixed: 130 units available · 300 total demand
         </div>
       </div>
 
       <!-- Country allocation bars -->
       <div>
-        <p class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-3">
+        <p class="text-xs text-gray-400 dark:text-neutral-500 uppercase tracking-wide font-medium mb-3">
           Allocation result
         </p>
         <div id="dsw-country-bars"></div>
@@ -81,8 +81,8 @@
   </div>
 
   <!-- Status bar -->
-  <div class="mt-5 pt-4 border-t border-gray-100 dark:border-gray-800">
-    <p id="dsw-status" class="text-sm text-gray-500 dark:text-gray-400 min-h-[1.375rem] transition-all duration-200">
+  <div class="mt-5 pt-4 border-t border-gray-100 dark:border-neutral-800">
+    <p id="dsw-status" class="text-sm text-gray-500 dark:text-neutral-400 min-h-[1.375rem] transition-all duration-200">
       Adjust the slicing factor above, then press ▶ Play or Step → to run the simulation.
     </p>
   </div>
@@ -136,7 +136,7 @@ if (document.getElementById('dsw')) {
       row.className = 'flex items-center gap-2';
 
       const lbl = document.createElement('span');
-      lbl.className = 'text-xs text-gray-400 dark:text-gray-500 w-14 shrink-0 font-medium';
+      lbl.className = 'text-xs text-gray-400 dark:text-neutral-500 w-14 shrink-0 font-medium';
       lbl.textContent = `Round ${r + 1}`;
       row.appendChild(lbl);
 
@@ -157,10 +157,10 @@ if (document.getElementById('dsw')) {
       el.innerHTML += `
         <div class="mb-3">
           <div class="flex justify-between items-baseline mb-1">
-            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Country ${c}</span>
-            <span id="dsw-pct-${c}" class="text-sm font-bold tabular-nums text-gray-700 dark:text-gray-300">0%</span>
+            <span class="text-sm font-semibold text-gray-700 dark:text-neutral-300">Country ${c}</span>
+            <span id="dsw-pct-${c}" class="text-sm font-bold tabular-nums text-gray-700 dark:text-neutral-300">0%</span>
           </div>
-          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div class="h-3 bg-gray-200 dark:bg-neutral-700 rounded-full overflow-hidden">
             <div id="dsw-cbar-${c}" class="h-full rounded-full transition-all duration-500"
                  style="width:0%;background:#6b7280"></div>
           </div>
@@ -173,11 +173,11 @@ if (document.getElementById('dsw')) {
   function setPill(pill, state, r, c) {
     const base = 'flex-1 text-center py-1.5 px-1 text-xs rounded-lg font-semibold transition-all duration-300';
     const styles = {
-      pending:  `${base} bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500`,
+      pending:  `${base} bg-gray-100 dark:bg-neutral-800 text-gray-400 dark:text-neutral-500`,
       active:   `${base} bg-sky-500 text-white ring-2 ring-sky-300 dark:ring-sky-600 scale-105`,
       full:     `${base} bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400`,
       partial:  `${base} bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400`,
-      skipped:  `${base} bg-gray-100 dark:bg-gray-800 text-gray-300 dark:text-gray-600 opacity-40`,
+      skipped:  `${base} bg-gray-100 dark:bg-neutral-800 text-gray-300 dark:text-neutral-600 opacity-40`,
     };
     const labels = {
       pending: `${COUNTRIES[c]}${r + 1}`,
