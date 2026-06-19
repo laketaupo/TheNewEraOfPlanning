@@ -1,3 +1,40 @@
+# Dedicated Note Button Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Replace the modal-on-mark-unclear flow with a dedicated always-visible pencil icon button that opens an add/edit note modal independently of the topic's progress state.
+
+**Architecture:** All changes are in `src/scripts/topic-progress.ts`. The file is imported once in `BaseLayout.astro` and runs `initTopicProgress()` on every page; the function guards itself with `if (!completeBtn) return` so it is a no-op on non-topic pages. No layout files need to change.
+
+**Tech Stack:** TypeScript, Tailwind CSS 3 (classes in JS string literals are scanned by Tailwind's content scanner), localStorage, vanilla DOM.
+
+## Global Constraints
+
+- No test framework — verification is `npm run build` (must exit 0 with "Indexed 228 pages") plus manual browser check.
+- Build output goes to `.vercel/output/static/`. Run `npm run build` from `/Users/stefanbakker/Documents/Github/Development/`.
+- Tailwind class safety: all classes must appear as complete literal strings. Never use string interpolation to build class names.
+- `localStorage` key `platform-comments` shape is unchanged: `{ [topicId: string]: string }`.
+- `platform-progress` key and shape are unchanged.
+- `_modalOpen` race-condition guard must be preserved on the new modal function.
+- `topicId` format is `"chapterSlug/topicSlug"` — unchanged.
+- Do NOT touch `UserDashboard.astro`. Dashboard rendering of comments (unclear topics only) is out of scope.
+
+---
+
+### Task 1: Rewrite `src/scripts/topic-progress.ts`
+
+**Files:**
+- Modify: `src/scripts/topic-progress.ts` (full replacement)
+
+**Interfaces:**
+- Consumes: `localStorage` keys `platform-progress` and `platform-comments`
+- Produces: DOM buttons `#complete-btn`, `#unclear-btn`, and an injected note button; dispatches `platform-progress-changed` custom event
+
+- [ ] **Step 1: Replace the file with the new implementation**
+
+Write the complete contents of `src/scripts/topic-progress.ts`:
+
+```typescript
 const STORAGE_KEY      = 'platform-progress';
 const COMMENTS_KEY     = 'platform-comments';
 const ADVANCE_DELAY_MS = 400;
@@ -259,3 +296,25 @@ function initTopicProgress() {
 }
 
 initTopicProgress();
+```
+
+- [ ] **Step 2: Verify the build passes**
+
+```bash
+cd /Users/stefanbakker/Documents/Github/Development && npm run build 2>&1 | tail -15
+```
+
+Expected output includes:
+```
+Indexed 228 pages
+Finished in ...
+```
+
+No TypeScript errors, no "build failed" lines.
+
+- [ ] **Step 3: Commit**
+
+```bash
+git add src/scripts/topic-progress.ts
+git commit -m "feat: dedicated note button, decouple comment from mark-unclear"
+```
