@@ -336,6 +336,33 @@ const totalTopics = allTopics.length;
     catch { return {}; }
   }
 
+  function formatNotesForClipboard() {
+    const comments = getComments();
+    const now   = new Date();
+    const day   = now.getDate();
+    const month = now.toLocaleString('en-GB', { month: 'long' });
+    const year  = now.getFullYear();
+
+    const lines = [
+      'My Learning Notes',
+      `Exported ${day} ${month} ${year}`,
+      '================================',
+    ];
+
+    let first = true;
+    topicsForClient.forEach(t => {
+      const comment = comments[t.id];
+      if (!comment) return;
+      if (!first) lines.push('');
+      first = false;
+      lines.push(`${t.pillarKey.toUpperCase()} › ${t.chapterTitle}`);
+      lines.push(t.title);
+      comment.split('\n').forEach(l => lines.push(`  ${l}`));
+    });
+
+    return lines.join('\n');
+  }
+
   // Lookups: role slug -> Set of "chapterSlug/topicSlug" refs, and -> full role object
   const roleRefs = {};
   const roleBySlug = {};
