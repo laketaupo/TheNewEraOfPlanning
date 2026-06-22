@@ -567,7 +567,19 @@ const totalTopics = allTopics.length;
       return;
     }
 
-    notesTab.innerHTML = chapterGroups.map(group => {
+    const copyBtnHtml = `
+      <div class="px-5 pt-3 pb-2.5 flex justify-end">
+        <button data-copy-notes-btn type="button"
+          class="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-400 dark:text-neutral-500 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+          <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+          <span data-copy-label>Copy all</span>
+        </button>
+      </div>`;
+
+    notesTab.innerHTML = copyBtnHtml + chapterGroups.map(group => {
       const accent = pillarAccentClass[group.pillar] ?? 'text-gray-500 dark:text-neutral-400';
       const items = group.topics.map(({ t, comment, state }) => {
         const dot = dotClass[state] ?? dotClass.none;
@@ -587,6 +599,9 @@ const totalTopics = allTopics.length;
         ${items}
       </div>`;
     }).join('');
+
+    const copyBtn = notesTab.querySelector('[data-copy-notes-btn]');
+    if (copyBtn) copyBtn.addEventListener('click', () => copyAllNotes(copyBtn));
   }
 
   // --- Dashboard open/close ---
