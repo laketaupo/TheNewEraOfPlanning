@@ -347,6 +347,7 @@ const totalTopics = allTopics.length;
       'My Learning Notes',
       `Exported ${day} ${month} ${year}`,
       '================================',
+      '',
     ];
 
     let first = true;
@@ -370,8 +371,10 @@ const totalTopics = allTopics.length;
 
     const text = formatNotesForClipboard();
 
+    let copied = false;
     try {
       await navigator.clipboard.writeText(text);
+      copied = true;
     } catch {
       // execCommand fallback for non-HTTPS / older browsers
       const ta = document.createElement('textarea');
@@ -379,9 +382,10 @@ const totalTopics = allTopics.length;
       ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
       document.body.appendChild(ta);
       ta.select();
-      try { document.execCommand('copy'); } catch { /* silent fail */ }
+      try { document.execCommand('copy'); copied = true; } catch { /* silent fail */ }
       document.body.removeChild(ta);
     }
+    if (!copied) return;
 
     // Visual feedback: switch to "Copied!" state
 
