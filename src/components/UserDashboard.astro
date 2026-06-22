@@ -363,6 +363,58 @@ const totalTopics = allTopics.length;
     return lines.join('\n');
   }
 
+  async function copyAllNotes(btn) {
+    const text = formatNotesForClipboard();
+
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      // execCommand fallback for non-HTTPS / older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch { /* silent fail */ }
+      document.body.removeChild(ta);
+    }
+
+    // Visual feedback: switch to "Copied!" state
+    const icon  = btn.querySelector('svg');
+    const label = btn.querySelector('[data-copy-label]');
+    if (!icon || !label) return;
+
+    btn.disabled = true;
+    btn.classList.remove(
+      'border-gray-300', 'dark:border-neutral-700',
+      'text-gray-400', 'dark:text-neutral-500',
+      'hover:border-amber-400', 'hover:text-amber-600', 'dark:hover:text-amber-400'
+    );
+    btn.classList.add(
+      'border-emerald-400', 'text-emerald-600', 'dark:text-emerald-400',
+      'bg-emerald-50', 'dark:bg-emerald-500/10'
+    );
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>';
+    icon.setAttribute('stroke-width', '2.5');
+    label.textContent = 'Copied!';
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.classList.add(
+        'border-gray-300', 'dark:border-neutral-700',
+        'text-gray-400', 'dark:text-neutral-500',
+        'hover:border-amber-400', 'hover:text-amber-600', 'dark:hover:text-amber-400'
+      );
+      btn.classList.remove(
+        'border-emerald-400', 'text-emerald-600', 'dark:text-emerald-400',
+        'bg-emerald-50', 'dark:bg-emerald-500/10'
+      );
+      icon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';
+      icon.setAttribute('stroke-width', '2');
+      label.textContent = 'Copy all';
+    }, 2000);
+  }
+
   // Lookups: role slug -> Set of "chapterSlug/topicSlug" refs, and -> full role object
   const roleRefs = {};
   const roleBySlug = {};
