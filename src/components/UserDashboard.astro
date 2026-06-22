@@ -356,9 +356,10 @@ const totalTopics = allTopics.length;
       if (!comment) return;
       if (!first) lines.push('');
       first = false;
-      lines.push(`${t.pillarKey.toUpperCase()} › ${t.chapterTitle}`);
-      lines.push(t.title);
-      comment.split('\n').forEach(l => lines.push(`  ${l}`));
+      const moduleLabel = t.moduleKey.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      lines.push(`${t.pillarKey.toUpperCase()} › ${moduleLabel} › ${t.chapterTitle} › ${t.title}`);
+      const indented = comment.split('\n').map(l => `  ${l}`).join('\n');
+      lines.push(`"${indented}"`);
     });
 
     return lines.join('\n');
