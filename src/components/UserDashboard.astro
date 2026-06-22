@@ -358,8 +358,7 @@ const totalTopics = allTopics.length;
       first = false;
       const moduleLabel = t.moduleKey.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
       lines.push(`${t.pillarKey.toUpperCase()} › ${moduleLabel} › ${t.chapterTitle} › ${t.title}`);
-      const indented = comment.split('\n').map(l => `  ${l}`).join('\n');
-      lines.push(`"${indented}"`);
+      lines.push(`  "${comment.split('\n').join('\n  ')}"`);
     });
 
     return lines.join('\n');
