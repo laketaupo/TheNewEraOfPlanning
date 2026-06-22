@@ -364,6 +364,10 @@ const totalTopics = allTopics.length;
   }
 
   async function copyAllNotes(btn) {
+    const icon  = btn.querySelector('svg');
+    const label = btn.querySelector('[data-copy-label]');
+    if (!icon || !label) return;
+
     const text = formatNotesForClipboard();
 
     try {
@@ -380,9 +384,6 @@ const totalTopics = allTopics.length;
     }
 
     // Visual feedback: switch to "Copied!" state
-    const icon  = btn.querySelector('svg');
-    const label = btn.querySelector('[data-copy-label]');
-    if (!icon || !label) return;
 
     btn.disabled = true;
     btn.classList.remove(
