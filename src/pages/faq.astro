@@ -116,7 +116,7 @@ const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar =
     const empty = document.getElementById('faq-empty')!;
     const sections = document.querySelectorAll<HTMLElement>('.faq-section');
 
-    input.addEventListener('input', () => {
+    function runFilter() {
       const query = input.value.toLowerCase().trim();
       let totalVisible = 0;
 
@@ -136,6 +136,9 @@ const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar =
       });
 
       empty.classList.toggle('hidden', totalVisible > 0);
-    });
+    }
+
+    input.addEventListener('input', runFilter);
+    input.addEventListener('search', runFilter);
   </script>
 </BaseLayout>
