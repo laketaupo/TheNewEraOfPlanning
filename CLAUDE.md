@@ -56,6 +56,7 @@ Both `pillar` and `module` are required in every `_meta.json`. Omitting either c
 | `full-widget` | `FullWidthWidgetLayout.astro` — interactive simulation |
 | `rasci-table` | `RasciTableLayout.astro` — RASCI responsibility matrix |
 | `ui-training` | `UiTrainingLayout.astro` — full-viewport screenshot + description + static steps sidebar |
+| `process-step-detail` | `ProcessStepDetailLayout.astro` — step execution layout with inputs/outputs/roles/systems/tasks metadata panels |
 | `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
 
 **Configuration manual** lives in `src/content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
@@ -97,12 +98,13 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 | `/{pillar}/{module}/{chapter}/` | `src/pages/[pillar]/[module]/[chapter]/index.astro` |
 | `/{pillar}/{module}/{chapter}/{topic}` | `src/pages/[pillar]/[module]/[chapter]/[topic].astro` |
 | `/roles/{role}` | `src/pages/roles/[role].astro` |
+| `/roles/{role}/{phase-number}` | `src/pages/roles/[role]/[phase].astro` (phase is a 1-based index, only generated for non-empty phases) |
 
 The module index pages for Technology each filter `getChapters('technology')` by `ch.module === '{module-slug}'`. The dynamic `[pillar]/[module]/[chapter]/` pages handle all pillars generically.
 
 ### Key Patterns
 
-**`moduleBackMap`** — maps module slug → back-link href/label. Defined **inline in every topic layout file** (all 7 layouts in `src/layouts/`) and also in `src/pages/[pillar]/[module]/[chapter]/index.astro`. When adding a new module, add an entry to all of these plus `moduleLabels` in `SiteOverlay.astro`.
+**`moduleBackMap`** — maps module slug → back-link href/label. Defined **inline in every topic layout file** (all 8 layouts in `src/layouts/`) and also in `src/pages/[pillar]/[module]/[chapter]/index.astro`. When adding a new module, add an entry to all of these plus `moduleLabels` in `SiteOverlay.astro`.
 
 **`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with the `moduleBackMap` entries across layout files.
 
@@ -123,6 +125,15 @@ Two `localStorage` keys:
 - **`platform-theme`** — `'dark'` or absent. `ThemeToggle.astro` writes it; `BaseLayout.astro` reads it inline before first render to prevent flash.
 - **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
 
+### Glossary System
+
+**`src/content/glossary.json`** — flat array of term objects with fields `slug`, `term`, `definition`, `aliases`, `related`, `seeAlso`. Loaded by `src/lib/glossary.ts`.
+
+- `getGlossaryTerms()` — returns all terms with array fields defaulted to `[]`.
+- `validateGlossary()` — called at build time from `glossary.astro`; throws on bad cross-references. Run the build (`npm run build`) to catch glossary errors.
+
+**Inline tooltips** — `BaseLayout.astro` injects the full glossary as `<script type="application/json" id="glossary-data">` and wires up hover tooltips for any element with `data-glossary="<slug>"`. The tooltip floats near the cursor; the `data-placement` attribute on `#glossary-tooltip` controls the caret direction (`bottom` = caret points up).
+
 ### Components
 
 All shared components live in `src/components/`:
@@ -132,6 +143,8 @@ All shared components live in `src/components/`:
 - **`ThemeToggle.astro`** — light/dark toggle button, included individually in each layout and pillar index page.
 - **`src/components/sim/`** — interactive simulation components (demand/supply flow graphs, demand shock sim, slicing/disaggregation widgets, step walkthrough). Used by the `full-widget` layout and embedded in topic prose.
 - **`src/components/widgets/`** — `OrgChart.astro` and `OrgTreeNode.astro`, used by the org-chart frontmatter field on people-pillar topics.
+- **`RoleMatrix.astro`** — role-to-topic responsibility matrix overlay. Added to `BaseLayout`.
+- **`IntroOverlay.astro`** — first-visit welcome/help modal. Added to `BaseLayout`; opened via `window.openIntro()`.
 
 ### Adding Content
 
