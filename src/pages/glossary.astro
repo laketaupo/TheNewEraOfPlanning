@@ -25,7 +25,13 @@ const letters = [...new Set(terms.map(t => t.term[0].toUpperCase()))].sort();
 
   <main class="max-w-3xl mx-auto px-6 pt-24 pb-32">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Glossary</h1>
-    <p class="text-gray-500 dark:text-neutral-400 mb-8">{terms.length} planning terms defined.</p>
+    <p class="text-gray-500 dark:text-neutral-400 mb-4">{terms.length} planning terms defined.</p>
+
+    <!-- Tab bar -->
+    <div class="flex gap-1 mb-8 border-b border-gray-100 dark:border-neutral-800">
+      <a href="/glossary" class="px-4 py-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 -mb-px">Glossary</a>
+      <a href="/faq" class="px-4 py-2 text-sm font-semibold text-gray-400 dark:text-neutral-500 hover:text-gray-700 dark:hover:text-neutral-300 transition-colors">FAQ</a>
+    </div>
 
     <!-- A-Z jump links -->
     <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to letter">
