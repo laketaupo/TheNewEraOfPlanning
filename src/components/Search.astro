@@ -189,6 +189,10 @@
         const input = container.querySelector('input');
         if (!input) return;
         observer.disconnect();
+        var pUI = container.querySelector('.pagefind-ui');
+        var drawer = container.querySelector('.pagefind-ui__drawer');
+        var pillsDiv = document.getElementById('pillar-pills');
+        if (pUI && drawer && pillsDiv) pUI.insertBefore(pillsDiv, drawer);
         input.addEventListener('input', () => {
           clearTimeout(noteDebounce);
           const val = input.value;
@@ -477,5 +481,10 @@
     display: block;
     text-decoration: none;
     color: inherit;
+  }
+
+  /* Hide Pagefind's auto-generated filter dropdown — replaced by pills */
+  .pagefind-ui__filter-panel {
+    display: none;
   }
 </style>
