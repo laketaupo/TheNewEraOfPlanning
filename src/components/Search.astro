@@ -13,6 +13,7 @@
     <p id="search-dev-notice" class="hidden text-center text-sm text-gray-500 dark:text-neutral-400 px-6 py-10">
       Search is available after running <code class="font-mono bg-gray-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded">npm run build</code>.
     </p>
+    <div id="notes-results" class="hidden px-2 pb-2"></div>
     <div class="flex items-center gap-4 border-t border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-950 px-4 py-2.5 text-xs text-gray-400 dark:text-neutral-500">
       <span class="flex items-center gap-1.5">
         <kbd class="rounded border border-b-2 border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 px-1.5 py-0.5 font-semibold">esc</kbd>
@@ -157,5 +158,78 @@
     align-items: flex-start;
     justify-content: center;
     padding-top: 15vh;
+  }
+  #notes-results {
+    padding: 0 0 4px;
+  }
+  .notes-section-header {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(156 163 175);
+    padding: 8px 12px 4px;
+    margin: 0;
+  }
+  .dark .notes-section-header {
+    color: rgb(115 115 115);
+  }
+  .note-result {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .note-result:hover {
+    background: rgb(238 242 255);
+  }
+  .dark .note-result:hover {
+    background: rgb(49 46 129 / 0.25);
+  }
+  .note-result-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(17 24 39);
+    margin-bottom: 3px;
+  }
+  .dark .note-result-title {
+    color: rgb(243 244 246);
+  }
+  .note-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    border: 1px solid rgb(251 191 36);
+    color: rgb(180 83 9);
+    background: rgb(255 251 235);
+    flex-shrink: 0;
+  }
+  .dark .note-badge {
+    color: rgb(251 191 36);
+    background: rgb(245 158 11 / 0.1);
+  }
+  .note-excerpt {
+    display: block;
+    font-size: 13px;
+    color: rgb(107 114 128);
+    line-height: 1.4;
+  }
+  .dark .note-excerpt {
+    color: rgb(163 163 163);
+  }
+  .note-excerpt mark {
+    background: rgb(254 243 199);
+    color: rgb(146 64 14);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+  .dark .note-excerpt mark {
+    background: rgb(245 158 11 / 0.25);
+    color: rgb(252 211 77);
   }
 </style>
