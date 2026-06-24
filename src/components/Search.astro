@@ -32,6 +32,62 @@
 
   let initialized = false;
 
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+    );
+  }
+
+  function highlightMatch(rawText, query) {
+    const lower = rawText.toLowerCase();
+    const idx = lower.indexOf(query.toLowerCase());
+    let text = rawText;
+    if (rawText.length > 120) {
+      const start = Math.max(0, idx - 40);
+      const end = Math.min(rawText.length, start + 120);
+      text = (start > 0 ? '…' : '') + rawText.slice(start, end) + (end < rawText.length ? '…' : '');
+    }
+    const escaped = escapeHtml(text);
+    const escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
+  }
+
+  function searchNotes(query) {
+    const mapEl = document.getElementById('topic-map');
+    if (!mapEl) return [];
+    let topicMap;
+    try { topicMap = JSON.parse(mapEl.textContent); } catch (e) { return []; }
+    let comments;
+    try { comments = JSON.parse(localStorage.getItem('platform-comments') || '{}'); } catch (e) { return []; }
+    const q = query.toLowerCase();
+    return Object.entries(comments)
+      .filter(([, noteText]) => noteText && noteText.toLowerCase().includes(q))
+      .map(([topicId, noteText]) => {
+        const topic = topicMap[topicId];
+        if (!topic) return null;
+        return { topicId, noteText, title: topic.title, url: topic.url };
+      })
+      .filter(Boolean);
+  }
+
+  function renderNoteResults(matches, query) {
+    const panel = document.getElementById('notes-results');
+    if (!panel) return;
+    if (matches.length === 0) {
+      panel.classList.add('hidden');
+      panel.innerHTML = '';
+      return;
+    }
+    const rows = matches.map(m =>
+      `<a class="note-result" href="${escapeHtml(m.url)}">` +
+      `<span class="note-result-title">${escapeHtml(m.title)}<span class="note-badge">Note</span></span>` +
+      `<span class="note-excerpt">${highlightMatch(m.noteText, query)}</span>` +
+      `</a>`
+    );
+    panel.innerHTML = '<p class="notes-section-header">Your notes</p>' + rows.join('');
+    panel.classList.remove('hidden');
+  }
+
   function openModal() {
     modal.showModal();
     if (!initialized) {
@@ -45,6 +101,8 @@
 
   function closeModal() {
     modal.close();
+    const panel = document.getElementById('notes-results');
+    if (panel) { panel.classList.add('hidden'); panel.innerHTML = ''; }
   }
 
   function initPagefind() {
@@ -69,6 +127,27 @@
         const input = container.querySelector('input');
         if (input) input.focus();
       }, 50);
+
+      let noteDebounce = null;
+      const observer = new MutationObserver(() => {
+        const input = container.querySelector('input');
+        if (!input) return;
+        observer.disconnect();
+        input.addEventListener('input', () => {
+          clearTimeout(noteDebounce);
+          const val = input.value;
+          noteDebounce = setTimeout(() => {
+            const q = val.trim();
+            if (q.length < 2) {
+              const panel = document.getElementById('notes-results');
+              if (panel) { panel.classList.add('hidden'); panel.innerHTML = ''; }
+              return;
+            }
+            renderNoteResults(searchNotes(q), q);
+          }, 150);
+        });
+      });
+      observer.observe(container, { childList: true, subtree: true });
     };
     script.onerror = function () {
       container.classList.add('hidden');
