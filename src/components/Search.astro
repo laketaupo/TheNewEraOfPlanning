@@ -473,11 +473,46 @@
     color: rgb(115 115 115);
   }
 
-  /* Filtered result rows — reuse pagefind-ui__result visual treatment */
+  /* Filtered result rows */
   .filtered-result {
     display: block;
     text-decoration: none;
     color: inherit;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 2px;
+  }
+  .filtered-result:hover {
+    background: rgb(238 242 255);
+  }
+  .dark .filtered-result:hover {
+    background: rgb(49 46 129 / 0.25);
+  }
+  .filtered-result .pagefind-ui__result-link {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit;
+    margin-bottom: 4px;
+  }
+  .filtered-result .pagefind-ui__result-excerpt {
+    display: block;
+    font-size: 13px;
+    color: rgb(107 114 128);
+    line-height: 1.45;
+  }
+  .dark .filtered-result .pagefind-ui__result-excerpt {
+    color: rgb(163 163 163);
+  }
+  .filtered-result .pagefind-ui__result-excerpt mark {
+    background: rgb(224 231 255);
+    color: rgb(67 56 202);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+  .dark .filtered-result .pagefind-ui__result-excerpt mark {
+    background: rgb(67 56 202 / 0.25);
+    color: rgb(165 180 252);
   }
 
   /* Hide Pagefind's auto-generated filter dropdown — replaced by pills */
