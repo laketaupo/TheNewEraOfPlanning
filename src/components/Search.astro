@@ -40,6 +40,7 @@
   let initialized = false;
   let activePillar = null;
   let pagefindRaw = null;
+  let pendingSearch = null;
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, c =>
@@ -78,30 +79,30 @@
     document.querySelectorAll('.pillar-pill').forEach(function (btn) {
       btn.classList.toggle('active', btn.dataset.pillar === slug);
     });
-    if (slug) {
-      container.classList.add('filtering');
-    } else {
-      container.classList.remove('filtering');
-      var fp = document.getElementById('filtered-results');
-      if (fp) { fp.classList.add('hidden'); fp.innerHTML = ''; }
-    }
   }
 
-  function runFilteredSearch(query) {
+  function runSearch(query) {
     var panel = document.getElementById('filtered-results');
-    if (!panel || !pagefindRaw) return;
+    if (!panel) return;
+    if (!pagefindRaw) { pendingSearch = query; return; }
     var q = (query || '').trim();
     if (q.length < 2) {
-      panel.innerHTML = '<p class="filter-state-msg">Type to search within ' + pillarLabel(activePillar) + '</p>';
-      panel.classList.remove('hidden');
+      panel.classList.add('hidden');
+      panel.innerHTML = '';
       return;
     }
-    pagefindRaw.search(q, { filters: { pillar: activePillar } }).then(function (search) {
+    var opts = activePillar ? { filters: { pillar: activePillar } } : {};
+    pagefindRaw.search(q, opts).then(function (search) {
       return Promise.all(search.results.slice(0, 10).map(function (r) { return r.data(); }));
     }).then(function (results) {
-      panel.innerHTML = results.length > 0
-        ? results.map(renderFilteredResult).join('')
-        : '<p class="filter-state-msg">No results in ' + pillarLabel(activePillar) + '</p>';
+      if (results.length > 0) {
+        panel.innerHTML = results.map(renderFilteredResult).join('');
+      } else {
+        var msg = activePillar
+          ? 'No results in ' + pillarLabel(activePillar)
+          : 'No results for "' + escapeHtml(q) + '"';
+        panel.innerHTML = '<p class="filter-state-msg">' + msg + '</p>';
+      }
       panel.classList.remove('hidden');
     });
   }
@@ -155,9 +156,12 @@
 
   function closeModal() {
     modal.close();
-    const panel = document.getElementById('notes-results');
-    if (panel) { panel.classList.add('hidden'); panel.innerHTML = ''; }
-    setActivePillar(null);
+    const notesPanel = document.getElementById('notes-results');
+    if (notesPanel) { notesPanel.classList.add('hidden'); notesPanel.innerHTML = ''; }
+    const resultsPanel = document.getElementById('filtered-results');
+    if (resultsPanel) { resultsPanel.classList.add('hidden'); resultsPanel.innerHTML = ''; }
+    activePillar = null;
+    document.querySelectorAll('.pillar-pill').forEach(function (btn) { btn.classList.remove('active'); });
   }
 
   function initPagefind() {
@@ -169,6 +173,10 @@
     const script = document.createElement('script');
     script.src = '/pagefind/pagefind-ui.js';
     script.onload = function () {
+      import('/pagefind/pagefind.js').then(function (pf) {
+        pagefindRaw = pf;
+        if (pendingSearch !== null) { runSearch(pendingSearch); pendingSearch = null; }
+      });
       new PagefindUI({
         element: '#search-container',
         showSubResults: false,
@@ -178,23 +186,17 @@
           zero_results: 'No results for [SEARCH_TERM]',
         },
       });
-      import('/pagefind/pagefind.js').then(function (pf) { pagefindRaw = pf; });
       setTimeout(() => {
         const input = container.querySelector('input');
         if (input) input.focus();
       }, 50);
 
       let noteDebounce = null;
+      let searchDebounce = null;
       const observer = new MutationObserver(() => {
         const input = container.querySelector('input');
         if (!input) return;
         observer.disconnect();
-        var pUI = container.querySelector('.pagefind-ui');
-        var pillsDiv = document.getElementById('pillar-pills');
-        if (pUI && pillsDiv) {
-          var drawerNow = pUI.querySelector('.pagefind-ui__drawer');
-          if (drawerNow) { pUI.insertBefore(pillsDiv, drawerNow); } else { pUI.appendChild(pillsDiv); }
-        }
         input.addEventListener('input', () => {
           clearTimeout(noteDebounce);
           const val = input.value;
@@ -208,13 +210,10 @@
             renderNoteResults(searchNotes(q), q);
           }, 150);
         });
-
-        var filterDebounce = null;
         input.addEventListener('input', function () {
-          if (!activePillar) return;
-          clearTimeout(filterDebounce);
+          clearTimeout(searchDebounce);
           var val = input.value;
-          filterDebounce = setTimeout(function () { runFilteredSearch(val); }, 150);
+          searchDebounce = setTimeout(function () { runSearch(val); }, 150);
         });
       });
       observer.observe(container, { childList: true, subtree: true });
@@ -229,13 +228,9 @@
   document.querySelectorAll('.pillar-pill').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var pillar = btn.dataset.pillar;
-      if (pillar === activePillar) {
-        setActivePillar(null);
-      } else {
-        setActivePillar(pillar);
-        var input = container.querySelector('input');
-        if (input) runFilteredSearch(input.value);
-      }
+      setActivePillar(pillar === activePillar ? null : pillar);
+      var input = container.querySelector('input');
+      runSearch(input ? input.value : '');
     });
   });
 
@@ -456,9 +451,9 @@
   .dark .pillar-pill[data-pillar="people"]:hover:not(.active) { background: rgba(252,165,165,0.12); }
   .dark .pillar-pill[data-pillar="people"].active { background: #b91c1c; color: white; }
 
-  /* Hide PagefindUI's own result list when a pill filter is active */
-  #search-container.filtering .pagefind-ui__results {
-    display: none;
+  /* Hide Pagefind's results drawer — all results rendered in #filtered-results instead */
+  #search-container .pagefind-ui__drawer {
+    display: none !important;
   }
 
   /* Filtered results container */
