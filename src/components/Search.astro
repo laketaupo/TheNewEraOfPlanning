@@ -38,6 +38,8 @@
   const devNotice = document.getElementById('search-dev-notice');
 
   let initialized = false;
+  let activePillar = null;
+  let pagefindRaw = null;
 
   function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, c =>
@@ -57,6 +59,51 @@
     const escaped = escapeHtml(text);
     const escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
+  }
+
+  function pillarLabel(slug) {
+    return { technology: 'Technology', process: 'Process', data: 'Data', people: 'People' }[slug] || slug;
+  }
+
+  function renderFilteredResult(r) {
+    return '<a class="pagefind-ui__result filtered-result" href="' + escapeHtml(r.url) + '">' +
+      '<div class="pagefind-ui__result-inner">' +
+      '<p class="pagefind-ui__result-link">' + escapeHtml(r.meta.title || '') + '</p>' +
+      '<p class="pagefind-ui__result-excerpt">' + (r.excerpt || '') + '</p>' +
+      '</div></a>';
+  }
+
+  function setActivePillar(slug) {
+    activePillar = slug;
+    document.querySelectorAll('.pillar-pill').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.pillar === slug);
+    });
+    if (slug) {
+      container.classList.add('filtering');
+    } else {
+      container.classList.remove('filtering');
+      var fp = document.getElementById('filtered-results');
+      if (fp) { fp.classList.add('hidden'); fp.innerHTML = ''; }
+    }
+  }
+
+  function runFilteredSearch(query) {
+    var panel = document.getElementById('filtered-results');
+    if (!panel || !pagefindRaw) return;
+    var q = (query || '').trim();
+    if (q.length < 2) {
+      panel.innerHTML = '<p class="filter-state-msg">Type to search within ' + pillarLabel(activePillar) + '</p>';
+      panel.classList.remove('hidden');
+      return;
+    }
+    pagefindRaw.search(q, { filters: { pillar: activePillar } }).then(function (search) {
+      return Promise.all(search.results.slice(0, 10).map(function (r) { return r.data(); }));
+    }).then(function (results) {
+      panel.innerHTML = results.length > 0
+        ? results.map(renderFilteredResult).join('')
+        : '<p class="filter-state-msg">No results in ' + pillarLabel(activePillar) + '</p>';
+      panel.classList.remove('hidden');
+    });
   }
 
   function searchNotes(query) {
@@ -110,6 +157,7 @@
     modal.close();
     const panel = document.getElementById('notes-results');
     if (panel) { panel.classList.add('hidden'); panel.innerHTML = ''; }
+    setActivePillar(null);
   }
 
   function initPagefind() {
@@ -130,6 +178,7 @@
           zero_results: 'No results for [SEARCH_TERM]',
         },
       });
+      import('/pagefind/pagefind.js').then(function (pf) { pagefindRaw = pf; });
       setTimeout(() => {
         const input = container.querySelector('input');
         if (input) input.focus();
@@ -153,6 +202,14 @@
             renderNoteResults(searchNotes(q), q);
           }, 150);
         });
+
+        var filterDebounce = null;
+        input.addEventListener('input', function () {
+          if (!activePillar) return;
+          clearTimeout(filterDebounce);
+          var val = input.value;
+          filterDebounce = setTimeout(function () { runFilteredSearch(val); }, 150);
+        });
       });
       observer.observe(container, { childList: true, subtree: true });
     };
@@ -162,6 +219,19 @@
     };
     document.head.appendChild(script);
   }
+
+  document.querySelectorAll('.pillar-pill').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pillar = btn.dataset.pillar;
+      if (pillar === activePillar) {
+        setActivePillar(null);
+      } else {
+        setActivePillar(pillar);
+        var input = container.querySelector('input');
+        if (input) runFilteredSearch(input.value);
+      }
+    });
+  });
 
   if (trigger) trigger.addEventListener('click', openModal);
   window.openSearch = openModal;
