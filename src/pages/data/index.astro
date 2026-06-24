@@ -42,8 +42,8 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
       </p>
     </div>
 
-    <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div class="relative z-10 px-6 pb-20 max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
         <!-- Data Fundamentals -->
         <a href={`${import.meta.env.BASE_URL}data/data-fundamentals`} class="group track-card track-fundamentals">
@@ -108,8 +108,7 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
 
   .track-card {
     @apply flex flex-col rounded-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
-    padding: 1.75rem;
-    padding-top: 1.5rem;
+    padding: 2.5rem;
     border-top-width: 4px;
     border-top-style: solid;
   }
@@ -139,7 +138,7 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
 
   /* ── Icon ───────────────────────────────────────── */
   .track-icon {
-    @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
+    @apply w-14 h-14 rounded-xl flex items-center justify-center mb-5;
     background: #dbeafe;
     color: #1d4ed8;
   }

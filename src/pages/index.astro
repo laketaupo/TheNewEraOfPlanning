@@ -4,67 +4,68 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="The New Era of Planning">
   <div class="relative min-h-screen flex flex-col items-center">
 
-    <!-- Full-screen grid background -->
+    <!-- Grid background -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <!-- Radial glow -->
-    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99,92,250,0.09), transparent 70%)"></div>
+    <div class="absolute inset-0 bg-home-radial pointer-events-none"></div>
 
     <!-- Logo -->
-    <div class="relative z-10 w-full px-6 pt-6 flex items-center gap-2 flex-shrink-0">
+    <div class="relative z-10 w-full px-10 pt-6 flex items-center gap-2 flex-shrink-0">
       <div class="w-2 h-2 rounded-full bg-[#635CFA]"></div>
       <span class="text-sm font-bold tracking-tight text-gray-900 dark:text-white">Planning Hub</span>
     </div>
 
-    <!-- Content area: grid with 1fr spacers to centre title between top and cards -->
-    <div class="relative z-10 flex-1 w-full px-6 pb-8" style="display: grid; grid-template-rows: 1fr auto 1fr auto 0.8fr; align-items: center; justify-items: center;">
+    <!-- Content area -->
+    <div class="relative z-10 flex-1 w-full px-8 pb-12" style="display: grid; grid-template-rows: 1fr auto 1fr auto 0.8fr; align-items: center; justify-items: center;">
 
-      <!-- Row 2: headline -->
+      <!-- Headline -->
       <div class="text-center" style="grid-row: 2">
         <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
-          The New Era of<br><span style="color:#635CFA">Planning</span>
+          The New Era of <span style="color:#635CFA">Planning</span>
         </h1>
-        <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-md mx-auto">
+        <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-lg mx-auto">
           A structured learning platform covering the people, processes, data, and technology behind modern supply chain planning.
         </p>
       </div>
 
-      <!-- Row 4: 2×2 card grid -->
-      <div class="grid grid-cols-2 gap-5 w-full max-w-2xl" style="grid-row: 4">
+      <!-- Cards -->
+      <div class="grid grid-cols-2 gap-6 w-full max-w-5xl" style="grid-row: 4">
 
-        <a href={`${import.meta.env.BASE_URL}roles`} class="landing-card">
-          <div class="card-header">
-            <h3 class="card-title">Learn by role</h3>
-            <div class="card-icon">🎯</div>
+        <a href={`${import.meta.env.BASE_URL}roles`} class="lcard">
+          <div class="lcard-header">
+            <h3 class="lcard-title">Learn by role</h3>
+            <div class="lcard-icon">🎯</div>
           </div>
-          <p class="card-desc">Choose your role and follow a guided path through five phases — from awareness to hands-on execution.</p>
-          <span class="card-link">Browse by role →</span>
+          <p class="lcard-desc">Choose your role and follow a guided path through five phases — from awareness to hands-on execution.</p>
+          <span class="lcard-link">Browse by role →</span>
         </a>
 
-        <a href={`${import.meta.env.BASE_URL}themes`} class="landing-card">
-          <div class="card-header">
-            <h3 class="card-title">Learn by theme</h3>
-            <div class="card-icon">🗂️</div>
+        <a href={`${import.meta.env.BASE_URL}themes`} class="lcard">
+          <div class="lcard-header">
+            <h3 class="lcard-title">Learn by theme</h3>
+            <div class="lcard-icon">🗂️</div>
           </div>
-          <p class="card-desc">Explore content across four themes — People, Process, Data and Technology — each broken into modules and topics.</p>
-          <span class="card-link">See all modules →</span>
+          <p class="lcard-desc">Explore content across four themes — People, Process, Data and Technology — each broken into modules and topics.</p>
+          <span class="lcard-link">Browse by theme →</span>
         </a>
 
-        <a href={`${import.meta.env.BASE_URL}glossary`} class="landing-card">
-          <div class="card-header">
-            <h3 class="card-title">Glossary</h3>
-            <div class="card-icon">🔤</div>
+        <a href={`${import.meta.env.BASE_URL}glossary`} class="lcard">
+          <div class="lcard-header">
+            <h3 class="lcard-title">Glossary</h3>
+            <div class="lcard-icon">🔤</div>
           </div>
-          <p class="card-desc">A reference for all key planning terms, definitions and abbreviations used throughout this guide.</p>
-          <span class="card-link">Browse terms →</span>
+          <p class="lcard-desc">Definitions for all key planning terms, abbreviations, and concepts used throughout this guide.</p>
+          <span class="lcard-link">Browse terms →</span>
         </a>
 
-        <div class="landing-card">
-          <div class="card-header">
-            <h3 class="card-title">Your progress</h3>
-            <div class="card-icon">📊</div>
+        <a href={`${import.meta.env.BASE_URL}about`} class="lcard">
+          <div class="lcard-header">
+            <h3 class="lcard-title">About This Guide</h3>
+            <div class="lcard-icon">📖</div>
           </div>
-          <p class="card-desc">Content coming soon.</p>
-        </div>
+          <p class="lcard-desc">Learn how this platform is structured, who it's for, and how to use it most effectively across your team.</p>
+          <span class="lcard-link">Read the overview →</span>
+        </a>
 
       </div>
     </div>
@@ -73,57 +74,81 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .landing-card {
-    @apply rounded-2xl no-underline flex flex-col gap-3 transition-all duration-200;
-    background: #dbeafe;
+  .bg-home-radial {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent);
+  }
+  :global(.dark) .bg-home-radial {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
+  }
+
+  .lcard {
+    background: #eff6ff;
     border: 1.5px solid #bfdbfe;
     border-top: 4px solid #93c5fd;
-    padding: 2.25rem;
+    border-radius: 20px;
+    padding: 2.75rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    transition: transform 0.2s, box-shadow 0.25s, border-color 0.2s;
   }
-  .landing-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 32px rgba(0,0,0,0.08);
-    border-color: #bfdbfe;
-    border-top-color: #93c5fd;
+  .lcard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 24px rgba(59,130,246,0.12);
   }
 
-  :global(.dark) .landing-card {
-    background: #1e3a5f;
-    border-color: rgba(147,197,253,0.2);
+  :global(.dark) .lcard {
+    background: #2c2c2c;
+    border-color: rgba(59,130,246,0.18);
     border-top-color: rgba(147,197,253,0.5);
   }
-  :global(.dark) .landing-card:hover {
-    background: #1e4070;
-    box-shadow: 0 10px 32px rgba(59,130,246,0.15);
+  :global(.dark) .lcard:hover {
+    background: #363636;
+    box-shadow: 0 6px 28px rgba(59,130,246,0.12);
   }
 
-  .card-header {
+  .lcard-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 1rem;
   }
-  .card-title {
-    @apply text-lg font-bold text-gray-900 dark:text-white;
-    letter-spacing: -0.015em;
-  }
-  .card-icon {
-    width: 52px; height: 52px;
-    border-radius: 13px;
-    background: rgba(255,255,255,0.6);
+  .lcard-icon {
+    width: 60px; height: 60px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     flex-shrink: 0;
+    background: #dbeafe;
   }
-  :global(.dark) .card-icon {
-    background: rgba(255,255,255,0.08);
+  :global(.dark) .lcard-icon { background: rgba(59,130,246,0.12); }
+
+  .lcard-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.02em;
   }
-  .card-desc {
-    @apply text-sm text-gray-600 dark:text-neutral-300 leading-relaxed;
+  :global(.dark) .lcard-title { color: #f3f4f6; }
+
+  .lcard-desc {
+    font-size: 0.93rem;
+    color: #6b7280;
+    line-height: 1.7;
   }
-  .card-link {
-    @apply text-sm font-semibold text-gray-700 dark:text-neutral-300;
+  :global(.dark) .lcard-desc { color: rgba(243,244,246,0.45); }
+
+  .lcard-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: auto;
+    color: #1d4ed8;
   }
+  :global(.dark) .lcard-link { color: #93c5fd; }
 </style>

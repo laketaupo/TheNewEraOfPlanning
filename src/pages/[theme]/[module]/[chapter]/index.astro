@@ -16,37 +16,37 @@ const chapter = chapters.find((c) => c.slug === chapterSlug)!;
 const topics = getTopicsForChapter(chapterSlug);
 
 const colorTextMap: Record<string, string> = {
-  indigo:  'text-indigo-600 dark:text-indigo-400',
-  violet:  'text-violet-600 dark:text-violet-400',
-  sky:     'text-sky-600 dark:text-sky-400',
-  emerald: 'text-emerald-600 dark:text-emerald-400',
-  amber:   'text-amber-600 dark:text-amber-400',
-  teal:    'text-teal-600 dark:text-teal-400',
-  yellow:  'text-yellow-600 dark:text-yellow-400',
+  indigo:  'text-blue-600 dark:text-blue-400',
+  violet:  'text-blue-600 dark:text-blue-400',
+  sky:     'text-blue-600 dark:text-blue-400',
+  emerald: 'text-blue-600 dark:text-blue-400',
+  amber:   'text-blue-600 dark:text-blue-400',
+  teal:    'text-blue-600 dark:text-blue-400',
+  yellow:  'text-blue-600 dark:text-blue-400',
   blue:    'text-blue-600 dark:text-blue-400',
-  red:     'text-red-600 dark:text-red-400',
+  red:     'text-blue-600 dark:text-blue-400',
 };
 const colorBorderMap: Record<string, string> = {
-  indigo:  'border-indigo-200 dark:border-indigo-500/40 hover:border-indigo-400',
-  violet:  'border-violet-200 dark:border-violet-500/40 hover:border-violet-400',
-  sky:     'border-sky-200 dark:border-sky-500/40 hover:border-sky-400',
-  emerald: 'border-emerald-200 dark:border-emerald-500/40 hover:border-emerald-400',
-  amber:   'border-amber-200 dark:border-amber-500/40 hover:border-amber-400',
-  teal:    'border-teal-200 dark:border-teal-500/40 hover:border-teal-400',
-  yellow:  'border-yellow-200 dark:border-yellow-500/40 hover:border-yellow-400',
+  indigo:  'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  violet:  'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  sky:     'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  emerald: 'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  amber:   'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  teal:    'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
+  yellow:  'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
   blue:    'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
-  red:     'border-red-200 dark:border-red-500/40 hover:border-red-400',
+  red:     'border-blue-200 dark:border-blue-500/40 hover:border-blue-400',
 };
 const colorBgMap: Record<string, string> = {
-  indigo:  'bg-indigo-50 dark:bg-neutral-900',
-  violet:  'bg-violet-50 dark:bg-neutral-900',
-  sky:     'bg-sky-50 dark:bg-neutral-900',
-  emerald: 'bg-emerald-50 dark:bg-neutral-900',
-  amber:   'bg-amber-50 dark:bg-neutral-900',
-  teal:    'bg-teal-50 dark:bg-neutral-900',
-  yellow:  'bg-yellow-50 dark:bg-neutral-900',
+  indigo:  'bg-blue-50 dark:bg-neutral-900',
+  violet:  'bg-blue-50 dark:bg-neutral-900',
+  sky:     'bg-blue-50 dark:bg-neutral-900',
+  emerald: 'bg-blue-50 dark:bg-neutral-900',
+  amber:   'bg-blue-50 dark:bg-neutral-900',
+  teal:    'bg-blue-50 dark:bg-neutral-900',
+  yellow:  'bg-blue-50 dark:bg-neutral-900',
   blue:    'bg-blue-50 dark:bg-neutral-900',
-  red:     'bg-red-50 dark:bg-neutral-900',
+  red:     'bg-blue-50 dark:bg-neutral-900',
 };
 
 const BASE_URL = import.meta.env.BASE_URL;
@@ -74,17 +74,17 @@ const back = moduleBackMap[currentModule] ?? { href: `${BASE_URL}${theme}/${curr
 const themeChapters = getChapters(theme).filter(c => !c.hidden && c.module === Astro.params.module);
 
 const colorGradientMap: Record<string, { light: string; dark: string }> = {
-  indigo:  { light: 'rgba(99,102,241,0.08)',   dark: 'rgba(99,102,241,0.15)' },
-  violet:  { light: 'rgba(139,92,246,0.08)',   dark: 'rgba(139,92,246,0.15)' },
-  sky:     { light: 'rgba(14,165,233,0.08)',   dark: 'rgba(14,165,233,0.15)' },
-  emerald: { light: 'rgba(16,185,129,0.08)',   dark: 'rgba(16,185,129,0.15)' },
-  amber:   { light: 'rgba(245,158,11,0.08)',   dark: 'rgba(245,158,11,0.15)' },
-  teal:    { light: 'rgba(20,184,166,0.08)',   dark: 'rgba(20,184,166,0.15)' },
-  yellow:  { light: 'rgba(234,179,8,0.08)',    dark: 'rgba(234,179,8,0.15)' },
+  indigo:  { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  violet:  { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  sky:     { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  emerald: { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  amber:   { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  teal:    { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
+  yellow:  { light: 'rgba(59,130,246,0.08)',    dark: 'rgba(59,130,246,0.15)' },
   blue:    { light: 'rgba(59,130,246,0.08)',   dark: 'rgba(59,130,246,0.15)' },
-  red:     { light: 'rgba(239,68,68,0.08)',    dark: 'rgba(239,68,68,0.15)' },
+  red:     { light: 'rgba(59,130,246,0.08)',    dark: 'rgba(59,130,246,0.15)' },
 };
-const gradientColor = colorGradientMap[chapter.color] ?? { light: 'rgba(16,185,129,0.08)', dark: 'rgba(16,185,129,0.15)' };
+const gradientColor = colorGradientMap[chapter.color] ?? { light: 'rgba(59,130,246,0.08)', dark: 'rgba(59,130,246,0.15)' };
 
 const textClass = colorTextMap[chapter.color] ?? 'text-brand-600 dark:text-brand-400';
 const borderClass = colorBorderMap[chapter.color] ?? 'border-brand-200 dark:border-brand-500/40';
@@ -158,7 +158,7 @@ const chapterPhaseCtxJson = JSON.stringify({ currentChapterSlug: chapterSlug, bg
             </div>
             <div class="flex items-center gap-3 shrink-0 mt-0.5">
               {topic.widget && (
-                <span class="text-xs text-emerald-600 dark:text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full">interactive</span>
+                <span class="text-xs text-blue-600 dark:text-blue-500 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">interactive</span>
               )}
               <span class="text-xs text-gray-400 dark:text-neutral-600">{topic.estimatedMinutes} min</span>
               <!-- Completion dot (filled by JS) -->
@@ -210,7 +210,7 @@ const chapterPhaseCtxJson = JSON.stringify({ currentChapterSlug: chapterSlug, bg
     const id = dot.dataset.topicId ?? '';
     if (progress[id]) {
       dot.classList.remove('bg-gray-200', 'dark:bg-neutral-700');
-      dot.classList.add('bg-emerald-500');
+      dot.classList.add('bg-blue-500');
     }
   });
 </script>

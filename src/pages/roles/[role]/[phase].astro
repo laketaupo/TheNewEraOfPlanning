@@ -47,52 +47,52 @@ const nextPhaseTitle = nextPhaseIdx !== null ? phases[nextPhaseIdx].title : null
 const nextPhaseNumber = nextPhaseIdx !== null ? nextPhaseIdx + 1 : null;
 
 const colorTextMap: Record<string, string> = {
-  indigo: 'text-indigo-600 dark:text-indigo-400',
-  violet: 'text-violet-600 dark:text-violet-400',
-  sky:    'text-sky-600 dark:text-sky-400',
-  emerald:'text-emerald-600 dark:text-emerald-400',
-  amber:  'text-amber-600 dark:text-amber-400',
-  teal:   'text-teal-600 dark:text-teal-400',
+  indigo: 'text-blue-600 dark:text-blue-400',
+  violet: 'text-blue-600 dark:text-blue-400',
+  sky:    'text-blue-600 dark:text-blue-400',
+  emerald:'text-blue-600 dark:text-blue-400',
+  amber:  'text-blue-600 dark:text-blue-400',
+  teal:   'text-blue-600 dark:text-blue-400',
 };
 const colorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-neutral-900',
-  violet: 'bg-violet-50 dark:bg-neutral-900',
-  sky:    'bg-sky-50 dark:bg-neutral-900',
-  emerald:'bg-emerald-50 dark:bg-neutral-900',
-  amber:  'bg-amber-50 dark:bg-neutral-900',
-  teal:   'bg-teal-50 dark:bg-neutral-900',
+  indigo: 'bg-blue-50 dark:bg-neutral-900',
+  violet: 'bg-blue-50 dark:bg-neutral-900',
+  sky:    'bg-blue-50 dark:bg-neutral-900',
+  emerald:'bg-blue-50 dark:bg-neutral-900',
+  amber:  'bg-blue-50 dark:bg-neutral-900',
+  teal:   'bg-blue-50 dark:bg-neutral-900',
 };
 const colorBorderMap: Record<string, string> = {
-  indigo: 'border-indigo-200 dark:border-indigo-500/30',
-  violet: 'border-violet-200 dark:border-violet-500/30',
-  sky:    'border-sky-200 dark:border-sky-500/30',
-  emerald:'border-emerald-200 dark:border-emerald-500/30',
-  amber:  'border-amber-200 dark:border-amber-500/30',
-  teal:   'border-teal-200 dark:border-teal-500/30',
+  indigo: 'border-blue-200 dark:border-blue-500/30',
+  violet: 'border-blue-200 dark:border-blue-500/30',
+  sky:    'border-blue-200 dark:border-blue-500/30',
+  emerald:'border-blue-200 dark:border-blue-500/30',
+  amber:  'border-blue-200 dark:border-blue-500/30',
+  teal:   'border-blue-200 dark:border-blue-500/30',
 };
 const colorDotMap: Record<string, string> = {
-  indigo: 'bg-indigo-500',
-  violet: 'bg-violet-500',
-  sky:    'bg-sky-500',
-  emerald:'bg-emerald-500',
-  amber:  'bg-amber-500',
-  teal:   'bg-teal-500',
+  indigo: 'bg-blue-500',
+  violet: 'bg-blue-500',
+  sky:    'bg-blue-500',
+  emerald:'bg-blue-500',
+  amber:  'bg-blue-500',
+  teal:   'bg-blue-500',
 };
 const colorGradientMap: Record<string, string> = {
-  indigo: 'from-indigo-500 to-violet-500',
-  violet: 'from-violet-500 to-pink-500',
-  sky:    'from-sky-500 to-indigo-500',
-  emerald:'from-emerald-500 to-teal-500',
-  amber:  'from-amber-500 to-orange-500',
-  teal:   'from-teal-500 to-emerald-500',
+  indigo: 'from-blue-500 to-blue-500',
+  violet: 'from-blue-500 to-blue-500',
+  sky:    'from-blue-500 to-blue-500',
+  emerald:'from-blue-500 to-blue-500',
+  amber:  'from-blue-500 to-blue-500',
+  teal:   'from-blue-500 to-blue-500',
 };
 const colorBarMap: Record<string, string> = {
-  indigo: 'bg-indigo-500',
-  violet: 'bg-violet-500',
-  sky:    'bg-sky-500',
-  emerald:'bg-emerald-500',
-  amber:  'bg-amber-500',
-  teal:   'bg-teal-500',
+  indigo: 'bg-blue-500',
+  violet: 'bg-blue-500',
+  sky:    'bg-blue-500',
+  emerald:'bg-blue-500',
+  amber:  'bg-blue-500',
+  teal:   'bg-blue-500',
 };
 
 const accentText     = colorTextMap[role.color]   ?? colorTextMap.indigo;
@@ -235,10 +235,10 @@ const topicIds = phaseTopics.map((t) => t.topicId);
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(20,184,166,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(20,184,166,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
   }
 </style>
 

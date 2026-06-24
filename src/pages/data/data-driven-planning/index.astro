@@ -33,12 +33,12 @@ const iconMap: Record<string, string> = {
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-12 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-500/10 border border-yellow-200 dark:border-yellow-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
         Data
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        Data-Driven <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-amber-500">Planning</span>
+        Data-Driven <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-500">Planning</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
         Understand how data quality and structure determine the quality of every plan your organisation produces.
@@ -46,25 +46,25 @@ const iconMap: Record<string, string> = {
     </div>
 
     <div class="relative z-10 px-6 pb-20 max-w-6xl mx-auto">
-      <div class="flex flex-col gap-4 max-w-3xl mx-auto">
+      <div class="flex flex-col gap-5 max-w-3xl mx-auto">
       {chapters.map((chapter) => {
         const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
         return (
           <a
             href={getChapterUrl(chapter)}
-            class="group relative flex flex-col p-6 rounded-2xl border bg-yellow-50 dark:bg-neutral-900 border-yellow-200 dark:border-yellow-500/30 hover:border-yellow-400 dark:hover:border-yellow-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+            class="group relative flex flex-col p-8 rounded-2xl border bg-blue-50 dark:bg-neutral-900 border-blue-200 dark:border-blue-500/30 hover:border-blue-400 dark:hover:border-blue-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
-            <span class="text-xs font-mono font-bold text-yellow-600 dark:text-yellow-400 mb-4">0{chapter.order}</span>
+            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 mb-4">0{chapter.order}</span>
             <div class="flex items-start gap-4 mb-4">
-              <div class="text-yellow-600 dark:text-yellow-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['cube']} />
+              <div class="text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['cube']} />
               <div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
                 <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1 leading-relaxed">{chapter.description}</p>
               </div>
             </div>
-            <div class="flex items-center justify-between mt-auto pt-4 border-t border-yellow-100 dark:border-yellow-500/10">
+            <div class="flex items-center justify-between mt-auto pt-4 border-t border-blue-100 dark:border-blue-500/10">
               <span class="text-xs text-gray-400 dark:text-neutral-500">{topics.length} topics</span>
-              <div class="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div class="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
                 Open chapter
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -82,9 +82,9 @@ const iconMap: Record<string, string> = {
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(234,179,8,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
   }
 </style>

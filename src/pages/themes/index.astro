@@ -55,7 +55,7 @@ const themeCards = themes.map((p) => ({
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
-    <div class="relative z-10 px-6 pt-16 pb-20 max-w-3xl mx-auto">
+    <div class="relative z-10 px-6 pt-16 pb-20 max-w-5xl mx-auto">
 
       <!-- Header -->
       <div class="mb-12">
@@ -64,7 +64,7 @@ const themeCards = themes.map((p) => ({
       </div>
 
       <!-- 2×2 Theme grid -->
-      <div class="grid grid-cols-2 gap-5">
+      <div class="grid grid-cols-2 gap-6">
         {themeCards.map((theme) => (
           <a href={`${import.meta.env.BASE_URL}${theme.slug}`} class={`group theme-card theme-${theme.slug}`}>
             <div class="theme-icon" set:html={theme.icon} />
@@ -92,8 +92,7 @@ const themeCards = themes.map((p) => ({
 
   .theme-card {
     @apply flex flex-col rounded-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
-    padding: 1.75rem;
-    padding-top: 1.5rem;
+    padding: 2.5rem;
     border-top-width: 4px;
     border-top-style: solid;
   }
@@ -119,7 +118,7 @@ const themeCards = themes.map((p) => ({
   :global(.dark) .theme-data:hover { background:#363636; box-shadow:0 6px 28px rgba(59,130,246,0.12); }
 
   .theme-icon {
-    @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
+    @apply w-14 h-14 rounded-xl flex items-center justify-center mb-5;
   }
   .theme-people .theme-icon,
   .theme-process .theme-icon,

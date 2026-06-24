@@ -46,13 +46,13 @@ const iconMap: Record<string, string> = {
     </div>
 
     <div class="relative z-10 px-6 pb-20 max-w-6xl mx-auto">
-      <div class="flex flex-col gap-4 max-w-3xl mx-auto">
+      <div class="flex flex-col gap-5 max-w-3xl mx-auto">
       {chapters.map((chapter) => {
         const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
         return (
           <a
             href={getChapterUrl(chapter)}
-            class="group relative flex flex-col p-6 rounded-2xl border bg-blue-50 dark:bg-neutral-900 border-blue-200 dark:border-blue-500/30 hover:border-blue-400 dark:hover:border-blue-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+            class="group relative flex flex-col p-8 rounded-2xl border bg-blue-50 dark:bg-neutral-900 border-blue-200 dark:border-blue-500/30 hover:border-blue-400 dark:hover:border-blue-400 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
             <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 mb-4">0{chapter.order}</span>
             <div class="flex items-start gap-4 mb-4">
