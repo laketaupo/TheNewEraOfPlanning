@@ -6,7 +6,11 @@ import Search from '../components/Search.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import IntroOverlay from '../components/IntroOverlay.astro';
 import { getGlossaryTerms } from '../lib/glossary';
+import { getTopics } from '../lib/chapters';
 const glossaryTerms = getGlossaryTerms().map(t => ({ term: t.term, aliases: t.aliases, slug: t.slug, definition: t.definition }));
+const topicMap = Object.fromEntries(
+  getTopics().map(t => [`${t.chapterSlug}/${t.slug}`, { title: t.title, url: t.url }])
+);
 
 export interface Props {
   title?: string;
@@ -119,6 +123,9 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
 
     <!-- Glossary tooltip data (injected at build time) -->
     <script type="application/json" id="glossary-data" set:html={JSON.stringify(glossaryTerms)}></script>
+
+    <!-- Topic map for client-side search (injected at build time) -->
+    <script type="application/json" id="topic-map" set:html={JSON.stringify(topicMap)}></script>
 
     <!-- Tooltip container -->
     <div
