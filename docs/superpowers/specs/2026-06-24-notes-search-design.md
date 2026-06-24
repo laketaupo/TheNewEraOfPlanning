@@ -50,7 +50,7 @@ Implemented inside the existing `Search.astro` inline script. No new files.
 - One row per matching note, styled to match Pagefind's `.pagefind-ui__result` rows:
   - Same padding (`10px 12px`), same border-radius (`10px`), same hover highlight (indigo-50 / dark indigo)
   - Topic title (bold) + amber `Note` badge (pill, matching the existing amber note-button palette)
-  - Excerpt: note text truncated to 120 chars with `…`, matched query term wrapped in `<mark>` for highlight
+  - Excerpt: note text truncated to 120 chars with `…`, matched query term wrapped in `<mark>` for highlight (styled amber to match the note palette, not the browser default yellow)
 
 **When no notes match:** hide `#notes-results` entirely — no empty-state message shown.
 

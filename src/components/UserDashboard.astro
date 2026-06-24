@@ -1,11 +1,11 @@
 ---
-import { getChapters, getTopics } from '../lib/chapters';
+import { getChapters, getTopics, getPillars } from '../lib/chapters';
 import { getRoles, resolveRoleSections, resolveRolePhases } from '../lib/roles';
 
 const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics   = getTopics();
 
-const pillarOrder = ['technology', 'process', 'data', 'people'];
+const pillarOrder = getPillars();
 
 const moduleLabels: Record<string, string> = {
   'planning-software':         'Planning Software',
