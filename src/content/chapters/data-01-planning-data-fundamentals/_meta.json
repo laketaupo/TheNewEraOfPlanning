@@ -3,6 +3,6 @@
   "description": "Understand what data-driven planning means and how data flows through the Planning software to produce a plan.",
   "icon": "cube",
   "color": "yellow",
-  "pillar": "data",
+  "theme": "data",
   "module": "data-driven-planning"
 }

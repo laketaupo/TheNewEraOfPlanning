@@ -13,11 +13,11 @@
     <p id="search-dev-notice" class="hidden text-center text-sm text-gray-500 dark:text-neutral-400 px-6 py-10">
       Search is available after running <code class="font-mono bg-gray-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded">npm run build</code>.
     </p>
-    <div id="pillar-pills">
-      <button class="pillar-pill" data-pillar="technology">Technology</button>
-      <button class="pillar-pill" data-pillar="process">Process</button>
-      <button class="pillar-pill" data-pillar="data">Data</button>
-      <button class="pillar-pill" data-pillar="people">People</button>
+    <div id="theme-pills">
+      <button class="theme-pill" data-theme="technology">Technology</button>
+      <button class="theme-pill" data-theme="process">Process</button>
+      <button class="theme-pill" data-theme="data">Data</button>
+      <button class="theme-pill" data-theme="people">People</button>
     </div>
     <div id="filtered-results" class="hidden"></div>
     <div id="notes-results" class="hidden px-2 pb-2"></div>
@@ -38,7 +38,7 @@
   const devNotice = document.getElementById('search-dev-notice');
 
   let initialized = false;
-  let activePillar = null;
+  let activeTheme = null;
   let pagefindRaw = null;
   let pendingSearch = null;
 
@@ -62,7 +62,7 @@
     return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
   }
 
-  function pillarLabel(slug) {
+  function themeLabel(slug) {
     return { technology: 'Technology', process: 'Process', data: 'Data', people: 'People' }[slug] || slug;
   }
 
@@ -74,10 +74,10 @@
       '</div></a>';
   }
 
-  function setActivePillar(slug) {
-    activePillar = slug;
-    document.querySelectorAll('.pillar-pill').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.pillar === slug);
+  function setActiveTheme(slug) {
+    activeTheme = slug;
+    document.querySelectorAll('.theme-pill').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.theme === slug);
     });
   }
 
@@ -91,15 +91,15 @@
       panel.innerHTML = '';
       return;
     }
-    var opts = activePillar ? { filters: { pillar: activePillar } } : {};
+    var opts = activeTheme ? { filters: { theme: activeTheme } } : {};
     pagefindRaw.search(q, opts).then(function (search) {
       return Promise.all(search.results.slice(0, 10).map(function (r) { return r.data(); }));
     }).then(function (results) {
       if (results.length > 0) {
         panel.innerHTML = results.map(renderFilteredResult).join('');
       } else {
-        var msg = activePillar
-          ? 'No results in ' + pillarLabel(activePillar)
+        var msg = activeTheme
+          ? 'No results in ' + themeLabel(activeTheme)
           : 'No results for "' + escapeHtml(q) + '"';
         panel.innerHTML = '<p class="filter-state-msg">' + msg + '</p>';
       }
@@ -160,8 +160,8 @@
     if (notesPanel) { notesPanel.classList.add('hidden'); notesPanel.innerHTML = ''; }
     const resultsPanel = document.getElementById('filtered-results');
     if (resultsPanel) { resultsPanel.classList.add('hidden'); resultsPanel.innerHTML = ''; }
-    activePillar = null;
-    document.querySelectorAll('.pillar-pill').forEach(function (btn) { btn.classList.remove('active'); });
+    activeTheme = null;
+    document.querySelectorAll('.theme-pill').forEach(function (btn) { btn.classList.remove('active'); });
   }
 
   function initPagefind() {
@@ -225,10 +225,10 @@
     document.head.appendChild(script);
   }
 
-  document.querySelectorAll('.pillar-pill').forEach(function (btn) {
+  document.querySelectorAll('.theme-pill').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var pillar = btn.dataset.pillar;
-      setActivePillar(pillar === activePillar ? null : pillar);
+      var theme = btn.dataset.theme;
+      setActiveTheme(theme === activeTheme ? null : theme);
       var input = container.querySelector('input');
       runSearch(input ? input.value : '');
     });
@@ -390,19 +390,19 @@
     color: rgb(252 211 77);
   }
 
-  /* ── Pillar pill strip ── */
-  #pillar-pills {
+  /* ── Theme pill strip ── */
+  #theme-pills {
     display: flex;
     gap: 8px;
     padding: 6px 12px 8px;
     border-bottom: 1px solid rgb(243 244 246);
   }
-  .dark #pillar-pills {
+  .dark #theme-pills {
     border-bottom-color: rgb(38 38 38);
   }
 
   /* Base pill reset */
-  .pillar-pill {
+  .theme-pill {
     border-radius: 9999px;
     padding: 3px 12px;
     font-size: 13px;
@@ -415,41 +415,41 @@
   }
 
   /* Technology — green */
-  .pillar-pill[data-pillar="technology"] { border-color: #15803d; color: #15803d; }
-  .pillar-pill[data-pillar="technology"]:hover:not(.active) { background: #dcfce7; }
-  .pillar-pill[data-pillar="technology"].active { background: #15803d; color: white; }
+  .theme-pill[data-theme="technology"] { border-color: #15803d; color: #15803d; }
+  .theme-pill[data-theme="technology"]:hover:not(.active) { background: #dcfce7; }
+  .theme-pill[data-theme="technology"].active { background: #15803d; color: white; }
 
   /* Process — blue */
-  .pillar-pill[data-pillar="process"] { border-color: #1d4ed8; color: #1d4ed8; }
-  .pillar-pill[data-pillar="process"]:hover:not(.active) { background: #dbeafe; }
-  .pillar-pill[data-pillar="process"].active { background: #1d4ed8; color: white; }
+  .theme-pill[data-theme="process"] { border-color: #1d4ed8; color: #1d4ed8; }
+  .theme-pill[data-theme="process"]:hover:not(.active) { background: #dbeafe; }
+  .theme-pill[data-theme="process"].active { background: #1d4ed8; color: white; }
 
   /* Data — amber */
-  .pillar-pill[data-pillar="data"] { border-color: #b45309; color: #b45309; }
-  .pillar-pill[data-pillar="data"]:hover:not(.active) { background: #fef3c7; }
-  .pillar-pill[data-pillar="data"].active { background: #b45309; color: white; }
+  .theme-pill[data-theme="data"] { border-color: #b45309; color: #b45309; }
+  .theme-pill[data-theme="data"]:hover:not(.active) { background: #fef3c7; }
+  .theme-pill[data-theme="data"].active { background: #b45309; color: white; }
 
   /* People — red */
-  .pillar-pill[data-pillar="people"] { border-color: #b91c1c; color: #b91c1c; }
-  .pillar-pill[data-pillar="people"]:hover:not(.active) { background: #fee2e2; }
-  .pillar-pill[data-pillar="people"].active { background: #b91c1c; color: white; }
+  .theme-pill[data-theme="people"] { border-color: #b91c1c; color: #b91c1c; }
+  .theme-pill[data-theme="people"]:hover:not(.active) { background: #fee2e2; }
+  .theme-pill[data-theme="people"].active { background: #b91c1c; color: white; }
 
   /* Dark mode — lighter accent variants */
-  .dark .pillar-pill[data-pillar="technology"] { border-color: #86efac; color: #86efac; }
-  .dark .pillar-pill[data-pillar="technology"]:hover:not(.active) { background: rgba(134,239,172,0.12); }
-  .dark .pillar-pill[data-pillar="technology"].active { background: #15803d; color: white; }
+  .dark .theme-pill[data-theme="technology"] { border-color: #86efac; color: #86efac; }
+  .dark .theme-pill[data-theme="technology"]:hover:not(.active) { background: rgba(134,239,172,0.12); }
+  .dark .theme-pill[data-theme="technology"].active { background: #15803d; color: white; }
 
-  .dark .pillar-pill[data-pillar="process"] { border-color: #93c5fd; color: #93c5fd; }
-  .dark .pillar-pill[data-pillar="process"]:hover:not(.active) { background: rgba(147,197,253,0.12); }
-  .dark .pillar-pill[data-pillar="process"].active { background: #1d4ed8; color: white; }
+  .dark .theme-pill[data-theme="process"] { border-color: #93c5fd; color: #93c5fd; }
+  .dark .theme-pill[data-theme="process"]:hover:not(.active) { background: rgba(147,197,253,0.12); }
+  .dark .theme-pill[data-theme="process"].active { background: #1d4ed8; color: white; }
 
-  .dark .pillar-pill[data-pillar="data"] { border-color: #fcd34d; color: #fcd34d; }
-  .dark .pillar-pill[data-pillar="data"]:hover:not(.active) { background: rgba(252,211,77,0.12); }
-  .dark .pillar-pill[data-pillar="data"].active { background: #b45309; color: white; }
+  .dark .theme-pill[data-theme="data"] { border-color: #fcd34d; color: #fcd34d; }
+  .dark .theme-pill[data-theme="data"]:hover:not(.active) { background: rgba(252,211,77,0.12); }
+  .dark .theme-pill[data-theme="data"].active { background: #b45309; color: white; }
 
-  .dark .pillar-pill[data-pillar="people"] { border-color: #fca5a5; color: #fca5a5; }
-  .dark .pillar-pill[data-pillar="people"]:hover:not(.active) { background: rgba(252,165,165,0.12); }
-  .dark .pillar-pill[data-pillar="people"].active { background: #b91c1c; color: white; }
+  .dark .theme-pill[data-theme="people"] { border-color: #fca5a5; color: #fca5a5; }
+  .dark .theme-pill[data-theme="people"]:hover:not(.active) { background: rgba(252,165,165,0.12); }
+  .dark .theme-pill[data-theme="people"].active { background: #b91c1c; color: white; }
 
   /* Hide Pagefind's results drawer — all results rendered in #filtered-results instead */
   #search-container .pagefind-ui__drawer {

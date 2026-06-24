@@ -28,12 +28,12 @@ const orgCount = allPeopleChapters.filter(c => c.module === 'organisation').leng
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-14 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
         People
       </div>
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
-        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-500">People</span>
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">People</span>
       </h1>
       <p class="text-lg text-gray-600 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
         Understand the roles, responsibilities, and governance that make supply chain planning work — and how to land a lasting transformation.
@@ -83,10 +83,10 @@ const orgCount = allPeopleChapters.filter(c => c.module === 'organisation').leng
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(239,68,68,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(239,68,68,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
   }
 
   .track-card {
@@ -99,32 +99,32 @@ const orgCount = allPeopleChapters.filter(c => c.module === 'organisation').leng
 
   /* ── Light mode ─────────────────────────────────── */
   .track-org-roles {
-    background: #fff5f5;
-    border: 1.5px solid #fecaca;
-    border-top: 4px solid #fca5a5;
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    border-top: 4px solid #93c5fd;
   }
-  .track-card:hover { box-shadow: 0 6px 24px rgba(239,68,68,0.13); }
+  .track-card:hover { box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
 
   /* ── Dark mode ──────────────────────────────────── */
   :global(.dark) .track-org-roles {
     background: #2c2c2c;
-    border-color: rgba(239,68,68,0.18);
-    border-top-color: rgba(252,165,165,0.5);
+    border-color: rgba(59,130,246,0.18);
+    border-top-color: rgba(147,197,253,0.5);
   }
   :global(.dark) .track-card:hover {
     background: #363636;
-    box-shadow: 0 6px 28px rgba(239,68,68,0.12);
+    box-shadow: 0 6px 28px rgba(59,130,246,0.12);
   }
 
   /* ── Icon ───────────────────────────────────────── */
   .track-icon {
     @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
-    background: #fee2e2;
-    color: #b91c1c;
+    background: #dbeafe;
+    color: #1d4ed8;
   }
   :global(.dark) .track-icon {
-    background: rgba(239,68,68,0.12);
-    color: #fca5a5;
+    background: rgba(59,130,246,0.12);
+    color: #93c5fd;
   }
 
   /* ── Title ──────────────────────────────────────── */
@@ -138,21 +138,21 @@ const orgCount = allPeopleChapters.filter(c => c.module === 'organisation').leng
   /* ── Badge ──────────────────────────────────────── */
   .track-badge {
     @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
-    background: #fee2e2;
-    color: #991b1b;
+    background: #dbeafe;
+    color: #1e40af;
   }
   :global(.dark) .track-badge {
-    background: rgba(239,68,68,0.12);
-    color: #fca5a5;
+    background: rgba(59,130,246,0.12);
+    color: #93c5fd;
   }
 
   .track-badge-soon {
-    background: #fef3c7;
-    color: #92400e;
+    background: #f3f4f6;
+    color: #6b7280;
   }
   :global(.dark) .track-badge-soon {
-    background: rgba(245,158,11,0.12);
-    color: #fcd34d;
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
   }
 
   .live-dot {

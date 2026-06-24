@@ -3,6 +3,6 @@
   "description": "Creating new items, managing attribute changes, retiring obsolete records \u2014 the core workflows that keep the master data foundation current and accurate.",
   "icon": "database",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "mdm"
 }

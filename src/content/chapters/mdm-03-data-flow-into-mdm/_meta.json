@@ -3,6 +3,6 @@
   "description": "Where master data originates and how it enters MDM \u2014 from new product requests to attribute updates and hierarchy changes.",
   "icon": "database",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "mdm"
 }

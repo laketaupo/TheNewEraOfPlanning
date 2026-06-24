@@ -3,6 +3,6 @@
   "description": "Run what-if scenarios, stress-test your plan, and see how the supply chain responds to change.",
   "icon": "beaker",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "planning-software"
 }

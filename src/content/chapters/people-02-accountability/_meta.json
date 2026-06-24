@@ -3,6 +3,6 @@
   "description": "How responsibility is assigned across the S&OP cycle \u2014 who owns each step, who supports, and who needs to be kept informed.",
   "icon": "network",
   "color": "red",
-  "pillar": "people",
+  "theme": "people",
   "module": "organisation"
 }

@@ -3,7 +3,7 @@
     "slug": "what-is-planning-software",
     "question": "What is planning software and how is it different from an ERP system?",
     "answer": "Planning software is purpose-built for demand, supply, and inventory optimisation. Unlike ERP, which records and processes transactions, planning software runs simulations and scenarios to help you decide what to produce, where to stock it, and when. The two systems work together: ERP provides the master and transactional data; planning software consumes it, runs the logic, and sends orders back.",
-    "pillar": "technology",
+    "theme": "technology",
     "seeAlso": [],
     "related": ["bill-of-materials", "bill-of-distribution"]
   },
@@ -11,7 +11,7 @@
     "slug": "what-is-bod",
     "question": "What is a Bill of Distribution?",
     "answer": "A Bill of Distribution (BOD) defines your distribution network — which locations supply which other locations, in what quantities, and with what lead times. It is the supply-side counterpart to the Bill of Materials and drives how supply signals cascade downstream from factories to distribution centres to customers.",
-    "pillar": "technology",
+    "theme": "technology",
     "seeAlso": [],
     "related": ["bill-of-distribution", "bill-of-materials"]
   },
@@ -19,7 +19,7 @@
     "slug": "sop-vs-soe",
     "question": "What is the difference between S&OP and S&OE?",
     "answer": "S&OP (Sales & Operations Planning) is a monthly process that aligns demand, supply, inventory, and finance over a 12–18 month horizon. S&OE (Sales & Operations Execution) is a weekly process that monitors execution against the agreed S&OP plan and triggers corrective actions when short-term deviations appear. S&OE operates inside the frozen fence; S&OP sets the plan that S&OE defends.",
-    "pillar": "process",
+    "theme": "process",
     "seeAlso": [],
     "related": ["sop", "soe"]
   },
@@ -27,7 +27,7 @@
     "slug": "how-often-sop-runs",
     "question": "How often does the S&OP cycle run?",
     "answer": "The S&OP cycle runs monthly. A typical four-week cadence moves through demand review, supply review, pre-S&OP reconciliation, and an executive S&OP meeting. The cycle then repeats, rolling the planning horizon forward by one month each time.",
-    "pillar": "process",
+    "theme": "process",
     "seeAlso": [],
     "related": ["sop"]
   },
@@ -35,7 +35,7 @@
     "slug": "what-is-master-data",
     "question": "What is master data and why does it matter for planning?",
     "answer": "Master data is the stable, shared reference data that describes your products, locations, customers, and suppliers — things that change rarely but underpin every transaction. In planning, master data quality is critical because every demand signal, supply order, and inventory calculation depends on it. Bad master data produces bad plans; there is no algorithm that compensates for missing lead times or wrong BOMs.",
-    "pillar": "data",
+    "theme": "data",
     "seeAlso": [],
     "related": []
   },
@@ -43,7 +43,7 @@
     "slug": "planning-parameters-vs-transactional",
     "question": "What is the difference between a planning parameter and transactional data?",
     "answer": "Planning parameters are standing values that govern how the planning engine behaves — safety stock targets, lead times, minimum order quantities, lot sizes. Transactional data is what actually happened: a sales order placed, a purchase receipt confirmed, a transfer shipped. Parameters tell the engine the rules; transactional data tells it the current state. Both flow from ERP into planning software.",
-    "pillar": "data",
+    "theme": "data",
     "seeAlso": [],
     "related": []
   },
@@ -51,7 +51,7 @@
     "slug": "who-owns-sop",
     "question": "Who owns the S&OP process?",
     "answer": "S&OP is typically owned by Supply Chain or Operations, with the process lead acting as the facilitator who drives the monthly cycle. Ownership of the outcome — the agreed business plan — is shared: demand is owned by Sales and Commercial, supply by Operations, inventory by Supply Chain, and the financial reconciliation by Finance. The executive S&OP meeting gives senior leadership joint accountability for the plan.",
-    "pillar": "people",
+    "theme": "people",
     "seeAlso": [],
     "related": ["sop"]
   },
@@ -59,7 +59,7 @@
     "slug": "what-does-demand-planner-do",
     "question": "What does a demand planner do?",
     "answer": "A demand planner is responsible for building and maintaining the statistical demand forecast, incorporating commercial intelligence from Sales, and producing a consensus demand plan for the S&OP cycle. They monitor forecast accuracy, investigate bias and error patterns, and manage the demand inputs into the planning system. In S&OE they track actuals against the plan and flag material deviations.",
-    "pillar": "people",
+    "theme": "people",
     "seeAlso": [],
     "related": ["sop", "soe"]
   }

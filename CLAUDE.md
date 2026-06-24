@@ -10,7 +10,7 @@ npm run build    # Build to .vercel/output/static/ — always run this to verify
 npm run preview  # Preview the built site
 ```
 
-No tests or linters are configured.
+`npm run build` runs `astro build` then `pagefind --site .vercel/output/static` (postbuild step that indexes the site for search). No tests or linters are configured.
 
 ## Architecture
 
@@ -21,8 +21,10 @@ No tests or linters are configured.
 A four-pillar learning hub (Technology, Process, Data, People). Each pillar has one or more **modules**, each module has one or more **chapters**, each chapter has one or more **topics**. The full URL shape is:
 
 ```
-/{pillar}/{module}/{chapter-slug}/{topic-slug}
+/{theme}/{module}/{chapter-slug}/{topic-slug}
 ```
+
+> **"Pillar" vs "theme":** The product calls these four areas "pillars", but the codebase calls them **themes** — in `_meta.json`, `order.json`, function names, URL parameters, and `localStorage`. Always use `theme` in code.
 
 Current modules per pillar:
 
@@ -30,18 +32,18 @@ Current modules per pillar:
 |---|---|
 | `technology` | `planning-software`, `erp`, `architecture`, `mdm`, `fms` |
 | `data` | `data-fundamentals`, `data-driven-planning`, `data-governance` |
-| `process` | `scenario-planning`, `sop-process`, `soe-process`, `execution-process`, `process-foundations` |
-| `people` | `organisation-and-roles`, `implementation-and-change` |
+| `process` | `process-fundamentals`, `scenario-planning`, `sop-process`, `soe-process`, `execution-process` |
+| `people` | `organisation`, `roles-and-responsibilities`, `implementation-and-change` |
 
 The Configuration Manual (`/technology/configuration`) is a separate content type surfaced via the Planning Software module page — it does not use the pillar/module/chapter/topic system.
 
 ### Content Model
 
 **Chapter content** lives in `src/content/chapters/<chapter-slug>/`:
-- `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `order`, `pillar`, `module`. Optional: `hidden` (bool).
+- `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `theme`, `module`. Optional: `hidden` (bool).
 - `NN-topic-slug.md` — one file per topic, frontmatter-heavy.
 
-Both `pillar` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (pillar defaults to `'technology'`, module defaults to `'planning-software'`).
+Both `theme` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (theme defaults to `'technology'`, module defaults to `'planning-software'`).
 
 `99-layout-showcase/` is a hidden dev-reference chapter (`"hidden": true`) — included in builds, invisible in nav.
 
@@ -68,25 +70,30 @@ Both `pillar` and `module` are required in every `_meta.json`. Omitting either c
 Content is loaded via `import.meta.glob` (not Astro content collections):
 
 - `src/lib/chapters.ts` — eagerly loads all `_meta.json` and topic frontmatter.
-  - `getChapters(pillar?)` — all chapters, optionally filtered by pillar
-  - `getTopics()` — all topics, each with derived `pillar`, `module`, `url`, `chapterUrl`
+  - `getChapters(theme?)` — all chapters, optionally filtered by theme
+  - `getTopics()` — all topics, each with derived `theme`, `module`, `url`, `chapterUrl`
   - `getTopicsForChapter(slug)` — topics for one chapter
-  - `getAdjacentTopics(url)` — `[prev, next]` scoped to same pillar
-  - `getChapterUrl(ch)` — builds `/{pillar}/{module}/{slug}`
-  - `getPillars()` — ordered list of pillars from `order.json`
-  - `getModulesForPillar(pillar)` — ordered module list for a pillar from `order.json`
+  - `getAdjacentTopics(url)` — `[prev, next]` scoped to same theme
+  - `getChapterUrl(ch)` — builds `/{theme}/{module}/{slug}`
+  - `getThemes()` — ordered list of themes from `order.json`
+  - `getModulesForTheme(theme)` — ordered module list for a theme from `order.json`
 - `src/lib/configuration.ts` — loads configuration manual entries.
+- `src/lib/faq.ts` — loads FAQ entries; `getFaqEntries()` / `validateFaq()`.
 - `src/lib/roles.ts` — loads role JSON files; `resolveRoleSections()` validates and hydrates topic references.
 
-**`src/content/order.json`** is the authoritative source for ordering. It defines `pillars` (array), `modules` (per-pillar arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
+**`src/content/order.json`** is the authoritative source for ordering. It defines `themes` (array), `modules` (per-theme arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
 
 ### Routing
 
 | Route pattern | File |
 |---|---|
 | `/` | `src/pages/index.astro` |
+| `/about` | `src/pages/about.astro` |
+| `/faq` | `src/pages/faq.astro` |
+| `/glossary` | `src/pages/glossary.astro` |
+| `/themes` | `src/pages/themes/index.astro` (pillar/module browser) |
 | `/start` | `src/pages/start.astro` (redirects to first topic) |
-| `/technology`, `/data`, `/process`, `/people` | `src/pages/{pillar}/index.astro` |
+| `/technology`, `/data`, `/process`, `/people` | `src/pages/{theme}/index.astro` |
 | `/technology/planning-software` | `src/pages/technology/planning-software/index.astro` |
 | `/technology/erp` | `src/pages/technology/erp/index.astro` |
 | `/technology/architecture` | `src/pages/technology/architecture/index.astro` |
@@ -94,27 +101,28 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 | `/technology/fms` | `src/pages/technology/fms/index.astro` |
 | `/technology/configuration` | `src/pages/technology/configuration/index.astro` |
 | `/data/data-fundamentals`, `/data/data-driven-planning`, `/data/data-governance` | `src/pages/data/{module}/index.astro` |
-| `/{pillar}/{module}` (process/people) | `src/pages/{pillar}/{module}/index.astro` |
-| `/{pillar}/{module}/{chapter}/` | `src/pages/[pillar]/[module]/[chapter]/index.astro` |
-| `/{pillar}/{module}/{chapter}/{topic}` | `src/pages/[pillar]/[module]/[chapter]/[topic].astro` |
+| `/{theme}/{module}` (process/people) | `src/pages/{theme}/{module}/index.astro` |
+| `/{theme}/{module}/{chapter}/` | `src/pages/[theme]/[module]/[chapter]/index.astro` |
+| `/{theme}/{module}/{chapter}/{topic}` | `src/pages/[theme]/[module]/[chapter]/[topic].astro` |
+| `/roles` | `src/pages/roles/index.astro` (role listing by department) |
 | `/roles/{role}` | `src/pages/roles/[role].astro` |
 | `/roles/{role}/{phase-number}` | `src/pages/roles/[role]/[phase].astro` (phase is a 1-based index, only generated for non-empty phases) |
 
-The module index pages for Technology each filter `getChapters('technology')` by `ch.module === '{module-slug}'`. The dynamic `[pillar]/[module]/[chapter]/` pages handle all pillars generically.
+The module index pages for Technology each filter `getChapters('technology')` by `ch.module === '{module-slug}'`. The dynamic `[theme]/[module]/[chapter]/` pages handle all themes generically.
 
 ### Key Patterns
 
-**`moduleBackMap`** — maps module slug → back-link href/label. Defined **inline in every topic layout file** (all 8 layouts in `src/layouts/`) and also in `src/pages/[pillar]/[module]/[chapter]/index.astro`. When adding a new module, add an entry to all of these plus `moduleLabels` in `SiteOverlay.astro`.
+**`moduleBackMap`** — maps module slug → back-link href/label. Defined in `src/pages/[theme]/[module]/[chapter]/index.astro` (chapter index back-link). When adding a new module, add an entry there plus to `moduleLabels` in `SiteOverlay.astro`.
 
-**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with the `moduleBackMap` entries across layout files.
+**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with the `moduleBackMap` in `[chapter]/index.astro`.
 
 **Layout prop flow** — `[topic].astro` builds a `sharedProps` object passed to whichever layout is selected. All layouts accept:
 ```
 title, description, chapterTitle, chapterSlug, chapterColor, chapterUrl,
 topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
-pillar, totalTopics
+theme, module, totalTopics
 ```
-`pillar` drives the back-link in topic layouts (via a `moduleBackMap` inside each layout). **Note:** topic layouts currently map all `technology` topics back to Planning Software — ERP/Architecture/MDM/FMS topics inherit this; it's a known gap.
+`chapterUrl` drives the back-link in topic layouts (links back to the chapter index).
 
 **Tailwind class safety** — color-specific classes must appear as complete strings in source. Never build them with string interpolation (e.g. `` `bg-${color}-500` ``) — Tailwind will purge them. Use lookup maps (`colorBgMap`, `colorTextMap`, etc.) defined inline per page.
 
@@ -123,7 +131,7 @@ pillar, totalTopics
 Two `localStorage` keys:
 
 - **`platform-theme`** — `'dark'` or absent. `ThemeToggle.astro` writes it; `BaseLayout.astro` reads it inline before first render to prevent flash.
-- **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
+- **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across themes/modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
 
 ### Glossary System
 
@@ -134,6 +142,13 @@ Two `localStorage` keys:
 
 **Inline tooltips** — `BaseLayout.astro` injects the full glossary as `<script type="application/json" id="glossary-data">` and wires up hover tooltips for any element with `data-glossary="<slug>"`. The tooltip floats near the cursor; the `data-placement` attribute on `#glossary-tooltip` controls the caret direction (`bottom` = caret points up).
 
+### FAQ System
+
+**`src/content/faq.json`** — flat array of FAQ entries with fields `slug`, `question`, `answer`, `theme` (one of: `technology`, `process`, `data`, `people`), `seeAlso` (array of `chapter-slug/topic-slug` refs), `related` (array of glossary slugs). Loaded by `src/lib/faq.ts`.
+
+- `getFaqEntries()` — returns all entries with array fields defaulted to `[]`.
+- `validateFaq()` — called at build time from `faq.astro`; throws on invalid theme, bad topic refs in `seeAlso`, or bad glossary refs in `related`. Run `npm run build` to catch FAQ errors.
+
 ### Components
 
 All shared components live in `src/components/`:
@@ -143,6 +158,7 @@ All shared components live in `src/components/`:
 - **`ThemeToggle.astro`** — light/dark toggle button, included individually in each layout and pillar index page.
 - **`src/components/sim/`** — interactive simulation components (demand/supply flow graphs, demand shock sim, slicing/disaggregation widgets, step walkthrough). Used by the `full-widget` layout and embedded in topic prose.
 - **`src/components/widgets/`** — `OrgChart.astro` and `OrgTreeNode.astro`, used by the org-chart frontmatter field on people-pillar topics.
+- **`Search.astro`** — search modal powered by Pagefind (indexed at build time). Added to `BaseLayout`.
 - **`RoleMatrix.astro`** — role-to-topic responsibility matrix overlay. Added to `BaseLayout`.
 - **`IntroOverlay.astro`** — first-visit welcome/help modal. Added to `BaseLayout`; opened via `window.openIntro()`.
 
@@ -150,9 +166,9 @@ All shared components live in `src/components/`:
 
 **New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `src/content/order.json` under the chapter key to control its position.
 
-**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `pillar` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. No routing changes needed — the dynamic `[pillar]/[module]/[chapter]/` route picks it up automatically.
+**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
 
-**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, and add the module to `moduleBackMap` in all 7 topic layout files and in `[chapter]/index.astro`, plus `moduleLabels` in `SiteOverlay.astro`.
+**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`.
 
 **New role course:** add `src/content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
 

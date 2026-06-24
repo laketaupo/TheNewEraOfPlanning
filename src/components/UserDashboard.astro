@@ -1,11 +1,11 @@
 ---
-import { getChapters, getTopics, getPillars } from '../lib/chapters';
+import { getChapters, getTopics, getThemes } from '../lib/chapters';
 import { getRoles, resolveRoleSections, resolveRolePhases } from '../lib/roles';
 
 const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics   = getTopics();
 
-const pillarOrder = getPillars();
+const themeOrder = getThemes();
 
 const moduleLabels: Record<string, string> = {
   'planning-software':         'Planning Software',
@@ -24,26 +24,26 @@ const moduleLabels: Record<string, string> = {
   'implementation-and-change': 'Implementation & Change',
 };
 
-const pillarMeta: Record<string, { label: string; accentClass: string; lineClass: string }> = {
+const themeMeta: Record<string, { label: string; accentClass: string; lineClass: string }> = {
   technology: { label: 'Technology', accentClass: 'text-emerald-600 dark:text-emerald-400', lineClass: 'bg-emerald-100 dark:bg-emerald-500/20' },
   process:    { label: 'Process',    accentClass: 'text-blue-600 dark:text-blue-400',       lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
   data:       { label: 'Data',       accentClass: 'text-yellow-600 dark:text-yellow-400',   lineClass: 'bg-yellow-100 dark:bg-yellow-500/20' },
   people:     { label: 'People',     accentClass: 'text-red-600 dark:text-red-400',         lineClass: 'bg-red-100 dark:bg-red-500/20' },
 };
 
-const hierarchy = pillarOrder.map(pillarKey => {
-  const meta = pillarMeta[pillarKey];
-  const pillarChapters = allChapters.filter(c => c.pillar === pillarKey);
+const hierarchy = themeOrder.map(themeKey => {
+  const meta = themeMeta[themeKey];
+  const themeChapters = allChapters.filter(c => c.theme === themeKey);
 
-  const moduleKeys = [...new Set(pillarChapters.map(c => c.module ?? ''))].filter(Boolean)
+  const moduleKeys = [...new Set(themeChapters.map(c => c.module ?? ''))].filter(Boolean)
     .sort((a, b) => {
-      const aOrd = pillarChapters.find(c => c.module === a)?.moduleOrder ?? 999;
-      const bOrd = pillarChapters.find(c => c.module === b)?.moduleOrder ?? 999;
+      const aOrd = themeChapters.find(c => c.module === a)?.moduleOrder ?? 999;
+      const bOrd = themeChapters.find(c => c.module === b)?.moduleOrder ?? 999;
       return aOrd - bOrd;
     });
 
   const modules = moduleKeys.map(moduleKey => {
-    const moduleChapters = pillarChapters.filter(c => c.module === moduleKey);
+    const moduleChapters = themeChapters.filter(c => c.module === moduleKey);
     const chapters = moduleChapters.map(ch => ({
       slug:       ch.slug,
       title:      ch.title,
@@ -59,7 +59,7 @@ const hierarchy = pillarOrder.map(pillarKey => {
 
   const topicCount = modules.reduce((s, m) => s + m.topicCount, 0);
   if (topicCount === 0) return null;
-  return { key: pillarKey, ...meta, topicCount, modules };
+  return { key: themeKey, ...meta, topicCount, modules };
 }).filter(Boolean) as {
   key: string; label: string; accentClass: string; lineClass: string;
   topicCount: number;
@@ -76,14 +76,14 @@ const topicsForClient = allTopics.map(t => {
     chapterTitle: chapter?.title ?? t.chapterSlug,
     topicSlug:    t.slug,
     moduleKey:    chapter?.module ?? '',
-    pillarKey:    chapter?.pillar ?? '',
+    themeKey:    chapter?.theme ?? '',
     order:        t.order,
   };
 });
 
 // Roles that actually have topics (skip the "coming soon" placeholders).
 // Each role keeps its own phase → section → topic hierarchy so the dashboard
-// can show the role's learning path rather than the site's pillar tree.
+// can show the role's learning path rather than the site's theme tree.
 // Roles without phases are normalised to a single untitled phase.
 const rolesForClient = getRoles()
   .filter(r => !r.comingSoon)
@@ -239,23 +239,23 @@ const totalTopics = allTopics.length;
         <!-- Role view: phase → section → topic. Built by JS when a role is selected. -->
         <div id="dash-role-view" class="hidden"></div>
 
-        <!-- Default view: pillar → module → chapter → topic -->
-        <div id="dash-pillar-view">
-        {hierarchy.map((pillar, pi) => (
-          <details data-pillar-node={pillar.key}>
+        <!-- Default view: theme → module → chapter → topic -->
+        <div id="dash-theme-view">
+        {hierarchy.map((theme, pi) => (
+          <details data-theme-node={theme.key}>
             <!-- Pillar header -->
             <summary class={`flex items-center gap-2 px-5 py-2 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40 ${pi > 0 ? 'mt-1' : ''}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" class={`dash-chevron w-2.5 h-2.5 shrink-0 ${pillar.accentClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" class={`dash-chevron w-2.5 h-2.5 shrink-0 ${theme.accentClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>
-              <span class={`text-[10px] font-bold uppercase tracking-widest ${pillar.accentClass}`}>{pillar.label}</span>
-              <div class={`flex-1 h-px ${pillar.lineClass}`}></div>
-              <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-pillar-count={pillar.key}>
-                0/{pillar.topicCount}
+              <span class={`text-[10px] font-bold uppercase tracking-widest ${theme.accentClass}`}>{theme.label}</span>
+              <div class={`flex-1 h-px ${theme.lineClass}`}></div>
+              <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-theme-count={theme.key}>
+                0/{theme.topicCount}
               </span>
             </summary>
 
-            {pillar.modules.map(mod => (
+            {theme.modules.map(mod => (
               <details data-module-node={mod.key}>
                 <!-- Module header -->
                 <summary class="flex items-center gap-2 pl-8 pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40">
@@ -357,7 +357,7 @@ const totalTopics = allTopics.length;
       if (!first) lines.push('');
       first = false;
       const moduleLabel = t.moduleKey.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      lines.push(`${t.pillarKey.toUpperCase()} › ${moduleLabel} › ${t.chapterTitle} › ${t.title}`);
+      lines.push(`${t.themeKey.toUpperCase()} › ${moduleLabel} › ${t.chapterTitle} › ${t.title}`);
       lines.push(`  "${comment.split('\n').join('\n  ')}"`);
     });
 
@@ -434,7 +434,7 @@ const totalTopics = allTopics.length;
     none:     'bg-gray-300 dark:bg-neutral-600',
   };
 
-  const pillarAccentClass = {
+  const themeAccentClass = {
     technology: 'text-emerald-600 dark:text-emerald-400',
     process:    'text-blue-600 dark:text-blue-400',
     data:       'text-yellow-600 dark:text-yellow-400',
@@ -457,9 +457,9 @@ const totalTopics = allTopics.length;
     return !activeFilter || state === activeFilter;
   }
 
-  // The currently visible tree root (role view or pillar view).
+  // The currently visible tree root (role view or theme view).
   function currentTreeRoot() {
-    return roleView.classList.contains('hidden') ? pillarView : roleView;
+    return roleView.classList.contains('hidden') ? themeView : roleView;
   }
 
   // Capture each <details> open state so clearing the filter restores the
@@ -510,7 +510,7 @@ const totalTopics = allTopics.length;
   const backdrop      = document.getElementById('user-dashboard-backdrop');
   const badge         = document.getElementById('dash-badge');
   const roleSelect    = document.getElementById('dash-role-select');
-  const pillarView    = document.getElementById('dash-pillar-view');
+  const themeView    = document.getElementById('dash-theme-view');
   const roleView      = document.getElementById('dash-role-view');
   const filterChip    = document.getElementById('dash-filter-chip');
   const filterLabel   = document.getElementById('dash-filter-label');
@@ -559,7 +559,7 @@ const totalTopics = allTopics.length;
       const comment = comments[t.id];
       if (!comment) return;
       if (!chapterIndex.has(t.chapterSlug)) {
-        const group = { slug: t.chapterSlug, title: t.chapterTitle, pillar: t.pillarKey, topics: [] };
+        const group = { slug: t.chapterSlug, title: t.chapterTitle, theme: t.themeKey, topics: [] };
         chapterGroups.push(group);
         chapterIndex.set(t.chapterSlug, group);
       }
@@ -584,7 +584,7 @@ const totalTopics = allTopics.length;
       </div>`;
 
     notesTab.innerHTML = copyBtnHtml + chapterGroups.map(group => {
-      const accent = pillarAccentClass[group.pillar] ?? 'text-gray-500 dark:text-neutral-400';
+      const accent = themeAccentClass[group.theme] ?? 'text-gray-500 dark:text-neutral-400';
       const items = group.topics.map(({ t, comment, state }) => {
         const dot = dotClass[state] ?? dotClass.none;
         return `<div class="py-2.5 border-b border-gray-50 dark:border-neutral-800/60 last:border-0">
@@ -725,45 +725,45 @@ const totalTopics = allTopics.length;
     });
   }
 
-  function updatePillarView(progress, comments) {
+  function updateThemeView(progress, comments) {
     const chapterComplete = {}, chapterUnclear = {};
-    const moduleComplete  = {}, pillarComplete = {};
-    const chapterTotal    = {}, moduleTotal    = {}, pillarTotal = {};
-    const chapterMatch    = {}, moduleMatch    = {}, pillarMatch = {};
+    const moduleComplete  = {}, themeComplete = {};
+    const chapterTotal    = {}, moduleTotal    = {}, themeTotal = {};
+    const chapterMatch    = {}, moduleMatch    = {}, themeMatch = {};
     const byChapter = {};
 
     topicsForClient.forEach(t => {
       (byChapter[t.chapterSlug] ??= []).push(t);
       chapterTotal[t.chapterSlug] = (chapterTotal[t.chapterSlug] ?? 0) + 1;
       moduleTotal[t.moduleKey]    = (moduleTotal[t.moduleKey]    ?? 0) + 1;
-      pillarTotal[t.pillarKey]    = (pillarTotal[t.pillarKey]    ?? 0) + 1;
+      themeTotal[t.themeKey]    = (themeTotal[t.themeKey]    ?? 0) + 1;
       const state = progress[t.id];
       if (state === 'complete') {
         chapterComplete[t.chapterSlug] = (chapterComplete[t.chapterSlug] ?? 0) + 1;
         moduleComplete[t.moduleKey]    = (moduleComplete[t.moduleKey]    ?? 0) + 1;
-        pillarComplete[t.pillarKey]    = (pillarComplete[t.pillarKey]    ?? 0) + 1;
+        themeComplete[t.themeKey]    = (themeComplete[t.themeKey]    ?? 0) + 1;
       } else if (state === 'unclear') {
         chapterUnclear[t.chapterSlug] = (chapterUnclear[t.chapterSlug] ?? 0) + 1;
       }
       if (matchesFilter(state ?? 'none')) {
         chapterMatch[t.chapterSlug] = (chapterMatch[t.chapterSlug] ?? 0) + 1;
         moduleMatch[t.moduleKey]    = (moduleMatch[t.moduleKey]    ?? 0) + 1;
-        pillarMatch[t.pillarKey]    = (pillarMatch[t.pillarKey]    ?? 0) + 1;
+        themeMatch[t.themeKey]    = (themeMatch[t.themeKey]    ?? 0) + 1;
       }
     });
 
-    pillarView.querySelectorAll('[data-pillar-node]').forEach(node => {
-      const key = node.dataset.pillarNode;
-      const countEl = node.querySelector('[data-pillar-count]');
-      if (countEl) countEl.textContent = `${pillarComplete[key] ?? 0}/${pillarTotal[key] ?? 0}`;
+    themeView.querySelectorAll('[data-theme-node]').forEach(node => {
+      const key = node.dataset.themeNode;
+      const countEl = node.querySelector('[data-theme-count]');
+      if (countEl) countEl.textContent = `${themeComplete[key] ?? 0}/${themeTotal[key] ?? 0}`;
       if (activeFilter) {
-        node.classList.toggle('hidden', (pillarMatch[key] ?? 0) === 0);
-        if ((pillarMatch[key] ?? 0) > 0) node.open = true;
+        node.classList.toggle('hidden', (themeMatch[key] ?? 0) === 0);
+        if ((themeMatch[key] ?? 0) > 0) node.open = true;
       } else {
         node.classList.remove('hidden');
       }
     });
-    pillarView.querySelectorAll('[data-module-node]').forEach(node => {
+    themeView.querySelectorAll('[data-module-node]').forEach(node => {
       const key = node.dataset.moduleNode;
       const countEl = node.querySelector('[data-module-count]');
       if (countEl) countEl.textContent = `${moduleComplete[key] ?? 0}/${moduleTotal[key] ?? 0}`;
@@ -774,7 +774,7 @@ const totalTopics = allTopics.length;
         node.classList.remove('hidden');
       }
     });
-    pillarView.querySelectorAll('[data-chapter-node]').forEach(node => {
+    themeView.querySelectorAll('[data-chapter-node]').forEach(node => {
       const slug    = node.dataset.chapterNode;
       const total   = chapterTotal[slug] ?? 0;
       const done    = chapterComplete[slug] ?? 0;
@@ -830,13 +830,13 @@ const totalTopics = allTopics.length;
 
     // Swap views and update the active one
     if (role) {
-      pillarView.classList.add('hidden');
+      themeView.classList.add('hidden');
       roleView.classList.remove('hidden');
       updateRoleView(role, progress, comments);
     } else {
       roleView.classList.add('hidden');
-      pillarView.classList.remove('hidden');
-      updatePillarView(progress, comments);
+      themeView.classList.remove('hidden');
+      updateThemeView(progress, comments);
     }
 
     // Active-filter chip + tile highlight
@@ -862,7 +862,7 @@ const totalTopics = allTopics.length;
     if (showFilterEmpty) {
       filterEmpty.textContent = filterEmptyText[activeFilter];
       filterEmpty.classList.remove('hidden');
-      pillarView.classList.add('hidden');
+      themeView.classList.add('hidden');
       roleView.classList.add('hidden');
     } else {
       filterEmpty.classList.add('hidden');

@@ -24,7 +24,7 @@ export interface Props {
   prevTitle?: string;
   nextTitle?: string;
   nodeType: 'item' | 'transformation' | 'transportation' | 'resource';
-  pillar?: string;
+  theme?: string;
   module?: string;
   totalTopics?: number;
   roleCtxJson?: string;
@@ -53,7 +53,7 @@ const {
   prevTitle,
   nextTitle,
   nodeType,
-  pillar,
+  theme,
   module,
   totalTopics,
   roleCtxJson = '{}',
@@ -125,7 +125,7 @@ const topicId = `${chapterSlug}/${topicSlug}`;
   <main
     class="min-h-screen pt-12 pb-32 flex flex-col items-center"
     data-pagefind-body
-    data-pagefind-filter={`pillar:${pillar ?? 'technology'}`}
+    data-pagefind-filter={`theme:${theme ?? 'technology'}`}
   >
     <span class="sr-only" data-pagefind-meta="chapter">{chapterTitle}</span>
     <article class="w-full max-w-5xl px-6 py-7 animate-slide-up">

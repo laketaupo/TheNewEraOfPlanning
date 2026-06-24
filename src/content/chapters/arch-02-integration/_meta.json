@@ -3,6 +3,6 @@
   "description": "How ERP, Planning software, FMS, and MDM system are integrated \u2014 the data flows, trigger points, and responsibilities for keeping the four-system landscape in sync.",
   "icon": "switch-horizontal",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "architecture"
 }

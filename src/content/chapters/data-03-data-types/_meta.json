@@ -3,6 +3,6 @@
   "description": "Master data, transactional data, and planning parameters are three distinct data categories. Understanding the difference \u2014 and where each lives \u2014 is essential for data quality management.",
   "icon": "database",
   "color": "yellow",
-  "pillar": "data",
+  "theme": "data",
   "module": "data-fundamentals"
 }

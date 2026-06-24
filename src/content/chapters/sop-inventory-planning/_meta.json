@@ -3,6 +3,6 @@
   "description": "Setting and maintaining inventory targets that balance service levels against working capital — from coverage analysis through exception resolution.",
   "icon": "network",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "sop-process"
 }

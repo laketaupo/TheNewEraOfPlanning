@@ -3,6 +3,6 @@
   "description": "What ERP sends to Planning software and other systems \u2014 the actuals, confirmations, and inventory signals that keep the plan grounded in reality.",
   "icon": "office-building",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

@@ -3,6 +3,6 @@
   "description": "Governance defines who decides what in the planning process. Escalation paths, decision frameworks, and exception-based working ensure decisions are made at the right level and at the right time.",
   "icon": "shield-check",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "process-fundamentals"
 }

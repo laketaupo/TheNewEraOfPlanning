@@ -3,6 +3,6 @@
   "description": "Tracking supply execution against the plan — production output, supplier deliveries, and inventory movements — and flagging constraint-driven deviations before they become service failures.",
   "icon": "network",
   "color": "teal",
-  "pillar": "process",
+  "theme": "process",
   "module": "soe-process"
 }

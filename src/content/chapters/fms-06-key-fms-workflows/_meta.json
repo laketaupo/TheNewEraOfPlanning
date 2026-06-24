@@ -3,6 +3,6 @@
   "description": "Managing field activities, recording actuals, and extracting supply signals \u2014 the workflows that connect grower operations to the planning system.",
   "icon": "globe",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "fms"
 }

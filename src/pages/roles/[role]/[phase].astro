@@ -159,7 +159,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
           const firstTopic = section.topics[0];
           const chapterUrl = firstTopic?.chapterUrl;
           const cc = firstTopic?.chapterColor ?? role.color;
-          const pillarLabel = firstTopic?.pillarLabel ?? '';
+          const themeLabel = firstTopic?.themeLabel ?? '';
           const totalMins = section.topics.reduce((s: number, t: any) => s + t.estimatedMinutes, 0);
           const halfH = Math.round(totalMins / 30) * 0.5;
           const time = totalMins >= 60 ? `~${halfH} hrs` : `~${totalMins} min`;
@@ -174,7 +174,7 @@ const topicIds = phaseTopics.map((t) => t.topicId);
                 <div class="flex items-center gap-2">
                   <span class="text-xs font-mono font-bold text-gray-400 dark:text-neutral-600">{String(si + 1).padStart(2, '0')}</span>
                   <span class={`text-xs font-medium ${colorTextMap[cc] ?? colorTextMap.indigo} ${colorBgMap[cc] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full`}>
-                    {pillarLabel}
+                    {themeLabel}
                   </span>
                 </div>
                 <span class="text-xs text-gray-400 dark:text-neutral-500">{section.topics.length} topics · {time}</span>

@@ -3,6 +3,6 @@
   "description": "How MDM distributes master data to Planning software, ERP, FMS, and other systems \u2014 and what to do when systems fall out of sync.",
   "icon": "database",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "mdm"
 }

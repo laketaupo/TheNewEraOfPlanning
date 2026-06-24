@@ -3,6 +3,6 @@
   "description": "Where field data originates and how it enters FMS \u2014 from contract setup to crop monitoring records and harvest reporting.",
   "icon": "globe",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "fms"
 }

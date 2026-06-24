@@ -3,6 +3,6 @@
   "description": "How the building blocks connect into a live supply chain graph \u2014 nodes, edges, and the Digital Brain.",
   "icon": "network",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "planning-software"
 }

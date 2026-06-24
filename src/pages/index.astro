@@ -1,277 +1,129 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getRoles, resolveRoleSections, getRoleStats } from '../lib/roles';
-import { getPillars, getModulesForPillar } from '../lib/chapters';
-
-const pillars = getPillars();
-
-const pillarMeta: Record<string, { title: string; desc: string; icon: string }> = {
-  technology: {
-    title: 'Technology',
-    desc: 'From building blocks to live scenario simulation — a guided tour of the Planning software.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0v10l-8 4M4 7v10l8 4"/></svg>`,
-  },
-  data: {
-    title: 'Data',
-    desc: 'Data models, signals, and structures that feed intelligent planning decisions.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`,
-  },
-  process: {
-    title: 'Process',
-    desc: 'How planning workflows are structured, governed, and continuously improved.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/></svg>`,
-  },
-  people: {
-    title: 'People',
-    desc: 'Roles, mindsets, and collaboration patterns that drive planning success.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
-  },
-};
-
-const pillarCards = pillars.map((p) => ({
-  slug: p,
-  ...pillarMeta[p],
-  moduleCount: getModulesForPillar(p).length,
-}));
-
-const roles = getRoles().map((role) => {
-  const stats = role.comingSoon ? null : getRoleStats(resolveRoleSections(role));
-  const halfHours = stats ? Math.round(stats.totalMinutes / 30) * 0.5 : 0;
-  return { ...role, stats, hoursLabel: stats ? `~${halfHours} hrs` : '' };
-});
-
-const DEPARTMENT_ORDER = [
-  'Supply Chain',
-  'Finance / Business Control',
-  'Product Management',
-  'Operations',
-  'Sales',
-  'Production',
-  'Subsidiary',
-];
-
-const rolesByDepartment = DEPARTMENT_ORDER.map((dept) => ({
-  name: dept,
-  roles: roles.filter((r) => r.department === dept),
-})).filter((g) => g.roles.length > 0);
-
-const roleColorTextMap: Record<string, string> = {
-  indigo: 'text-indigo-600 dark:text-indigo-400',
-  violet: 'text-violet-600 dark:text-violet-400',
-  sky:    'text-sky-600 dark:text-sky-400',
-  emerald:'text-emerald-600 dark:text-emerald-400',
-  amber:  'text-amber-600 dark:text-amber-400',
-  teal:   'text-teal-600 dark:text-teal-400',
-};
-const roleBadgeBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-neutral-900',
-  violet: 'bg-violet-50 dark:bg-neutral-900',
-  sky:    'bg-sky-50 dark:bg-neutral-900',
-  emerald:'bg-emerald-50 dark:bg-neutral-900',
-  amber:  'bg-amber-50 dark:bg-neutral-900',
-  teal:   'bg-teal-50 dark:bg-neutral-900',
-};
-const roleColorBgMap: Record<string, string> = {
-  indigo: 'bg-indigo-50 dark:bg-neutral-900 border-indigo-200 dark:border-indigo-500/30 hover:border-indigo-400 dark:hover:border-indigo-400',
-  violet: 'bg-violet-50 dark:bg-neutral-900 border-violet-200 dark:border-violet-500/30 hover:border-violet-400 dark:hover:border-violet-400',
-  sky:    'bg-sky-50 dark:bg-neutral-900 border-sky-200 dark:border-sky-500/30 hover:border-sky-400 dark:hover:border-sky-400',
-  emerald:'bg-emerald-50 dark:bg-neutral-900 border-emerald-200 dark:border-emerald-500/30 hover:border-emerald-400 dark:hover:border-emerald-400',
-  amber:  'bg-amber-50 dark:bg-neutral-900 border-amber-200 dark:border-amber-500/30 hover:border-amber-400 dark:hover:border-amber-400',
-  teal:   'bg-teal-50 dark:bg-neutral-900 border-teal-200 dark:border-teal-500/30 hover:border-teal-400 dark:hover:border-teal-400',
-};
-
-const roleIconMap: Record<string, string> = {
-  truck: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>`,
-  beaker: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3h6m-6 0v7l-4 9a1 1 0 001 1h12a1 1 0 001-1l-4-9V3"/></svg>`,
-  'trending-up': `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>`,
-  currency: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-  briefcase: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
-  chart: `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
-};
 ---
 <BaseLayout title="The New Era of Planning">
-  <!-- Floating theme toggle -->
-  <div class="fixed top-3 right-4 z-50">
-    
-  </div>
+  <div class="relative min-h-screen flex flex-col items-center">
 
-  <!-- Page wrapper -->
-  <div class="relative min-h-screen overflow-hidden">
-    <!-- Background grid -->
+    <!-- Full-screen grid background -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
-    <!-- Radial gradient -->
-    <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
+    <!-- Radial glow -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99,92,250,0.09), transparent 70%)"></div>
 
-    <!-- Header -->
-    <div class="relative z-10 px-6 pt-20 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        The New Era of<br>
-        <span style="color:#635CFA">Planning</span>
-      </h1>
-      <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
-        A practical learning hub for supply chain planning. Explore how Process, People, Technology and Data power modern supply chain planning.
-      </p>
+    <!-- Logo -->
+    <div class="relative z-10 w-full px-6 pt-6 flex items-center gap-2 flex-shrink-0">
+      <div class="w-2 h-2 rounded-full bg-[#635CFA]"></div>
+      <span class="text-sm font-bold tracking-tight text-gray-900 dark:text-white">Planning Hub</span>
     </div>
 
-    <!-- 2×2 Pillar grid -->
-    <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
-      <div class="grid grid-cols-2 gap-5">
+    <!-- Content area: grid with 1fr spacers to centre title between top and cards -->
+    <div class="relative z-10 flex-1 w-full px-6 pb-8" style="display: grid; grid-template-rows: 1fr auto 1fr auto 0.8fr; align-items: center; justify-items: center;">
 
-        {pillarCards.map((pillar) => (
-          <a href={`/${pillar.slug}`} class={`group pillar-card pillar-${pillar.slug}`}>
-            <div class="pillar-icon" set:html={pillar.icon} />
-            <h2 class="pillar-title">{pillar.title}</h2>
-            <p class="pillar-desc">{pillar.desc}</p>
-            <span class="pillar-badge pillar-badge-live">
-              <span class="live-dot"></span>
-              {pillar.moduleCount} modules available
-            </span>
-          </a>
-        ))}
-
-      </div>
-    </div>
-
-    <!-- Learn by role -->
-    <div class="relative z-10 px-6 pb-20 max-w-3xl mx-auto">
-      <div class="text-center mb-10">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Learn by role</h2>
-        <p class="text-gray-500 dark:text-neutral-400">A curated learning path with exactly what you need for your position.</p>
+      <!-- Row 2: headline -->
+      <div class="text-center" style="grid-row: 2">
+        <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
+          The New Era of<br><span style="color:#635CFA">Planning</span>
+        </h1>
+        <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-md mx-auto">
+          A structured learning platform covering the people, processes, data, and technology behind modern supply chain planning.
+        </p>
       </div>
 
-      <div class="space-y-10">
-        {rolesByDepartment.map(({ name, roles: deptRoles }) => (
-          <div>
-            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-4">{name}</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {deptRoles.map((role) => {
-                const textClass = roleColorTextMap[role.color] ?? roleColorTextMap.indigo;
-                const bgClass = roleColorBgMap[role.color] ?? roleColorBgMap.indigo;
-                const icon = roleIconMap[role.icon] ?? roleIconMap.beaker;
-                const cardInner = (
-                  <>
-                    <div class={`${textClass} mb-3`} set:html={icon} />
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1 leading-snug">{role.title}</h3>
-                    <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed mb-4 flex-1">{role.description}</p>
-                    {role.stats ? (
-                      <span class={`inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full self-start ${roleBadgeBgMap[role.color] ?? roleBadgeBgMap.indigo} ${textClass}`}>
-                        <span class="role-live-dot"></span>
-                        {role.stats.topicCount} topics · {role.hoursLabel}
-                      </span>
-                    ) : (
-                      <span class="role-badge-soon">Coming soon</span>
-                    )}
-                  </>
-                );
-                return role.stats ? (
-                  <a href={role.url} class={`group flex flex-col p-5 rounded-2xl border ${bgClass} bg-white dark:bg-neutral-900 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl no-underline`}>
-                    {cardInner}
-                  </a>
-                ) : (
-                  <div class="flex flex-col p-5 rounded-2xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 opacity-60">
-                    {cardInner}
-                  </div>
-                );
-              })}
-            </div>
+      <!-- Row 4: 2×2 card grid -->
+      <div class="grid grid-cols-2 gap-5 w-full max-w-2xl" style="grid-row: 4">
+
+        <a href="/roles" class="landing-card">
+          <div class="card-header">
+            <h3 class="card-title">Learn by role</h3>
+            <div class="card-icon">🎯</div>
           </div>
-        ))}
+          <p class="card-desc">Choose your role and follow a guided path through five phases — from awareness to hands-on execution.</p>
+          <span class="card-link">Browse by role →</span>
+        </a>
+
+        <a href="/themes" class="landing-card">
+          <div class="card-header">
+            <h3 class="card-title">Learn by theme</h3>
+            <div class="card-icon">🗂️</div>
+          </div>
+          <p class="card-desc">Explore content across four themes — People, Process, Data and Technology — each broken into modules and topics.</p>
+          <span class="card-link">See all modules →</span>
+        </a>
+
+        <a href="/glossary" class="landing-card">
+          <div class="card-header">
+            <h3 class="card-title">Glossary</h3>
+            <div class="card-icon">🔤</div>
+          </div>
+          <p class="card-desc">A reference for all key planning terms, definitions and abbreviations used throughout this guide.</p>
+          <span class="card-link">Browse terms →</span>
+        </a>
+
+        <div class="landing-card">
+          <div class="card-header">
+            <h3 class="card-title">Your progress</h3>
+            <div class="card-icon">📊</div>
+          </div>
+          <p class="card-desc">Content coming soon.</p>
+        </div>
+
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
+  </div>
 </BaseLayout>
 
 <style>
-  .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.08), transparent);
+  .landing-card {
+    @apply rounded-2xl no-underline flex flex-col gap-3 transition-all duration-200;
+    background: #dbeafe;
+    border: 1.5px solid #bfdbfe;
+    border-top: 4px solid #93c5fd;
+    padding: 2.25rem;
   }
-  :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.15), transparent);
-  }
-
-  .pillar-card {
-    @apply flex flex-col rounded-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer no-underline;
-    padding: 1.75rem;
-    padding-top: 1.5rem;
-    border-top-width: 4px;
-    border-top-style: solid;
-  }
-
-  /* ── Light mode ─────────────────────────────────── */
-  .pillar-people     { background:#fff5f5; border:1.5px solid #fecaca; border-top:4px solid #fca5a5; }
-  .pillar-process    { background:#eff6ff; border:1.5px solid #bfdbfe; border-top:4px solid #93c5fd; }
-  .pillar-technology { background:#f0fdf4; border:1.5px solid #bbf7d0; border-top:4px solid #86efac; }
-  .pillar-data       { background:#fffbeb; border:1.5px solid #fde68a; border-top:4px solid #fcd34d; }
-
-  .pillar-people:hover     { box-shadow: 0 6px 24px rgba(239,68,68,0.13); }
-  .pillar-process:hover    { box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
-  .pillar-technology:hover { box-shadow: 0 6px 24px rgba(34,197,94,0.12); }
-  .pillar-data:hover       { box-shadow: 0 6px 24px rgba(234,179,8,0.16); }
-
-  /* ── Dark mode ──────────────────────────────────── */
-  :global(.dark) .pillar-people     { background:#2c2c2c; border-color:rgba(239,68,68,0.18);  border-top-color:rgba(252,165,165,0.5); }
-  :global(.dark) .pillar-process    { background:#2c2c2c; border-color:rgba(59,130,246,0.18); border-top-color:rgba(147,197,253,0.5); }
-  :global(.dark) .pillar-technology { background:#2c2c2c; border-color:rgba(34,197,94,0.18);  border-top-color:rgba(134,239,172,0.5); }
-  :global(.dark) .pillar-data       { background:#2c2c2c; border-color:rgba(234,179,8,0.18);  border-top-color:rgba(253,211,77,0.5); }
-
-  :global(.dark) .pillar-people:hover     { background:#363636; box-shadow:0 6px 28px rgba(239,68,68,0.12); }
-  :global(.dark) .pillar-process:hover    { background:#363636; box-shadow:0 6px 28px rgba(59,130,246,0.12); }
-  :global(.dark) .pillar-technology:hover { background:#363636; box-shadow:0 6px 28px rgba(34,197,94,0.1); }
-  :global(.dark) .pillar-data:hover       { background:#363636; box-shadow:0 6px 28px rgba(234,179,8,0.12); }
-
-  /* ── Icon ───────────────────────────────────────── */
-  .pillar-icon {
-    @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
-  }
-  .pillar-people .pillar-icon     { background:#fee2e2; color:#b91c1c; }
-  .pillar-process .pillar-icon    { background:#dbeafe; color:#1d4ed8; }
-  .pillar-technology .pillar-icon { background:#dcfce7; color:#15803d; }
-  .pillar-data .pillar-icon       { background:#fef3c7; color:#b45309; }
-
-  :global(.dark) .pillar-people .pillar-icon     { background:rgba(239,68,68,0.12);  color:#fca5a5; }
-  :global(.dark) .pillar-process .pillar-icon    { background:rgba(59,130,246,0.12); color:#93c5fd; }
-  :global(.dark) .pillar-technology .pillar-icon { background:rgba(34,197,94,0.12);  color:#86efac; }
-  :global(.dark) .pillar-data .pillar-icon       { background:rgba(234,179,8,0.12);  color:#fcd34d; }
-
-  /* ── Title ──────────────────────────────────────── */
-  .pillar-title { @apply text-xl font-bold mb-2; color:#111827; }
-  :global(.dark) .pillar-title { color:#f3f4f6; }
-
-  /* ── Description ────────────────────────────────── */
-  .pillar-desc { @apply text-sm leading-relaxed mb-5 flex-1; color:#6b7280; }
-  :global(.dark) .pillar-desc { color:rgba(243,244,246,0.45); }
-
-  /* ── Badge ──────────────────────────────────────── */
-  .pillar-badge {
-    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
-  }
-  .pillar-people .pillar-badge     { background:#fee2e2; color:#991b1b; }
-  .pillar-process .pillar-badge    { background:#dbeafe; color:#1e40af; }
-  .pillar-technology .pillar-badge { background:#dcfce7; color:#166534; }
-  .pillar-data .pillar-badge       { background:#fef3c7; color:#92400e; }
-
-  :global(.dark) .pillar-people .pillar-badge     { background:rgba(239,68,68,0.12);  color:#fca5a5; }
-  :global(.dark) .pillar-process .pillar-badge    { background:rgba(59,130,246,0.12); color:#93c5fd; }
-  :global(.dark) .pillar-technology .pillar-badge { background:rgba(34,197,94,0.12);  color:#86efac; }
-  :global(.dark) .pillar-data .pillar-badge       { background:rgba(234,179,8,0.12);  color:#fcd34d; }
-
-  .live-dot {
-    @apply w-1.5 h-1.5 rounded-full;
-    background: currentColor;
-    animation: pulse 2s infinite;
-  }
-  .role-live-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-current;
-    animation: pulse 2s infinite;
-  }
-  .role-badge-soon {
-    @apply inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded-full self-start bg-gray-100 dark:bg-neutral-800 text-gray-500 dark:text-neutral-400;
+  .landing-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.08);
+    border-color: #bfdbfe;
+    border-top-color: #93c5fd;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+  :global(.dark) .landing-card {
+    background: #1e3a5f;
+    border-color: rgba(147,197,253,0.2);
+    border-top-color: rgba(147,197,253,0.5);
+  }
+  :global(.dark) .landing-card:hover {
+    background: #1e4070;
+    box-shadow: 0 10px 32px rgba(59,130,246,0.15);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .card-title {
+    @apply text-lg font-bold text-gray-900 dark:text-white;
+    letter-spacing: -0.015em;
+  }
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 13px;
+    background: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  :global(.dark) .card-icon {
+    background: rgba(255,255,255,0.08);
+  }
+  .card-desc {
+    @apply text-sm text-gray-600 dark:text-neutral-300 leading-relaxed;
+  }
+  .card-link {
+    @apply text-sm font-semibold text-gray-700 dark:text-neutral-300;
   }
 </style>

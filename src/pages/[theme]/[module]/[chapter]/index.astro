@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const chapters = getChapters();
   return chapters
     .filter(ch => ch.module && !ch.hidden)
-    .map((ch) => ({ params: { pillar: ch.pillar, module: ch.module, chapter: ch.slug } }));
+    .map((ch) => ({ params: { theme: ch.theme, module: ch.module, chapter: ch.slug } }));
 }
 
 const { chapter: chapterSlug } = Astro.params;
@@ -68,10 +68,10 @@ const moduleBackMap: Record<string, { href: string; label: string }> = {
   'organisation':               { href: `${BASE_URL}people/organisation`,               label: 'Organisation' },
   'roles-and-responsibilities': { href: `${BASE_URL}people/roles-and-responsibilities`, label: 'Roles & Responsibilities' },
 };
-const pillar = chapter.pillar ?? 'technology';
+const theme = chapter.theme ?? 'technology';
 const currentModule = chapter.module ?? Astro.params.module ?? 'planning-software';
-const back = moduleBackMap[currentModule] ?? { href: `${BASE_URL}${pillar}/${currentModule}`, label: currentModule };
-const pillarChapters = getChapters(pillar).filter(c => !c.hidden && c.module === Astro.params.module);
+const back = moduleBackMap[currentModule] ?? { href: `${BASE_URL}${theme}/${currentModule}`, label: currentModule };
+const themeChapters = getChapters(theme).filter(c => !c.hidden && c.module === Astro.params.module);
 
 const colorGradientMap: Record<string, { light: string; dark: string }> = {
   indigo:  { light: 'rgba(99,102,241,0.08)',   dark: 'rgba(99,102,241,0.15)' },

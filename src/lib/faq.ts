@@ -6,12 +6,12 @@ export interface FaqEntry {
   slug: string;
   question: string;
   answer: string;
-  pillar: string;
+  theme: string;
   seeAlso: string[];
   related: string[];
 }
 
-const VALID_PILLARS = new Set(['technology', 'process', 'data', 'people']);
+const VALID_THEMES = new Set(['technology', 'process', 'data', 'people']);
 
 export function getFaqEntries(): FaqEntry[] {
   return (faqRaw as FaqEntry[]).map(e => ({
@@ -29,9 +29,9 @@ export function validateFaq(): void {
   const termSlugs = new Set(glossaryTerms.map(t => t.slug));
 
   for (const entry of entries) {
-    if (!VALID_PILLARS.has(entry.pillar)) {
+    if (!VALID_THEMES.has(entry.theme)) {
       throw new Error(
-        `FAQ "${entry.slug}": invalid pillar "${entry.pillar}". ` +
+        `FAQ "${entry.slug}": invalid theme "${entry.theme}". ` +
         `Must be one of: technology, process, data, people.`
       );
     }

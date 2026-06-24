@@ -3,6 +3,6 @@
   "description": "How ERP organises data into items, locations, and transactions \u2014 the structures that planning relies on to execute confirmed orders.",
   "icon": "database",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

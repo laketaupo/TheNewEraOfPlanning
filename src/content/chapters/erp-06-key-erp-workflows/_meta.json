@@ -3,6 +3,6 @@
   "description": "The core transactions planners trigger or monitor in ERP \u2014 releasing orders, receiving goods, issuing materials, and extracting reports.",
   "icon": "document-text",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

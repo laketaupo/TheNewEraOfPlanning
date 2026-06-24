@@ -3,6 +3,6 @@
   "description": "Closing the loop between execution and planning — surfacing systematic variances, flagging constraint changes, and triggering plan updates where execution reality has diverged from the plan.",
   "icon": "network",
   "color": "amber",
-  "pillar": "process",
+  "theme": "process",
   "module": "execution-process"
 }

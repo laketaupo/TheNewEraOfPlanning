@@ -3,6 +3,6 @@
   "description": "Bringing demand, supply, inventory, and resource plans together — from cross-functional pre-alignment through executive sign-off and plan distribution.",
   "icon": "network",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "sop-process"
 }

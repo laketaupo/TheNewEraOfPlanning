@@ -3,6 +3,6 @@
   "description": "A week, month, and quarter in the life of the three planning horizons — what each planner does, when, and why.",
   "icon": "calendar",
   "color": "orange",
-  "pillar": "people",
+  "theme": "people",
   "module": "organisation"
 }

@@ -3,6 +3,6 @@
   "description": "Understand what execution means in a planning context \u2014 the daily operational layer that turns confirmed plans into shipped orders, produced batches, and delivered commitments.",
   "icon": "lightning-bolt",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "process-fundamentals"
 }

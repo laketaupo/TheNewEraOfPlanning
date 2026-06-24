@@ -12,15 +12,15 @@ const glossaryTerms = getGlossaryTerms();
 const topicMap = Object.fromEntries(topics.map(t => [`${t.chapterSlug}/${t.slug}`, t]));
 const glossaryMap = Object.fromEntries(glossaryTerms.map(t => [t.slug, t]));
 
-const PILLAR_ORDER = ['technology', 'process', 'data', 'people'] as const;
-const PILLAR_LABELS: Record<string, string> = {
+const THEME_ORDER = ['technology', 'process', 'data', 'people'] as const;
+const THEME_LABELS: Record<string, string> = {
   technology: 'Technology',
   process: 'Process',
   data: 'Data',
   people: 'People',
 };
 
-const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar === p));
+const themesWithEntries = THEME_ORDER.filter(p => entries.some(e => e.theme === p));
 ---
 
 <BaseLayout title="FAQ — How Planning Software Works" description="Frequently asked questions about planning software, S&OP, data, and people in the planning process.">
@@ -31,12 +31,18 @@ const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar =
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
       </a>
+      <a href="/" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        The New Era of Planning
+      </a>
     </div>
   </header>
 
   <main class="max-w-3xl mx-auto px-6 pt-24 pb-32">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Frequently Asked Questions</h1>
-    <p class="text-gray-500 dark:text-neutral-400 mb-4">{entries.length} questions across {pillarsWithEntries.length} pillars.</p>
+    <p class="text-gray-500 dark:text-neutral-400 mb-4">{entries.length} questions across {themesWithEntries.length} themes.</p>
 
     <!-- Tab bar -->
     <div class="flex gap-1 mb-8 border-b border-gray-100 dark:border-neutral-800">
@@ -54,14 +60,14 @@ const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar =
       />
     </div>
 
-    <!-- Pillar jump nav -->
-    <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to pillar">
-      {pillarsWithEntries.map(pillar => (
+    <!-- Theme jump nav -->
+    <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to theme">
+      {themesWithEntries.map(theme => (
         <a
-          href={`#pillar-${pillar}`}
+          href={`#theme-${theme}`}
           class="px-3 h-7 flex items-center justify-center rounded text-xs font-semibold text-gray-500 dark:text-neutral-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
-          {PILLAR_LABELS[pillar]}
+          {THEME_LABELS[theme]}
         </a>
       ))}
     </nav>
@@ -69,14 +75,14 @@ const pillarsWithEntries = PILLAR_ORDER.filter(p => entries.some(e => e.pillar =
     <!-- Empty state -->
     <p id="faq-empty" class="hidden text-sm text-gray-400 dark:text-neutral-500 text-center py-10">No questions matched.</p>
 
-    <!-- Entries grouped by pillar -->
-    {PILLAR_ORDER.map(pillar => {
-      const group = entries.filter(e => e.pillar === pillar);
+    <!-- Entries grouped by theme -->
+    {THEME_ORDER.map(theme => {
+      const group = entries.filter(e => e.theme === theme);
       if (group.length === 0) return null;
       return (
-        <section id={`pillar-${pillar}`} class="mb-10 faq-section">
+        <section id={`theme-${theme}`} class="mb-10 faq-section">
           <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-600 mb-4 border-b border-gray-100 dark:border-neutral-800 pb-2">
-            {PILLAR_LABELS[pillar]}
+            {THEME_LABELS[theme]}
           </h2>
           <dl class="space-y-6">
             {group.map(entry => {

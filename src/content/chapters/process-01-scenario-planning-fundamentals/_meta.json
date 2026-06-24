@@ -3,6 +3,6 @@
   "description": "Understand what scenario planning is, when to use it, and how a structured what-if process leads to better planning decisions.",
   "icon": "beaker",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "scenario-planning"
 }

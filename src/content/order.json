@@ -1,5 +1,5 @@
 {
-  "pillars": ["people", "process", "data", "technology"],
+  "themes": ["people", "process", "data", "technology"],
   "modules": {
     "technology": ["planning-software", "erp", "architecture", "mdm", "fms"],
     "data": ["data-fundamentals", "data-driven-planning", "data-governance"],

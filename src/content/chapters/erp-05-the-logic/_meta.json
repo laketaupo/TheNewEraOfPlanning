@@ -3,6 +3,6 @@
   "description": "The business rules that govern how ERP processes orders, manages inventory, and posts transactions \u2014 what happens automatically and why.",
   "icon": "office-building",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

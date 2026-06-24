@@ -3,6 +3,6 @@
   "description": "How to move around ERP efficiently \u2014 the interface structure, search, filters, and the key pages planners return to every day.",
   "icon": "office-building",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

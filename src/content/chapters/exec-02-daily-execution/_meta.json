@@ -3,6 +3,6 @@
   "description": "How to manage the operational day \u2014 order prioritisation, real-time decision-making, and the discipline that keeps execution aligned with the plan when reality does not cooperate.",
   "icon": "beaker",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "process-fundamentals"
 }

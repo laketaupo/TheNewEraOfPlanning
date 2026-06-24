@@ -13,15 +13,15 @@ for (const role of allRoles) {
   roleChapterSets.set(role.slug, set);
 }
 
-// Derive pillar order directly from the already-sorted getChapters() output,
+// Derive theme order directly from the already-sorted getChapters() output,
 // which uses order.json internally — so this matches order.json exactly.
-const pillarOrder: string[] = [];
+const themeOrder: string[] = [];
 for (const ch of allChapters) {
-  const p = ch.pillar ?? 'technology';
-  if (!pillarOrder.includes(p)) pillarOrder.push(p);
+  const p = ch.theme ?? 'technology';
+  if (!themeOrder.includes(p)) themeOrder.push(p);
 }
 
-const pillarMeta: Record<string, { label: string; bg: string; color: string }> = {
+const themeMeta: Record<string, { label: string; bg: string; color: string }> = {
   technology: { label: 'Technology', bg: '#f0fdf4', color: '#15803d' },
   process:    { label: 'Process',    bg: '#eff6ff', color: '#1d4ed8' },
   data:       { label: 'Data',       bg: '#fffbeb', color: '#b45309' },
@@ -49,28 +49,28 @@ const moduleLabels: Record<string, string> = {
 };
 
 type ModuleGroup = { key: string; label: string; chapters: typeof allChapters };
-type PillarGroup = { key: string; label: string; bg: string; color: string; modules: ModuleGroup[] };
+type ThemeGroup = { key: string; label: string; bg: string; color: string; modules: ModuleGroup[] };
 
-const pillars: PillarGroup[] = [];
-for (const pillarKey of pillarOrder) {
-  const pChapters = allChapters.filter(c => (c.pillar ?? 'technology') === pillarKey);
-  if (!pChapters.length) continue;
+const themes: ThemeGroup[] = [];
+for (const themeKey of themeOrder) {
+  const themeChapters = allChapters.filter(c => (c.theme ?? 'technology') === themeKey);
+  if (!themeChapters.length) continue;
 
   const seenMods = new Set<string>();
   const modsOrdered: string[] = [];
-  for (const ch of pChapters) {
+  for (const ch of themeChapters) {
     const m = ch.module ?? 'planning-software';
     if (!seenMods.has(m)) { seenMods.add(m); modsOrdered.push(m); }
   }
 
-  const meta = pillarMeta[pillarKey] ?? { label: pillarKey, bg: '#f9fafb', color: '#374151' };
-  pillars.push({
-    key: pillarKey,
+  const meta = themeMeta[themeKey] ?? { label: themeKey, bg: '#f9fafb', color: '#374151' };
+  themes.push({
+    key: themeKey,
     ...meta,
     modules: modsOrdered.map(mod => ({
       key: mod,
       label: moduleLabels[mod] ?? mod,
-      chapters: pChapters.filter(c => (c.module ?? 'planning-software') === mod),
+      chapters: themeChapters.filter(c => (c.module ?? 'planning-software') === mod),
     })),
   });
 }
@@ -150,28 +150,28 @@ deptPalette.forEach((p, i) => {
   }
 
   /* Pillar row backgrounds — light mode */
-  #role-matrix .rm-pillar-row[data-pillar="technology"] { background: #f0fdf4; }
-  #role-matrix .rm-pillar-row[data-pillar="process"]    { background: #eff6ff; }
-  #role-matrix .rm-pillar-row[data-pillar="data"]       { background: #fffbeb; }
-  #role-matrix .rm-pillar-row[data-pillar="people"]     { background: #fff1f2; }
+  #role-matrix .rm-theme-row[data-theme="technology"] { background: #f0fdf4; }
+  #role-matrix .rm-theme-row[data-theme="process"]    { background: #eff6ff; }
+  #role-matrix .rm-theme-row[data-theme="data"]       { background: #fffbeb; }
+  #role-matrix .rm-theme-row[data-theme="people"]     { background: #fff1f2; }
 
-  /* Sticky first-column cell in pillar rows — light mode */
-  #role-matrix .rm-pillar-row[data-pillar="technology"] .rm-pillar-sticky { background: #f0fdf4; color: #15803d; }
-  #role-matrix .rm-pillar-row[data-pillar="process"]    .rm-pillar-sticky { background: #eff6ff; color: #1d4ed8; }
-  #role-matrix .rm-pillar-row[data-pillar="data"]       .rm-pillar-sticky { background: #fffbeb; color: #b45309; }
-  #role-matrix .rm-pillar-row[data-pillar="people"]     .rm-pillar-sticky { background: #fff1f2; color: #be123c; }
+  /* Sticky first-column cell in theme rows — light mode */
+  #role-matrix .rm-theme-row[data-theme="technology"] .rm-theme-sticky { background: #f0fdf4; color: #15803d; }
+  #role-matrix .rm-theme-row[data-theme="process"]    .rm-theme-sticky { background: #eff6ff; color: #1d4ed8; }
+  #role-matrix .rm-theme-row[data-theme="data"]       .rm-theme-sticky { background: #fffbeb; color: #b45309; }
+  #role-matrix .rm-theme-row[data-theme="people"]     .rm-theme-sticky { background: #fff1f2; color: #be123c; }
 
   /* Pillar row backgrounds — dark mode */
-  .dark #role-matrix .rm-pillar-row[data-pillar="technology"] { background: #052e16; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="process"]    { background: #172554; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="data"]       { background: #431407; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="people"]     { background: #4c0519; }
+  .dark #role-matrix .rm-theme-row[data-theme="technology"] { background: #052e16; }
+  .dark #role-matrix .rm-theme-row[data-theme="process"]    { background: #172554; }
+  .dark #role-matrix .rm-theme-row[data-theme="data"]       { background: #431407; }
+  .dark #role-matrix .rm-theme-row[data-theme="people"]     { background: #4c0519; }
 
-  /* Sticky first-column cell in pillar rows — dark mode */
-  .dark #role-matrix .rm-pillar-row[data-pillar="technology"] .rm-pillar-sticky { background: #052e16; color: #4ade80; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="process"]    .rm-pillar-sticky { background: #172554; color: #60a5fa; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="data"]       .rm-pillar-sticky { background: #431407; color: #fbbf24; }
-  .dark #role-matrix .rm-pillar-row[data-pillar="people"]     .rm-pillar-sticky { background: #4c0519; color: #fb7185; }
+  /* Sticky first-column cell in theme rows — dark mode */
+  .dark #role-matrix .rm-theme-row[data-theme="technology"] .rm-theme-sticky { background: #052e16; color: #4ade80; }
+  .dark #role-matrix .rm-theme-row[data-theme="process"]    .rm-theme-sticky { background: #172554; color: #60a5fa; }
+  .dark #role-matrix .rm-theme-row[data-theme="data"]       .rm-theme-sticky { background: #431407; color: #fbbf24; }
+  .dark #role-matrix .rm-theme-row[data-theme="people"]     .rm-theme-sticky { background: #4c0519; color: #fb7185; }
 
   /* Module roll-up dot — only visible while the module row is collapsed */
   #role-matrix .rm-module-dot { display: none; }
@@ -279,16 +279,16 @@ deptPalette.forEach((p, i) => {
 
       <!-- Body rows -->
       <tbody>
-        {pillars.map(pillar => (
+        {themes.map(theme => (
           <>
-            {/* Pillar header row */}
-            <tr class="rm-pillar-row" data-pillar={pillar.key} style="cursor: pointer;">
+            {/* Theme header row */}
+            <tr class="rm-theme-row" data-theme={theme.key} style="cursor: pointer;">
               <td
-                class="rm-pillar-sticky"
+                class="rm-theme-sticky"
                 style={`position: sticky; left: 0; z-index: 10; width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 5px 10px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border-strong); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; user-select: none;`}
               >
                 <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
-                {pillar.label}
+                {theme.label}
               </td>
               {allRoles.map(role => (
                 <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border)'}; border-bottom: 1px solid var(--rm-border-strong);`}></td>
@@ -296,9 +296,9 @@ deptPalette.forEach((p, i) => {
             </tr>
 
             {/* Module and chapter rows */}
-            {pillar.modules.map(mod => (
+            {theme.modules.map(mod => (
               <>
-                <tr class="rm-module-row" data-pillar={pillar.key} data-module={mod.key} style="background: var(--rm-surface); cursor: pointer;">
+                <tr class="rm-module-row" data-theme={theme.key} data-module={mod.key} style="background: var(--rm-surface); cursor: pointer;">
                   <td
                     style={`position: sticky; left: 0; z-index: 10; background: var(--rm-surface); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 4px 10px 4px 24px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border); font-weight: 600; font-size: 11px; color: var(--rm-text-muted); white-space: nowrap; user-select: none;`}
                   >
@@ -319,7 +319,7 @@ deptPalette.forEach((p, i) => {
 
                 {mod.chapters.map(ch => {
                   return (
-                    <tr class="rm-chapter-row" data-pillar={pillar.key} data-module={mod.key}>
+                    <tr class="rm-chapter-row" data-theme={theme.key} data-module={mod.key}>
                       <td
                         title={ch.title}
                         style={`position: sticky; left: 0; z-index: 10; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; max-width: ${FIRST_COL_W}px; padding: 3px 10px 3px 36px; border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-light); font-size: 12px; color: var(--rm-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`}
@@ -358,7 +358,7 @@ deptPalette.forEach((p, i) => {
     <span class="text-xs text-gray-300 dark:text-neutral-600">|</span>
     <span class="text-xs text-gray-400 dark:text-neutral-500">Dimmed columns = coming soon roles</span>
     <span class="text-xs text-gray-300 dark:text-neutral-600">|</span>
-    <span class="text-xs text-gray-400 dark:text-neutral-500">Click pillar or module labels to collapse</span>
+    <span class="text-xs text-gray-400 dark:text-neutral-500">Click theme or module labels to collapse</span>
   </div>
 </div>
 
@@ -381,16 +381,16 @@ deptPalette.forEach((p, i) => {
 
   // Re-level the entire matrix to a single depth
   function setDepth(level: string) {
-    const pillarRows  = overlay.querySelectorAll<HTMLElement>('.rm-pillar-row');
+    const themeRows  = overlay.querySelectorAll<HTMLElement>('.rm-theme-row');
     const moduleRows  = overlay.querySelectorAll<HTMLElement>('.rm-module-row');
     const chapterRows = overlay.querySelectorAll<HTMLElement>('.rm-chapter-row');
 
     if (level === 'modules') {
-      pillarRows.forEach(r => setRowCollapsed(r, false));
+      themeRows.forEach(r => setRowCollapsed(r, false));
       moduleRows.forEach(r => { setRowCollapsed(r, true); r.style.display = ''; });
       chapterRows.forEach(r => { r.style.display = 'none'; });
     } else {
-      pillarRows.forEach(r => setRowCollapsed(r, false));
+      themeRows.forEach(r => setRowCollapsed(r, false));
       moduleRows.forEach(r => { setRowCollapsed(r, false); r.style.display = ''; });
       chapterRows.forEach(r => { r.style.display = ''; });
     }
@@ -423,11 +423,11 @@ deptPalette.forEach((p, i) => {
     overlay.classList.contains('hidden') ? open() : close();
   }
 
-  // Pillar row toggle
-  overlay.querySelectorAll<HTMLElement>('.rm-pillar-row').forEach(row => {
+  // Theme row toggle
+  overlay.querySelectorAll<HTMLElement>('.rm-theme-row').forEach(row => {
     row.addEventListener('click', () => {
       clearDepth();
-      const pillar = row.dataset.pillar!;
+      const theme = row.dataset.theme!;
       const isCollapsed = row.hasAttribute('data-collapsed');
       const chevron = row.querySelector<HTMLElement>('.rm-chevron');
 
@@ -435,12 +435,12 @@ deptPalette.forEach((p, i) => {
         row.removeAttribute('data-collapsed');
         // Show module rows; chapter rows only if their module isn't also collapsed
         overlay.querySelectorAll<HTMLElement>('.rm-module-row').forEach(r => {
-          if (r.dataset.pillar === pillar) r.style.display = '';
+          if (r.dataset.theme === theme) r.style.display = '';
         });
         overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
-          if (r.dataset.pillar === pillar) {
+          if (r.dataset.theme === theme) {
             const modRow = overlay.querySelector<HTMLElement>(
-              `.rm-module-row[data-pillar="${pillar}"][data-module="${r.dataset.module}"]`
+              `.rm-module-row[data-theme="${theme}"][data-module="${r.dataset.module}"]`
             );
             if (!modRow?.hasAttribute('data-collapsed')) r.style.display = '';
           }
@@ -449,19 +449,19 @@ deptPalette.forEach((p, i) => {
       } else {
         row.setAttribute('data-collapsed', '');
         overlay.querySelectorAll<HTMLElement>('.rm-module-row, .rm-chapter-row').forEach(r => {
-          if (r.dataset.pillar === pillar) r.style.display = 'none';
+          if (r.dataset.theme === theme) r.style.display = 'none';
         });
         if (chevron) chevron.style.transform = '';
       }
     });
   });
 
-  // Module row toggle (stop bubbling to pillar row)
+  // Module row toggle (stop bubbling to theme row)
   overlay.querySelectorAll<HTMLElement>('.rm-module-row').forEach(row => {
     row.addEventListener('click', e => {
       e.stopPropagation();
       clearDepth();
-      const pillar = row.dataset.pillar!;
+      const theme = row.dataset.theme!;
       const mod = row.dataset.module!;
       const isCollapsed = row.hasAttribute('data-collapsed');
       const chevron = row.querySelector<HTMLElement>('.rm-chevron');
@@ -469,13 +469,13 @@ deptPalette.forEach((p, i) => {
       if (isCollapsed) {
         row.removeAttribute('data-collapsed');
         overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
-          if (r.dataset.pillar === pillar && r.dataset.module === mod) r.style.display = '';
+          if (r.dataset.theme === theme && r.dataset.module === mod) r.style.display = '';
         });
         if (chevron) chevron.style.transform = 'rotate(90deg)';
       } else {
         row.setAttribute('data-collapsed', '');
         overlay.querySelectorAll<HTMLElement>('.rm-chapter-row').forEach(r => {
-          if (r.dataset.pillar === pillar && r.dataset.module === mod) r.style.display = 'none';
+          if (r.dataset.theme === theme && r.dataset.module === mod) r.style.display = 'none';
         });
         if (chevron) chevron.style.transform = '';
       }

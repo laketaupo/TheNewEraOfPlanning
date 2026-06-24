@@ -3,6 +3,6 @@
   "description": "What ERP is, how it evolved from legacy ERP, and the core concepts that underpin how it works.",
   "icon": "office-building",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

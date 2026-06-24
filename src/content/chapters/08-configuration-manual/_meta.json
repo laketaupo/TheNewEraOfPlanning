@@ -3,6 +3,6 @@
   "description": "Step-by-step configuration of Planning software for your business \u2014 items, BOMs, BODs, resources, parameters, and network setup.",
   "icon": "document-text",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "planning-software"
 }

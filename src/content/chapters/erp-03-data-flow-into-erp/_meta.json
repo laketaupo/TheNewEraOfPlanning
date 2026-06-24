@@ -3,6 +3,6 @@
   "description": "Where operational data originates and how it enters ERP \u2014 from manual entry to system-generated transactions and integration feeds.",
   "icon": "office-building",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "erp"
 }

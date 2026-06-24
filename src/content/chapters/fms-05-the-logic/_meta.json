@@ -3,6 +3,6 @@
   "description": "The rules and calculations FMS applies to field data \u2014 how yield forecasts are generated, how field assignments work, and how harvest schedules are derived.",
   "icon": "globe",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "fms"
 }

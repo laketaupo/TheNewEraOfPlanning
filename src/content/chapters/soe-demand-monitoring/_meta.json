@@ -3,6 +3,6 @@
   "description": "Tracking actual demand performance against the agreed plan, identifying deviations early, and escalating where the gap requires a planning response.",
   "icon": "network",
   "color": "teal",
-  "pillar": "process",
+  "theme": "process",
   "module": "soe-process"
 }

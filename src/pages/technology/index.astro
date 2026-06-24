@@ -28,12 +28,12 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-14 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
-      <div class="inline-flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-full px-3 py-1 mb-6">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded-full px-3 py-1 mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
         Technology
       </div>
       <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight tracking-tight">
-        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Technology</span>
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Technology</span>
       </h1>
       <p class="text-lg text-gray-600 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
         Understand the systems that power modern supply chain planning — the Planning software model, ERP data flows, master data management, field systems, and how they all connect.
@@ -140,10 +140,10 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
 
 <style>
   .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.08), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent);
   }
   :global(.dark) .bg-radial-gradient {
-    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16,185,129,0.15), transparent);
+    background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent);
   }
 
   .track-card {
@@ -154,18 +154,18 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
     border-top-style: solid;
   }
 
-  /* ── Light mode (all technology tracks = green) ── */
+  /* ── Light mode (all technology tracks = blue) ── */
   .track-how-platform,
   .track-bc,
   .track-arch,
   .track-mdm,
   .track-fms,
   .track-reporting {
-    background: #f0fdf4;
-    border: 1.5px solid #bbf7d0;
-    border-top: 4px solid #86efac;
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    border-top: 4px solid #93c5fd;
   }
-  .track-card:hover { box-shadow: 0 6px 24px rgba(34,197,94,0.12); }
+  .track-card:hover { box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
 
   /* ── Dark mode ──────────────────────────────────── */
   :global(.dark) .track-how-platform,
@@ -175,23 +175,23 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
   :global(.dark) .track-fms,
   :global(.dark) .track-reporting {
     background: #2c2c2c;
-    border-color: rgba(34,197,94,0.18);
-    border-top-color: rgba(134,239,172,0.5);
+    border-color: rgba(59,130,246,0.18);
+    border-top-color: rgba(147,197,253,0.5);
   }
   :global(.dark) .track-card:hover {
     background: #363636;
-    box-shadow: 0 6px 28px rgba(34,197,94,0.1);
+    box-shadow: 0 6px 28px rgba(59,130,246,0.12);
   }
 
   /* ── Icon ───────────────────────────────────────── */
   .track-icon {
     @apply w-11 h-11 rounded-xl flex items-center justify-center mb-5;
-    background: #dcfce7;
-    color: #15803d;
+    background: #dbeafe;
+    color: #1d4ed8;
   }
   :global(.dark) .track-icon {
-    background: rgba(34,197,94,0.12);
-    color: #86efac;
+    background: rgba(59,130,246,0.12);
+    color: #93c5fd;
   }
 
   /* ── Title ──────────────────────────────────────── */
@@ -205,12 +205,12 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
   /* ── Badge ──────────────────────────────────────── */
   .track-badge {
     @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full self-start;
-    background: #dcfce7;
-    color: #166534;
+    background: #dbeafe;
+    color: #1e40af;
   }
   :global(.dark) .track-badge {
-    background: rgba(34,197,94,0.12);
-    color: #86efac;
+    background: rgba(59,130,246,0.12);
+    color: #93c5fd;
   }
   .track-badge:not(.track-badge-live) {
     background: #f3f4f6;

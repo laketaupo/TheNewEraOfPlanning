@@ -7,7 +7,7 @@ export interface ChapterMeta {
   color: string;
   order: number;
   slug: string;
-  pillar?: string;
+  theme?: string;
   module?: string;
   hidden?: boolean;
 }
@@ -60,7 +60,7 @@ export interface TopicMeta {
   chapterSlug: string;
   url: string;
   chapterUrl: string;
-  pillar?: string;
+  theme?: string;
   module?: string;
 }
 
@@ -86,26 +86,26 @@ function chapterOrderIndex(chapterSlug: string, module: string): number {
   return idx >= 0 ? idx : 9999;
 }
 
-function moduleOrderIndex(module: string, pillar: string): number {
-  const list = (siteOrder.modules as Record<string, string[]>)[pillar] ?? [];
+function moduleOrderIndex(module: string, theme: string): number {
+  const list = (siteOrder.modules as Record<string, string[]>)[theme] ?? [];
   const idx = list.indexOf(module);
   return idx >= 0 ? idx : 9999;
 }
 
-function pillarOrderIndex(pillar: string): number {
-  const idx = siteOrder.pillars.indexOf(pillar);
+function themeOrderIndex(theme: string): number {
+  const idx = siteOrder.themes.indexOf(theme);
   return idx >= 0 ? idx : 9999;
 }
 
-export function getPillars(): string[] {
-  return siteOrder.pillars;
+export function getThemes(): string[] {
+  return siteOrder.themes;
 }
 
-export function getModulesForPillar(pillar: string): string[] {
-  return (siteOrder.modules as Record<string, string[]>)[pillar] ?? [];
+export function getModulesForTheme(theme: string): string[] {
+  return (siteOrder.modules as Record<string, string[]>)[theme] ?? [];
 }
 
-export function getChapters(pillar?: string): ChapterMeta[] {
+export function getChapters(theme?: string): ChapterMeta[] {
   return Object.entries(chapterMetaFiles)
     .map(([path, mod]: [string, any]) => {
       const chapterSlug = path.split('/').slice(-2, -1)[0];
@@ -113,24 +113,24 @@ export function getChapters(pillar?: string): ChapterMeta[] {
       const orderIdx = chapterOrderIndex(chapterSlug, module);
       return { ...mod, slug: chapterSlug, order: orderIdx + 1 } as ChapterMeta;
     })
-    .filter((ch) => !pillar || ch.pillar === pillar)
+    .filter((ch) => !theme || ch.theme === theme)
     .sort((a, b) => {
-      const aPillar = a.pillar ?? 'technology';
-      const bPillar = b.pillar ?? 'technology';
+      const aTheme = a.theme ?? 'technology';
+      const bTheme = b.theme ?? 'technology';
       const aModule = a.module ?? 'planning-software';
       const bModule = b.module ?? 'planning-software';
-      const pillarDiff = pillarOrderIndex(aPillar) - pillarOrderIndex(bPillar);
-      if (pillarDiff !== 0) return pillarDiff;
-      const moduleDiff = moduleOrderIndex(aModule, aPillar) - moduleOrderIndex(bModule, bPillar);
+      const themeDiff = themeOrderIndex(aTheme) - themeOrderIndex(bTheme);
+      if (themeDiff !== 0) return themeDiff;
+      const moduleDiff = moduleOrderIndex(aModule, aTheme) - moduleOrderIndex(bModule, bTheme);
       if (moduleDiff !== 0) return moduleDiff;
       return chapterOrderIndex(a.slug, aModule) - chapterOrderIndex(b.slug, bModule);
     });
 }
 
 export function getChapterUrl(ch: ChapterMeta): string {
-  const pillar = ch.pillar ?? 'technology';
+  const theme = ch.theme ?? 'technology';
   const module = ch.module ?? 'planning-software';
-  return `${import.meta.env.BASE_URL}${pillar}/${module}/${ch.slug}`;
+  return `${import.meta.env.BASE_URL}${theme}/${module}/${ch.slug}`;
 }
 
 export function getTopics(): TopicMeta[] {
@@ -141,7 +141,7 @@ export function getTopics(): TopicMeta[] {
       const topicSlug = slugFromPath(path);
       const chapterSlug = chapterSlugFromPath(path);
       const chapter = allChapters.find((c) => c.slug === chapterSlug);
-      const pillar = chapter?.pillar ?? 'technology';
+      const theme = chapter?.theme ?? 'technology';
       const module = chapter?.module ?? 'planning-software';
       const topicList = (siteOrder.topics as Record<string, string[]>)[chapterSlug] ?? [];
       const topicIdx = topicList.indexOf(topicSlug);
@@ -178,20 +178,20 @@ export function getTopics(): TopicMeta[] {
         tasks: fm.tasks ?? undefined,
         slug: topicSlug,
         chapterSlug,
-        url: `${import.meta.env.BASE_URL}${pillar}/${module}/${chapterSlug}/${topicSlug}`,
-        chapterUrl: `${import.meta.env.BASE_URL}${pillar}/${module}/${chapterSlug}`,
-        pillar,
+        url: `${import.meta.env.BASE_URL}${theme}/${module}/${chapterSlug}/${topicSlug}`,
+        chapterUrl: `${import.meta.env.BASE_URL}${theme}/${module}/${chapterSlug}`,
+        theme,
         module,
       } as TopicMeta;
     })
     .sort((a, b) => {
-      const aPillar = a.pillar ?? 'technology';
-      const bPillar = b.pillar ?? 'technology';
+      const aTheme = a.theme ?? 'technology';
+      const bTheme = b.theme ?? 'technology';
       const aModule = a.module ?? 'planning-software';
       const bModule = b.module ?? 'planning-software';
-      const pillarDiff = pillarOrderIndex(aPillar) - pillarOrderIndex(bPillar);
-      if (pillarDiff !== 0) return pillarDiff;
-      const moduleDiff = moduleOrderIndex(aModule, aPillar) - moduleOrderIndex(bModule, bPillar);
+      const themeDiff = themeOrderIndex(aTheme) - themeOrderIndex(bTheme);
+      if (themeDiff !== 0) return themeDiff;
+      const moduleDiff = moduleOrderIndex(aModule, aTheme) - moduleOrderIndex(bModule, bTheme);
       if (moduleDiff !== 0) return moduleDiff;
       const chapterDiff = chapterOrderIndex(a.chapterSlug, aModule) - chapterOrderIndex(b.chapterSlug, bModule);
       if (chapterDiff !== 0) return chapterDiff;
@@ -203,12 +203,12 @@ export function getTopicsForChapter(chapterSlug: string): TopicMeta[] {
   return getTopics().filter((t) => t.chapterSlug === chapterSlug);
 }
 
-/** Returns [prev, next] for a given topic url, scoped to the same pillar */
+/** Returns [prev, next] for a given topic url, scoped to the same theme */
 export function getAdjacentTopics(url: string): [TopicMeta | null, TopicMeta | null] {
   const all = getTopics();
   const current = all.find((t) => t.url === url);
   if (!current) return [null, null];
-  const scoped = all.filter((t) => t.pillar === current.pillar);
+  const scoped = all.filter((t) => t.theme === current.theme);
   const idx = scoped.findIndex((t) => t.url === url);
   return [idx > 0 ? scoped[idx - 1] : null, idx < scoped.length - 1 ? scoped[idx + 1] : null];
 }

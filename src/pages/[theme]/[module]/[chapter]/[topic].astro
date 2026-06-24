@@ -34,9 +34,9 @@ export async function getStaticPaths() {
     .map((topic) => {
       const chapter = chapters.find((c) => c.slug === topic.chapterSlug)!;
       const [prev, next] = getAdjacentTopics(topic.url);
-      const totalTopics = allTopics.filter((t) => t.pillar === topic.pillar).length;
+      const totalTopics = allTopics.filter((t) => t.theme === topic.theme).length;
       return {
-        params: { pillar: topic.pillar, module: chapter.module, chapter: topic.chapterSlug, topic: topic.slug },
+        params: { theme: topic.theme, module: chapter.module, chapter: topic.chapterSlug, topic: topic.slug },
         props: { topic, chapter, prev, next, totalTopics },
       };
     });
@@ -95,7 +95,7 @@ const sharedProps = {
   nextUrl: next?.url,
   prevTitle: prev?.title,
   nextTitle: next?.title,
-  pillar: topic.pillar ?? 'technology',
+  theme: topic.theme ?? 'technology',
   module: topic.module ?? 'planning-software',
   totalTopics,
   roleCtxJson,

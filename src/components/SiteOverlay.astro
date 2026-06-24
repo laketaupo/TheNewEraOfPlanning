@@ -6,9 +6,9 @@ const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics = getTopics();
 const liveRoles = getRoles().filter(r => !r.comingSoon);
 
-const pillarOrder = ['technology', 'process', 'data', 'people'];
+const themeOrder = ['technology', 'process', 'data', 'people'];
 
-const pillarMeta: Record<string, { label: string; accent: string; line: string }> = {
+const themeMeta: Record<string, { label: string; accent: string; line: string }> = {
   technology: { label: 'Technology', accent: 'text-emerald-600 dark:text-emerald-400', line: 'bg-emerald-100 dark:bg-emerald-500/20' },
   process:    { label: 'Process',    accent: 'text-blue-600 dark:text-blue-400',      line: 'bg-blue-100 dark:bg-blue-500/20' },
   data:       { label: 'Data',       accent: 'text-yellow-600 dark:text-yellow-400',  line: 'bg-yellow-100 dark:bg-yellow-500/20' },
@@ -34,22 +34,22 @@ const moduleLabels: Record<string, string> = {
   'roles-and-responsibilities': 'Roles & Responsibilities',
 };
 
-const pillars = pillarOrder.map(pillar => {
-  const pChapters = allChapters.filter(c => c.pillar === pillar);
-  const modules = [...new Set(pChapters.map(c => c.module ?? ''))].filter(Boolean)
+const themes = themeOrder.map(theme => {
+  const themeChapters = allChapters.filter(c => c.theme === theme);
+  const modules = [...new Set(themeChapters.map(c => c.module ?? ''))].filter(Boolean)
     .sort((a, b) => {
-      const aOrder = pChapters.find(c => c.module === a)?.moduleOrder ?? 999;
-      const bOrder = pChapters.find(c => c.module === b)?.moduleOrder ?? 999;
+      const aOrder = themeChapters.find(c => c.module === a)?.moduleOrder ?? 999;
+      const bOrder = themeChapters.find(c => c.module === b)?.moduleOrder ?? 999;
       return aOrder - bOrder;
     });
   return {
-    pillar,
-    ...pillarMeta[pillar],
+    theme,
+    ...themeMeta[theme],
     multiModule: modules.length > 1,
     modules: modules.map(mod => ({
       key: mod,
       label: moduleLabels[mod] ?? mod,
-      chapters: pChapters
+      chapters: themeChapters
         .filter(c => c.module === mod)
         .map(ch => ({
           slug: ch.slug,
@@ -107,20 +107,20 @@ const totalTopics = allTopics.length;
       <!-- Tree content -->
       <div id="site-overlay-content" class="overflow-y-auto flex-1 py-3">
 
-        {pillars.map((pillar, pi) => (
-          <section class="pillar-section" data-pillar={pillar.pillar}>
+        {themes.map((theme, pi) => (
+          <section class="theme-section" data-theme={theme.theme}>
 
-            {/* ── Pillar row ── */}
+            {/* ── Theme row ── */}
             <div class={`flex items-center gap-2 px-5 py-2 ${pi > 0 ? 'mt-2' : ''}`}>
-              <span class={`text-[10px] font-bold uppercase tracking-widest ${pillar.accent}`}>{pillar.label}</span>
-              <div class={`flex-1 h-px ${pillar.line}`}></div>
+              <span class={`text-[10px] font-bold uppercase tracking-widest ${theme.accent}`}>{theme.label}</span>
+              <div class={`flex-1 h-px ${theme.line}`}></div>
             </div>
 
-            {pillar.modules.map(mod => (
+            {theme.modules.map(mod => (
               <div class="module-group" data-module={mod.key}>
 
-                {/* ── Module row (only when >1 module per pillar) ── */}
-                {pillar.multiModule && (
+                {/* ── Module row (only when >1 module per theme) ── */}
+                {theme.multiModule && (
                   <div class="flex items-center gap-2 pl-8 pr-5 py-1.5">
                     <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-neutral-500">{mod.label}</span>
                     <div class="flex-1 h-px bg-gray-100 dark:bg-neutral-800"></div>
@@ -178,7 +178,7 @@ const totalTopics = allTopics.length;
         ))}
 
         {liveRoles.length > 0 && (
-          <section class="pillar-section" data-pillar="roles">
+          <section class="theme-section" data-theme="roles">
             <div class="flex items-center gap-2 px-5 py-2 mt-2">
               <span class="text-[10px] font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400">Roles</span>
               <div class="flex-1 h-px bg-teal-100 dark:bg-teal-500/20"></div>
@@ -304,14 +304,14 @@ const totalTopics = allTopics.length;
       }
     });
 
-    // Hide module groups and pillar sections with no visible content
+    // Hide module groups and theme sections with no visible content
     document.querySelectorAll<HTMLElement>('.module-group').forEach(mod => {
       const visible = Array.from(mod.querySelectorAll<HTMLElement>('.chapter-card'))
         .some(c => c.style.display !== 'none');
       mod.style.display = visible ? '' : 'none';
     });
 
-    document.querySelectorAll<HTMLElement>('.pillar-section').forEach(sec => {
+    document.querySelectorAll<HTMLElement>('.theme-section').forEach(sec => {
       const visible = Array.from(sec.querySelectorAll<HTMLElement>('.module-group'))
         .some(m => m.style.display !== 'none');
       sec.style.display = visible ? '' : 'none';

@@ -3,6 +3,6 @@
   "description": "Data confidence, ownership, definitions, and the single source of truth \u2014 the governance structures that keep planning data reliable across a multi-system landscape.",
   "icon": "shield-check",
   "color": "yellow",
-  "pillar": "data",
+  "theme": "data",
   "module": "data-governance"
 }

@@ -3,6 +3,6 @@
   "description": "Applying agreed prioritisation rules to sequence open orders when supply is constrained — ensuring the right customers and products are served first.",
   "icon": "network",
   "color": "amber",
-  "pillar": "process",
+  "theme": "process",
   "module": "execution-process"
 }

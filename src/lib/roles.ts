@@ -32,7 +32,7 @@ export interface RoleTopic extends TopicMeta {
   topicId: string;
   chapterTitle: string;
   chapterColor: string;
-  pillarLabel: string;
+  themeLabel: string;
 }
 
 export interface ResolvedRoleSection {
@@ -101,13 +101,13 @@ function resolveChapter(
   if (!chapter) fail('unknown chapter slug');
   if (chapter!.hidden) fail('reference into hidden chapter');
 
-  const pillar = chapter!.pillar ?? 'technology';
+  const theme = chapter!.theme ?? 'technology';
   const topics = getTopicsForChapter(chapterSlug).map((topic) => ({
     ...topic,
     topicId: `${chapterSlug}/${topic.slug}`,
     chapterTitle: chapter!.title,
     chapterColor: chapter!.color,
-    pillarLabel: pillar.charAt(0).toUpperCase() + pillar.slice(1),
+    themeLabel: theme.charAt(0).toUpperCase() + theme.slice(1),
   })) as RoleTopic[];
 
   return {

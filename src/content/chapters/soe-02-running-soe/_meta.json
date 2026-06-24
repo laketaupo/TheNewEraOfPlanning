@@ -3,6 +3,6 @@
   "description": "How to run the weekly S&OE cycle in practice \u2014 monitoring performance, resolving exceptions, adjusting the near-term plan, and keeping the handoff to execution clean.",
   "icon": "beaker",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "process-fundamentals"
 }

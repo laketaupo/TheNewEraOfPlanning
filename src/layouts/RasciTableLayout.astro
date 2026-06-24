@@ -17,7 +17,7 @@ export interface Props {
   nextTitle?: string;
   roles?: string[];
   steps?: Array<{ label: string; assignments: Record<string, string> }>;
-  pillar?: string;
+  theme?: string;
   module?: string;
   totalTopics?: number;
   roleCtxJson?: string;
@@ -39,7 +39,7 @@ const {
   nextTitle,
   roles = [],
   steps = [],
-  pillar,
+  theme,
   module,
   totalTopics,
   roleCtxJson = '{}',
@@ -155,7 +155,7 @@ const topicId = `${chapterSlug}/${topicSlug}`;
     class="min-h-screen pt-12 pb-32"
     style={`--accent: ${accentColor}; --accent-subtle: ${accentSubtle};`}
     data-pagefind-body
-    data-pagefind-filter={`pillar:${pillar ?? 'technology'}`}
+    data-pagefind-filter={`theme:${theme ?? 'technology'}`}
   >
     <span class="sr-only" data-pagefind-meta="chapter">{chapterTitle}</span>
 

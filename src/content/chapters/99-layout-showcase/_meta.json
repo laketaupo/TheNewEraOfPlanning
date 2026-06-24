@@ -4,6 +4,6 @@
   "icon": "cube",
   "color": "emerald",
   "hidden": true,
-  "pillar": "technology",
+  "theme": "technology",
   "module": "planning-software"
 }

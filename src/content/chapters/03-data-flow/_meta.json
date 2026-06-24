@@ -3,6 +3,6 @@
   "description": "How demand forecasts travel upstream through the network and how planned orders and inventory flow downstream — from customer back to raw material and back again.",
   "icon": "switch-horizontal",
   "color": "emerald",
-  "pillar": "technology",
+  "theme": "technology",
   "module": "planning-software"
 }

@@ -3,6 +3,6 @@
   "description": "The practical how-to: creating, adjusting, comparing, and promoting scenarios within the Planning software.",
   "icon": "network",
   "color": "blue",
-  "pillar": "process",
+  "theme": "process",
   "module": "scenario-planning"
 }
