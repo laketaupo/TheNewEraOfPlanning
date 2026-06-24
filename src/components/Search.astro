@@ -167,13 +167,14 @@
   function initPagefind() {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/pagefind/pagefind-ui.css';
+    const baseUrl = (document.querySelector('meta[name="base-url"]')?.content || '/').replace(/\/$/, '');
+    link.href = baseUrl + '/pagefind/pagefind-ui.css';
     document.head.appendChild(link);
 
     const script = document.createElement('script');
-    script.src = '/pagefind/pagefind-ui.js';
+    script.src = baseUrl + '/pagefind/pagefind-ui.js';
     script.onload = function () {
-      import('/pagefind/pagefind.js').then(function (pf) {
+      import(baseUrl + '/pagefind/pagefind.js').then(function (pf) {
         pagefindRaw = pf;
         if (pendingSearch !== null) { runSearch(pendingSearch); pendingSearch = null; }
       });

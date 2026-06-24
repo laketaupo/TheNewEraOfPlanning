@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
   site: 'https://laketaupo.github.io',
-  base: '/TheNewEraOfPlanning',
+  base: '/TheNewEraOfPlanning/',
   output: 'static',
   integrations: [tailwind(), mdx()],
   devToolbar: { enabled: false },

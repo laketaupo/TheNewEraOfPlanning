@@ -25,6 +25,7 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="base-url" content={import.meta.env.BASE_URL} />
     <title>{title}</title>
 
     <!-- Apply saved theme before render to avoid flash -->
@@ -65,7 +66,7 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
       <!-- Glossary/FAQ -->
       <div class="relative group/tip">
         <a
-          href="/glossary"
+          href={`${import.meta.env.BASE_URL}glossary`}
           aria-label="Open Glossary/FAQ"
           class="p-2 rounded-lg text-gray-500 hover:text-gray-900 dark:text-neutral-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors flex"
         >
@@ -136,7 +137,7 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
     >
       <p id="glossary-tooltip-term" class="mb-1 text-sm font-bold text-gray-900 dark:text-white"></p>
       <p id="glossary-tooltip-def" class="text-sm leading-relaxed text-gray-600 dark:text-neutral-300"></p>
-      <a id="glossary-tooltip-link" href="/glossary" class="mt-2 inline-block text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">View in Glossary →</a>
+      <a id="glossary-tooltip-link" href={`${import.meta.env.BASE_URL}glossary`} class="mt-2 inline-block text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">View in Glossary →</a>
     </div>
 
     <script is:inline>
@@ -235,7 +236,8 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
         clearTimeout(hideTimer);
         tooltipTerm.textContent = target.dataset.term || '';
         tooltipDef.textContent = target.dataset.def;
-        tooltipLink.href = '/glossary#' + target.dataset.slug;
+        const baseUrl = (document.querySelector('meta[name="base-url"]')?.content || '/').replace(/\/$/, '');
+        tooltipLink.href = baseUrl + '/glossary#' + target.dataset.slug;
         tooltip.classList.remove('hidden');
         positionTooltip(target);
       }
@@ -487,7 +489,7 @@ const { title = 'How Planning Software Works', description = 'An interactive gui
       if (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable) return;
       if (e.key === 'h' || e.key === 'H') {
         const homeLink = document.querySelector<HTMLAnchorElement>('a[title^="Home"]');
-        window.location.href = homeLink ? homeLink.href : '/';
+        window.location.href = homeLink ? homeLink.href : (import.meta.env.BASE_URL || '/');
       }
     });
   </script>
