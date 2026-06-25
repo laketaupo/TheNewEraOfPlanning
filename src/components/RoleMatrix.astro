@@ -529,6 +529,23 @@ deptPalette.forEach((p, i) => {
   const closeBtn = document.getElementById('role-matrix-close')!;
   const depthBtns = overlay.querySelectorAll<HTMLElement>('.rm-depth-btn');
 
+  const viewBtns     = overlay.querySelectorAll<HTMLElement>('.rm-view-btn');
+  const pillarBody   = document.getElementById('rm-pillar-body')!;
+  const phaseBody    = document.getElementById('rm-phase-body')!;
+  const depthControl = document.getElementById('rm-depth-control')!;
+
+  function setView(view: string) {
+    const inPhase = view === 'phase';
+    pillarBody.style.display  = inPhase ? 'none' : '';
+    phaseBody.style.display   = inPhase ? '' : 'none';
+    depthControl.style.display = inPhase ? 'none' : '';
+    viewBtns.forEach(b => b.classList.toggle('rm-view-active', b.dataset.view === view));
+  }
+
+  viewBtns.forEach(btn => {
+    btn.addEventListener('click', () => setView(btn.dataset.view ?? 'pillar'));
+  });
+
   // Sync a row's collapsed attribute + chevron to a target state
   function setRowCollapsed(row: HTMLElement, collapsed: boolean) {
     const chevron = row.querySelector<HTMLElement>('.rm-chevron');
@@ -656,4 +673,24 @@ deptPalette.forEach((p, i) => {
   });
 
   closeBtn.addEventListener('click', close);
+
+  // Phase row collapse (mirrors theme row collapse pattern)
+  overlay.querySelectorAll<HTMLElement>('.rm-phase-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const phaseId     = row.dataset.phase!;
+      const isCollapsed = row.hasAttribute('data-collapsed');
+      const chevron     = row.querySelector<HTMLElement>('.rm-chevron');
+      const childRows   = overlay.querySelectorAll<HTMLElement>(`.rm-phase-chapter-row[data-phase="${phaseId}"]`);
+
+      if (isCollapsed) {
+        row.removeAttribute('data-collapsed');
+        childRows.forEach(r => { r.style.display = ''; });
+        if (chevron) chevron.style.transform = 'rotate(90deg)';
+      } else {
+        row.setAttribute('data-collapsed', '');
+        childRows.forEach(r => { r.style.display = 'none'; });
+        if (chevron) chevron.style.transform = '';
+      }
+    });
+  });
 </script>
