@@ -42,7 +42,7 @@ const themesWithEntries = THEME_ORDER.filter(p => entries.some(e => e.theme === 
 
   <main class="max-w-3xl mx-auto px-6 pt-24 pb-32">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Frequently Asked Questions</h1>
-    <p class="text-gray-500 dark:text-neutral-400 mb-4">{entries.length} questions across {themesWithEntries.length} themes.</p>
+    <p class="text-gray-500 dark:text-neutral-400 mb-4">{entries.length} questions across {themesWithEntries.length} pillars.</p>
 
     <!-- Tab bar -->
     <div class="flex gap-1 mb-8 border-b border-gray-100 dark:border-neutral-800">
@@ -61,7 +61,7 @@ const themesWithEntries = THEME_ORDER.filter(p => entries.some(e => e.theme === 
     </div>
 
     <!-- Theme jump nav -->
-    <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to theme">
+    <nav class="flex flex-wrap gap-1.5 mb-10" aria-label="Jump to pillar">
       {themesWithEntries.map(theme => (
         <a
           href={`#theme-${theme}`}
