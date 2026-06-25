@@ -257,9 +257,28 @@ deptPalette.forEach((p, i) => {
   #role-matrix .rm-depth-btn + .rm-depth-btn { border-left: 1px solid var(--rm-border); }
   #role-matrix .rm-depth-btn:hover { background: var(--rm-surface); color: var(--rm-text); }
   #role-matrix .rm-depth-btn.rm-depth-active { background: var(--rm-dot); color: #fff; }
+
+  /* View selector — Pillar | Phase */
+  #role-matrix .rm-view-seg { display: inline-flex; align-items: center; border: 1px solid var(--rm-border); border-radius: 6px; overflow: hidden; }
+  #role-matrix .rm-view-btn {
+    background: transparent;
+    color: var(--rm-text-muted);
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 4px 9px;
+    transition: background 0.12s, color 0.12s;
+  }
+  #role-matrix .rm-view-btn + .rm-view-btn { border-left: 1px solid var(--rm-border); }
+  #role-matrix .rm-view-btn:hover { background: var(--rm-surface); color: var(--rm-text); }
+  #role-matrix .rm-view-btn.rm-view-active { background: var(--rm-dot); color: #fff; }
 </style>
 
 <style is:global set:html={deptCss}></style>
+
+<style is:global set:html={phaseCss}></style>
 
 <div
   id="role-matrix"
@@ -275,7 +294,11 @@ deptPalette.forEach((p, i) => {
       <span class="text-xs text-gray-400 dark:text-neutral-500 hidden sm:inline">
         {allRoles.filter(r => !r.comingSoon).length} active &nbsp;·&nbsp; {allRoles.filter(r => r.comingSoon).length} coming soon
       </span>
-      <div class="rm-depth-seg" role="group" aria-label="Collapse depth">
+      <div class="rm-view-seg" role="group" aria-label="View">
+        <button type="button" class="rm-view-btn rm-view-active" data-view="pillar">Pillar</button>
+        <button type="button" class="rm-view-btn" data-view="phase">Phase</button>
+      </div>
+      <div id="rm-depth-control" class="rm-depth-seg" role="group" aria-label="Collapse depth">
         <button type="button" class="rm-depth-btn" data-depth="modules">Modules</button>
         <button type="button" class="rm-depth-btn rm-depth-active" data-depth="chapters">Chapters</button>
       </div>
@@ -342,7 +365,7 @@ deptPalette.forEach((p, i) => {
       </thead>
 
       <!-- Body rows -->
-      <tbody>
+      <tbody id="rm-pillar-body">
         {themes.map(theme => (
           <>
             {/* Theme header row */}
@@ -407,6 +430,81 @@ deptPalette.forEach((p, i) => {
             ))}
           </>
         ))}
+      </tbody>
+
+      <tbody id="rm-phase-body" style="display: none;">
+        {phaseGroups.map(group => (
+          <>
+            <tr class="rm-phase-row" data-phase={group.id} style="cursor: pointer;">
+              <td
+                class="rm-phase-sticky"
+                style={`position: sticky; left: 0; z-index: 10; width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 5px 10px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border-strong); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; user-select: none;`}
+              >
+                <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
+                {group.title}
+              </td>
+              {allRoles.map(role => (
+                <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border)'}; border-bottom: 1px solid var(--rm-border-strong);`}></td>
+              ))}
+            </tr>
+            {group.chapters.map(ch => (
+              <tr class="rm-phase-chapter-row" data-phase={group.id}>
+                <td
+                  title={ch.title}
+                  style={`position: sticky; left: 0; z-index: 10; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; max-width: ${FIRST_COL_W}px; padding: 3px 10px 3px 36px; border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-light); font-size: 12px; color: var(--rm-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`}
+                >
+                  {ch.title}
+                </td>
+                {allRoles.map(role => {
+                  const assigned = roleChapterSets.get(role.slug)?.has(ch.slug) ?? false;
+                  return (
+                    <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border-light)'}; border-bottom: 1px solid var(--rm-border-light); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                      {assigned && (
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </>
+        ))}
+        {unassignedChapters.length > 0 && (
+          <>
+            <tr class="rm-phase-row" data-phase="unassigned" data-collapsed="" style="cursor: pointer;">
+              <td
+                class="rm-phase-sticky"
+                style={`position: sticky; left: 0; z-index: 10; background: var(--rm-surface); color: var(--rm-text-faint); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 5px 10px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border-strong); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; user-select: none;`}
+              >
+                <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s;">▶</span>
+                Unassigned
+              </td>
+              {allRoles.map(role => (
+                <td style={`background: var(--rm-surface); border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border)'}; border-bottom: 1px solid var(--rm-border-strong);`}></td>
+              ))}
+            </tr>
+            {unassignedChapters.map(ch => (
+              <tr class="rm-phase-chapter-row" data-phase="unassigned" style="display: none;">
+                <td
+                  title={ch.title}
+                  style={`position: sticky; left: 0; z-index: 10; background: var(--rm-bg); width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; max-width: ${FIRST_COL_W}px; padding: 3px 10px 3px 36px; border-right: 1px solid var(--rm-border); border-bottom: 1px solid var(--rm-border-light); font-size: 12px; color: var(--rm-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`}
+                >
+                  {ch.title}
+                </td>
+                {allRoles.map(role => {
+                  const assigned = roleChapterSets.get(role.slug)?.has(ch.slug) ?? false;
+                  return (
+                    <td style={`border-right: ${groupBoundarySlugs.has(role.slug) ? '2px solid var(--rm-border-strong)' : '1px solid var(--rm-border-light)'}; border-bottom: 1px solid var(--rm-border-light); text-align: center; padding: 3px 0; opacity: ${role.comingSoon ? 0.45 : 1};`}>
+                      {assigned && (
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--rm-dot); margin: 0 auto;"></div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </>
+        )}
       </tbody>
     </table>
   </div>
