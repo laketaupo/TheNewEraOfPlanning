@@ -1,9 +1,73 @@
 ---
 import { getChapters } from '../lib/chapters';
-import { getRoles } from '../lib/roles';
+import { getRoles, getLearningPhases } from '../lib/roles';
 
 const allChapters = getChapters().filter(c => !c.hidden);
 const allRoles = getRoles();
+
+// ── Phase view data ──────────────────────────────────────────────────────────
+
+const learningPhases = getLearningPhases(); // [{id, title, ...}, ...]
+const phaseOrder = learningPhases.map(p => p.id); // tie-break order
+
+// Tally how many roles assign each chapter to each phase
+const phaseTally = new Map<string, Map<string, number>>();
+for (const role of allRoles) {
+  if (!role.phases) continue;
+  for (const phase of role.phases) {
+    for (const chSlug of phase.chapters) {
+      if (!phaseTally.has(chSlug)) phaseTally.set(chSlug, new Map());
+      const t = phaseTally.get(chSlug)!;
+      t.set(phase.phaseId, (t.get(phase.phaseId) ?? 0) + 1);
+    }
+  }
+}
+
+// Pick canonical phase: highest count, tie-break by phase order (earlier wins)
+const canonicalPhaseMap = new Map<string, string>();
+for (const [chSlug, tally] of phaseTally) {
+  let bestPhase = '';
+  let bestCount = 0;
+  for (const phaseId of phaseOrder) {
+    const count = tally.get(phaseId) ?? 0;
+    if (count > bestCount) { bestCount = count; bestPhase = phaseId; }
+  }
+  canonicalPhaseMap.set(chSlug, bestPhase);
+}
+
+// Build ordered phase groups (empty phases omitted from the rendered table)
+type PhaseGroup = { id: string; title: string; chapters: typeof allChapters };
+const phaseGroupMap = new Map<string, PhaseGroup>();
+for (const lp of learningPhases) {
+  phaseGroupMap.set(lp.id, { id: lp.id, title: lp.title, chapters: [] });
+}
+for (const ch of allChapters) {
+  const pid = canonicalPhaseMap.get(ch.slug);
+  if (pid && phaseGroupMap.has(pid)) phaseGroupMap.get(pid)!.chapters.push(ch);
+}
+const phaseGroups: PhaseGroup[] = learningPhases
+  .map(lp => phaseGroupMap.get(lp.id)!)
+  .filter(g => g.chapters.length > 0);
+
+// Chapters assigned to no phase (shown collapsed at the bottom of Phase view)
+const unassignedChapters = allChapters.filter(ch => !canonicalPhaseMap.has(ch.slug));
+
+// Phase row colours (light + dark)
+const phaseMeta: Record<string, { lBg: string; lFg: string; dBg: string; dFg: string }> = {
+  awareness:    { lBg: '#fffbeb', lFg: '#b45309', dBg: '#451a03', dFg: '#fcd34d' },
+  conceptual:   { lBg: '#eff6ff', lFg: '#1d4ed8', dBg: '#172554', dFg: '#60a5fa' },
+  practical:    { lBg: '#f0fdf4', lFg: '#15803d', dBg: '#052e16', dFg: '#4ade80' },
+  embedded:     { lBg: '#faf5ff', lFg: '#7e22ce', dBg: '#3b0764', dFg: '#d8b4fe' },
+  optimization: { lBg: '#fff7ed', lFg: '#c2410c', dBg: '#431407', dFg: '#fdba74' },
+};
+
+let phaseCss = '';
+for (const [id, m] of Object.entries(phaseMeta)) {
+  phaseCss += `#role-matrix .rm-phase-row[data-phase="${id}"]{background:${m.lBg};}`;
+  phaseCss += `#role-matrix .rm-phase-row[data-phase="${id}"] .rm-phase-sticky{background:${m.lBg};color:${m.lFg};}`;
+  phaseCss += `.dark #role-matrix .rm-phase-row[data-phase="${id}"]{background:${m.dBg};}`;
+  phaseCss += `.dark #role-matrix .rm-phase-row[data-phase="${id}"] .rm-phase-sticky{background:${m.dBg};color:${m.dFg};}`;
+}
 
 // Build role → chapter slug set
 const roleChapterSets = new Map<string, Set<string>>();
