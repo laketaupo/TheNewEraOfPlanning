@@ -32,7 +32,7 @@ for (const [chSlug, tally] of phaseTally) {
     const count = tally.get(phaseId) ?? 0;
     if (count > bestCount) { bestCount = count; bestPhase = phaseId; }
   }
-  canonicalPhaseMap.set(chSlug, bestPhase);
+  if (bestPhase) canonicalPhaseMap.set(chSlug, bestPhase);
 }
 
 // Build ordered phase groups (empty phases omitted from the rendered table)
@@ -67,6 +67,11 @@ for (const [id, m] of Object.entries(phaseMeta)) {
   phaseCss += `#role-matrix .rm-phase-row[data-phase="${id}"] .rm-phase-sticky{background:${m.lBg};color:${m.lFg};}`;
   phaseCss += `.dark #role-matrix .rm-phase-row[data-phase="${id}"]{background:${m.dBg};}`;
   phaseCss += `.dark #role-matrix .rm-phase-row[data-phase="${id}"] .rm-phase-sticky{background:${m.dBg};color:${m.dFg};}`;
+}
+
+const unthemedPhases = phaseOrder.filter(id => !phaseMeta[id]);
+if (unthemedPhases.length > 0) {
+  throw new Error(`[RoleMatrix] Missing phaseMeta colours for: ${unthemedPhases.join(', ')}. Add entries to phaseMeta.`);
 }
 
 // Build role → chapter slug set
@@ -520,7 +525,8 @@ deptPalette.forEach((p, i) => {
     <span class="text-xs text-gray-300 dark:text-neutral-600">|</span>
     <span class="text-xs text-gray-400 dark:text-neutral-500">Dimmed columns = coming soon roles</span>
     <span class="text-xs text-gray-300 dark:text-neutral-600">|</span>
-    <span class="text-xs text-gray-400 dark:text-neutral-500">Click theme or module labels to collapse</span>
+    <span id="rm-footer-pillar-hint" class="text-xs text-gray-400 dark:text-neutral-500">Click theme or module labels to collapse</span>
+    <span id="rm-footer-phase-hint" class="text-xs text-gray-400 dark:text-neutral-500" style="display: none;">Click phase labels to collapse</span>
   </div>
 </div>
 
@@ -533,12 +539,16 @@ deptPalette.forEach((p, i) => {
   const pillarBody   = document.getElementById('rm-pillar-body')!;
   const phaseBody    = document.getElementById('rm-phase-body')!;
   const depthControl = document.getElementById('rm-depth-control')!;
+  const footerPillarHint = document.getElementById('rm-footer-pillar-hint')!;
+  const footerPhaseHint  = document.getElementById('rm-footer-phase-hint')!;
 
   function setView(view: string) {
     const inPhase = view === 'phase';
     pillarBody.style.display  = inPhase ? 'none' : '';
     phaseBody.style.display   = inPhase ? '' : 'none';
     depthControl.style.display = inPhase ? 'none' : '';
+    footerPillarHint.style.display = inPhase ? 'none' : '';
+    footerPhaseHint.style.display  = inPhase ? '' : 'none';
     viewBtns.forEach(b => b.classList.toggle('rm-view-active', b.dataset.view === view));
   }
 
@@ -680,7 +690,7 @@ deptPalette.forEach((p, i) => {
       const phaseId     = row.dataset.phase!;
       const isCollapsed = row.hasAttribute('data-collapsed');
       const chevron     = row.querySelector<HTMLElement>('.rm-chevron');
-      const childRows   = overlay.querySelectorAll<HTMLElement>(`.rm-phase-chapter-row[data-phase="${phaseId}"]`);
+      const childRows   = overlay.querySelectorAll<HTMLElement>(`.rm-phase-chapter-row[data-phase="${CSS.escape(phaseId)}"]`);
 
       if (isCollapsed) {
         row.removeAttribute('data-collapsed');
