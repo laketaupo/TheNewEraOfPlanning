@@ -1,5 +1,5 @@
 ---
-title: "Priming"
+title: "Priming Node"
 description: "Item F is primed to improve germination, producing Item H."
 chapter: "02-the-network"
 estimatedMinutes: 2

@@ -1,5 +1,5 @@
 ---
-title: "Disaggregation from year to month"
+title: "Disaggregation: Year to Month"
 description: "How an annual plan is distributed across months using seasonal profiles and planning rules."
 chapter: "03-the-logic"
 estimatedMinutes: 4

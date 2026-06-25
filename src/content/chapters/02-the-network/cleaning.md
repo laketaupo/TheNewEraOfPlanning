@@ -1,5 +1,5 @@
 ---
-title: "Cleaning"
+title: "Cleaning Node"
 description: "Item C is cleaned at the Central Warehouse to produce Item D."
 chapter: "02-the-network"
 estimatedMinutes: 2

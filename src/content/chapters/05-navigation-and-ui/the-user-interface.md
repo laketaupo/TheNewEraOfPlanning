@@ -1,5 +1,5 @@
 ---
-title: "The User Interface"
+title: "Planning Software Interface Overview"
 description: "The Planning software interface is built around a grid-and-chart model. Understanding the core UI components — grids, filters, charts, and the exception panel — makes every workspace easier to use."
 chapter: "05-navigation-and-ui"
 estimatedMinutes: 5

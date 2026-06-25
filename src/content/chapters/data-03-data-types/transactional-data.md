@@ -1,5 +1,5 @@
 ---
-title: "Transactional Data"
+title: "What Is Transactional Data?"
 description: "Transactional data records what has happened: inventory movements, order receipts, production completions. It is the evidence of execution — and the foundation for keeping the plan grounded in reality."
 chapter: "data-03-data-types"
 estimatedMinutes: 4

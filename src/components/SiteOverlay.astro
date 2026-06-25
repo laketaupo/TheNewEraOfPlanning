@@ -1,12 +1,12 @@
 ---
-import { getChapters, getTopics, getChapterUrl } from '../lib/chapters';
+import { getChapters, getTopics, getChapterUrl, getThemes } from '../lib/chapters';
 import { getRoles } from '../lib/roles';
 
 const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics = getTopics();
 const liveRoles = getRoles().filter(r => !r.comingSoon);
 
-const themeOrder = ['technology', 'process', 'data', 'people'];
+const themeOrder = getThemes();
 
 const themeMeta: Record<string, { label: string; accent: string; line: string }> = {
   technology: { label: 'Technology', accent: 'text-emerald-600 dark:text-emerald-400', line: 'bg-emerald-100 dark:bg-emerald-500/20' },

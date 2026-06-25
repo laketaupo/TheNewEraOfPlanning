@@ -1,5 +1,5 @@
 ---
-title: "Pull"
+title: "Pull Planning Logic"
 description: "A planning strategy where supply is triggered only by actual downstream demand or consumption."
 chapter: "03-the-logic"
 estimatedMinutes: 3

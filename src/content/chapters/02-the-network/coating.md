@@ -1,5 +1,5 @@
 ---
-title: "Coating"
+title: "Coating Node"
 description: "Primed seeds (Item H) receive a polymer coating to produce Item I."
 chapter: "02-the-network"
 estimatedMinutes: 2

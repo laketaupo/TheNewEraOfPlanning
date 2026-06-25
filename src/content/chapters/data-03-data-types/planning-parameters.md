@@ -1,5 +1,5 @@
 ---
-title: "Planning Parameters"
+title: "What Are Planning Parameters?"
 description: "Planning parameters are the settings that control how the planning engine behaves for each item: lead times, safety stock, minimum order quantities, lot sizes. Getting them right is as important as having good data."
 chapter: "data-03-data-types"
 estimatedMinutes: 5

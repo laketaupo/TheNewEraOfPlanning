@@ -1,5 +1,5 @@
 {
-  "title": "The Data Model",
+  "title": "MDM Data Model",
   "description": "How MDM organises product data \u2014 item hierarchies, attribute structures, and the relationships between entities that downstream systems rely on.",
   "icon": "database",
   "color": "emerald",

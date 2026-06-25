@@ -1,5 +1,5 @@
 ---
-title: "Calibrating"
+title: "Calibrating Node"
 description: "Calibrating splits Item D into three co-products: Items E, F, and G."
 chapter: "02-the-network"
 estimatedMinutes: 2

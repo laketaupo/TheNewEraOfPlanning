@@ -1,5 +1,5 @@
 ---
-title: "Demand slicing"
+title: "How Demand Slicing Works"
 description: "How splitting demand into equal micro-buckets creates a fair, rotation-based inventory allocation when supply is constrained."
 chapter: "03-the-logic"
 estimatedMinutes: 5

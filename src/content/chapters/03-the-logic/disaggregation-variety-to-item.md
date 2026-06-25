@@ -1,5 +1,5 @@
 ---
-title: "Disaggregation from variety to item"
+title: "Disaggregation: Variety to Item"
 description: "How a high-level variety forecast is broken down into individual item-level demand signals."
 chapter: "03-the-logic"
 estimatedMinutes: 4

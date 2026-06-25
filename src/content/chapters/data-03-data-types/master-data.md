@@ -1,5 +1,5 @@
 ---
-title: "Master Data"
+title: "What Is Master Data?"
 description: "Master data is the stable, reference information that describes the objects in the planning model — items, locations, customers, suppliers. It changes slowly but when it's wrong, everything built on it is wrong."
 chapter: "data-03-data-types"
 estimatedMinutes: 4

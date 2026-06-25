@@ -1,5 +1,5 @@
 ---
-title: "Seed Production"
+title: "Seed Production Node"
 description: "A BOM process at the Grower consumes Item A and Item B to produce Item C."
 chapter: "02-the-network"
 estimatedMinutes: 2

@@ -1,5 +1,5 @@
 ---
-title: "Packing"
+title: "Packing Node"
 description: "Coated seeds (Item I) are packed into saleable units to produce Item J."
 chapter: "02-the-network"
 estimatedMinutes: 2

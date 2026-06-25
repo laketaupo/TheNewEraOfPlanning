@@ -1,5 +1,5 @@
 ---
-title: "Final Shipment"
+title: "Final Shipment Node"
 description: "Item J is dispatched to the customer via a BOD lane, completing the network."
 chapter: "02-the-network"
 estimatedMinutes: 2
