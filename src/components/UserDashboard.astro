@@ -2,6 +2,11 @@
 import { getChapters, getTopics, getThemes } from '../lib/chapters';
 import { getRoles, resolveRoleSections, resolveRolePhases } from '../lib/roles';
 
+export interface Props {
+  standalone?: boolean;
+}
+const { standalone = false } = Astro.props;
+
 const allChapters = getChapters().filter(c => !c.hidden);
 const allTopics   = getTopics();
 
@@ -122,21 +127,22 @@ const totalTopics = allTopics.length;
   .dash-stat-tile-active[data-stat-filter="none"]     { box-shadow: inset 0 0 0 1.5px rgb(148 163 184); }
 </style>
 
-<!-- Dashboard panel overlay -->
 <div
   id="user-dashboard"
-  class="fixed inset-0 z-[9990] hidden"
-  role="dialog"
-  aria-modal="true"
-  aria-label="Progress dashboard"
+  class={standalone ? "w-full" : "fixed inset-0 z-[9990] hidden"}
+  role={standalone ? undefined : "dialog"}
+  aria-modal={standalone ? undefined : "true"}
+  aria-label={standalone ? undefined : "Progress dashboard"}
+  data-standalone={standalone ? "" : undefined}
 >
-  <!-- Backdrop -->
-  <div id="user-dashboard-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  {!standalone && <div id="user-dashboard-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>}
 
-  <!-- Right-side panel -->
-  <div class="absolute top-0 right-0 bottom-0 w-80 flex flex-col bg-white dark:bg-neutral-900 shadow-2xl">
+  <div class={standalone
+    ? "flex flex-col"
+    : "absolute top-0 right-0 bottom-0 w-80 flex flex-col bg-white dark:bg-neutral-900 shadow-2xl"}>
 
-    <!-- Panel header -->
+    <!-- Panel header (panel mode only) -->
+    {!standalone && (
     <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
       <div class="flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,6 +160,7 @@ const totalTopics = allTopics.length;
         </svg>
       </button>
     </div>
+    )}
 
     <!-- Tab bar -->
     <div class="flex border-b border-gray-100 dark:border-neutral-800 shrink-0">
@@ -174,7 +181,7 @@ const totalTopics = allTopics.length;
     </div>
 
     <!-- Progress tab content -->
-    <div id="progress-tab" class="flex flex-col flex-1 overflow-hidden">
+    <div id="progress-tab" class={standalone ? "flex flex-col" : "flex flex-col flex-1 overflow-hidden"}>
 
       <!-- Role selector -->
       {rolesForClient.length > 0 && (
@@ -233,8 +240,8 @@ const totalTopics = allTopics.length;
         </button>
       </div>
 
-      <!-- Hierarchy tree (scrollable) -->
-      <div class="flex-1 overflow-y-auto py-1 dash-tree">
+      <!-- Hierarchy tree -->
+      <div class={standalone ? "py-2 dash-tree" : "flex-1 overflow-y-auto py-1 dash-tree"}>
 
         <!-- Role view: phase → section → topic. Built by JS when a role is selected. -->
         <div id="dash-role-view" class="hidden"></div>
@@ -521,6 +528,7 @@ const totalTopics = allTopics.length;
   const notesTab      = document.getElementById('notes-tab');
   const tabProgressBtn = document.getElementById('dash-tab-progress-btn');
   const tabNotesBtn   = document.getElementById('dash-tab-notes-btn');
+  const isStandalone  = !!panel?.hasAttribute('data-standalone');
 
   // --- Tab management ---
 
@@ -626,6 +634,7 @@ const totalTopics = allTopics.length;
 
   // Badge is always global (total completed across the whole site)
   function updateBadge() {
+    if (!badge) return;
     const progress = getProgress();
     const n = topicsForClient.filter(t => progress[t.id] === 'complete').length;
     if (n > 0) {
@@ -905,15 +914,18 @@ const totalTopics = allTopics.length;
   tabProgressBtn.addEventListener('click', () => setTab('progress'));
   tabNotesBtn.addEventListener('click',   () => setTab('notes'));
 
-  triggerBtn.addEventListener('click', () =>
-    panel.classList.contains('hidden') ? openDashboard() : closeDashboard()
-  );
-  closeBtn.addEventListener('click', closeDashboard);
-  backdrop.addEventListener('click', closeDashboard);
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !panel.classList.contains('hidden')) closeDashboard();
-  });
+  if (isStandalone) {
+    refreshDashboard();
+  } else {
+    if (triggerBtn) triggerBtn.addEventListener('click', () =>
+      panel.classList.contains('hidden') ? openDashboard() : closeDashboard()
+    );
+    if (closeBtn) closeBtn.addEventListener('click', closeDashboard);
+    if (backdrop) backdrop.addEventListener('click', closeDashboard);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !panel.classList.contains('hidden')) closeDashboard();
+    });
+  }
 
   document.getElementById('dash-reset-btn').addEventListener('click', () => {
     if (confirm('Reset all progress? This cannot be undone.')) {
@@ -926,7 +938,7 @@ const totalTopics = allTopics.length;
 
   window.addEventListener('platform-progress-changed', () => {
     updateBadge();
-    if (!panel.classList.contains('hidden')) {
+    if (isStandalone || !panel.classList.contains('hidden')) {
       if (activeTab === 'notes') buildNotesTab();
       else refreshDashboard();
     }
