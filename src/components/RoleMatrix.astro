@@ -36,11 +36,11 @@ for (const [chSlug, tally] of phaseTally) {
 }
 
 // Build ordered phase groups (empty phases omitted from the rendered table)
-type PhaseGroup = { id: string; title: string; chapters: typeof allChapters };
+type PhaseGroup = { id: string; title: string; number: number; chapters: typeof allChapters };
 const phaseGroupMap = new Map<string, PhaseGroup>();
-for (const lp of learningPhases) {
-  phaseGroupMap.set(lp.id, { id: lp.id, title: lp.title, chapters: [] });
-}
+learningPhases.forEach((lp, i) => {
+  phaseGroupMap.set(lp.id, { id: lp.id, title: lp.title, number: i + 1, chapters: [] });
+});
 for (const ch of allChapters) {
   const pid = canonicalPhaseMap.get(ch.slug);
   if (pid && phaseGroupMap.has(pid)) phaseGroupMap.get(pid)!.chapters.push(ch);
@@ -446,6 +446,7 @@ deptPalette.forEach((p, i) => {
                 style={`position: sticky; left: 0; z-index: 10; width: ${FIRST_COL_W}px; min-width: ${FIRST_COL_W}px; padding: 5px 10px; border-right: 1px solid var(--rm-border-strong); border-bottom: 1px solid var(--rm-border-strong); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; user-select: none;`}
               >
                 <span class="rm-chevron" style="display: inline-block; font-size: 8px; margin-right: 5px; transition: transform 0.15s; transform: rotate(90deg);">▶</span>
+                <span style="opacity: 0.55; font-weight: 600; margin-right: 5px;">Phase {group.number}</span>
                 {group.title}
               </td>
               {allRoles.map(role => (
