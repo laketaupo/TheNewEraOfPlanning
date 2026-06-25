@@ -103,6 +103,13 @@ const accentBar      = colorBarMap[role.color]    ?? colorBarMap.indigo;
 const accentGradient = colorGradientMap[role.color] ?? colorGradientMap.indigo;
 
 const topicIds = phaseTopics.map((t) => t.topicId);
+
+const categoryIcons: Record<string, string> = {
+  people:  'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
+  process: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+  data:    'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  technology: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+};
 ---
 <BaseLayout
   title={`Phase ${phaseIndex + 1}: ${phase.title} — ${role.title}`}
@@ -152,58 +159,65 @@ const topicIds = phaseTopics.map((t) => t.topicId);
       <p id="phase-progress-text" class="text-sm text-gray-500 dark:text-neutral-400 mt-2 text-center">0 of {phaseTopics.length} topics completed</p>
     </div>
 
-    <!-- Chapter cards -->
+    <!-- Chapter cards grouped by category -->
     <main class="relative z-10 max-w-3xl mx-auto px-6 pb-20 animate-slide-up">
-      <div class="space-y-3">
-        {phase.sections.map((section, si) => {
-          const firstTopic = section.topics[0];
-          const chapterUrl = firstTopic?.chapterUrl;
-          const cc = firstTopic?.chapterColor ?? role.color;
-          const themeLabel = firstTopic?.themeLabel ?? '';
-          const totalMins = section.topics.reduce((s: number, t: any) => s + t.estimatedMinutes, 0);
-          const halfH = Math.round(totalMins / 30) * 0.5;
-          const time = totalMins >= 60 ? `~${halfH} hrs` : `~${totalMins} min`;
-          const chapterTopicIds = section.topics.map((t: any) => t.topicId).join(',');
-          return (
-            <a
-              href={`${chapterUrl}?from=roles/${role.slug}/${phaseIndex + 1}`}
-              class={`block p-5 rounded-2xl border ${colorBorderMap[cc] ?? colorBorderMap.indigo} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
-              data-chapter-topic-ids={chapterTopicIds}
-            >
-              <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-mono font-bold text-gray-400 dark:text-neutral-600">{String(si + 1).padStart(2, '0')}</span>
-                  <span class={`text-xs font-medium ${colorTextMap[cc] ?? colorTextMap.indigo} ${colorBgMap[cc] ?? colorBgMap.indigo} px-2 py-0.5 rounded-full`}>
-                    {themeLabel}
-                  </span>
-                </div>
-                <span class="text-xs text-gray-400 dark:text-neutral-500">{section.topics.length} topics · {time}</span>
-              </div>
-              <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-1">{section.title}</h2>
-              {section.description && (
-                <p class="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed">{section.description}</p>
-              )}
-              <div class="flex items-center gap-3 mt-4">
-                <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-neutral-800 overflow-hidden">
-                  <div class={`chapter-progress-bar h-full rounded-full ${colorBarMap[cc] ?? colorBarMap.indigo} transition-all duration-500`} style="width:0%"></div>
-                </div>
-                <span class="chapter-progress-text text-xs text-gray-400 dark:text-neutral-500 shrink-0 w-12 text-right">
-                  0 / {section.topics.length}
-                </span>
-                <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${colorTextMap[cc] ?? colorTextMap.indigo} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      <div class="space-y-10">
+        {phase.categoryGroups.map((group) => (
+            <div>
+              <div class="flex items-center gap-2.5 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${accentText} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={categoryIcons[group.category]}/>
                 </svg>
+                <h2 class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-neutral-400">{group.label}</h2>
+                <div class="flex-1 h-px bg-gray-100 dark:bg-neutral-800"></div>
               </div>
-            </a>
-          );
-        })}
+              <div class="space-y-3">
+                {group.sections.map((section, si) => {
+                  const firstTopic = section.topics[0];
+                  const chapterUrl = firstTopic?.chapterUrl;
+                  const cc = firstTopic?.chapterColor ?? role.color;
+                  const totalMins = section.topics.reduce((s: number, t: any) => s + t.estimatedMinutes, 0);
+                  const halfH = Math.round(totalMins / 30) * 0.5;
+                  const time = totalMins >= 60 ? `~${halfH} hrs` : `~${totalMins} min`;
+                  const chapterTopicIds = section.topics.map((t: any) => t.topicId).join(',');
+                  return (
+                    <a
+                      href={`${chapterUrl}?from=roles/${role.slug}/${phaseIndex + 1}`}
+                      class={`block p-5 rounded-2xl border ${colorBorderMap[cc] ?? colorBorderMap.indigo} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
+                      data-chapter-topic-ids={chapterTopicIds}
+                    >
+                      <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-mono font-bold text-gray-400 dark:text-neutral-600">{String(si + 1).padStart(2, '0')}</span>
+                        <span class="text-xs text-gray-400 dark:text-neutral-500">{section.topics.length} topics · {time}</span>
+                      </div>
+                      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1">{section.title}</h3>
+                      {section.description && (
+                        <p class="text-sm text-gray-500 dark:text-neutral-400 leading-relaxed">{section.description}</p>
+                      )}
+                      <div class="flex items-center gap-3 mt-4">
+                        <div class="flex-1 h-1.5 rounded-full bg-gray-100 dark:bg-neutral-800 overflow-hidden">
+                          <div class={`chapter-progress-bar h-full rounded-full ${colorBarMap[cc] ?? colorBarMap.indigo} transition-all duration-500`} style="width:0%"></div>
+                        </div>
+                        <span class="chapter-progress-text text-xs text-gray-400 dark:text-neutral-500 shrink-0 w-12 text-right">
+                          0 / {section.topics.length}
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class={`w-4 h-4 ${colorTextMap[cc] ?? colorTextMap.indigo} shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+        ))}
       </div>
 
       <!-- Navigation -->
       <div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
         <div class="flex items-center gap-4">
           <a
-            href={`${phase.sections[0]?.topics[0]?.chapterUrl ?? BASE_URL}?from=roles/${role.slug}/${phaseIndex + 1}`}
+            href={`${phase.categoryGroups[0]?.sections[0]?.topics[0]?.chapterUrl ?? BASE_URL}?from=roles/${role.slug}/${phaseIndex + 1}`}
             class={`inline-flex items-center gap-2 ${accentBg} ${accentText} font-semibold px-5 py-2.5 rounded-xl border ${accentBorder} hover:opacity-90 transition-opacity`}
           >
             Start phase

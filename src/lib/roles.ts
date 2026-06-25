@@ -39,6 +39,15 @@ export interface ResolvedRoleSection {
   title: string;
   description?: string;
   topics: RoleTopic[];
+  chapterSlug: string;
+}
+
+export type RoleCategory = 'people' | 'process' | 'data' | 'technology';
+
+export interface ResolvedPhaseCategoryGroup {
+  category: RoleCategory;
+  label: string;
+  sections: ResolvedRoleSection[];
 }
 
 export interface ResolvedRolePhase {
@@ -48,7 +57,29 @@ export interface ResolvedRolePhase {
   keyAreas: string[];
   behaviors: string[];
   sections: ResolvedRoleSection[];
+  categoryGroups: ResolvedPhaseCategoryGroup[];
   isEmpty: boolean;
+}
+
+const CATEGORY_LABELS: Record<RoleCategory, string> = {
+  people: 'People',
+  process: 'Process',
+  data: 'Data',
+  technology: 'Technology',
+};
+
+const CATEGORY_ORDER: RoleCategory[] = ['people', 'process', 'data', 'technology'];
+
+function categoryOf(chapterSlug: string): RoleCategory {
+  if (chapterSlug.startsWith('people-')) return 'people';
+  if (chapterSlug.startsWith('data-')) return 'data';
+  if (
+    chapterSlug.startsWith('sop-') ||
+    chapterSlug.startsWith('soe-') ||
+    chapterSlug.startsWith('exec-') ||
+    chapterSlug.startsWith('process-')
+  ) return 'process';
+  return 'technology';
 }
 
 // Eagerly load all role config files
@@ -114,6 +145,7 @@ function resolveChapter(
     title: chapter!.title,
     description: chapter!.description,
     topics,
+    chapterSlug,
   };
 }
 
@@ -133,18 +165,30 @@ export function resolveRolePhases(role: RoleConfig): ResolvedRolePhase[] | null 
         keyAreas: lp.keyAreas,
         behaviors: lp.behaviors,
         sections: [],
+        categoryGroups: [],
         isEmpty: true,
       };
     }
+    const sections = rolePhase.chapters.map((slug) =>
+      resolveChapter(slug, role.slug, allChapters, seen),
+    );
+    const grouped = new Map<RoleCategory, ResolvedRoleSection[]>();
+    for (const section of sections) {
+      const cat = categoryOf(section.chapterSlug);
+      if (!grouped.has(cat)) grouped.set(cat, []);
+      grouped.get(cat)!.push(section);
+    }
+    const categoryGroups: ResolvedPhaseCategoryGroup[] = CATEGORY_ORDER
+      .filter((cat) => grouped.has(cat))
+      .map((cat) => ({ category: cat, label: CATEGORY_LABELS[cat], sections: grouped.get(cat)! }));
     return {
       phaseId: lp.id,
       title: lp.title,
       goal: lp.goal,
       keyAreas: rolePhase.keyAreas ?? lp.keyAreas,
       behaviors: lp.behaviors,
-      sections: rolePhase.chapters.map((slug) =>
-        resolveChapter(slug, role.slug, allChapters, seen),
-      ),
+      sections,
+      categoryGroups,
       isEmpty: false,
     };
   });
