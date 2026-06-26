@@ -6,15 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 npm run dev      # Start dev server at http://localhost:4321
-npm run build    # Build to .vercel/output/static/ — always run this to verify before considering a task done
+npm run build    # Build to dist/ — always run this to verify before considering a task done
 npm run preview  # Preview the built site
 ```
 
-`npm run build` runs `astro build` then `pagefind --site .vercel/output/static` (postbuild step that indexes the site for search). No tests or linters are configured.
+`npm run build` runs `astro build` then `pagefind --site dist` (postbuild step that indexes the site for search). No tests or linters are configured.
 
 ## Architecture
 
-**Stack:** Astro 4 (static site generation) + Tailwind CSS 3 + MDX. Deployed via Vercel (`@astrojs/vercel/static` adapter, v7.x — compatible with Astro 4).
+**Stack:** Astro 4 (static site generation) + Tailwind CSS 3 + MDX. Deployed to GitHub Pages via `.github/workflows/` — CI runs `npm run build` and uploads `dist/`.
+
+**Base URL:** `astro.config.mjs` sets `base: '/TheNewEraOfPlanning/'`. All internal links must use `import.meta.env.BASE_URL` as a prefix (already done in `chapters.ts`, `roles.ts`). Never hardcode `/` as a root-relative prefix.
 
 ### Site Structure
 
@@ -93,6 +95,7 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 | `/glossary` | `src/pages/glossary.astro` |
 | `/themes` | `src/pages/themes/index.astro` (pillar/module browser) |
 | `/start` | `src/pages/start.astro` (redirects to first topic) |
+| `/progress` | `src/pages/progress.astro` (standalone My Progress page, renders `UserDashboard` in full-page mode) |
 | `/technology`, `/data`, `/process`, `/people` | `src/pages/{theme}/index.astro` |
 | `/technology/planning-software` | `src/pages/technology/planning-software/index.astro` |
 | `/technology/erp` | `src/pages/technology/erp/index.astro` |
@@ -128,10 +131,15 @@ theme, module, totalTopics
 
 ### Client-Side Persistence
 
-Two `localStorage` keys:
+Three `localStorage` keys:
 
 - **`platform-theme`** — `'dark'` or absent. `ThemeToggle.astro` writes it; `BaseLayout.astro` reads it inline before first render to prevent flash.
 - **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across themes/modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
+- **`platform-comments`** — `{ [topicId]: string }`. Per-topic freetext notes. Written and read by `src/scripts/topic-progress.ts`; surfaced in `UserDashboard.astro`.
+
+After any progress or comment change, topic scripts dispatch `window.dispatchEvent(new CustomEvent('platform-progress-changed'))` so `UserDashboard.astro` can re-render without a page reload.
+
+**`src/scripts/topic-progress.ts`** — the single client-side script bundled with all topic layouts (via `<script>` in `BaseLayout.astro`). Handles mark-complete, mark-unclear, note modal, auto-advance to next topic, and dispatching `platform-progress-changed`.
 
 ### Glossary System
 

@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, Dev]
   workflow_dispatch:
 
 permissions:
@@ -19,21 +19,50 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-branch
+
+      - name: Checkout Dev
+        uses: actions/checkout@v4
+        with:
+          ref: Dev
+          path: dev-branch
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: main-branch/package-lock.json
 
-      - run: npm ci
+      - name: Install dependencies (main)
+        run: npm ci
+        working-directory: main-branch
 
-      - name: Build Astro site
+      - name: Build main site
         run: npm run build
+        working-directory: main-branch
+
+      - name: Install dependencies (Dev)
+        run: npm ci
+        working-directory: dev-branch
+
+      - name: Build Dev site
+        run: npm run build
+        working-directory: dev-branch
+        env:
+          ASTRO_BASE: /TheNewEraOfPlanning/dev/
+
+      - name: Combine builds
+        run: |
+          mkdir -p main-branch/dist/dev
+          cp -r dev-branch/dist/. main-branch/dist/dev/
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: main-branch/dist
 
   deploy:
     name: Deploy
