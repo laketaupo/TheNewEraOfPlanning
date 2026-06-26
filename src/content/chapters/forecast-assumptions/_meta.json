@@ -1,0 +1,1 @@
+{ "title": "Forecast Assumptions", "description": "The commercial and statistical assumptions built into the demand forecast — growth rates, seasonality, and market conditions.", "icon": "server", "color": "yellow", "theme": "data", "module": "planning-parameters-and-assumptions", "comingSoon": true }

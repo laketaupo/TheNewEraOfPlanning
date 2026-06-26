@@ -1,0 +1,1 @@
+{ "title": "Data Validation Routines", "description": "The checks and routines used to validate planning data before it enters the plan.", "icon": "database", "color": "yellow", "theme": "data", "module": "data-quality-and-governance", "comingSoon": true }

@@ -1,0 +1,1 @@
+{ "title": "Capacity Data", "description": "Resource availability, utilisation rates, and constraint data — the numbers behind capacity planning.", "icon": "database", "color": "yellow", "theme": "data", "module": "planning-data-domains", "comingSoon": true }

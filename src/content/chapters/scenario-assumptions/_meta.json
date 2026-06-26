@@ -1,0 +1,1 @@
+{ "title": "Scenario Assumptions", "description": "The assumptions that underpin scenarios — demand growth, yield changes, capacity upgrades, and risk events.", "icon": "server", "color": "yellow", "theme": "data", "module": "planning-parameters-and-assumptions", "comingSoon": true }

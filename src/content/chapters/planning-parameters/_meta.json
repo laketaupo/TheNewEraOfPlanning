@@ -1,0 +1,1 @@
+{ "title": "Planning Parameters", "description": "Lead times, lot sizes, safety stock levels, and other parameters that shape how the planning engine calculates.", "icon": "server", "color": "yellow", "theme": "data", "module": "planning-parameters-and-assumptions", "comingSoon": true }
