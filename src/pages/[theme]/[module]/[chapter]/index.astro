@@ -51,22 +51,32 @@ const colorBgMap: Record<string, string> = {
 
 const BASE_URL = import.meta.env.BASE_URL;
 const moduleBackMap: Record<string, { href: string; label: string }> = {
-  'planning-software':         { href: `${BASE_URL}technology/planning-software`,         label: 'Planning Software' },
-  'erp':                  { href: `${BASE_URL}technology/erp`,     label: 'ERP' },
-  'architecture':         { href: `${BASE_URL}technology/architecture`,         label: 'Architecture & Integration' },
-  'mdm':                  { href: `${BASE_URL}technology/mdm`,                  label: 'MDM Tool' },
-  'fms':                  { href: `${BASE_URL}technology/fms`,                  label: 'FMS Tool' },
-  'data-driven-planning': { href: `${BASE_URL}data/data-driven-planning`,       label: 'Data-Driven Planning' },
-  'data-fundamentals':    { href: `${BASE_URL}data/data-fundamentals`,          label: 'Data Fundamentals' },
-  'data-governance':      { href: `${BASE_URL}data/data-governance`,            label: 'Data Governance' },
-  'reporting':            { href: `${BASE_URL}technology/reporting`,            label: 'Reporting' },
-  'process-fundamentals': { href: `${BASE_URL}process/process-fundamentals`,     label: 'Process Fundamentals' },
-  'scenario-planning':    { href: `${BASE_URL}process/scenario-planning`,       label: 'Scenario Planning' },
-  'sop-process':          { href: `${BASE_URL}process/sop-process`,             label: 'S&OP' },
-  'soe-process':          { href: `${BASE_URL}process/soe-process`,             label: 'S&OE' },
-  'execution-process':    { href: `${BASE_URL}process/execution-process`,       label: 'Execution' },
-  'organisation':               { href: `${BASE_URL}people/organisation`,               label: 'Organisation' },
-  'roles-and-responsibilities': { href: `${BASE_URL}people/roles-and-responsibilities`, label: 'Roles & Responsibilities' },
+  // Technology
+  'planning-software':                  { href: `${BASE_URL}technology/planning-software`,                  label: 'Planning Software' },
+  'erp':                                { href: `${BASE_URL}technology/erp`,                                label: 'ERP' },
+  'tool-landscape':                     { href: `${BASE_URL}technology/tool-landscape`,                     label: 'Tool Landscape & Architecture' },
+  'fms':                                { href: `${BASE_URL}technology/fms`,                                label: 'Farm Management System' },
+  'mdm':                                { href: `${BASE_URL}technology/mdm`,                                label: 'MDM' },
+  'adoption-and-usage-quality':         { href: `${BASE_URL}technology/adoption-and-usage-quality`,         label: 'Adoption & Usage Quality' },
+  // Data
+  'data-foundations':                   { href: `${BASE_URL}data/data-foundations`,                         label: 'Data Foundations' },
+  'planning-data-domains':              { href: `${BASE_URL}data/planning-data-domains`,                    label: 'Planning Data Domains' },
+  'planning-parameters-and-assumptions':{ href: `${BASE_URL}data/planning-parameters-and-assumptions`,     label: 'Planning Parameters & Assumptions' },
+  'signals-and-insights':               { href: `${BASE_URL}data/signals-and-insights`,                    label: 'Signals & Insights' },
+  'performance-and-measurement':        { href: `${BASE_URL}data/performance-and-measurement`,              label: 'Performance & Measurement' },
+  'data-quality-and-governance':        { href: `${BASE_URL}data/data-quality-and-governance`,              label: 'Data Quality & Governance' },
+  // Process
+  'planning-fundamentals':              { href: `${BASE_URL}process/planning-fundamentals`,                 label: 'Planning Fundamentals' },
+  'planning-cycles-and-governance':     { href: `${BASE_URL}process/planning-cycles-and-governance`,        label: 'Planning Cycles & Governance' },
+  'sop':                                { href: `${BASE_URL}process/sop`,                                   label: 'S&OP' },
+  'soe':                                { href: `${BASE_URL}process/soe`,                                   label: 'S&OE' },
+  'execution':                          { href: `${BASE_URL}process/execution`,                             label: 'Execution' },
+  'advanced-planning':                  { href: `${BASE_URL}process/advanced-planning`,                     label: 'Advanced Planning' },
+  // People
+  'roles-and-responsibilities':         { href: `${BASE_URL}people/roles-and-responsibilities`,             label: 'Roles & Responsibilities' },
+  'decision-making-and-ownership':      { href: `${BASE_URL}people/decision-making-and-ownership`,          label: 'Decision Making & Ownership' },
+  'collaboration-and-ways-of-working':  { href: `${BASE_URL}people/collaboration-and-ways-of-working`,     label: 'Collaboration & Ways of Working' },
+  'capabilities-and-skills':            { href: `${BASE_URL}people/capabilities-and-skills`,               label: 'Capabilities & Skills' },
 };
 const theme = chapter.theme ?? 'technology';
 const currentModule = chapter.module ?? Astro.params.module ?? 'planning-software';
@@ -142,49 +152,67 @@ const chapterPhaseCtxJson = JSON.stringify({ currentChapterSlug: chapterSlug, bg
     <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">{chapter.title}</h1>
     <p class="text-lg text-gray-500 dark:text-neutral-400 mb-10">{chapter.description}</p>
 
-    <!-- Topic list -->
-    <ol class="space-y-3">
-      {topics.map((topic, i) => (
-        <li>
-          <a
-            href={topic.url}
-            class={`group flex items-start gap-4 p-4 rounded-xl border ${borderClass} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
-          >
-            <!-- Topic number -->
-            <span class={`text-sm font-mono font-bold ${textClass} w-6 shrink-0 mt-0.5`}>{String(i + 1).padStart(2, '0')}</span>
-            <div class="flex-1 min-w-0">
-              <p class="text-gray-900 dark:text-white font-medium">{topic.title}</p>
-              <p class="text-sm text-gray-500 dark:text-neutral-500 mt-0.5">{topic.description}</p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0 mt-0.5">
-              {topic.widget && (
-                <span class="text-xs text-blue-600 dark:text-blue-500 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">interactive</span>
-              )}
-              <span class="text-xs text-gray-400 dark:text-neutral-600">{topic.estimatedMinutes} min</span>
-              <!-- Completion dot (filled by JS) -->
-              <span
-                class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 transition-colors"
-                data-topic-id={`${chapter.slug}/${topic.slug}`}
-              ></span>
-            </div>
-          </a>
-        </li>
-      ))}
-    </ol>
+    {chapter.comingSoon ? (
+      <div class="py-16 text-center">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gray-100 dark:bg-neutral-800 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <p class="text-lg font-semibold text-gray-700 dark:text-neutral-300 mb-2">Content coming soon</p>
+        <p class="text-sm text-gray-400 dark:text-neutral-500 mb-8">This chapter is part of the new structure and will be available shortly.</p>
+        <a href={back.href} class="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Back to {back.label}
+        </a>
+      </div>
+    ) : (
+      <>
+        <!-- Topic list -->
+        <ol class="space-y-3">
+          {topics.map((topic, i) => (
+            <li>
+              <a
+                href={topic.url}
+                class={`group flex items-start gap-4 p-4 rounded-xl border ${borderClass} bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-900/70 transition-all`}
+              >
+                <span class={`text-sm font-mono font-bold ${textClass} w-6 shrink-0 mt-0.5`}>{String(i + 1).padStart(2, '0')}</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-gray-900 dark:text-white font-medium">{topic.title}</p>
+                  <p class="text-sm text-gray-500 dark:text-neutral-500 mt-0.5">{topic.description}</p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0 mt-0.5">
+                  {topic.widget && (
+                    <span class="text-xs text-blue-600 dark:text-blue-500 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">interactive</span>
+                  )}
+                  <span class="text-xs text-gray-400 dark:text-neutral-600">{topic.estimatedMinutes} min</span>
+                  <span
+                    class="topic-completion-dot w-2 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 transition-colors"
+                    data-topic-id={`${chapter.slug}/${topic.slug}`}
+                  ></span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ol>
 
-    <!-- Start chapter CTA -->
-    <div class="mt-10 flex items-center gap-4">
-      <a
-        href={topics[0]?.url ?? import.meta.env.BASE_URL}
-        class={`inline-flex items-center gap-2 ${bgClass} ${textClass} font-semibold px-5 py-2.5 rounded-xl border ${borderClass} hover:opacity-90 transition-opacity`}
-      >
-        Start chapter
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>
-      </a>
-      <a id="chapter-back-overview" href={back.href} class="text-sm text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-neutral-300 transition-colors">Back to overview</a>
-    </div>
+        <!-- Start chapter CTA -->
+        <div class="mt-10 flex items-center gap-4">
+          <a
+            href={topics[0]?.url ?? import.meta.env.BASE_URL}
+            class={`inline-flex items-center gap-2 ${bgClass} ${textClass} font-semibold px-5 py-2.5 rounded-xl border ${borderClass} hover:opacity-90 transition-opacity`}
+          >
+            Start chapter
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a id="chapter-back-overview" href={back.href} class="text-sm text-gray-400 dark:text-neutral-500 hover:text-gray-600 dark:hover:text-neutral-300 transition-colors">Back to overview</a>
+        </div>
+      </>
+    )}
   </main>
   </div>
   <script is:inline define:vars={{ chapterPhaseCtxJson }}>window.__chapterPhaseCtx = JSON.parse(chapterPhaseCtxJson);</script>
