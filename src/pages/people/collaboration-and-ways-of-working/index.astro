@@ -2,7 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getChapters, getTopics, getChapterUrl } from '../../../lib/chapters';
 
-const chapters = getChapters('people').filter(c => c.module === 'roles-and-responsibilities');
+const chapters = getChapters('people').filter(c => c.module === 'collaboration-and-ways-of-working');
 const allTopics = getTopics();
 
 const iconMap: Record<string, string> = {
@@ -13,7 +13,7 @@ const iconMap: Record<string, string> = {
   'chart-bar': `<svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
 };
 ---
-<BaseLayout title="Roles &amp; Responsibilities — People">
+<BaseLayout title="Collaboration &amp; Ways of Working — People">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
     <div class="flex items-center gap-3">
       <a href={import.meta.env.BASE_URL} title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -40,10 +40,10 @@ const iconMap: Record<string, string> = {
         People
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Roles &amp; Responsibilities</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Collaboration &amp; Ways of Working</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
-        Every planning role explained — what they own, what they do day-to-day, and how they interact across S&amp;OP and S&amp;OE.
+        How planning teams collaborate, run effective meetings, and align stakeholders.
       </p>
     </div>
 
