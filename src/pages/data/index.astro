@@ -2,10 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getChapters } from '../../lib/chapters';
 
-const chapters = getChapters('data').filter(c => !c.hidden);
-const fundamentalsCount = chapters.filter(c => c.module === 'data-fundamentals').length;
-const planningCount = chapters.filter(c => c.module === 'data-driven-planning').length;
-const governanceCount = chapters.filter(c => c.module === 'data-governance').length;
+const allDataChapters = getChapters('data').filter(c => !c.hidden);
+const foundationsCount    = allDataChapters.filter(c => c.module === 'data-foundations' && !c.comingSoon).length;
+const domainsCount        = allDataChapters.filter(c => c.module === 'planning-data-domains' && !c.comingSoon).length;
+const parametersCount     = allDataChapters.filter(c => c.module === 'planning-parameters-and-assumptions' && !c.comingSoon).length;
+const signalsCount        = allDataChapters.filter(c => c.module === 'signals-and-insights' && !c.comingSoon).length;
+const performanceCount    = allDataChapters.filter(c => c.module === 'performance-and-measurement' && !c.comingSoon).length;
+const qualityCount        = allDataChapters.filter(c => c.module === 'data-quality-and-governance' && !c.comingSoon).length;
 ---
 <BaseLayout title="Data">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
@@ -45,8 +48,8 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
     <div class="relative z-10 px-6 pb-20 max-w-5xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-        <!-- Data Fundamentals -->
-        <a href={`${import.meta.env.BASE_URL}data/data-fundamentals`} class="group track-card track-fundamentals">
+        <!-- Data Foundations -->
+        <a href={`${import.meta.env.BASE_URL}data/data-foundations`} class="group track-card track-fundamentals">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <ellipse cx="12" cy="5" rx="9" ry="3" stroke-width="1.5"/>
@@ -54,42 +57,111 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
             </svg>
           </div>
-          <h2 class="track-title">Data Fundamentals</h2>
+          <h2 class="track-title">Data Foundations</h2>
           <p class="track-desc">Types, sources, and structure — the building blocks every planner needs to understand before working with planning data.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {fundamentalsCount} chapters available
-          </span>
+          {foundationsCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{foundationsCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Data-Driven Planning -->
-        <a href={`${import.meta.env.BASE_URL}data/data-driven-planning`} class="group track-card track-planning">
+        <!-- Planning Data Domains -->
+        <a href={`${import.meta.env.BASE_URL}data/planning-data-domains`} class="group track-card track-planning">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 1.1.9 2 2 2h12a2 2 0 002-2V7M4 7c0-1.1.9-2 2-2h12a2 2 0 012 2M4 7h16M8 11h8M8 15h5"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Planning Data Domains</h2>
+          <p class="track-desc">Master data, transactional data, and planning parameters — what each domain contains and why it matters.</p>
+          {domainsCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{domainsCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
+        <!-- Planning Parameters & Assumptions -->
+        <a href={`${import.meta.env.BASE_URL}data/planning-parameters-and-assumptions`} class="group track-card track-governance">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Planning Parameters &amp; Assumptions</h2>
+          <p class="track-desc">Safety stock, lead times, and the key assumptions that shape how the planning engine calculates supply and demand.</p>
+          {parametersCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{parametersCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
+        <!-- Signals & Insights -->
+        <a href={`${import.meta.env.BASE_URL}data/signals-and-insights`} class="group track-card track-fundamentals">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Signals &amp; Insights</h2>
+          <p class="track-desc">How demand signals, market data, and external inputs flow into planning — and how to interpret them.</p>
+          {signalsCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{signalsCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
+        <!-- Performance & Measurement -->
+        <a href={`${import.meta.env.BASE_URL}data/performance-and-measurement`} class="group track-card track-planning">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
             </svg>
           </div>
-          <h2 class="track-title">Data-Driven Planning</h2>
-          <p class="track-desc">How data quality and structure drive every planning outcome — from data flow to the cost of bad data in plans.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {planningCount} chapters available
-          </span>
+          <h2 class="track-title">Performance &amp; Measurement</h2>
+          <p class="track-desc">KPIs, forecast accuracy, and the data-backed metrics that tell you whether your planning is working.</p>
+          {performanceCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{performanceCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Data Governance -->
-        <a href={`${import.meta.env.BASE_URL}data/data-governance`} class="group track-card track-governance">
+        <!-- Data Quality & Governance -->
+        <a href={`${import.meta.env.BASE_URL}data/data-quality-and-governance`} class="group track-card track-governance">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
             </svg>
           </div>
-          <h2 class="track-title">Data Governance</h2>
+          <h2 class="track-title">Data Quality &amp; Governance</h2>
           <p class="track-desc">Ownership, definitions, and the governance structures that keep planning data reliable across a multi-system landscape.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {governanceCount} chapters available
-          </span>
+          {qualityCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{qualityCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
       </div>
@@ -164,6 +236,15 @@ const governanceCount = chapters.filter(c => c.module === 'data-governance').len
   :global(.dark) .track-badge {
     background: rgba(59,130,246,0.12);
     color: #93c5fd;
+  }
+
+  .track-badge-soon {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+  :global(.dark) .track-badge-soon {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
   }
 
   .live-dot {
