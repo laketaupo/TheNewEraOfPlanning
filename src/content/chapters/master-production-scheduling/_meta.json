@@ -1,0 +1,1 @@
+{ "title": "Master Production Scheduling", "description": "Building and maintaining the master production schedule — inputs, time fences, and freeze logic.", "icon": "chart-bar", "color": "blue", "theme": "process", "module": "soe", "comingSoon": true }
