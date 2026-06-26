@@ -1,0 +1,1 @@
+{ "title": "Supply and Production Data", "description": "Purchase orders, production orders, and receipts — the supply-side data that feeds the plan.", "icon": "database", "color": "yellow", "theme": "data", "module": "planning-data-domains", "comingSoon": true }

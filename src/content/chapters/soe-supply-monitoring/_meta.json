@@ -4,5 +4,5 @@
   "icon": "network",
   "color": "teal",
   "theme": "process",
-  "module": "soe-process"
+  "module": "soe"
 }

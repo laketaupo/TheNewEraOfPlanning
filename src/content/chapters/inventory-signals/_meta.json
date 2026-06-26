@@ -1,0 +1,1 @@
+{ "title": "Inventory Signals", "description": "The data signals that indicate inventory health — coverage, shortfall, and excess flags.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "signals-and-insights", "comingSoon": true }

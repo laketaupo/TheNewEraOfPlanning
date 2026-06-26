@@ -1,0 +1,1 @@
+{ "title": "Inventory Data", "description": "Stock positions, coverage calculations, and safety stock parameters — the data behind inventory decisions.", "icon": "database", "color": "yellow", "theme": "data", "module": "planning-data-domains", "comingSoon": true }

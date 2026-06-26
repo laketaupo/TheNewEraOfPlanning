@@ -10,6 +10,7 @@ export interface ChapterMeta {
   theme?: string;
   module?: string;
   hidden?: boolean;
+  comingSoon?: boolean;
 }
 
 export interface OrgNode {

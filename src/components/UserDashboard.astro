@@ -13,20 +13,32 @@ const allTopics   = getTopics();
 const themeOrder = getThemes();
 
 const moduleLabels: Record<string, string> = {
-  'planning-software':         'Planning Software',
-  'erp':                       'ERP',
-  'architecture':              'Architecture & Integration',
-  'mdm':                       'MDM Tool',
-  'fms':                       'FMS Tool',
-  'data-driven-planning':      'Data-Driven Planning',
-  'process-fundamentals':       'Process Fundamentals',
-  'scenario-planning':         'Scenario Planning',
-  'sop-process':               'S&OP',
-  'soe-process':               'S&OE',
-  'execution-process':         'Execution',
-  'organisation':              'Organisation',
-  'roles-and-responsibilities': 'Roles & Responsibilities',
-  'implementation-and-change': 'Implementation & Change',
+  // Technology
+  'planning-software':                   'Planning Software',
+  'erp':                                 'ERP',
+  'tool-landscape':                      'Tool Landscape & Architecture',
+  'fms':                                 'Farm Management System',
+  'mdm':                                 'MDM',
+  'adoption-and-usage-quality':          'Adoption & Usage Quality',
+  // Data
+  'data-foundations':                    'Data Foundations',
+  'planning-data-domains':               'Planning Data Domains',
+  'planning-parameters-and-assumptions': 'Planning Parameters & Assumptions',
+  'signals-and-insights':                'Signals & Insights',
+  'performance-and-measurement':         'Performance & Measurement',
+  'data-quality-and-governance':         'Data Quality & Governance',
+  // Process
+  'planning-fundamentals':               'Planning Fundamentals',
+  'planning-cycles-and-governance':      'Planning Cycles & Governance',
+  'sop':                                 'S&OP',
+  'soe':                                 'S&OE',
+  'execution':                           'Execution',
+  'advanced-planning':                   'Advanced Planning',
+  // People
+  'roles-and-responsibilities':          'Roles & Responsibilities',
+  'decision-making-and-ownership':       'Decision Making & Ownership',
+  'collaboration-and-ways-of-working':   'Collaboration & Ways of Working',
+  'capabilities-and-skills':             'Capabilities & Skills',
 };
 
 const themeMeta: Record<string, { label: string; accentClass: string; lineClass: string }> = {

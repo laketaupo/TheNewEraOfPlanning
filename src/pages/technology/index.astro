@@ -3,7 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getChapters } from '../../lib/chapters';
 
 const chapters = getChapters('technology');
-const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-software').length;
+const toolLandscapeCount = chapters.filter(c => !c.hidden && c.module === 'tool-landscape' && !c.comingSoon).length;
+const planningSwCount    = chapters.filter(c => !c.hidden && c.module === 'planning-software' && !c.comingSoon).length;
+const erpCount           = chapters.filter(c => !c.hidden && c.module === 'erp' && !c.comingSoon).length;
+const fmsCount           = chapters.filter(c => !c.hidden && c.module === 'fms' && !c.comingSoon).length;
+const mdmCount           = chapters.filter(c => !c.hidden && c.module === 'mdm' && !c.comingSoon).length;
+const adoptionCount      = chapters.filter(c => !c.hidden && c.module === 'adoption-and-usage-quality' && !c.comingSoon).length;
 ---
 <BaseLayout title="Technology">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
@@ -43,6 +48,25 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
     <div class="relative z-10 px-6 pb-20 max-w-5xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
+        <!-- Tool Landscape -->
+        <a href={`${import.meta.env.BASE_URL}technology/tool-landscape`} class="group track-card track-arch">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Tool Landscape</h2>
+          <p class="track-desc">An overview of the technology ecosystem — how planning software, ERP, MDM, and FMS fit together and interact.</p>
+          {toolLandscapeCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{toolLandscapeCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
         <!-- Planning Software -->
         <a href={`${import.meta.env.BASE_URL}technology/planning-software`} class="group track-card track-how-platform">
           <div class="track-icon">
@@ -52,10 +76,14 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
           </div>
           <h2 class="track-title">Planning Software</h2>
           <p class="track-desc">From building blocks to live scenario simulation — a guided tour of the Planning software.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {chapterCount} chapters available
-          </span>
+          {planningSwCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{planningSwCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
         <!-- ERP -->
@@ -67,43 +95,17 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
           </div>
           <h2 class="track-title">ERP</h2>
           <p class="track-desc">The system that executes the plan — how to navigate it and how it connects to Planning software.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            ERP guide
-          </span>
+          {erpCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{erpCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Architecture & Integration -->
-        <a href={`${import.meta.env.BASE_URL}technology/architecture`} class="group track-card track-arch">
-          <div class="track-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
-            </svg>
-          </div>
-          <h2 class="track-title">Architecture &amp; Integration</h2>
-          <p class="track-desc">Interfaces, batch runs, and data flows — how ERP, Planning software, FMS, and MDM system stay in sync.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            Integration guide
-          </span>
-        </a>
-
-        <!-- MDM Tool -->
-        <a href={`${import.meta.env.BASE_URL}technology/mdm`} class="group track-card track-mdm">
-          <div class="track-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 1.1.9 2 2 2h12a2 2 0 002-2V7M4 7c0-1.1.9-2 2-2h12a2 2 0 012 2M4 7h16M8 11h8M8 15h5"/>
-            </svg>
-          </div>
-          <h2 class="track-title">MDM Tool</h2>
-          <p class="track-desc">The master data hub — product records, hierarchies, and planning parameters that all other systems depend on.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            Master data guide
-          </span>
-        </a>
-
-        <!-- FMS Tool -->
+        <!-- FMS -->
         <a href={`${import.meta.env.BASE_URL}technology/fms`} class="group track-card track-fms">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,24 +114,52 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
           </div>
           <h2 class="track-title">FMS Tool</h2>
           <p class="track-desc">Field management tracking grower contracts, crop development, and harvest signals for supply-side planning.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            Field management guide
-          </span>
+          {fmsCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{fmsCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Reporting -->
-        <a href={`${import.meta.env.BASE_URL}technology/reporting`} class="group track-card track-reporting">
+        <!-- MDM -->
+        <a href={`${import.meta.env.BASE_URL}technology/mdm`} class="group track-card track-mdm">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 1.1.9 2 2 2h12a2 2 0 002-2V7M4 7c0-1.1.9-2 2-2h12a2 2 0 012 2M4 7h16M8 11h8M8 15h5"/>
             </svg>
           </div>
-          <h2 class="track-title">Reporting</h2>
-          <p class="track-desc">Power BI dashboards and KPI reports — connecting planning outputs to the insights that drive decisions.</p>
-          <span class="track-badge">
-            Coming soon
-          </span>
+          <h2 class="track-title">MDM Tool</h2>
+          <p class="track-desc">The master data hub — product records, hierarchies, and planning parameters that all other systems depend on.</p>
+          {mdmCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{mdmCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
+        <!-- Adoption & Usage Quality -->
+        <a href={`${import.meta.env.BASE_URL}technology/adoption-and-usage-quality`} class="group track-card track-reporting">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Adoption &amp; Usage Quality</h2>
+          <p class="track-desc">How to measure and improve system adoption — process compliance, data discipline, and embedding new ways of working.</p>
+          {adoptionCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{adoptionCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
       </div>
@@ -216,6 +246,15 @@ const chapterCount = chapters.filter(c => !c.hidden && c.module === 'planning-so
     color: #6b7280;
   }
   :global(.dark) .track-badge:not(.track-badge-live) {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .track-badge-soon {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+  :global(.dark) .track-badge-soon {
     background: rgba(255,255,255,0.07);
     color: rgba(255,255,255,0.4);
   }

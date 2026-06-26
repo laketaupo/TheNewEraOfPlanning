@@ -4,5 +4,5 @@
   "icon": "network",
   "color": "blue",
   "theme": "process",
-  "module": "sop-process"
+  "module": "sop"
 }

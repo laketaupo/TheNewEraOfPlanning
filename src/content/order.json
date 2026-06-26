@@ -1,108 +1,37 @@
 {
   "themes": ["people", "process", "data", "technology"],
   "modules": {
-    "technology": ["planning-software", "erp", "architecture", "mdm", "fms"],
-    "data": ["data-fundamentals", "data-driven-planning", "data-governance"],
-    "process": ["process-fundamentals", "scenario-planning", "sop-process", "soe-process", "execution-process"],
-    "people": ["organisation", "roles-and-responsibilities", "implementation-and-change"]
+    "people":     ["roles-and-responsibilities", "decision-making-and-ownership", "collaboration-and-ways-of-working", "capabilities-and-skills"],
+    "process":    ["planning-fundamentals", "planning-cycles-and-governance", "sop", "soe", "execution", "advanced-planning"],
+    "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "signals-and-insights", "performance-and-measurement", "data-quality-and-governance"],
+    "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
   },
   "chapters": {
-    "planning-software": [
-      "01-understanding-basics",
-      "02-the-network",
-      "03-data-flow",
-      "03-the-logic",
-      "04-the-simulation",
-      "05-navigation-and-ui",
-      "08-configuration-manual",
-      "99-layout-showcase"
-    ],
-    "erp": [
-      "erp-01-erp-basics",
-      "erp-02-the-data-model",
-      "erp-03-data-flow-into-erp",
-      "erp-04-data-flow-out-of-erp",
-      "erp-05-the-logic",
-      "erp-06-key-erp-workflows",
-      "erp-07-navigation-and-ui"
-    ],
-    "architecture": [
-      "arch-01-end-to-end",
-      "arch-02-integration"
-    ],
-    "mdm": [
-      "mdm-01-understanding-basics",
-      "mdm-02-the-data-model",
-      "mdm-03-data-flow-into-mdm",
-      "mdm-04-data-flow-out-of-mdm",
-      "mdm-05-the-logic",
-      "mdm-06-key-mdm-workflows",
-      "mdm-07-navigation-and-ui"
-    ],
-    "fms": [
-      "fms-01-understanding-basics",
-      "fms-02-the-data-model",
-      "fms-03-data-flow-into-fms",
-      "fms-04-data-flow-out-of-fms",
-      "fms-05-the-logic",
-      "fms-06-key-fms-workflows",
-      "fms-07-navigation-and-ui"
-    ],
-    "data-fundamentals": [
-      "data-03-data-types",
-      "data-05-data-sources-and-model"
-    ],
-    "data-driven-planning": [
-      "data-01-planning-data-fundamentals",
-      "data-02-data-quality-and-impact"
-    ],
-    "data-governance": [
-      "data-04-data-governance"
-    ],
-    "process-fundamentals": [
-      "process-03-operating-model",
-      "process-04-planning-policy",
-      "process-05-governance-and-escalation",
-      "process-06-kpis",
-      "sop-01-sop-fundamentals",
-      "sop-02-running-sop",
-      "soe-01-soe-fundamentals",
-      "soe-02-running-soe",
-      "exec-01-execution-fundamentals",
-      "exec-02-daily-execution"
-    ],
-    "scenario-planning": [
-      "process-01-scenario-planning-fundamentals",
-      "process-02-running-scenarios"
-    ],
-    "sop-process": [
-      "sop-demand-forecasting",
-      "sop-inventory-planning",
-      "sop-supply-planning",
-      "sop-resource-planning",
-      "sop-sop-review"
-    ],
-    "soe-process": [
-      "soe-demand-monitoring",
-      "soe-supply-monitoring",
-      "soe-exception-management",
-      "soe-integrated-review"
-    ],
-    "execution-process": [
-      "exec-order-prioritisation",
-      "exec-execution-monitoring",
-      "exec-actuals-capture",
-      "exec-feedback-to-planning"
-    ],
-    "organisation": [
-      "people-01-planning-team",
-      "people-02-accountability",
-      "people-03-planning-cadences"
-    ],
-    "roles-and-responsibilities": [
-      "people-04-roles-overview"
-    ],
-    "implementation-and-change": []
+    "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
+    "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
+    "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
+    "capabilities-and-skills":             ["planning-capabilities", "data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
+
+    "planning-fundamentals":               ["process-03-operating-model", "planning-horizons", "integrated-planning-concept", "decision-flow-overview"],
+    "planning-cycles-and-governance":      ["sop-01-sop-fundamentals", "soe-01-soe-fundamentals", "planning-cadence", "meeting-structure", "process-05-governance-and-escalation", "process-04-planning-policy"],
+    "sop":                                 ["sop-02-running-sop", "sop-demand-forecasting", "sop-supply-planning", "sop-inventory-planning", "sop-resource-planning", "sop-sop-review", "product-lifecycle-planning"],
+    "soe":                                 ["soe-02-running-soe", "soe-demand-monitoring", "soe-supply-monitoring", "soe-exception-management", "soe-integrated-review", "master-production-scheduling", "rough-cut-capacity-planning", "material-planning", "atp"],
+    "execution":                           ["exec-01-execution-fundamentals", "exec-02-daily-execution", "exec-order-prioritisation", "exec-execution-monitoring", "exec-actuals-capture", "exec-feedback-to-planning", "lot-selection"],
+    "advanced-planning":                   ["process-01-scenario-planning-fundamentals", "process-02-running-scenarios", "exception-management", "constraint-management"],
+
+    "data-foundations":                    ["data-01-planning-data-fundamentals", "data-03-data-types", "data-04-data-governance", "data-05-data-sources-and-model"],
+    "planning-data-domains":               ["forecast-data", "inventory-data", "capacity-data", "supply-and-production-data", "lifecycle-data"],
+    "planning-parameters-and-assumptions": ["planning-parameters", "scenario-assumptions", "forecast-assumptions", "business-rules"],
+    "signals-and-insights":               ["demand-signals", "supply-signals", "inventory-signals", "capacity-signals", "exception-signals"],
+    "performance-and-measurement":         ["process-06-kpis", "kpi-definitions", "kpi-interpretation", "root-cause-analysis", "performance-dashboards"],
+    "data-quality-and-governance":         ["data-02-data-quality-and-impact", "common-data-issues", "data-validation-routines", "impact-of-poor-data"],
+
+    "tool-landscape":                      ["tool-landscape-overview", "system-roles", "arch-01-end-to-end", "arch-02-integration"],
+    "planning-software":                   ["01-understanding-basics", "02-the-network", "03-data-flow", "03-the-logic", "04-the-simulation", "05-navigation-and-ui", "08-configuration-manual", "99-layout-showcase"],
+    "erp":                                 ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui"],
+    "fms":                                 ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-03-data-flow-into-fms", "fms-04-data-flow-out-of-fms", "fms-05-the-logic", "fms-06-key-fms-workflows", "fms-07-navigation-and-ui"],
+    "mdm":                                 ["mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-03-data-flow-into-mdm", "mdm-04-data-flow-out-of-mdm", "mdm-05-the-logic", "mdm-06-key-mdm-workflows", "mdm-07-navigation-and-ui"],
+    "adoption-and-usage-quality":          ["common-tool-mistakes", "best-practices", "tool-usage-by-role", "faq-and-troubleshooting"]
   },
   "topics": {
     "01-understanding-basics": [

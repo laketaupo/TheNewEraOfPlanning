@@ -1,0 +1,1 @@
+{ "title": "Demand Signals", "description": "The data signals that indicate demand — orders, forecasts, bookings, and market intelligence.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "signals-and-insights", "comingSoon": true }

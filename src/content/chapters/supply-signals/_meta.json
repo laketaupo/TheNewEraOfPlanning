@@ -1,0 +1,1 @@
+{ "title": "Supply Signals", "description": "The data signals that indicate supply availability — receipts, production completions, and supplier confirmations.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "signals-and-insights", "comingSoon": true }

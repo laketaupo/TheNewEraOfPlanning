@@ -3,11 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getChapters } from '../../lib/chapters';
 
 const allProcessChapters = getChapters('process').filter(c => !c.hidden);
-const foundationsChapterCount = allProcessChapters.filter(c => c.module === 'process-fundamentals').length;
-const sopChapterCount    = allProcessChapters.filter(c => c.module === 'sop-process').length;
-const soeChapterCount    = allProcessChapters.filter(c => c.module === 'soe-process').length;
-const execChapterCount   = allProcessChapters.filter(c => c.module === 'execution-process').length;
-const scenarioChapterCount = allProcessChapters.filter(c => c.module === 'scenario-planning').length;
+const fundamentalsCount  = allProcessChapters.filter(c => c.module === 'planning-fundamentals' && !c.comingSoon).length;
+const cyclesCount        = allProcessChapters.filter(c => c.module === 'planning-cycles-and-governance' && !c.comingSoon).length;
+const sopCount           = allProcessChapters.filter(c => c.module === 'sop' && !c.comingSoon).length;
+const soeCount           = allProcessChapters.filter(c => c.module === 'soe' && !c.comingSoon).length;
+const executionCount     = allProcessChapters.filter(c => c.module === 'execution' && !c.comingSoon).length;
+const advancedCount      = allProcessChapters.filter(c => c.module === 'advanced-planning' && !c.comingSoon).length;
 ---
 <BaseLayout title="Process">
   <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
@@ -47,79 +48,118 @@ const scenarioChapterCount = allProcessChapters.filter(c => c.module === 'scenar
     <div class="relative z-10 px-6 pb-20 max-w-5xl mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-        <!-- Process Fundamentals -->
-        <a href={`${import.meta.env.BASE_URL}process/process-fundamentals`} class="group track-card track-process">
+        <!-- Planning Fundamentals -->
+        <a href={`${import.meta.env.BASE_URL}process/planning-fundamentals`} class="group track-card track-process">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
             </svg>
           </div>
-          <h2 class="track-title">Process Fundamentals</h2>
-          <p class="track-desc">The operating model, planning policies, governance structure, and KPIs that apply across all planning processes.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {foundationsChapterCount} chapters available
-          </span>
+          <h2 class="track-title">Planning Fundamentals</h2>
+          <p class="track-desc">The end-to-end planning flow, horizons, and integrated concept — the foundation before diving into cycles.</p>
+          {fundamentalsCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{fundamentalsCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- S&OP Process -->
-        <a href={`${import.meta.env.BASE_URL}process/sop-process`} class="group track-card track-process">
+        <!-- Planning Cycles & Governance -->
+        <a href={`${import.meta.env.BASE_URL}process/planning-cycles-and-governance`} class="group track-card track-process">
+          <div class="track-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </div>
+          <h2 class="track-title">Planning Cycles &amp; Governance</h2>
+          <p class="track-desc">S&amp;OP, S&amp;OE, cadences, meeting structure, and the governance that keeps decisions on track.</p>
+          {cyclesCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{cyclesCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
+        </a>
+
+        <!-- S&OP -->
+        <a href={`${import.meta.env.BASE_URL}process/sop`} class="group track-card track-process">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
           </div>
           <h2 class="track-title">S&amp;OP</h2>
-          <p class="track-desc">Learn the monthly Sales &amp; Operations Planning cycle — aligning demand, supply, and finance into one agreed plan.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {sopChapterCount} chapters available
-          </span>
+          <p class="track-desc">Running the monthly Sales &amp; Operations Planning cycle — demand, supply, inventory, and the executive review.</p>
+          {sopCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{sopCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- S&OE Process -->
-        <a href={`${import.meta.env.BASE_URL}process/soe-process`} class="group track-card track-process">
+        <!-- S&OE -->
+        <a href={`${import.meta.env.BASE_URL}process/soe`} class="group track-card track-process">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
             </svg>
           </div>
           <h2 class="track-title">S&amp;OE</h2>
-          <p class="track-desc">Master the weekly Sales &amp; Operations Execution cycle — managing the gap between the plan and operational reality.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {soeChapterCount} chapters available
-          </span>
+          <p class="track-desc">Running the weekly S&amp;OE cycle — near-term monitoring, exception management, and plan adjustments.</p>
+          {soeCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{soeCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Execution Process -->
-        <a href={`${import.meta.env.BASE_URL}process/execution-process`} class="group track-card track-process">
+        <!-- Execution -->
+        <a href={`${import.meta.env.BASE_URL}process/execution`} class="group track-card track-process">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
           </div>
           <h2 class="track-title">Execution</h2>
-          <p class="track-desc">Understand the daily execution layer — how confirmed plans become shipped orders, produced batches, and delivered commitments.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {execChapterCount} chapters available
-          </span>
+          <p class="track-desc">Order management, lot selection, and the daily discipline that turns the plan into action.</p>
+          {executionCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{executionCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
-        <!-- Scenario Planning -->
-        <a href={`${import.meta.env.BASE_URL}process/scenario-planning`} class="group track-card track-process">
+        <!-- Advanced Planning -->
+        <a href={`${import.meta.env.BASE_URL}process/advanced-planning`} class="group track-card track-process">
           <div class="track-icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3h6m-6 0v7l-4 9a1 1 0 001 1h12a1 1 0 001-1l-4-9V3"/>
             </svg>
           </div>
-          <h2 class="track-title">Scenario Planning</h2>
-          <p class="track-desc">Explore uncertainty and compare outcomes to make better planning decisions with Planning software.</p>
-          <span class="track-badge track-badge-live">
-            <span class="live-dot"></span>
-            {scenarioChapterCount} chapters available
-          </span>
+          <h2 class="track-title">Advanced Planning</h2>
+          <p class="track-desc">Scenario planning, exception management, and constraint management for complex planning situations.</p>
+          {advancedCount > 0 ? (
+            <span class="track-badge track-badge-live"><span class="live-dot"></span>{advancedCount} chapters available</span>
+          ) : (
+            <span class="track-badge track-badge-soon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Content coming soon
+            </span>
+          )}
         </a>
 
       </div>
@@ -190,6 +230,15 @@ const scenarioChapterCount = allProcessChapters.filter(c => c.module === 'scenar
   :global(.dark) .track-badge {
     background: rgba(59,130,246,0.12);
     color: #93c5fd;
+  }
+
+  .track-badge-soon {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+  :global(.dark) .track-badge-soon {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.4);
   }
 
   .live-dot {

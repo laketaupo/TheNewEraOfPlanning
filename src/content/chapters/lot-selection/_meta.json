@@ -1,0 +1,1 @@
+{ "title": "Lot Selection", "description": "How lots are selected for fulfilment — quality status, FEFO/FIFO logic, and allocation rules.", "icon": "shield-check", "color": "blue", "theme": "process", "module": "execution", "comingSoon": true }

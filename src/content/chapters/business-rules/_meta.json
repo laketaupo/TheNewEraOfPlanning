@@ -1,0 +1,1 @@
+{ "title": "Business Rules", "description": "The policies encoded into the planning system — allocation rules, priority logic, and constraint hierarchy.", "icon": "server", "color": "yellow", "theme": "data", "module": "planning-parameters-and-assumptions", "comingSoon": true }

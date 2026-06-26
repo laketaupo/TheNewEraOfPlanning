@@ -1,0 +1,1 @@
+{ "title": "Exception Signals", "description": "The data signals that trigger exception management — threshold breaches, plan deviations, and system alerts.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "signals-and-insights", "comingSoon": true }
