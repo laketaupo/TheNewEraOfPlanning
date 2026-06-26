@@ -4,5 +4,5 @@
   "icon": "network",
   "color": "amber",
   "theme": "process",
-  "module": "execution-process"
+  "module": "execution"
 }
