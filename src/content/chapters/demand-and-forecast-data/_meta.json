@@ -1,0 +1,1 @@
+{ "title": "Demand & Forecast Data", "description": "The data that drives demand planning — statistical inputs, commercial overlays, consensus signals, and real-time demand signals including orders, bookings, and market intelligence.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "planning-data-domains", "comingSoon": true }

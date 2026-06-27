@@ -3,7 +3,7 @@
   "modules": {
     "people":     ["roles-and-responsibilities", "decision-making-and-ownership", "collaboration-and-ways-of-working", "capabilities-and-skills"],
     "process":    ["planning-fundamentals", "sop", "soe", "execution", "planning-governance", "advanced-planning"],
-    "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "signals-and-insights", "performance-and-measurement", "data-quality-and-governance"],
+    "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "performance-and-measurement", "data-quality-and-governance"],
     "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
   },
   "chapters": {
@@ -19,12 +19,11 @@
     "planning-governance":                 ["process-04-planning-policy", "process-05-governance-and-escalation", "process-06-kpis"],
     "advanced-planning":                   ["process-01-scenario-planning-fundamentals", "process-02-running-scenarios", "exception-management", "constraint-management"],
 
-    "data-foundations":                    ["data-01-planning-data-fundamentals", "data-03-data-types", "data-04-data-governance", "data-05-data-sources-and-model"],
-    "planning-data-domains":               ["forecast-data", "inventory-data", "capacity-data", "supply-and-production-data", "lifecycle-data"],
+    "data-foundations":                    ["data-01-planning-data-fundamentals", "data-03-data-types", "data-05-data-sources-and-model"],
+    "planning-data-domains":               ["demand-and-forecast-data", "supply-and-production-data", "inventory-data", "capacity-data", "lifecycle-data", "exception-signals"],
     "planning-parameters-and-assumptions": ["planning-parameters", "scenario-assumptions", "forecast-assumptions", "business-rules"],
-    "signals-and-insights":               ["demand-signals", "supply-signals", "inventory-signals", "capacity-signals", "exception-signals"],
     "performance-and-measurement":         ["kpi-definitions", "kpi-interpretation", "root-cause-analysis", "performance-dashboards"],
-    "data-quality-and-governance":         ["data-02-data-quality-and-impact", "common-data-issues", "data-validation-routines", "impact-of-poor-data"],
+    "data-quality-and-governance":         ["data-02-data-quality-and-impact", "data-validation-routines", "data-04-data-governance"],
 
     "tool-landscape":                      ["tool-landscape-overview", "system-roles", "arch-01-end-to-end", "arch-02-integration"],
     "planning-software":                   ["01-understanding-basics", "02-the-network", "03-data-flow", "03-the-logic", "04-the-simulation", "05-navigation-and-ui", "08-configuration-manual", "99-layout-showcase"],
@@ -83,7 +82,7 @@
     "fms-05-the-logic": ["fms-business-rules", "field-assignment-logic", "yield-and-activity-tracking"],
     "fms-06-key-fms-workflows": ["managing-field-activities", "recording-actuals", "reporting-and-extraction"],
     "fms-07-navigation-and-ui": ["navigating-fms", "the-fms-interface", "reading-fms-output"],
-    "data-03-data-types": ["master-data", "transactional-data", "planning-parameters"],
+    "data-03-data-types": ["master-data", "transactional-data"],
     "data-05-data-sources-and-model": ["data-model-overview", "where-data-comes-from"],
     "data-01-planning-data-fundamentals": [
       "what-is-data-driven-planning", "how-data-flows-into-a-plan", "the-cost-of-bad-data"
