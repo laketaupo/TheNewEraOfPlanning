@@ -2,28 +2,28 @@
   "themes": ["people", "process", "data", "technology"],
   "modules": {
     "people":     ["roles-and-responsibilities", "decision-making-and-ownership", "collaboration-and-ways-of-working", "capabilities-and-skills"],
-    "process":    ["planning-fundamentals", "planning-cycles-and-governance", "sop", "soe", "execution", "advanced-planning"],
+    "process":    ["planning-fundamentals", "sop", "soe", "execution", "planning-governance", "advanced-planning"],
     "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "signals-and-insights", "performance-and-measurement", "data-quality-and-governance"],
     "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
   },
   "chapters": {
-    "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
-    "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
+    "roles-and-responsibilities":          ["people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
+    "decision-making-and-ownership":       ["people-02-accountability", "decision-frameworks", "escalation-behaviour"],
     "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
-    "capabilities-and-skills":             ["planning-capabilities", "data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
+    "capabilities-and-skills":             ["data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
 
     "planning-fundamentals":               ["process-03-operating-model", "planning-horizons", "integrated-planning-concept", "decision-flow-overview"],
-    "planning-cycles-and-governance":      ["sop-01-sop-fundamentals", "soe-01-soe-fundamentals", "planning-cadence", "meeting-structure", "process-05-governance-and-escalation", "process-04-planning-policy"],
-    "sop":                                 ["sop-02-running-sop", "sop-demand-forecasting", "sop-supply-planning", "sop-inventory-planning", "sop-resource-planning", "sop-sop-review", "product-lifecycle-planning"],
-    "soe":                                 ["soe-02-running-soe", "soe-demand-monitoring", "soe-supply-monitoring", "soe-exception-management", "soe-integrated-review", "master-production-scheduling", "rough-cut-capacity-planning", "material-planning", "atp"],
-    "execution":                           ["exec-01-execution-fundamentals", "exec-02-daily-execution", "exec-order-prioritisation", "exec-execution-monitoring", "exec-actuals-capture", "exec-feedback-to-planning", "lot-selection"],
+    "sop":                                 ["sop-01-sop-fundamentals", "sop-demand-forecasting", "sop-supply-planning", "sop-inventory-planning", "sop-resource-planning", "sop-sop-review", "product-lifecycle-planning"],
+    "soe":                                 ["soe-01-soe-fundamentals", "soe-02-running-soe", "soe-demand-monitoring", "soe-supply-monitoring", "soe-integrated-review", "master-production-scheduling", "rough-cut-capacity-planning", "material-planning", "atp"],
+    "execution":                           ["exec-01-execution-fundamentals", "exec-order-prioritisation", "exec-execution-monitoring", "exec-actuals-capture", "exec-feedback-to-planning", "lot-selection"],
+    "planning-governance":                 ["process-04-planning-policy", "process-05-governance-and-escalation", "process-06-kpis"],
     "advanced-planning":                   ["process-01-scenario-planning-fundamentals", "process-02-running-scenarios", "exception-management", "constraint-management"],
 
     "data-foundations":                    ["data-01-planning-data-fundamentals", "data-03-data-types", "data-04-data-governance", "data-05-data-sources-and-model"],
     "planning-data-domains":               ["forecast-data", "inventory-data", "capacity-data", "supply-and-production-data", "lifecycle-data"],
     "planning-parameters-and-assumptions": ["planning-parameters", "scenario-assumptions", "forecast-assumptions", "business-rules"],
     "signals-and-insights":               ["demand-signals", "supply-signals", "inventory-signals", "capacity-signals", "exception-signals"],
-    "performance-and-measurement":         ["process-06-kpis", "kpi-definitions", "kpi-interpretation", "root-cause-analysis", "performance-dashboards"],
+    "performance-and-measurement":         ["kpi-definitions", "kpi-interpretation", "root-cause-analysis", "performance-dashboards"],
     "data-quality-and-governance":         ["data-02-data-quality-and-impact", "common-data-issues", "data-validation-routines", "impact-of-poor-data"],
 
     "tool-landscape":                      ["tool-landscape-overview", "system-roles", "arch-01-end-to-end", "arch-02-integration"],
@@ -95,9 +95,9 @@
     "data-04-data-governance": ["data-confidence", "data-ownership", "data-definitions", "data-governance-basics"],
     "process-03-operating-model": ["what-is-sop", "what-is-soe", "execution", "the-cadence"],
     "process-04-planning-policy": ["service-level-targets", "safety-stock", "allocation", "prioritization"],
-    "process-05-governance-and-escalation": ["decision-framework", "escalation-paths", "management-by-exception"],
+    "process-05-governance-and-escalation": ["decision-framework", "escalation-paths"],
     "process-06-kpis": [
-      "kpi-framework-overview", "key-planning-kpis", "kpi-ownership-and-review", "kpis-and-exception-management"
+      "kpi-framework-overview", "key-planning-kpis", "kpi-ownership-and-review", "kpis-and-exception-management", "execution-kpis"
     ],
     "process-01-scenario-planning-fundamentals": [
       "what-is-scenario-planning", "when-to-use-scenario-planning", "types-of-scenarios",
@@ -107,11 +107,10 @@
       "creating-a-scenario", "adjusting-parameters-and-assumptions", "running-and-comparing-scenarios",
       "promoting-a-scenario-to-baseline", "communicating-scenario-findings"
     ],
+    "planning-horizons": ["01-the-three-horizons", "02-time-fences", "03-horizon-to-cycle-mapping"],
+    "integrated-planning-concept": ["01-what-is-integrated-planning", "02-the-planning-hierarchy", "03-handoffs-and-dependencies"],
     "sop-01-sop-fundamentals": [
       "what-is-sop", "the-sop-cycle", "sop-roles", "sop-outputs", "sop-in-planning-software"
-    ],
-    "sop-02-running-sop": [
-      "demand-review", "supply-review", "pre-sop", "executive-sop", "sop-failure-modes"
     ],
     "sop-demand-forecasting": [
       "data-collection", "statistical-baseline", "commercial-overlay", "consensus-review", "forecast-lock"
@@ -128,37 +127,36 @@
     "sop-sop-review": [
       "pre-sop-alignment", "financial-reconciliation", "executive-sop-review", "plan-distribution"
     ],
-    "soe-demand-monitoring": [],
-    "soe-supply-monitoring": [],
-    "soe-exception-management": [],
-    "soe-integrated-review": [],
-    "exec-order-prioritisation": [],
-    "exec-execution-monitoring": [],
-    "exec-actuals-capture": [],
-    "exec-feedback-to-planning": [],
     "soe-01-soe-fundamentals": [
-      "what-is-soe", "weekly-cadence", "soe-roles", "exception-management", "escalating-to-sop"
+      "what-is-soe", "weekly-cadence", "soe-roles", "escalating-to-sop"
     ],
     "soe-02-running-soe": [
       "monitoring-the-plan", "adjustments-and-resets", "integrated-soe-review", "handoff-to-execution"
     ],
+    "soe-demand-monitoring": ["01-what-to-monitor", "02-monitoring-in-practice", "03-escalation-from-demand-monitoring"],
+    "soe-supply-monitoring": ["01-supply-signals", "02-supply-exceptions-and-response", "03-supplier-performance-tracking"],
+    "soe-integrated-review": ["01-purpose-and-structure", "02-the-review-agenda", "03-decisions-and-outputs"],
     "exec-01-execution-fundamentals": [
-      "what-is-execution", "from-plan-to-action", "execution-exceptions", "execution-kpis", "execution-and-erp"
+      "what-is-execution", "from-plan-to-action", "execution-exceptions", "execution-and-erp"
     ],
-    "exec-02-daily-execution": [
-      "order-prioritisation", "real-time-visibility", "execution-discipline", "feedback-to-planning"
-    ],
+    "exec-order-prioritisation": ["01-why-prioritisation-is-a-policy", "02-prioritisation-criteria", "03-allocation-policy-and-escalation"],
+    "exec-execution-monitoring": ["01-what-execution-monitoring-covers", "02-real-time-visibility-in-practice", "03-end-of-day-reconciliation"],
+    "exec-actuals-capture": ["01-what-actuals-capture-means", "02-recording-discipline-by-transaction-type", "03-reason-codes-and-continuous-improvement"],
+    "exec-feedback-to-planning": ["01-the-feedback-loop", "02-integration-lag-and-its-implications", "03-systematic-variances-and-escalation"],
+    "exception-management": ["01-what-is-exception-management", "02-exception-types", "03-exception-resolution", "04-calibrating-exception-thresholds"],
+    "constraint-management": ["01-what-is-a-constraint", "02-identifying-binding-constraints", "03-managing-constraints-in-the-planning-cycle"],
     "people-01-planning-team": [
-      "who-is-in-the-planning-team", "planning-roles-overview", "the-planning-org-chart",
-      "role-competencies", "building-an-effective-planning-team", "broader-org-structure"
+      "who-is-in-the-planning-team", "the-planning-org-chart",
+      "building-an-effective-planning-team", "broader-org-structure"
     ],
     "people-02-accountability": [
-      "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
+      "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work", "authority-model", "ownership-enforcement"
     ],
     "people-03-planning-cadences": [
-      "week-in-the-life",
-      "month-in-the-life",
-      "quarter-in-the-life"
-    ]
+      "planning-rhythm-overview"
+    ],
+    "production-planner": ["week-in-the-life"],
+    "master-planner": ["month-in-the-life"],
+    "demand-planner": ["quarter-in-the-life"]
   }
 }

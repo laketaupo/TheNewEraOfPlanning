@@ -62,7 +62,7 @@
         "soe-02-running-soe",
         "soe-demand-monitoring",
         "soe-supply-monitoring",
-        "soe-exception-management",
+        "exception-management",
         "soe-integrated-review",
         "04-the-simulation",
         "05-navigation-and-ui",

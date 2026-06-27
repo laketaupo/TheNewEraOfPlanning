@@ -1,0 +1,39 @@
+---
+title: "Real-Time Visibility in Practice"
+description: "How real-time visibility works across goods receipts, production, warehouse, and carrier feeds — and why inventory record accuracy is the foundation everything else depends on."
+chapter: "exec-execution-monitoring"
+estimatedMinutes: 5
+topicLayout: "prose-topic"
+---
+
+## What Real-Time Visibility Actually Means
+
+Real-time visibility is often described as a technology capability — dashboards, live feeds, track-and-trace. It is. But the more important question is what data those systems are showing, and whether that data reflects what is physically happening.
+
+Visibility is only as good as the event confirmations flowing into the system. A live dashboard that is drawing from data recorded yesterday does not show you what is happening now — it shows you what was happening when someone last updated the system. The gap between physical reality and system record is the core problem that real-time visibility is trying to solve, and it is not solved by dashboards alone. It is solved by confirmation discipline: making sure that events are recorded as they happen, not batched at the end of the day.
+
+## How Visibility Flows by Event Type
+
+Different event types update the system through different mechanisms, and each has its own lag characteristics.
+
+**Goods receipts** update available stock as items are received at the dock, not at day-end. In a well-configured warehouse operation, a goods receipt is posted in ERP at the point of physical receipt — the warehouse operative scans the delivery, confirms quantity and quality, and the system immediately reflects the incoming stock as available (or quarantined, if quality hold applies). The planning system sees that stock in its next refresh cycle.
+
+**Production orders** are confirmed as individual batches or production runs complete. In facilities using an MES (Manufacturing Execution System), batch completions flow automatically to ERP as production orders are closed. In facilities using manual confirmation, the window between production completion and system update depends on the discipline of the production team and the frequency of confirmation runs. Either way, the system's view of available production output lags physical reality by however long confirmation takes.
+
+**WMS pick confirmations** update allocation status in near-real-time in modern warehouse management systems. As a picker confirms a pick line complete, the system updates the order's fulfilment status and reduces available inventory. This is critical for preventing over-allocation: if pick confirmations are delayed, the system may allocate stock that has already been committed to another order.
+
+**Carrier track-and-trace feeds** provide shipment status from despatch through to proof of delivery. The quality of this data depends on the carrier's systems. Some carriers provide granular event feeds (picked up, in transit, out for delivery, delivered); others provide only milestone events. Integration with carrier feeds allows the execution team to monitor delivery performance without manual chasing.
+
+## The Risk of Deferred Recording
+
+Deferred recording — where transactions are entered at the end of a shift or day rather than at the point of the event — is the single largest source of visibility gaps in execution monitoring. It is also one of the most common operational shortcuts, because immediate confirmation takes time that production and warehouse operatives feel they do not have.
+
+The cost is significant. During the window between a physical event and its system confirmation, the planning system's view of inventory, availability, and order status is wrong. Planners making allocation decisions, S&OE reviewers checking exception queues, and customer service teams responding to availability queries are all working from stale data. Decisions made on that data carry a risk of error that grows proportionally with the lag.
+
+## Inventory Record Accuracy as the Foundation
+
+Inventory record accuracy (IRA) is the percentage of stock locations where the system quantity matches the physical quantity, measured by cycle count. It is the single most important indicator of whether real-time visibility is actually working.
+
+Below IRA of 98 to 99%, the planning system progressively loses confidence in its own data. Safety stock calculations become unreliable because the system does not know the true starting position. Allocation logic runs on phantom inventory. Exception thresholds trigger on discrepancies that turn out to be recording errors, not real shortages.
+
+Execution monitoring is built on the assumption that the inventory position shown in the system is an accurate reflection of physical stock. If IRA is low, that assumption fails — and every subsequent monitoring activity is built on an unreliable foundation. Maintaining IRA above threshold is not a warehouse housekeeping task. It is a prerequisite for the entire execution monitoring process to function.
