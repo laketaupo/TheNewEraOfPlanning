@@ -1,1 +1,1 @@
-{ "title": "Constraint Management", "description": "Identifying and managing binding constraints across the supply chain — capacity, material, and regulatory constraints.", "icon": "beaker", "color": "blue", "theme": "process", "module": "advanced-planning", "comingSoon": true }
+{ "title": "Constraint Management", "description": "Identifying and managing binding constraints across the supply chain — capacity, material, and regulatory constraints.", "icon": "beaker", "color": "blue", "theme": "process", "module": "advanced-planning" }

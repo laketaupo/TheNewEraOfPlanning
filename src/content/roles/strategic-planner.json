@@ -57,7 +57,6 @@
         "Demand forecasting: statistical baselines, commercial overlays, and consensus building"
       ],
       "chapters": [
-        "sop-02-running-sop",
         "sop-demand-forecasting",
         "sop-supply-planning",
         "sop-inventory-planning",

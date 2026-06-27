@@ -52,7 +52,6 @@
         "Navigating ERP: creating orders, processing goods receipts and issues, and reading execution output"
       ],
       "chapters": [
-        "exec-02-daily-execution",
         "exec-actuals-capture",
         "exec-order-prioritisation",
         "exec-execution-monitoring",
@@ -60,7 +59,7 @@
         "soe-02-running-soe",
         "soe-demand-monitoring",
         "soe-supply-monitoring",
-        "soe-exception-management",
+        "exception-management",
         "soe-integrated-review",
         "erp-05-the-logic",
         "erp-06-key-erp-workflows",
