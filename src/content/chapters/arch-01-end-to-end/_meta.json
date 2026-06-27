@@ -4,5 +4,6 @@
   "icon": "arrows-expand",
   "color": "emerald",
   "theme": "technology",
-  "module": "tool-landscape"
+  "module": "tool-landscape",
+  "hidden": true
 }

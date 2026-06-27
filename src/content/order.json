@@ -4,7 +4,7 @@
     "people":     ["roles-and-responsibilities", "decision-making-and-ownership", "collaboration-and-ways-of-working", "capabilities-and-skills"],
     "process":    ["planning-fundamentals", "sop", "soe", "execution", "planning-governance", "advanced-planning"],
     "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "performance-and-measurement", "data-quality-and-governance"],
-    "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
+    "technology": ["tool-landscape", "planning-software", "erp", "supporting-systems"]
   },
   "chapters": {
     "roles-and-responsibilities":          ["people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
@@ -25,12 +25,10 @@
     "performance-and-measurement":         ["kpi-definitions", "kpi-interpretation", "root-cause-analysis", "performance-dashboards"],
     "data-quality-and-governance":         ["data-02-data-quality-and-impact", "data-validation-routines", "data-04-data-governance"],
 
-    "tool-landscape":                      ["tool-landscape-overview", "system-roles", "arch-01-end-to-end", "arch-02-integration"],
-    "planning-software":                   ["01-understanding-basics", "02-the-network", "03-data-flow", "03-the-logic", "04-the-simulation", "05-navigation-and-ui", "08-configuration-manual", "99-layout-showcase"],
-    "erp":                                 ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui"],
-    "fms":                                 ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-03-data-flow-into-fms", "fms-04-data-flow-out-of-fms", "fms-05-the-logic", "fms-06-key-fms-workflows", "fms-07-navigation-and-ui"],
-    "mdm":                                 ["mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-03-data-flow-into-mdm", "mdm-04-data-flow-out-of-mdm", "mdm-05-the-logic", "mdm-06-key-mdm-workflows", "mdm-07-navigation-and-ui"],
-    "adoption-and-usage-quality":          ["common-tool-mistakes", "best-practices", "tool-usage-by-role", "faq-and-troubleshooting"]
+    "tool-landscape":     ["tool-landscape-overview", "system-roles", "arch-how-systems-connect", "tool-usage-by-role"],
+    "planning-software":  ["01-understanding-basics", "02-the-network", "03-data-flow", "planning-logic", "04-the-simulation", "05-navigation-and-ui", "planning-software-best-practices", "99-layout-showcase"],
+    "erp":                ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui", "erp-best-practices"],
+    "supporting-systems": ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-04-data-flow-out-of-fms", "fms-logic-and-workflows", "mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-04-data-flow-out-of-mdm", "mdm-logic-and-workflows", "supporting-systems-best-practices"]
   },
   "topics": {
     "01-understanding-basics": [
@@ -42,7 +40,7 @@
       "cleaning", "calibrating", "priming", "coating", "packing", "final-shipment", "full-network"
     ],
     "03-data-flow": ["demand-signal", "forecast-origin", "upstream-cascade", "timing-and-netting", "supply-signal", "inventory-netting", "parent-line-items", "downstream-cascade"],
-    "03-the-logic": [
+    "planning-logic": [
       "disaggregation-variety-to-item", "disaggregation-year-to-month", "backward-consumption",
       "scheduled-receipt", "push", "pull", "safety-stock", "demand-slicing"
     ],
@@ -68,6 +66,12 @@
     "erp-07-navigation-and-ui": ["navigating-erp", "the-erp-interface", "reading-erp-output"],
     "arch-01-end-to-end": ["interfaces", "batchrun", "data-upload"],
     "arch-02-integration": ["erp-planning-software-integration", "planning-software-fms-mdm"],
+    "arch-how-systems-connect": ["interfaces", "batchrun", "data-upload", "erp-planning-software-integration", "planning-software-fms-mdm"],
+    "planning-software-best-practices": [],
+    "erp-best-practices": [],
+    "fms-logic-and-workflows": ["fms-business-rules", "field-assignment-logic", "yield-and-activity-tracking", "managing-field-activities", "recording-actuals", "reporting-and-extraction"],
+    "mdm-logic-and-workflows": ["mdm-governance-rules", "data-matching-and-deduplication", "approval-workflows", "creating-and-maintaining-records", "managing-data-changes", "auditing-and-reporting"],
+    "supporting-systems-best-practices": [],
     "mdm-01-understanding-basics": ["what-is-mdm", "why-mdm-matters", "core-mdm-concepts"],
     "mdm-02-the-data-model": ["how-mdm-structures-data", "key-master-data-entities", "data-hierarchies-and-relationships"],
     "mdm-03-data-flow-into-mdm": ["where-master-data-originates", "how-data-enters-mdm", "data-validation-in-mdm"],

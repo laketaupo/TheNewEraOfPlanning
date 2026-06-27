@@ -4,5 +4,6 @@
   "icon": "document-text",
   "color": "emerald",
   "theme": "technology",
-  "module": "planning-software"
+  "module": "planning-software",
+  "hidden": true
 }

@@ -1,0 +1,9 @@
+{
+  "title": "Working Effectively with ERP",
+  "description": "How planners and execution teams get the most from ERP — best practices for order management, common mistakes that corrupt the planning model, and answers to frequent questions.",
+  "icon": "shield-check",
+  "color": "emerald",
+  "theme": "technology",
+  "module": "erp",
+  "comingSoon": true
+}
