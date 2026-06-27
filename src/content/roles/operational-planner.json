@@ -10,12 +10,14 @@
       "phaseId": "awareness",
       "keyAreas": [
         "How execution fits into the broader operating model and what it means to be the bridge between plan and reality",
+        "How long-term, mid-term, and short-term planning horizons connect — and what the operational planner receives from the levels above",
         "Who is in the planning team and how the operational planner role connects to supply, demand, and commercial functions",
         "Why data quality at the point of execution is critical — and what happens to the plan when actuals are poor",
         "What ERP is, why it is the system of record for execution, and how it differs from planning software"
       ],
       "chapters": [
         "process-03-operating-model",
+        "planning-horizons",
         "people-01-planning-team",
         "data-01-planning-data-fundamentals",
         "erp-01-erp-basics"
@@ -26,17 +28,25 @@
       "keyAreas": [
         "Execution fundamentals: what moves from plan to action, and how orders, actuals, and exceptions are managed",
         "The S&OE cadence: near-term monitoring, exception-based working, and the integrated review",
+        "Planning software data objects and the network model: understanding what the planning system computes and why it matters for execution",
+        "Planning logic: push/pull, safety stock, and how the system nets inventory against demand — the upstream logic behind the orders operational planners execute",
         "ERP data model: how master and transactional data are structured and how they drive execution logic",
         "How data flows into and out of ERP and back to planning software",
+        "RASCI accountability: your role in the execution handshake across planning, supply, and demand functions",
         "Data types and quality: what makes execution data reliable enough to plan from",
         "End-to-end system integration: how planning software, ERP, and the wider landscape connect"
       ],
       "chapters": [
         "exec-01-execution-fundamentals",
         "soe-01-soe-fundamentals",
+        "01-understanding-basics",
+        "02-the-network",
+        "03-data-flow",
+        "03-the-logic",
         "erp-02-the-data-model",
         "erp-03-data-flow-into-erp",
         "erp-04-data-flow-out-of-erp",
+        "people-02-accountability",
         "data-03-data-types",
         "data-02-data-quality-and-impact",
         "arch-how-systems-connect"
