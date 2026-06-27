@@ -7,7 +7,7 @@
     "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
   },
   "chapters": {
-    "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
+    "roles-and-responsibilities":          ["people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
     "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
     "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
     "capabilities-and-skills":             ["data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
@@ -146,8 +146,8 @@
     "exception-management": ["01-what-is-exception-management", "02-exception-types", "03-exception-resolution", "04-calibrating-exception-thresholds"],
     "constraint-management": ["01-what-is-a-constraint", "02-identifying-binding-constraints", "03-managing-constraints-in-the-planning-cycle"],
     "people-01-planning-team": [
-      "who-is-in-the-planning-team", "planning-roles-overview", "the-planning-org-chart",
-      "role-competencies", "building-an-effective-planning-team", "broader-org-structure"
+      "who-is-in-the-planning-team", "the-planning-org-chart",
+      "building-an-effective-planning-team", "broader-org-structure"
     ],
     "people-02-accountability": [
       "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
