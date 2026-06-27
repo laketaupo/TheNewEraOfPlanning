@@ -10,12 +10,14 @@
       "phaseId": "awareness",
       "keyAreas": [
         "The end-to-end operating model: where S&OE sits between monthly S&OP and daily execution, and why the tactical horizon matters",
+        "How long-term, mid-term, and short-term planning horizons differ — and where the tactical planner's ownership begins and ends",
         "Who is in the planning team and how the tactical planner connects to demand, supply, and commercial functions",
         "Why data quality matters in the near-term plan — and what poor data costs when managing live exceptions",
         "What ERP is, what planning software is, and how they work together to support tactical decision-making"
       ],
       "chapters": [
         "process-03-operating-model",
+        "planning-horizons",
         "people-01-planning-team",
         "data-01-planning-data-fundamentals",
         "erp-01-erp-basics"
