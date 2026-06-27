@@ -7,7 +7,7 @@
     "technology": ["tool-landscape", "planning-software", "erp", "fms", "mdm", "adoption-and-usage-quality"]
   },
   "chapters": {
-    "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
+    "roles-and-responsibilities":          ["people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
     "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
     "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
     "capabilities-and-skills":             ["planning-capabilities", "data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
@@ -149,8 +149,8 @@
       "order-prioritisation", "real-time-visibility", "execution-discipline", "feedback-to-planning"
     ],
     "people-01-planning-team": [
-      "who-is-in-the-planning-team", "planning-roles-overview", "the-planning-org-chart",
-      "role-competencies", "building-an-effective-planning-team", "broader-org-structure"
+      "who-is-in-the-planning-team", "the-planning-org-chart",
+      "building-an-effective-planning-team", "broader-org-structure"
     ],
     "people-02-accountability": [
       "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
