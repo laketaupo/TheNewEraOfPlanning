@@ -10,7 +10,7 @@
     "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
     "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
     "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
-    "capabilities-and-skills":             ["planning-capabilities", "data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
+    "capabilities-and-skills":             ["data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
 
     "planning-fundamentals":               ["process-03-operating-model", "planning-horizons", "integrated-planning-concept", "decision-flow-overview"],
     "sop":                                 ["sop-01-sop-fundamentals", "sop-demand-forecasting", "sop-supply-planning", "sop-inventory-planning", "sop-resource-planning", "sop-sop-review", "product-lifecycle-planning"],
