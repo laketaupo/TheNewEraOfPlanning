@@ -2,6 +2,24 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Working Style
+
+### Parallel Agents
+When a task splits into 2 or more independent subtasks, always dispatch parallel agents rather than working sequentially. If subtasks share no state and don't depend on each other's output, run them simultaneously.
+
+### Agent Model Selection
+Match agent model to task complexity — don't default everything to the most expensive model:
+
+| Task type | Model |
+|---|---|
+| File reads, searches, simple edits, navigation | `claude-haiku-4-5-20251001` |
+| Complex implementation, multi-file features | `claude-sonnet-4-6` |
+| Planning / design / architecture decisions | `claude-sonnet-4-6` or `claude-opus-4-8` |
+| Debugging, root-cause analysis | `claude-sonnet-4-6` |
+| Code review, security audits, cross-file analysis | `claude-sonnet-4-6` |
+
+When spawning agents via the `Agent` tool, pass the appropriate `model` parameter. Default to Haiku for lightweight work; escalate to Sonnet or Opus only when the task warrants it.
+
 ## Commands
 
 ```bash
@@ -28,14 +46,14 @@ A four-pillar learning hub (Technology, Process, Data, People). Each pillar has 
 
 > **"Pillar" vs "theme":** The product calls these four areas "pillars", but the codebase calls them **themes** — in `_meta.json`, `order.json`, function names, URL parameters, and `localStorage`. Always use `theme` in code.
 
-Current modules per pillar:
+Current modules per pillar (authoritative order from `src/content/order.json`):
 
 | Pillar | Modules |
 |---|---|
-| `technology` | `planning-software`, `erp`, `architecture`, `mdm`, `fms` |
-| `data` | `data-fundamentals`, `data-driven-planning`, `data-governance` |
-| `process` | `process-fundamentals`, `scenario-planning`, `sop-process`, `soe-process`, `execution-process` |
-| `people` | `organisation`, `roles-and-responsibilities`, `implementation-and-change` |
+| `people` | `roles-and-responsibilities`, `decision-making-and-ownership`, `collaboration-and-ways-of-working`, `capabilities-and-skills` |
+| `process` | `planning-fundamentals`, `sop`, `soe`, `execution`, `planning-governance`, `advanced-planning` |
+| `data` | `data-foundations`, `planning-data-domains`, `planning-parameters-and-assumptions`, `performance-and-measurement`, `data-quality-and-governance` |
+| `technology` | `tool-landscape`, `planning-software`, `erp`, `fms`, `mdm`, `adoption-and-usage-quality` |
 
 The Configuration Manual (`/technology/configuration`) is a separate content type surfaced via the Planning Software module page — it does not use the pillar/module/chapter/topic system.
 
@@ -97,13 +115,9 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 | `/start` | `src/pages/start.astro` (redirects to first topic) |
 | `/progress` | `src/pages/progress.astro` (standalone My Progress page, renders `UserDashboard` in full-page mode) |
 | `/technology`, `/data`, `/process`, `/people` | `src/pages/{theme}/index.astro` |
-| `/technology/planning-software` | `src/pages/technology/planning-software/index.astro` |
-| `/technology/erp` | `src/pages/technology/erp/index.astro` |
-| `/technology/architecture` | `src/pages/technology/architecture/index.astro` |
-| `/technology/mdm` | `src/pages/technology/mdm/index.astro` |
-| `/technology/fms` | `src/pages/technology/fms/index.astro` |
+| `/technology/tool-landscape`, `/technology/planning-software`, `/technology/erp`, `/technology/fms`, `/technology/mdm`, `/technology/adoption-and-usage-quality`, `/technology/reporting` | `src/pages/technology/{module}/index.astro` |
 | `/technology/configuration` | `src/pages/technology/configuration/index.astro` |
-| `/data/data-fundamentals`, `/data/data-driven-planning`, `/data/data-governance` | `src/pages/data/{module}/index.astro` |
+| `/data/data-foundations`, `/data/planning-data-domains`, `/data/planning-parameters-and-assumptions`, `/data/performance-and-measurement`, `/data/data-quality-and-governance` | `src/pages/data/{module}/index.astro` |
 | `/{theme}/{module}` (process/people) | `src/pages/{theme}/{module}/index.astro` |
 | `/{theme}/{module}/{chapter}/` | `src/pages/[theme]/[module]/[chapter]/index.astro` |
 | `/{theme}/{module}/{chapter}/{topic}` | `src/pages/[theme]/[module]/[chapter]/[topic].astro` |
@@ -176,7 +190,7 @@ All shared components live in `src/components/`:
 
 **New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
 
-**New module in Technology:** also create `src/pages/technology/{module}/index.astro`, add a card to `src/pages/technology/index.astro`, add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`.
+**New module (any pillar):** create `src/pages/{theme}/{module}/index.astro`, add a card to the pillar index page (`src/pages/{theme}/index.astro`), add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`. Also register it in `src/content/order.json`.
 
 **New role course:** add `src/content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
 
