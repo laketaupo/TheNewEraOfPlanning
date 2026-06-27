@@ -2,34 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="The New Era of Planning">
-  <div class="relative min-h-screen flex flex-col items-center">
+  <div class="relative min-h-screen flex flex-col items-center px-6 pt-12 pb-12 md:block md:p-0">
 
     <!-- Grid background -->
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <!-- Radial glow -->
     <div class="absolute inset-0 bg-home-radial pointer-events-none"></div>
 
-    <!-- Logo -->
-    <div class="relative z-10 w-full px-10 pt-6 flex items-center gap-2 flex-shrink-0">
-      <div class="w-2 h-2 rounded-full bg-[#635CFA]"></div>
-      <span class="text-sm font-bold tracking-tight text-gray-900 dark:text-white">Planning Hub</span>
+    <!-- Title: normal flow on mobile, absolute top-center on desktop -->
+    <div class="relative z-20 w-full text-center md:absolute md:top-12 md:inset-x-0 md:px-8">
+      <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
+        The New Era of <span style="color:#635CFA">Planning</span>
+      </h1>
+      <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-lg mx-auto">
+        A structured learning platform covering the people, processes, data, and technology behind modern supply chain planning.
+      </p>
     </div>
 
-    <!-- Content area -->
-    <div class="relative z-10 flex-1 w-full px-8 pb-12" style="display: grid; grid-template-rows: 1fr auto 1fr auto 0.8fr; align-items: center; justify-items: center;">
-
-      <!-- Headline -->
-      <div class="text-center" style="grid-row: 2">
-        <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
-          The New Era of <span style="color:#635CFA">Planning</span>
-        </h1>
-        <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-lg mx-auto">
-          A structured learning platform covering the people, processes, data, and technology behind modern supply chain planning.
-        </p>
-      </div>
-
-      <!-- Cards -->
-      <div class="grid grid-cols-2 gap-6 w-full max-w-5xl" style="grid-row: 4">
+    <!-- Cards: stacked below title on mobile, absolute centered on desktop -->
+    <div class="relative z-10 mt-10 w-full max-w-md md:absolute md:inset-0 md:flex md:items-center md:justify-center md:mt-0 md:max-w-none md:px-8 md:pt-48">
+      <div class="flex flex-col gap-6 w-full md:grid md:grid-cols-2 md:max-w-3xl">
 
         <a href={`${import.meta.env.BASE_URL}themes`} class="lcard">
           <div class="lcard-header">
@@ -48,7 +40,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="lcard-desc">Choose your role and follow a guided path through five phases — from awareness to hands-on execution.</p>
           <span class="lcard-link">Browse by role →</span>
         </a>
-
 
       </div>
     </div>
