@@ -1,77 +1,54 @@
-name: Deploy to GitHub Pages
+name: Deploy to Azure Static Web Apps
 
 on:
   push:
-    branches: [main, Dev]
-  workflow_dispatch:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+  pull-requests: write
 
 jobs:
-  build:
-    name: Build
+  build_and_deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
+    name: Build and Deploy
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          path: main-branch
-
-      - name: Checkout Dev
-        uses: actions/checkout@v4
-        with:
-          ref: Dev
-          path: dev-branch
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: main-branch/package-lock.json
 
-      - name: Install dependencies (main)
+      - name: Install dependencies
         run: npm ci
-        working-directory: main-branch
 
-      - name: Build main site
+      - name: Build site
         run: npm run build
-        working-directory: main-branch
 
-      - name: Install dependencies (Dev)
-        run: npm ci
-        working-directory: dev-branch
-
-      - name: Build Dev site
-        run: npm run build
-        working-directory: dev-branch
-        env:
-          ASTRO_BASE: /TheNewEraOfPlanning/dev/
-
-      - name: Combine builds
-        run: |
-          mkdir -p main-branch/dist/dev
-          cp -r dev-branch/dist/. main-branch/dist/dev/
-
-      - uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          path: main-branch/dist
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: /
+          output_location: dist
+          skip_app_build: true
 
-  deploy:
-    name: Deploy
-    needs: build
+  close_pull_request:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    name: Close Pull Request
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Close staging environment
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: close
+          app_location: /
