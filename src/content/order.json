@@ -156,9 +156,10 @@
       "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
     ],
     "people-03-planning-cadences": [
-      "week-in-the-life",
-      "month-in-the-life",
-      "quarter-in-the-life"
-    ]
+      "planning-rhythm-overview"
+    ],
+    "production-planner": ["week-in-the-life"],
+    "master-planner": ["month-in-the-life"],
+    "demand-planner": ["quarter-in-the-life"]
   }
 }

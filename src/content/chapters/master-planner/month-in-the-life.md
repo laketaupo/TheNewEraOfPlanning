@@ -1,6 +1,7 @@
 ---
 title: "Month in the Life of a Tactical Planner"
 description: "A structured walkthrough of how a tactical planner spends a typical month — from S&OE cadence management through to handover into the monthly S&OP cycle."
+chapter: "master-planner"
 topicLayout: prose-topic
 ---
 
