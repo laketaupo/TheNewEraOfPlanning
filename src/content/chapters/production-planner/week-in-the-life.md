@@ -1,6 +1,7 @@
 ---
 title: "Week in the Life of an Operational Planner"
 description: "A structured walkthrough of how an operational planner spends a typical week — from Monday's order prioritisation through to Friday's execution feedback loop."
+chapter: "production-planner"
 topicLayout: prose-topic
 ---
 

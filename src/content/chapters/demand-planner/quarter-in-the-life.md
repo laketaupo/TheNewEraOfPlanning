@@ -1,6 +1,7 @@
 ---
 title: "Quarter in the Life of a Strategic Planner"
 description: "A structured walkthrough of how a strategic planner spends a typical quarter — anchored by three monthly S&OP cycles plus a quarterly IBP or business review horizon."
+chapter: "demand-planner"
 topicLayout: prose-topic
 ---
 
