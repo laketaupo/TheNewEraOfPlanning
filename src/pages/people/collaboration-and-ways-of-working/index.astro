@@ -52,15 +52,16 @@ const iconMap: Record<string, string> = {
       {chapters.map((chapter) => {
         const topics = allTopics.filter(t => t.chapterSlug === chapter.slug);
         return chapter.comingSoon ? (
-          <div class="relative flex flex-col p-8 rounded-2xl border bg-gray-50 dark:bg-neutral-900/40 border-gray-200 dark:border-neutral-800 opacity-60 cursor-default select-none">
-            <span class="text-xs font-mono font-bold text-gray-400 dark:text-neutral-600 mb-4">0{chapter.order}</span>
+          <div class="relative flex flex-col p-8 rounded-2xl border bg-blue-50 dark:bg-neutral-900 border-blue-200 dark:border-blue-500/30 cursor-default select-none">
+            <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 mb-4">0{chapter.order}</span>
             <div class="flex items-start gap-4 mb-4">
-              <div class="text-gray-400 dark:text-neutral-600 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['users']} />
+              <div class="text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" set:html={iconMap[chapter.icon] ?? iconMap['users']} />
               <div>
-                <h3 class="text-lg font-semibold text-gray-500 dark:text-neutral-400 leading-snug">{chapter.title}</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-snug">{chapter.title}</h3>
+                <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1 leading-relaxed">{chapter.description}</p>
               </div>
             </div>
-            <div class="flex items-center mt-auto pt-4 border-t border-gray-100 dark:border-neutral-800">
+            <div class="flex items-center mt-auto pt-4 border-t border-blue-100 dark:border-blue-500/10">
               <span class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 dark:text-neutral-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 Coming soon
