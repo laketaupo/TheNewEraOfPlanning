@@ -1,0 +1,8 @@
+{
+  "title": "How the Systems Connect",
+  "description": "How ERP, Planning software, FMS, and MDM connect — the interfaces, batch runs, data uploads, and integration patterns that keep the four-system landscape in sync.",
+  "icon": "switch-horizontal",
+  "color": "emerald",
+  "theme": "technology",
+  "module": "tool-landscape"
+}

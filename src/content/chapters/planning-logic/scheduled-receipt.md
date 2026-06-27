@@ -1,0 +1,7 @@
+---
+title: "What Is a Scheduled Receipt?"
+description: "An existing supply order that is already in progress and will arrive at a known future date."
+chapter: "planning-logic"
+estimatedMinutes: 3
+widget: ""
+---

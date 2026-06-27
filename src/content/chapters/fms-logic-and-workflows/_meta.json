@@ -1,0 +1,8 @@
+{
+  "title": "FMS Logic & Workflows",
+  "description": "How FMS calculates yield and manages field operations — the business rules that govern field assignments and yield forecasting, plus the key workflows for recording actuals and extracting supply signals.",
+  "icon": "globe",
+  "color": "emerald",
+  "theme": "technology",
+  "module": "supporting-systems"
+}

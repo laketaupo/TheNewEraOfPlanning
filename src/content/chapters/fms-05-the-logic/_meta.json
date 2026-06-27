@@ -1,8 +1,9 @@
 {
   "title": "How FMS Calculates Yield",
-  "description": "The rules and calculations FMS applies to field data \u2014 how yield forecasts are generated, how field assignments work, and how harvest schedules are derived.",
+  "description": "The rules and calculations FMS applies to field data — how yield forecasts are generated, how field assignments work, and how harvest schedules are derived.",
   "icon": "globe",
   "color": "emerald",
   "theme": "technology",
-  "module": "fms"
+  "module": "fms",
+  "hidden": true
 }

@@ -39,7 +39,7 @@
         "erp-04-data-flow-out-of-erp",
         "data-03-data-types",
         "data-02-data-quality-and-impact",
-        "arch-01-end-to-end"
+        "arch-how-systems-connect"
       ]
     },
     {
@@ -79,8 +79,7 @@
         "process-04-planning-policy",
         "process-05-governance-and-escalation",
         "process-06-kpis",
-        "data-04-data-governance",
-        "arch-02-integration"
+        "data-04-data-governance"
       ]
     }
   ]

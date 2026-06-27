@@ -38,13 +38,13 @@
         "01-understanding-basics",
         "02-the-network",
         "03-data-flow",
-        "03-the-logic",
+        "planning-logic",
         "data-03-data-types",
         "data-02-data-quality-and-impact",
         "data-05-data-sources-and-model",
         "erp-02-the-data-model",
         "erp-04-data-flow-out-of-erp",
-        "arch-01-end-to-end"
+        "arch-how-systems-connect"
       ]
     },
     {

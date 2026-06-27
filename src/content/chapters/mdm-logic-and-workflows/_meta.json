@@ -1,0 +1,8 @@
+{
+  "title": "MDM Logic & Workflows",
+  "description": "How MDM governs master data and manages record changes — the governance rules and approval workflows that maintain data quality, plus the core workflows for creating, updating, and auditing records.",
+  "icon": "database",
+  "color": "emerald",
+  "theme": "technology",
+  "module": "supporting-systems"
+}
