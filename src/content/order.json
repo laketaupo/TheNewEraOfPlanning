@@ -8,7 +8,7 @@
   },
   "chapters": {
     "roles-and-responsibilities":          ["people-04-roles-overview", "people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
-    "decision-making-and-ownership":       ["people-02-accountability", "decision-rights", "decision-frameworks", "escalation-behaviour", "ownership-of-planning-decisions"],
+    "decision-making-and-ownership":       ["people-02-accountability", "decision-frameworks", "escalation-behaviour"],
     "collaboration-and-ways-of-working":   ["people-03-planning-cadences", "collaboration-model", "planning-meeting-behaviour", "stakeholder-alignment", "communication-standards"],
     "capabilities-and-skills":             ["planning-capabilities", "data-literacy", "decision-making-skills", "continuous-improvement-mindset"],
 
@@ -153,7 +153,7 @@
       "role-competencies", "building-an-effective-planning-team", "broader-org-structure"
     ],
     "people-02-accountability": [
-      "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work"
+      "what-is-rasci", "demand-review-rasci", "supply-review-rasci", "executive-sop-rasci", "making-rasci-work", "authority-model", "ownership-enforcement"
     ],
     "people-03-planning-cadences": [
       "week-in-the-life",
