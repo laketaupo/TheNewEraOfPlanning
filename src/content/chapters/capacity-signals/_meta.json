@@ -1,1 +1,0 @@
-{ "title": "Capacity Signals", "description": "The data signals that indicate capacity pressure — utilisation alerts, queue build-up, and constraint proximity.", "icon": "chart-bar", "color": "yellow", "theme": "data", "module": "signals-and-insights", "comingSoon": true }

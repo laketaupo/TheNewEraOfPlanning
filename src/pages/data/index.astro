@@ -6,7 +6,6 @@ const allDataChapters = getChapters('data').filter(c => !c.hidden);
 const foundationsCount    = allDataChapters.filter(c => c.module === 'data-foundations' && !c.comingSoon).length;
 const domainsCount        = allDataChapters.filter(c => c.module === 'planning-data-domains' && !c.comingSoon).length;
 const parametersCount     = allDataChapters.filter(c => c.module === 'planning-parameters-and-assumptions' && !c.comingSoon).length;
-const signalsCount        = allDataChapters.filter(c => c.module === 'signals-and-insights' && !c.comingSoon).length;
 const performanceCount    = allDataChapters.filter(c => c.module === 'performance-and-measurement' && !c.comingSoon).length;
 const qualityCount        = allDataChapters.filter(c => c.module === 'data-quality-and-governance' && !c.comingSoon).length;
 ---
@@ -77,7 +76,7 @@ const qualityCount        = allDataChapters.filter(c => c.module === 'data-quali
             </svg>
           </div>
           <h2 class="track-title">Planning Data Domains</h2>
-          <p class="track-desc">Master data, transactional data, and planning parameters — what each domain contains and why it matters.</p>
+          <p class="track-desc">Demand, supply, inventory, and capacity — the data and signals behind each planning domain, from static master data to real-time indicators.</p>
           {domainsCount > 0 ? (
             <span class="track-badge track-badge-live"><span class="live-dot"></span>{domainsCount} chapters available</span>
           ) : (
@@ -99,25 +98,6 @@ const qualityCount        = allDataChapters.filter(c => c.module === 'data-quali
           <p class="track-desc">Safety stock, lead times, and the key assumptions that shape how the planning engine calculates supply and demand.</p>
           {parametersCount > 0 ? (
             <span class="track-badge track-badge-live"><span class="live-dot"></span>{parametersCount} chapters available</span>
-          ) : (
-            <span class="track-badge track-badge-soon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              Content coming soon
-            </span>
-          )}
-        </a>
-
-        <!-- Signals & Insights -->
-        <a href={`${import.meta.env.BASE_URL}data/signals-and-insights`} class="group track-card track-fundamentals">
-          <div class="track-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-            </svg>
-          </div>
-          <h2 class="track-title">Signals &amp; Insights</h2>
-          <p class="track-desc">How demand signals, market data, and external inputs flow into planning — and how to interpret them.</p>
-          {signalsCount > 0 ? (
-            <span class="track-badge track-badge-live"><span class="live-dot"></span>{signalsCount} chapters available</span>
           ) : (
             <span class="track-badge track-badge-soon">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

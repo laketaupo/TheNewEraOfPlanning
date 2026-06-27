@@ -1,1 +1,0 @@
-{ "title": "Forecast Data", "description": "The data that drives demand forecasting — statistical inputs, commercial overlays, and consensus signals.", "icon": "database", "color": "yellow", "theme": "data", "module": "planning-data-domains", "comingSoon": true }
