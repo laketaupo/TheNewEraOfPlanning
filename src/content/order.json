@@ -4,7 +4,7 @@
     "people":     ["roles-and-responsibilities", "decision-making-and-ownership", "collaboration-and-ways-of-working", "capabilities-and-skills"],
     "process":    ["planning-fundamentals", "sop", "soe", "execution", "planning-governance", "advanced-planning"],
     "data":       ["data-foundations", "planning-data-domains", "planning-parameters-and-assumptions", "performance-and-measurement", "data-quality-and-governance"],
-    "technology": ["tool-landscape", "planning-software", "erp", "supporting-systems"]
+    "technology": ["tool-landscape", "planning-software", "erp", "supporting-systems", "adoption-and-usage-quality"]
   },
   "chapters": {
     "roles-and-responsibilities":          ["people-01-planning-team", "demand-planner", "supply-planner", "production-planner", "master-planner", "sales", "operations", "finance", "management", "subject-matter-expert"],
@@ -28,7 +28,8 @@
     "tool-landscape":     ["tool-landscape-overview", "system-roles", "arch-how-systems-connect", "tool-usage-by-role"],
     "planning-software":  ["01-understanding-basics", "02-the-network", "03-data-flow", "planning-logic", "04-the-simulation", "05-navigation-and-ui", "planning-software-best-practices", "99-layout-showcase"],
     "erp":                ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui", "erp-best-practices"],
-    "supporting-systems": ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-04-data-flow-out-of-fms", "fms-logic-and-workflows", "mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-04-data-flow-out-of-mdm", "mdm-logic-and-workflows", "supporting-systems-best-practices"]
+    "supporting-systems": ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-04-data-flow-out-of-fms", "fms-logic-and-workflows", "mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-04-data-flow-out-of-mdm", "mdm-logic-and-workflows", "supporting-systems-best-practices"],
+    "adoption-and-usage-quality": ["best-practices", "common-tool-mistakes", "faq-and-troubleshooting"]
   },
   "topics": {
     "01-understanding-basics": [
