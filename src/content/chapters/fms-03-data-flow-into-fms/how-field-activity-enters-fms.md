@@ -1,6 +1,6 @@
 ---
 title: "How Field Activity Enters FMS"
-description: "The process for recording crop events, updating yield estimates, and logging harvest activity in FMS — from mobile capture in the field to system entry."
+description: "Grower contracts, planting declarations, and crop progress updates each enter FMS through a different pathway — manual entry, mobile capture, or integration from agronomic tools."
 chapter: "fms-03-data-flow-into-fms"
 estimatedMinutes: 4
 topicLayout: "prose-topic"

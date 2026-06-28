@@ -1,9 +1,8 @@
 {
   "title": "Data Flow: Into MDM",
-  "description": "Where master data originates and how it enters MDM — from new product requests to attribute updates and hierarchy changes.",
+  "description": "Where master data originates and how it enters MDM — from product creation requests and supplier updates to system-generated changes — before it is distributed to Planning software, ERP, and FMS.",
   "icon": "database",
   "color": "emerald",
   "theme": "technology",
-  "module": "mdm",
-  "hidden": true
+  "module": "supporting-systems"
 }
