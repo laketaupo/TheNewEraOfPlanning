@@ -1,6 +1,6 @@
 {
   "title": "What FMS Sends to Planning",
-  "description": "The supply signals that flow from FMS into Planning software — yield forecasts, harvest schedules, and the actuals that close the loop on planned supply.",
+  "description": "The supply signals that flow from FMS into Planning software — yield forecasts, harvest schedules, and the actuals that close the loop on planned supply. For the technical integration mechanics, see How the Systems Connect in the Tool Landscape module.",
   "icon": "globe",
   "color": "emerald",
   "theme": "technology",

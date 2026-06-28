@@ -1,6 +1,6 @@
 ---
 title: "Planning software ↔ FMS & MDM system"
-description: "FMS feeds field-level supply signals into Planning software; MDM system feeds the master data that makes those signals interpretable. Understanding these integrations is essential for data quality management."
+description: "How Planning software connects to FMS and MDM technically — integration frequency, the master data dependency chain that must complete before a new item is plannable, and why item-code mapping between systems is a recurring failure point."
 chapter: "arch-how-systems-connect"
 estimatedMinutes: 4
 topicLayout: "prose-topic"
