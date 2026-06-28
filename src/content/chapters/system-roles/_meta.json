@@ -1,1 +1,1 @@
-{ "title": "System Roles", "description": "The role each system plays in the planning landscape — system of record, system of engagement, system of intelligence.", "icon": "cube", "color": "emerald", "theme": "technology", "module": "tool-landscape", "comingSoon": true }
+{ "title": "System Roles", "description": "The role each system plays in the planning landscape — system of record, system of engagement, system of intelligence.", "icon": "cube", "color": "emerald", "theme": "technology", "module": "tool-landscape" }

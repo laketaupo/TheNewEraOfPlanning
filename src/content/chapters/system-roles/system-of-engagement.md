@@ -1,0 +1,73 @@
+---
+title: "System of Engagement"
+description: "What 'system of engagement' means, which systems planners and field teams work in daily, and why the SoE depends entirely on the health of the systems feeding it."
+chapter: "system-roles"
+estimatedMinutes: 8
+topicLayout: "prose-topic"
+---
+
+## What "System of Engagement" Actually Means
+
+A system of engagement is defined by a single question: where do people log in to do their work? Not where the data lives, not where the data was created — where does a person sit down, open a screen, and make decisions. That is the SoE.
+
+The definition sounds obvious until you examine it carefully, because the SoE and the system of record are different dimensions of the same system landscape. The SoE is the user-facing layer. The SoR is the data-owning layer. A system can be the primary workspace for a team without owning most of the data it displays. Planning Software is the clearest example of this: it is where supply planners spend their entire working day, but the majority of the data it shows — inventory balances, purchase orders, master data records — originated in other systems and was delivered to Planning Software through integrations. The planner experiences one coherent workspace. Behind that workspace is a network of upstream sources.
+
+This distinction has practical consequences. When a number in Planning Software looks wrong, the investigation starts not by asking whether Planning Software has a bug, but by asking which system owns that data and whether the integration that delivered it ran cleanly. Confusing the SoE with the SoR leads planning teams to chase problems in the wrong place — or to accept bad data because "the system looks fine."
+
+## Planning Software: The Planning SoE
+
+For supply planners and demand planners, Planning Software is the system where the planning process lives. Everything that happens in the S&OP and S&OE cycles — every review meeting, every decision, every plan version — is executed inside Planning Software.
+
+In the S&OP cycle, planners use Planning Software to review the statistical demand forecast, apply commercial overlays or adjustments, run the supply plan against that demand signal, identify capacity gaps, and compare supply against inventory targets. When the numbers don't reconcile, planners run scenarios directly in the system — adjusting sourcing assumptions, shifting production between periods, testing the impact of a constrained supply run. The final step of the S&OP process is a plan approval recorded in Planning Software. That approval is not just a formality. It is the documented record that a particular supply plan was reviewed and signed off at a particular point in time, with particular assumptions in place.
+
+In the S&OE cycle, the focus shifts from building the plan to protecting it. Planners log into Planning Software each morning to review exception alerts — items flagged for short supply, delayed purchase orders, forecast deviations, or stock-out risk within the frozen horizon. Planning Software's exception management functionality determines what a planner sees when they open the system. A well-configured exception screen surfaces only the alerts that require human attention today. A poorly configured one floods the planner with hundreds of flagged items, most of which resolve themselves, causing them to either work through a backlog they can't meaningfully prioritise or, more commonly, start ignoring the exception queue altogether.
+
+Planning Software is also where release decisions happen. When planned orders cross the release horizon, Planning Software generates the instructions that get sent to ERP — purchase order requisitions, production orders, transfer orders. The planner's action in Planning Software triggers a downstream record in the SoR.
+
+## FMS: The Field SoE
+
+In agricultural supply chains, the supply signal starts in the field, and the field is a different world from the planning office. Crop yields, planting progress, pest incidents, and harvest estimates do not live naturally in a planning tool. They live in a Field Management System, which is the SoE for field managers, agronomists, and grower relations teams.
+
+FMS is where the grower relationship is formalised and tracked. A grower contract is recorded here: which grower, which fields, which crop variety, how many tonnes committed for which delivery window, at what price. As the season progresses, field activities are logged — planting dates, germination rates, fertiliser applications, irrigation events, crop growth assessments. When an agronomist visits a farm and updates the projected yield based on what they see, that update is entered into FMS.
+
+These records matter to the planning process because they are the most current view of what the supply chain will actually receive from the field. The harvest forecast in Planning Software is only as current as the last data push from FMS. When field conditions change rapidly — a late frost, an unexpected disease pressure event, a region delivering earlier than the contracted window — FMS is where that change is first captured, and FMS-to-Planning-Software integration is what makes that change visible to planners before it becomes a surprise at intake.
+
+Field managers and agronomists do not need to interact with Planning Software. Their SoE is FMS. They record what they observe. The integration does the rest. This is the intended design: each role works in the system built for their domain, and data flows between systems through structured interfaces rather than manual re-entry.
+
+## ERP: The Transactional SoE
+
+ERP serves a different community. Procurement teams raise and receive purchase orders in ERP. Operations teams manage production orders, record goods receipts, and trigger goods issues in ERP. Finance teams use ERP for invoice matching and inventory valuation. These are not planning activities in the strict sense, but they generate the actuals that planning depends on.
+
+ERP is worth understanding as an SoE because the quality of ERP data entry directly affects Planning Software's view of reality. When a goods receipt is posted late, or posted to the wrong location, or posted with the wrong quantity, Planning Software inherits that error through the nightly integration. The planner sees an inventory position that doesn't match the physical stock. A procurement team that understands that their ERP entries feed Planning Software tends to be more disciplined about posting accuracy and timing than one that treats ERP as an isolated operational tool.
+
+## MDM System: The Master Data SoE
+
+The MDM system is the SoE for data stewards and product managers — the people responsible for creating and maintaining the master data records that every other system depends on. When a new raw material is sourced, a data steward creates the item record in MDM system, defines its attributes, sets the unit of measure and conversion factors, and assigns the planning parameters. That record then propagates to Planning Software, ERP, and FMS through their respective integration feeds.
+
+The MDM system's role as SoE means that master data errors are introduced at source. If a minimum order quantity is entered incorrectly in MDM system, every system that receives that master data will reflect the error. The correction has to happen in MDM system — not in Planning Software, not in ERP — and then flow back out through the same distribution path.
+
+## The Dependency: SoE Is Only as Good as Its Inputs
+
+This is the most important structural fact about the SoE concept: the SoE cannot be better than the data flowing into it. Planning Software is an exceptionally capable planning environment, but every insight it offers rests on the accuracy and freshness of the data it received from ERP, MDM system, and FMS.
+
+Consider what happens when the overnight ERP integration fails. Planners log into Planning Software the next morning. The system loads normally. The dashboards render. The exception alerts appear. But every inventory position shown is yesterday's. If goods receipts were posted in ERP after the integration ran, Planning Software doesn't know about them. If purchase orders were closed in ERP, Planning Software still shows them as open. The planner is working in their SoE, looking at a normal-looking screen, making decisions based on stale data — and they may not know it immediately.
+
+This is the most dangerous integration failure scenario. An obvious crash — a system that won't load, an error page, a blank dashboard — forces the team to investigate. A silent staleness looks like normal operation. Decisions get made. Supply plans get released. Orders get placed. The problem only surfaces when the physical supply chain contradicts what the plan predicted, and by then the decision is already downstream.
+
+Good integration monitoring exists to prevent exactly this. Each integration feed should have a last-successful-run timestamp that planners can check before the morning review meeting. The question "when did the ERP feed last complete successfully?" should be as routine as checking whether the planning run has finished.
+
+## A System Can Be Both SoE and SoR
+
+The SoE and SoR categories are not mutually exclusive — a system frequently holds both roles, but for different data types. Understanding which role a system is playing for a given data domain is what matters.
+
+Planning Software is the SoE for planners and simultaneously the SoR for planning scenarios and simulation data. No other system stores the planning run versions, the what-if scenarios, or the historical record of which supply plan was approved for which planning period. That data originates in Planning Software and lives only there. If Planning Software goes down and the backup is three days old, those three days of planning work are gone — because Planning Software was the SoR for that data.
+
+ERP is the SoE for procurement and operations teams and the SoR for all transactional data — purchase orders, production orders, goods movements, financial postings. MDM system is the SoE for data stewards and the SoR for master data. FMS is the SoE for field teams and the SoR for grower contracts, field activity records, and harvest actuals.
+
+Treating "SoR" as a label that means "the real system" and "SoE" as "just the interface" misrepresents how these systems carry organisational knowledge. Both roles carry real weight. Losing a system in its SoR capacity means losing data. Losing a system in its SoE capacity means the people who depend on it cannot work — even if all the underlying data survives intact in upstream systems.
+
+## Why SoE Configuration Is a Process Decision
+
+The SoE is not neutral. It shapes how work gets done. Planning Software's exception management configuration — what triggers an alert, how alerts are prioritised, which planners see which exception categories — is a direct encoding of the planning team's operating model. Change the threshold for a demand deviation alert, and planners either catch more real problems earlier or deal with more noise. Getting that configuration right requires understanding the planning process deeply enough to know which signals matter, at what tolerance level, and to whom.
+
+This is why SoE configuration should be owned jointly by the planning team and the system team — not delegated entirely to IT. The system team understands what is technically possible. The planning team understands what is operationally necessary. Neither group alone has the full picture.

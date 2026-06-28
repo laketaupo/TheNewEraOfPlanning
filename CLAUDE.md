@@ -61,7 +61,7 @@ The Configuration Manual (`/technology/configuration`) is a separate content typ
 
 **Chapter content** lives in `src/content/chapters/<chapter-slug>/`:
 - `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `theme`, `module`. Optional: `hidden` (bool).
-- `NN-topic-slug.md` — one file per topic, frontmatter-heavy.
+- `topic-slug.md` — one file per topic, frontmatter-heavy. **Do not use a numeric prefix (`NN-`) on topic filenames.** The content loader in `[topic].astro` resolves the file by matching `${chapterSlug}/${topicSlug}.md` — the slug is derived by stripping any leading digits, so a file named `01-the-four-systems.md` produces slug `the-four-systems` but the loader then looks for `the-four-systems.md` and fails to find it. Chapter directory names may have the `NN-` prefix; topic filenames must not.
 
 Both `theme` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (theme defaults to `'technology'`, module defaults to `'planning-software'`).
 
