@@ -1,6 +1,6 @@
 {
   "title": "MDM Basics",
-  "description": "What MDM is, why master data management matters, and the core concepts that underpin how MDM serves the rest of the system landscape.",
+  "description": "How MDM works internally — what master data is, why data management matters across the system landscape, and the core concepts that underpin how MDM serves ERP, Planning software, and FMS. For a high-level introduction to what MDM is and why it exists, see The Four Systems in the Tool Landscape module.",
   "icon": "database",
   "color": "emerald",
   "theme": "technology",

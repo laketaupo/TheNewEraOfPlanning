@@ -1,6 +1,6 @@
 {
   "title": "ERP Basics",
-  "description": "What ERP is, how it evolved from legacy ERP, and the core concepts that underpin how it works.",
+  "description": "How ERP works internally — its evolution from legacy systems, the core concepts that govern transaction processing, and the structural assumptions that downstream planning depends on. For a high-level introduction to what ERP is and why it exists, see The Four Systems in the Tool Landscape module.",
   "icon": "office-building",
   "color": "emerald",
   "theme": "technology",
