@@ -1,9 +1,0 @@
-{
-  "title": "Working Effectively with Supporting Systems",
-  "description": "Best practices for planners working with FMS and MDM — how to read field signals accurately, how to raise master data issues, and the most common mistakes that create discrepancies between the planning model and operational reality.",
-  "icon": "shield-check",
-  "color": "emerald",
-  "theme": "technology",
-  "module": "supporting-systems",
-  "comingSoon": true
-}
