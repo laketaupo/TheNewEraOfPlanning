@@ -26,9 +26,9 @@
     "data-quality-and-governance":         ["data-02-data-quality-and-impact", "data-validation-routines", "data-04-data-governance"],
 
     "tool-landscape":     ["tool-landscape-overview", "system-roles", "arch-how-systems-connect", "tool-usage-by-role"],
-    "planning-software":  ["01-understanding-basics", "02-the-network", "03-data-flow", "planning-logic", "04-the-simulation", "05-navigation-and-ui", "planning-software-best-practices", "99-layout-showcase"],
-    "erp":                ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui", "erp-best-practices"],
-    "supporting-systems": ["fms-01-understanding-basics", "fms-02-the-data-model", "fms-04-data-flow-out-of-fms", "fms-logic-and-workflows", "mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-04-data-flow-out-of-mdm", "mdm-logic-and-workflows", "supporting-systems-best-practices"],
+    "planning-software":  ["01-understanding-basics", "02-the-network", "03-data-flow", "planning-logic", "04-the-simulation", "05-navigation-and-ui", "99-layout-showcase"],
+    "erp":                ["erp-01-erp-basics", "erp-02-the-data-model", "erp-03-data-flow-into-erp", "erp-04-data-flow-out-of-erp", "erp-05-the-logic", "erp-06-key-erp-workflows", "erp-07-navigation-and-ui"],
+    "supporting-systems": ["fms-mdm-in-the-landscape", "fms-01-understanding-basics", "fms-02-the-data-model", "fms-03-data-flow-into-fms", "fms-04-data-flow-out-of-fms", "fms-logic-and-workflows", "mdm-01-understanding-basics", "mdm-02-the-data-model", "mdm-03-data-flow-into-mdm", "mdm-04-data-flow-out-of-mdm", "mdm-logic-and-workflows"],
     "adoption-and-usage-quality": ["best-practices", "common-tool-mistakes", "faq-and-troubleshooting"]
   },
   "topics": {
@@ -71,11 +71,8 @@
     "system-roles": ["system-of-record", "system-of-engagement", "system-of-intelligence"],
     "arch-how-systems-connect": ["interfaces", "batchrun", "data-upload", "erp-planning-software-integration", "planning-software-fms-mdm"],
     "tool-usage-by-role": ["supply-planner-tools", "demand-planner-tools", "data-manager-tools"],
-    "planning-software-best-practices": [],
-    "erp-best-practices": [],
     "fms-logic-and-workflows": ["fms-business-rules", "field-assignment-logic", "yield-and-activity-tracking", "managing-field-activities", "recording-actuals", "reporting-and-extraction"],
     "mdm-logic-and-workflows": ["mdm-governance-rules", "data-matching-and-deduplication", "approval-workflows", "creating-and-maintaining-records", "managing-data-changes", "auditing-and-reporting"],
-    "supporting-systems-best-practices": [],
     "mdm-01-understanding-basics": ["what-is-mdm", "why-mdm-matters", "core-mdm-concepts"],
     "mdm-02-the-data-model": ["how-mdm-structures-data", "key-master-data-entities", "data-hierarchies-and-relationships"],
     "mdm-03-data-flow-into-mdm": ["where-master-data-originates", "how-data-enters-mdm", "data-validation-in-mdm"],
@@ -83,6 +80,7 @@
     "mdm-05-the-logic": ["mdm-governance-rules", "data-matching-and-deduplication", "approval-workflows"],
     "mdm-06-key-mdm-workflows": ["creating-and-maintaining-records", "managing-data-changes", "auditing-and-reporting"],
     "mdm-07-navigation-and-ui": ["navigating-mdm", "the-mdm-interface", "reading-mdm-output"],
+    "fms-mdm-in-the-landscape": ["why-they-are-grouped", "fms-vs-mdm-key-differences", "how-fms-and-mdm-interact"],
     "fms-01-understanding-basics": ["what-is-fms", "why-field-management-matters", "core-fms-concepts"],
     "fms-02-the-data-model": ["how-fms-structures-data", "key-field-data-entities", "field-to-plan-data-mapping"],
     "fms-03-data-flow-into-fms": ["where-field-data-originates", "how-field-activity-enters-fms", "data-capture-and-validation"],

@@ -125,8 +125,7 @@
       "03-data-flow":                     "conceptual",
       "planning-logic":                   "conceptual",
       "04-the-simulation":                "practical",
-      "05-navigation-and-ui":             "practical",
-      "planning-software-best-practices": "optimization"
+      "05-navigation-and-ui":             "practical"
     },
     "erp": {
       "erp-01-erp-basics":          "awareness",
@@ -135,19 +134,20 @@
       "erp-04-data-flow-out-of-erp": "conceptual",
       "erp-05-the-logic":           "practical",
       "erp-06-key-erp-workflows":   "practical",
-      "erp-07-navigation-and-ui":   "practical",
-      "erp-best-practices":         "optimization"
+      "erp-07-navigation-and-ui":   "practical"
     },
     "supporting-systems": {
+      "fms-mdm-in-the-landscape":       "awareness",
       "fms-01-understanding-basics":    "awareness",
       "fms-02-the-data-model":          "conceptual",
+      "fms-03-data-flow-into-fms":      "conceptual",
       "fms-04-data-flow-out-of-fms":    "conceptual",
       "fms-logic-and-workflows":        "practical",
       "mdm-01-understanding-basics":    "awareness",
       "mdm-02-the-data-model":          "conceptual",
+      "mdm-03-data-flow-into-mdm":      "conceptual",
       "mdm-04-data-flow-out-of-mdm":    "conceptual",
-      "mdm-logic-and-workflows":        "practical",
-      "supporting-systems-best-practices": "optimization"
+      "mdm-logic-and-workflows":        "practical"
     },
     "adoption-and-usage-quality": {
       "best-practices":         "optimization",
