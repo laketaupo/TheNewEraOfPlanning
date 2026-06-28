@@ -1,1 +1,1 @@
-{ "title": "Tool Landscape", "description": "An overview of all tools in the planning technology stack — what each does, and how they relate.", "icon": "cube", "color": "emerald", "theme": "technology", "module": "tool-landscape" }
+{ "title": "Tool Landscape", "description": "What the four systems are, why the planning landscape needs all four, and what breaks when any one is absent — the 'what exists and why' layer before diving into any system's mechanics.", "icon": "cube", "color": "emerald", "theme": "technology", "module": "tool-landscape" }

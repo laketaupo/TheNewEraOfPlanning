@@ -1,6 +1,6 @@
 ---
 title: "ERP ↔ Planning software Integration"
-description: "ERP and Planning software exchange transactional data in both directions. ERP sends actuals; Planning software sends planned orders. Understanding the flow prevents discrepancies between what is planned and what is being executed."
+description: "How the ERP ↔ Planning software link works technically — what triggers the exchange, the batch cycle that drives it, common failure modes, and the governance control that prevents unreviewed planned orders from auto-releasing to ERP."
 chapter: "arch-how-systems-connect"
 estimatedMinutes: 4
 topicLayout: "prose-topic"
