@@ -55,7 +55,9 @@ Current modules per pillar (authoritative order from `src/content/order.json`):
 | `data` | `data-foundations`, `planning-data-domains`, `planning-parameters-and-assumptions`, `performance-and-measurement`, `data-quality-and-governance` |
 | `technology` | `tool-landscape`, `planning-software`, `erp`, `fms`, `mdm`, `adoption-and-usage-quality` |
 
-The Configuration Manual (`/technology/configuration`) is a separate content type surfaced via the Planning Software module page — it does not use the pillar/module/chapter/topic system.
+The Configuration Manual is available both as a standalone page at `/technology/configuration` (content in `src/content/configuration/`) and as a chapter `08-configuration-manual` within the `planning-software` module (content in `src/content/chapters/08-configuration-manual/`).
+
+> **Known slug mismatch:** The process `planning-governance` module page is at `src/pages/process/planning-cycles-and-governance/index.astro` and filters chapters by `c.module === 'planning-cycles-and-governance'`. All chapter `_meta.json` files and `order.json` use `planning-governance`, so no chapters appear on that page. Fix by changing the filter in the page file to `'planning-governance'` (or renaming the folder and matching the filter).
 
 ### Content Model
 
@@ -271,7 +273,6 @@ Use the table below when building or reviewing a role. Chapters not relevant to 
 - `fms-04-data-flow-out-of-fms` — what FMS sends to planning *(field-facing roles)*
 
 **Phase 3 — Practical** (how to execute, step by step)
-- `sop-02-running-sop` — running demand, supply, and executive S&OP reviews
 - `sop-demand-forecasting` — data collection, statistical baseline, commercial overlay
 - `sop-supply-planning` — capacity assessment, constrained run, gap identification
 - `sop-inventory-planning` — target setting, coverage analysis, safety stock review
@@ -280,9 +281,7 @@ Use the table below when building or reviewing a role. Chapters not relevant to 
 - `soe-02-running-soe` — monitoring the near-term plan, integrated S&OE review
 - `soe-demand-monitoring` — demand monitoring process
 - `soe-supply-monitoring` — supply monitoring process
-- `soe-exception-management` — exception identification and resolution
 - `soe-integrated-review` — integrated S&OE review steps
-- `exec-02-daily-execution` — order prioritisation, real-time visibility, execution discipline
 - `exec-actuals-capture` — capturing actuals
 - `exec-order-prioritisation` — order prioritisation workflow
 - `exec-execution-monitoring` — monitoring execution
@@ -308,3 +307,9 @@ Use the table below when building or reviewing a role. Chapters not relevant to 
 - `arch-02-integration` — ERP↔Planning Software↔FMS/MDM integration patterns
 
 **Phase 5 — Optimization** (reserved for advanced/SME-level content; often empty for initial role builds)
+- `exception-management` — exception identification, types, resolution, threshold calibration (`advanced-planning` module)
+- `constraint-management` — identifying and managing binding constraints (`advanced-planning` module)
+- `process-01-scenario-planning-fundamentals` — scenario planning overview
+- `process-02-running-scenarios` — creating, comparing, and promoting scenarios
+
+**Role-profile chapters** (under `roles-and-responsibilities` module) — `demand-planner`, `supply-planner`, `production-planner`, `master-planner`, `sales`, `operations`, `finance`, `management`, `subject-matter-expert`. Each contains "day/week/month/quarter-in-the-life" topics written as prose walkthroughs of the role's planning rhythm. Add these to Phase 3 when building role courses.
