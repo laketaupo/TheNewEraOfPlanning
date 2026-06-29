@@ -115,7 +115,7 @@
     "planning-horizons": ["01-the-three-horizons", "02-time-fences", "03-horizon-to-cycle-mapping"],
     "integrated-planning-concept": ["01-what-is-integrated-planning", "02-the-planning-hierarchy", "03-handoffs-and-dependencies"],
     "sop-01-sop-fundamentals": [
-      "what-is-sop", "the-sop-cycle", "sop-roles", "sop-outputs", "sop-in-planning-software"
+      "the-sop-cycle", "sop-roles", "sop-outputs", "sop-in-planning-software"
     ],
     "sop-demand-forecasting": [
       "data-collection", "statistical-baseline", "commercial-overlay", "consensus-review", "forecast-lock"
@@ -133,7 +133,7 @@
       "pre-sop-alignment", "financial-reconciliation", "executive-sop-review", "plan-distribution"
     ],
     "soe-01-soe-fundamentals": [
-      "what-is-soe", "weekly-cadence", "soe-roles", "escalating-to-sop"
+      "weekly-cadence", "soe-roles", "escalating-to-sop"
     ],
     "soe-02-running-soe": [
       "monitoring-the-plan", "adjustments-and-resets", "integrated-soe-review", "handoff-to-execution"
