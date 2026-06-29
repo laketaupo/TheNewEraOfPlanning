@@ -41,10 +41,10 @@ const moduleLabels: Record<string, string> = {
 };
 
 const themeMeta: Record<string, { label: string; accentClass: string; lineClass: string }> = {
-  technology: { label: 'Technology', accentClass: 'text-emerald-600 dark:text-emerald-400', lineClass: 'bg-emerald-100 dark:bg-emerald-500/20' },
-  process:    { label: 'Process',    accentClass: 'text-blue-600 dark:text-blue-400',       lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
-  data:       { label: 'Data',       accentClass: 'text-yellow-600 dark:text-yellow-400',   lineClass: 'bg-yellow-100 dark:bg-yellow-500/20' },
-  people:     { label: 'People',     accentClass: 'text-red-600 dark:text-red-400',         lineClass: 'bg-red-100 dark:bg-red-500/20' },
+  technology: { label: 'Technology', accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  process:    { label: 'Process',    accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  data:       { label: 'Data',       accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  people:     { label: 'People',     accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
 };
 
 const hierarchy = themeOrder.map(themeKey => {
@@ -453,10 +453,10 @@ const totalTopics = allTopics.length;
   };
 
   const themeAccentClass = {
-    technology: 'text-emerald-600 dark:text-emerald-400',
+    technology: 'text-blue-600 dark:text-blue-400',
     process:    'text-blue-600 dark:text-blue-400',
-    data:       'text-yellow-600 dark:text-yellow-400',
-    people:     'text-red-600 dark:text-red-400',
+    data:       'text-blue-600 dark:text-blue-400',
+    people:     'text-blue-600 dark:text-blue-400',
   };
 
   // Session-only state filter: '' (all) | 'complete' | 'unclear' | 'none' (remaining).
