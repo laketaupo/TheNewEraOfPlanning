@@ -10,12 +10,14 @@
       "phaseId": "awareness",
       "keyAreas": [
         "The end-to-end operating model: where S&OP sits relative to S&OE and execution, and how the three horizons connect",
+        "How long-term, mid-term, and short-term planning horizons differ — what each covers, who owns it, and how they hand off",
         "Who owns strategic planning in the organisation and how it interfaces with commercial, finance, and supply functions",
         "Why data quality is the foundation of credible long-range plans",
         "What planning software is and how it enables structured, data-driven S&OP"
       ],
       "chapters": [
         "process-03-operating-model",
+        "planning-horizons",
         "people-01-planning-team",
         "data-01-planning-data-fundamentals",
         "erp-01-erp-basics"
@@ -38,13 +40,13 @@
         "01-understanding-basics",
         "02-the-network",
         "03-data-flow",
-        "03-the-logic",
+        "planning-logic",
         "data-03-data-types",
         "data-02-data-quality-and-impact",
         "data-05-data-sources-and-model",
         "erp-02-the-data-model",
         "erp-04-data-flow-out-of-erp",
-        "arch-01-end-to-end"
+        "arch-how-systems-connect"
       ]
     },
     {
@@ -74,7 +76,8 @@
         "Setting and owning planning policy: safety stock targets, service level agreements, and allocation rules",
         "Governance and escalation: how strategic planning decisions are surfaced, challenged, and closed",
         "KPI ownership: which long-horizon metrics you own and how to steer on them in S&OP reviews",
-        "Data governance: maintaining master data quality as the foundation of credible long-range plans"
+        "Data governance: maintaining master data quality as the foundation of credible long-range plans",
+        "System integration: how planning software, ERP, and the wider landscape connect — and what that means for data governance and plan integrity"
       ],
       "chapters": [
         "process-04-planning-policy",

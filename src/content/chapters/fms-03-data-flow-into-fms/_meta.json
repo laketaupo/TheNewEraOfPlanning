@@ -1,8 +1,8 @@
 {
   "title": "Data Flow: Into FMS",
-  "description": "Where field data originates and how it enters FMS \u2014 from contract setup to crop monitoring records and harvest reporting.",
+  "description": "Where field-level data originates — grower contracts, planting records, and agronomic inputs — and how that data enters FMS to become usable supply signals for Planning software.",
   "icon": "globe",
   "color": "emerald",
   "theme": "technology",
-  "module": "fms"
+  "module": "supporting-systems"
 }

@@ -1,6 +1,6 @@
 ---
-title: "Data Capture and Validation"
-description: "How FMS validates field data at entry — what checks are applied, what can be overridden, and what the implications are for supply plan accuracy downstream."
+title: "Data Capture and Validation in FMS"
+description: "FMS applies validation rules at entry to prevent bad field data from propagating into the supply plan — what those rules are and what happens when data fails them."
 chapter: "fms-03-data-flow-into-fms"
 estimatedMinutes: 4
 topicLayout: "prose-topic"

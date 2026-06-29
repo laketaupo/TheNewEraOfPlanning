@@ -1,8 +1,8 @@
 {
   "title": "FMS Basics",
-  "description": "What FMS is, why field management matters for supply chain planning, and the core concepts that connect field activity to the supply plan.",
+  "description": "How FMS works internally — what it tracks, why field management matters for supply chain planning, and the core concepts that connect field activity to the supply plan. For a high-level introduction to what FMS is and why it exists, see The Four Systems in the Tool Landscape module.",
   "icon": "globe",
   "color": "emerald",
   "theme": "technology",
-  "module": "fms"
+  "module": "supporting-systems"
 }

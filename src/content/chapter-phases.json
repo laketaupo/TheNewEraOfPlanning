@@ -1,0 +1,158 @@
+{
+  "people": {
+    "roles-and-responsibilities": {
+      "people-01-planning-team":  "awareness",
+      "demand-planner":           "awareness",
+      "supply-planner":           "awareness",
+      "production-planner":       "awareness",
+      "master-planner":           "awareness",
+      "sales":                    "awareness",
+      "operations":               "awareness",
+      "finance":                  "awareness",
+      "management":               "awareness",
+      "subject-matter-expert":    "optimization"
+    },
+    "decision-making-and-ownership": {
+      "people-02-accountability": "conceptual",
+      "decision-frameworks":      "conceptual",
+      "escalation-behaviour":     "embedded"
+    },
+    "collaboration-and-ways-of-working": {
+      "people-03-planning-cadences":  "conceptual",
+      "collaboration-model":          "conceptual",
+      "planning-meeting-behaviour":   "practical",
+      "stakeholder-alignment":        "practical",
+      "communication-standards":      "embedded"
+    },
+    "capabilities-and-skills": {
+      "data-literacy":                "practical",
+      "decision-making-skills":       "practical",
+      "continuous-improvement-mindset": "optimization"
+    }
+  },
+
+  "process": {
+    "planning-fundamentals": {
+      "process-03-operating-model":   "awareness",
+      "planning-horizons":            "awareness",
+      "integrated-planning-concept":  "conceptual",
+      "decision-flow-overview":       "conceptual"
+    },
+    "sop": {
+      "sop-01-sop-fundamentals":    "conceptual",
+      "sop-demand-forecasting":     "practical",
+      "sop-supply-planning":        "practical",
+      "sop-inventory-planning":     "practical",
+      "sop-resource-planning":      "practical",
+      "sop-sop-review":             "practical",
+      "product-lifecycle-planning": "embedded"
+    },
+    "soe": {
+      "soe-01-soe-fundamentals":        "conceptual",
+      "soe-02-running-soe":             "practical",
+      "soe-demand-monitoring":          "practical",
+      "soe-supply-monitoring":          "practical",
+      "soe-integrated-review":          "practical",
+      "master-production-scheduling":   "practical",
+      "rough-cut-capacity-planning":    "practical",
+      "material-planning":              "practical",
+      "atp":                            "practical"
+    },
+    "execution": {
+      "exec-01-execution-fundamentals": "conceptual",
+      "exec-order-prioritisation":      "practical",
+      "exec-execution-monitoring":      "practical",
+      "exec-actuals-capture":           "practical",
+      "exec-feedback-to-planning":      "practical",
+      "lot-selection":                  "practical"
+    },
+    "planning-governance": {
+      "process-04-planning-policy":         "embedded",
+      "process-05-governance-and-escalation": "embedded",
+      "process-06-kpis":                    "embedded"
+    },
+    "advanced-planning": {
+      "process-01-scenario-planning-fundamentals": "conceptual",
+      "process-02-running-scenarios":              "practical",
+      "exception-management":                      "embedded",
+      "constraint-management":                     "optimization"
+    }
+  },
+
+  "data": {
+    "data-foundations": {
+      "data-01-planning-data-fundamentals": "awareness",
+      "data-03-data-types":                 "conceptual",
+      "data-05-data-sources-and-model":     "conceptual"
+    },
+    "planning-data-domains": {
+      "demand-and-forecast-data":   "conceptual",
+      "supply-and-production-data": "conceptual",
+      "inventory-data":             "conceptual",
+      "capacity-data":              "conceptual",
+      "lifecycle-data":             "conceptual",
+      "exception-signals":          "practical"
+    },
+    "planning-parameters-and-assumptions": {
+      "planning-parameters":   "conceptual",
+      "scenario-assumptions":  "practical",
+      "forecast-assumptions":  "practical",
+      "business-rules":        "embedded"
+    },
+    "performance-and-measurement": {
+      "kpi-definitions":      "embedded",
+      "kpi-interpretation":   "embedded",
+      "root-cause-analysis":  "embedded",
+      "performance-dashboards": "embedded"
+    },
+    "data-quality-and-governance": {
+      "data-02-data-quality-and-impact": "conceptual",
+      "data-validation-routines":         "practical",
+      "data-04-data-governance":          "embedded"
+    }
+  },
+
+  "technology": {
+    "tool-landscape": {
+      "tool-landscape-overview":  "awareness",
+      "system-roles":             "conceptual",
+      "arch-how-systems-connect": "conceptual",
+      "tool-usage-by-role":       "practical"
+    },
+    "planning-software": {
+      "01-understanding-basics":          "conceptual",
+      "02-the-network":                   "conceptual",
+      "03-data-flow":                     "conceptual",
+      "planning-logic":                   "conceptual",
+      "04-the-simulation":                "practical",
+      "05-navigation-and-ui":             "practical"
+    },
+    "erp": {
+      "erp-01-erp-basics":          "awareness",
+      "erp-02-the-data-model":      "conceptual",
+      "erp-03-data-flow-into-erp":  "conceptual",
+      "erp-04-data-flow-out-of-erp": "conceptual",
+      "erp-05-the-logic":           "practical",
+      "erp-06-key-erp-workflows":   "practical",
+      "erp-07-navigation-and-ui":   "practical"
+    },
+    "supporting-systems": {
+      "fms-mdm-in-the-landscape":       "awareness",
+      "fms-01-understanding-basics":    "awareness",
+      "fms-02-the-data-model":          "conceptual",
+      "fms-03-data-flow-into-fms":      "conceptual",
+      "fms-04-data-flow-out-of-fms":    "conceptual",
+      "fms-logic-and-workflows":        "practical",
+      "mdm-01-understanding-basics":    "awareness",
+      "mdm-02-the-data-model":          "conceptual",
+      "mdm-03-data-flow-into-mdm":      "conceptual",
+      "mdm-04-data-flow-out-of-mdm":    "conceptual",
+      "mdm-logic-and-workflows":        "practical"
+    },
+    "adoption-and-usage-quality": {
+      "best-practices":         "optimization",
+      "common-tool-mistakes":   "embedded",
+      "faq-and-troubleshooting": "embedded"
+    }
+  }
+}

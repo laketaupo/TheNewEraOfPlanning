@@ -63,7 +63,7 @@ The Configuration Manual is available both as a standalone page at `/technology/
 
 **Chapter content** lives in `src/content/chapters/<chapter-slug>/`:
 - `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `theme`, `module`. Optional: `hidden` (bool).
-- `NN-topic-slug.md` — one file per topic, frontmatter-heavy.
+- `topic-slug.md` — one file per topic, frontmatter-heavy. **Do not use a numeric prefix (`NN-`) on topic filenames.** The content loader in `[topic].astro` resolves the file by matching `${chapterSlug}/${topicSlug}.md` — the slug is derived by stripping any leading digits, so a file named `01-the-four-systems.md` produces slug `the-four-systems` but the loader then looks for `the-four-systems.md` and fails to find it. Chapter directory names may have the `NN-` prefix; topic filenames must not.
 
 Both `theme` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (theme defaults to `'technology'`, module defaults to `'planning-software'`).
 
@@ -84,6 +84,18 @@ Both `theme` and `module` are required in every `_meta.json`. Omitting either ca
 | `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
 
 **Configuration manual** lives in `src/content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
+
+**`src/content/chapter-phases.json`** — maps every non-hidden chapter to one of the five learning phases, organized as `pillar → module → chapter-slug: "phase"`. Used as a content-author reference when building or reviewing role learning paths. Must be updated manually whenever a chapter is added or deleted — add/remove the chapter slug under the correct pillar and module key.
+
+```json
+{
+  "technology": {
+    "tool-landscape": {
+      "chapter-slug": "awareness"
+    }
+  }
+}
+```
 
 **Roles** live in `src/content/roles/<slug>.json` — defines role-based courses as a list of `"chapter-slug/topic-slug"` references. Bad references throw at build time via `resolveRoleSections()`.
 
@@ -190,11 +202,21 @@ All shared components live in `src/components/`:
 
 **New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `src/content/order.json` under the chapter key to control its position.
 
-**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
+**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. Add the chapter to `src/content/chapter-phases.json` under the correct pillar and module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
 
 **New module (any pillar):** create `src/pages/{theme}/{module}/index.astro`, add a card to the pillar index page (`src/pages/{theme}/index.astro`), add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`. Also register it in `src/content/order.json`.
 
 **New role course:** add `src/content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
+
+### Removing Content
+
+**Deleting a topic:** remove the topic file and remove its slug from `src/content/order.json`. The "topics" count badge on the chapter overview page updates automatically at build time.
+
+**Deleting a chapter:** remove the chapter folder, remove its slug from `src/content/order.json`, and remove its entry from `src/content/chapter-phases.json`. The "chapters available" badge on the module/pillar overview page updates automatically at build time.
+
+**Deleting a module:** reverse the steps in "New module" above — remove the page, the pillar index card, the `moduleBackMap` entry, and the `moduleLabels` entry, and remove it from `src/content/order.json`.
+
+> **Counters are dynamic.** The "X chapters available" badges on pillar overview pages and the "X topics" counts on module/chapter overview pages are computed at build time from `getChapters()` and `getTopics()`. They update automatically — no manual edits needed in any `.astro` file.
 
 ### Role JSON Structure
 

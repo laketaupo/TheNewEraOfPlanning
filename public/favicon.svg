@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#635CFA"/>
+  <!-- Left hemisphere outline -->
+  <path d="M16 22.5 C14.5 22.5 13 22 12 21
+           C10.5 20 9.5 18.5 9 17
+           C8 16 7.5 14.5 8 13
+           C8.5 11 10 9.5 12 9
+           C13 8.5 14 8.5 15 9
+           C15.5 9.2 16 9.5 16 9.5 L16 22.5Z"
+    fill="white" opacity="0.9"/>
+  <!-- Right hemisphere outline -->
+  <path d="M16 22.5 C17.5 22.5 19 22 20 21
+           C21.5 20 22.5 18.5 23 17
+           C24 16 24.5 14.5 24 13
+           C23.5 11 22 9.5 20 9
+           C19 8.5 18 8.5 17 9
+           C16.5 9.2 16 9.5 16 9.5 L16 22.5Z"
+    fill="white" opacity="0.75"/>
+  <!-- Center divider -->
+  <line x1="16" y1="9" x2="16" y2="23" stroke="#635CFA" stroke-width="1.2"/>
+  <!-- Fold lines left -->
+  <path d="M11 13.5 C12.5 13 13.5 14.5 12.5 16" fill="none" stroke="#635CFA" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  <path d="M10.5 17 C12 17.5 12.5 19 11.5 20" fill="none" stroke="#635CFA" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  <!-- Fold lines right -->
+  <path d="M21 13.5 C19.5 13 18.5 14.5 19.5 16" fill="none" stroke="#635CFA" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  <path d="M21.5 17 C20 17.5 19.5 19 20.5 20" fill="none" stroke="#635CFA" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+</svg>

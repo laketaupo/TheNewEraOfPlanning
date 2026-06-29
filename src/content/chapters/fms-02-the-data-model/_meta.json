@@ -1,8 +1,8 @@
 {
   "title": "FMS Data Model",
-  "description": "How FMS organises field data \u2014 growers, contracts, fields, and crops \u2014 and how these entities map to the items and locations Planning software uses.",
+  "description": "How FMS organises field data — growers, contracts, fields, and crops — and how these entities map to the items and locations Planning software uses.",
   "icon": "globe",
   "color": "emerald",
   "theme": "technology",
-  "module": "fms"
+  "module": "supporting-systems"
 }
