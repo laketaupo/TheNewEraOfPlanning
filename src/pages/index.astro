@@ -10,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="absolute inset-0 bg-home-radial pointer-events-none"></div>
 
     <!-- Title: normal flow on mobile, absolute top-center on desktop -->
-    <div class="relative z-20 w-full text-center md:absolute md:top-12 md:inset-x-0 md:px-8">
+    <div class="relative z-20 w-full text-center md:absolute md:top-[15%] md:inset-x-0 md:px-8">
       <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
         The New Era of <span style="color:#635CFA">Planning</span>
       </h1>
@@ -20,7 +20,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <!-- Cards: stacked below title on mobile, absolute centered on desktop -->
-    <div class="relative z-10 mt-10 w-full max-w-md md:absolute md:inset-0 md:flex md:items-center md:justify-center md:mt-0 md:max-w-none md:px-8 md:pt-48">
+    <div class="relative z-10 mt-10 w-full max-w-md md:absolute md:inset-0 md:flex md:items-center md:justify-center md:mt-0 md:max-w-none md:px-8">
       <div class="flex flex-col gap-6 w-full md:grid md:grid-cols-2 md:max-w-3xl">
 
         <a href={`${import.meta.env.BASE_URL}pillars`} class="lcard">
