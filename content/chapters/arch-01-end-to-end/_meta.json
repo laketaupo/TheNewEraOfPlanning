@@ -1,9 +1,0 @@
-{
-  "title": "End-to-End Architecture",
-  "description": "How ERP, Planning software, FMS, and MDM system connect: the interfaces, batch runs, and data upload processes that keep the system landscape in sync.",
-  "icon": "arrows-expand",
-  "color": "emerald",
-  "theme": "technology",
-  "module": "tool-landscape",
-  "hidden": true
-}
