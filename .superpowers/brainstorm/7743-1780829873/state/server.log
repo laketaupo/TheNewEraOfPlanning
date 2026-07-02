@@ -1,9 +1,0 @@
-{"type":"server-started","port":62904,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:62904","screen_dir":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content","state_dir":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/state"}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/waiting.html"}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/landing-layouts.html"}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/waiting-2.html"}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/pillar-colors.html"}
-{"source":"user-event","type":"click","text":"👥\n          People\n          Coming soon\n        \n        \n          ⚙️\n          Process\n          Coming soon\n        \n        \n          🖥️\n          Technology\n          6 chapters →\n        \n        \n          📊\n          Data\n          Coming soon\n        \n      \n    \n    \n      A — Each pillar has its own color\n      Indigo, violet, sky, emerald — same palette as the current chapter cards. Vibrant and distinct. All four tiles feel equally alive.","choice":"a","id":null,"timestamp":1780830199255}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/waiting-3.html"}
-{"type":"screen-added","file":"/Users/stefanbakker/Documents/Github/Development/.superpowers/brainstorm/7743-1780829873/content/full-page-design.html"}
-{"type":"server-stopped","reason":"idle timeout"}

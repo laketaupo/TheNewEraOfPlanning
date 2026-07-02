@@ -1,1 +1,0 @@
-import"./hoisted.DdZFDk8l.js";const e="platform-progress";function o(){try{return JSON.parse(localStorage.getItem(e)||"{}")}catch{return{}}}const s=o();document.querySelectorAll(".topic-completion-dot").forEach(t=>{const r=t.dataset.topicId??"";s[r]&&(t.classList.remove("bg-gray-200","dark:bg-neutral-700"),t.classList.add("bg-blue-500"))});
