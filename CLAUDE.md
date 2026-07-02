@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **Architecture note (read first):** This project is a **build-free vanilla-JavaScript single-page app**, not an Astro site. Earlier revisions were built with Astro; that toolchain has been fully removed. Many `js/*.js` files carry `// Port of src/...astro` comments describing their Astro ancestor — those comments are historical and the `src/` tree no longer exists. The authoritative runtime spec is **[CONTRACTS.md](CONTRACTS.md)**; when this file and CONTRACTS.md disagree about runtime behaviour, CONTRACTS.md wins.
+
 ## Working Style
 
 ### Parallel Agents
@@ -23,18 +25,31 @@ When spawning agents via the `Agent` tool, pass the appropriate `model` paramete
 ## Commands
 
 ```bash
-npm run dev      # Start dev server at http://localhost:4321
-npm run build    # Build to dist/ — always run this to verify before considering a task done
-npm run preview  # Preview the built site
+npm run dev        # Serve the site locally at http://localhost:8080 (scripts/gh-pages-like-server.mjs)
+npm run generate   # Regenerate data/content-index.json, data/search-index.json, and css/site.css
+npm run validate   # Validate all cross-references (roles, glossary, faq) — throws on bad refs
+npm test           # Headless Playwright smoke + interaction tests (scripts/test.mjs)
 ```
 
-`npm run build` runs `astro build` then `pagefind --site dist` (postbuild step that indexes the site for search). No tests or linters are configured.
+There is **no `build` step** — the site is served as static files straight from the repo root. `npm run generate` is the closest equivalent: it runs three scripts in sequence:
+
+- `scripts/gen-content-index.mjs` → writes `data/content-index.json` (chapters, topics with compiled+sanitized HTML bodies, roles, glossary, faq).
+- `scripts/gen-search-index.mjs` → writes `data/search-index.json` (the search corpus).
+- `scripts/gen-css.mjs` → runs the Tailwind CLI over `js/`+`index.html` → `css/site.css`.
+
+**Generated artifacts are committed.** `data/*.json` and `css/site.css` are checked in and served as-is. **After any content, glossary, faq, role, or `order.json` change you MUST run `npm run generate` and commit the regenerated files** — otherwise the live site won't reflect your change. Run `npm run validate` (or `npm test`) to catch broken references before committing.
+
+**Dependencies:** the generator/test scripts need the devDependencies installed (`npm install`): `marked` + `dompurify` + `jsdom` (markdown → sanitized HTML in `gen-content-index.mjs`), `gray-matter` (frontmatter), `playwright` (tests), `tailwindcss` (CSS). The browser runtime itself has **zero dependencies** — plain ES modules.
 
 ## Architecture
 
-**Stack:** Astro 4 (static site generation) + Tailwind CSS 3 + MDX. Deployed to GitHub Pages via `.github/workflows/` — CI runs `npm run build` and uploads `dist/`.
+**Stack:** Static `index.html` shell + ES-module JavaScript under `js/`, Tailwind-generated `css/site.css`, Markdown content under `content/` compiled to a JSON index at generate-time. No framework, no bundler, no server.
 
-**Base URL:** `astro.config.mjs` sets `base: '/TheNewEraOfPlanning/'`. All internal links must use `import.meta.env.BASE_URL` as a prefix (already done in `chapters.ts`, `roles.ts`). Never hardcode `/` as a root-relative prefix.
+**Entry point:** `index.html` loads `<script type="module" src="js/app.js">`. [js/app.js](js/app.js) boots: restores deep-link redirects (see `404.html`), awaits `initContentIndex()` (fetches `data/content-index.json` once), mounts the fixed shell chrome (`js/shell/*.js`), then starts the router.
+
+**Deployment:** GitHub Pages via [.github/workflows/deploy.yml](.github/workflows/deploy.yml) on push to `main`. The workflow does **not** build — it copies the already-committed static files (`index.html`, `404.html`, `favicon.svg`, `css`, `js`, `content`, `data`, `ui-training`) into `_site/` and publishes. Compilation happens locally via `npm run generate`, not in CI.
+
+**Base URL:** the site works both at `/` (local dev) and `/TheNewEraOfPlanning/` (GitHub Pages). [js/base-url.js](js/base-url.js) detects `BASE` at runtime from the `<script src>` path — there is no config file. **All internal URLs must be built with `url(path)` or prefixed with `BASE`** from `js/base-url.js`; never hardcode a leading `/`. Index/data structures store BASE-free paths and prefix at consumption time (see CONTRACTS.md §5b).
 
 ### Site Structure
 
@@ -44,7 +59,7 @@ A four-pillar learning hub (Technology, Process, Data, People). Each pillar has 
 /{theme}/{module}/{chapter-slug}/{topic-slug}
 ```
 
-> **"Pillar" vs "theme":** The product calls these four areas "pillars", but the codebase calls them **themes** — in `_meta.json`, `order.json`, function names, URL parameters, and `localStorage`. Always use `theme` in code.
+> **"Pillar" vs "theme":** The product calls these four areas "pillars", but the codebase calls them **themes** — in `_meta.json`, `order.json`, function names, URL parameters, and `localStorage`. Always use `theme` in code. (The browser route is `/pillars`, though the page module keeps the filename `js/pages/themes.js`.)
 
 Current modules per pillar (authoritative order from `content/order.json`):
 
@@ -53,174 +68,150 @@ Current modules per pillar (authoritative order from `content/order.json`):
 | `people` | `roles-and-responsibilities`, `decision-making-and-ownership`, `collaboration-and-ways-of-working`, `capabilities-and-skills` |
 | `process` | `planning-fundamentals`, `sop`, `soe`, `execution`, `planning-governance`, `advanced-planning` |
 | `data` | `data-foundations`, `planning-data-domains`, `planning-parameters-and-assumptions`, `performance-and-measurement`, `data-quality-and-governance` |
-| `technology` | `tool-landscape`, `planning-software`, `erp`, `fms`, `mdm`, `adoption-and-usage-quality` |
+| `technology` | `tool-landscape`, `planning-software`, `erp`, `supporting-systems`, `adoption-and-usage-quality` |
 
-The Configuration Manual is available both as a standalone page at `/technology/configuration` (content in `content/configuration/`) and as a chapter `08-configuration-manual` within the `planning-software` module (content in `content/chapters/08-configuration-manual/`).
+> The technology pillar's former standalone `fms` and `mdm` modules were consolidated into a single **`supporting-systems`** module.
 
-> **Known slug mismatch:** The process `planning-governance` module page is at `src/pages/process/planning-cycles-and-governance/index.astro` and filters chapters by `c.module === 'planning-cycles-and-governance'`. All chapter `_meta.json` files and `order.json` use `planning-governance`, so no chapters appear on that page. Fix by changing the filter in the page file to `'planning-governance'` (or renaming the folder and matching the filter).
+The Configuration Manual is available both as a standalone page at `/technology/configuration` (content in `content/configuration/`, page in `js/pages/configuration.js`) and as a hidden chapter `08-configuration-manual` within the `planning-software` module (content in `content/chapters/08-configuration-manual/`).
 
 ### Content Model
 
 **Chapter content** lives in `content/chapters/<chapter-slug>/`:
 - `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `theme`, `module`. Optional: `hidden` (bool).
-- `topic-slug.md` — one file per topic, frontmatter-heavy. **Do not use a numeric prefix (`NN-`) on topic filenames.** The content loader in `[topic].astro` resolves the file by matching `${chapterSlug}/${topicSlug}.md` — the slug is derived by stripping any leading digits, so a file named `01-the-four-systems.md` produces slug `the-four-systems` but the loader then looks for `the-four-systems.md` and fails to find it. Chapter directory names may have the `NN-` prefix; topic filenames must not.
+- `topic-slug.md` — one file per topic, frontmatter-heavy. A committed `topic-slug.html` sits beside each `.md`; both are (re)written by `npm run generate` — the `.html` is the compiled+sanitized body embedded in `content-index.json`. Edit the `.md`; never hand-edit the `.html`.
+- **Numeric filename prefixes are allowed.** `gen-content-index.mjs` derives the topic slug by stripping a leading `NN-` (`the-four-systems.md` and `01-the-four-systems.md` both yield slug `the-four-systems`) and reads the actual file directly, so a `NN-` prefix works fine and is used across the content set. Chapter directory names may also carry an `NN-` prefix.
 
-Both `theme` and `module` are required in every `_meta.json`. Omitting either causes silently wrong behaviour (theme defaults to `'technology'`, module defaults to `'planning-software'`).
+Both `theme` and `module` are required in every `_meta.json` — a chapter whose `module` value isn't one of the real modules in `order.json` won't appear on any module index page.
 
-`99-layout-showcase/` is a hidden dev-reference chapter (`"hidden": true`) — included in builds, invisible in nav.
+`99-layout-showcase/` is a hidden dev-reference chapter (`"hidden": true`) — included in the index, invisible in nav.
 
-**Topic frontmatter** — the key field is `topicLayout`, which selects the layout component:
+**Topic frontmatter** — the key field is `topicLayout`, which selects the layout module ([js/layouts/layout-registry.js](js/layouts/layout-registry.js)):
 
-| `topicLayout` value | Layout used |
+| `topicLayout` value | Layout module |
 |---|---|
-| `node-topic` | `NodeTopicLayout.astro` — network node diagram with summary + bullets |
-| `card-grid` | `CardGridLayout.astro` — card-based comparison |
-| `comparison` | `ComparisonLayout.astro` — left/right two-column |
-| `data-table` | `DataTableLayout.astro` — tabular data |
-| `full-widget` | `FullWidthWidgetLayout.astro` — interactive simulation |
-| `rasci-table` | `RasciTableLayout.astro` — RASCI responsibility matrix |
-| `ui-training` | `UiTrainingLayout.astro` — full-viewport screenshot + description + static steps sidebar |
-| `process-step-detail` | `ProcessStepDetailLayout.astro` — step execution layout with inputs/outputs/roles/systems/tasks metadata panels |
-| `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
+| `node-topic` | `js/layouts/node-topic.js` — network node diagram with summary + bullets |
+| `card-grid` | `js/layouts/card-grid.js` — card-based comparison |
+| `comparison` | `js/layouts/comparison.js` — left/right two-column |
+| `data-table` | `js/layouts/data-table.js` — tabular data |
+| `full-widget` | `js/layouts/full-width-widget.js` — interactive simulation |
+| `rasci-table` | `js/layouts/rasci-table.js` — RASCI responsibility matrix |
+| `ui-training` | `js/layouts/ui-training.js` — full-viewport screenshot + steps sidebar |
+| `process-step-detail` | `js/layouts/process-step-detail.js` — step layout with inputs/outputs/roles/systems/tasks panels |
+| `prose-topic` or omitted | `js/layouts/topic.js` — generic prose + optional widget (the fallback) |
 
-**Configuration manual** lives in `content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
+**Interactive widgets** are selected by the frontmatter `widget:` field and dispatched through [js/widgets/registry.js](js/widgets/registry.js) (see CONTRACTS.md §3). Registered keys: `what-if`, `graph`, `demand-flow`, `supply-flow`, `org-chart`, `demand-slicing`, `variety-disagg`, `seasonal-disagg`. A `widget:` value with no registry entry renders nothing.
 
-**`content/chapter-phases.json`** — maps every non-hidden chapter to one of the five learning phases, organized as `pillar → module → chapter-slug: "phase"`. Used as a content-author reference when building or reviewing role learning paths. Must be updated manually whenever a chapter is added or deleted — add/remove the chapter slug under the correct pillar and module key.
+**Configuration manual** lives in `content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot`.
 
-```json
-{
-  "technology": {
-    "tool-landscape": {
-      "chapter-slug": "awareness"
-    }
-  }
-}
-```
+**`content/chapter-phases.json`** — maps every non-hidden chapter to one of the five learning phases, organized as `pillar → module → chapter-slug: "phase"`. A content-author reference used when building/reviewing role learning paths. Update it manually whenever a chapter is added or deleted.
 
-**Roles** live in `content/roles/<slug>.json` — defines role-based courses as a list of `"chapter-slug/topic-slug"` references. Bad references throw at build time via `resolveRoleSections()`.
+**Roles** live in `content/roles/<slug>.json` — role-based courses referencing chapter slugs per phase. Bad references throw in `npm run validate`.
 
 ### Data Loading
 
-Content is loaded via `import.meta.glob` (not Astro content collections):
+There are **no** framework content collections and no `import.meta.glob`. Content flows: Markdown/JSON under `content/` → `scripts/gen-content-index.mjs` → **`data/content-index.json`** → fetched once at boot by [js/content.js](js/content.js) (`initContentIndex()` / `getIndex()`) → queried synchronously by the `js/lib/*.js` accessors:
 
-- `src/lib/chapters.ts` — eagerly loads all `_meta.json` and topic frontmatter.
-  - `getChapters(theme?)` — all chapters, optionally filtered by theme
-  - `getTopics()` — all topics, each with derived `theme`, `module`, `url`, `chapterUrl`
-  - `getTopicsForChapter(slug)` — topics for one chapter
-  - `getAdjacentTopics(url)` — `[prev, next]` scoped to same theme
-  - `getChapterUrl(ch)` — builds `/{theme}/{module}/{slug}`
-  - `getThemes()` — ordered list of themes from `order.json`
-  - `getModulesForTheme(theme)` — ordered module list for a theme from `order.json`
-- `src/lib/configuration.ts` — loads configuration manual entries.
-- `src/lib/faq.ts` — loads FAQ entries; `getFaqEntries()` / `validateFaq()`.
-- `src/lib/roles.ts` — loads role JSON files; `resolveRoleSections()` validates and hydrates topic references.
+- [js/lib/chapters.js](js/lib/chapters.js) — `getChapters(theme?)`, `getTopics()`, `getTopicsForChapter(slug)`, `getAdjacentTopics(url)`, `getChapterUrl(ch)`, `getThemes()`, `getModulesForTheme(theme)`.
+- [js/lib/configuration.js](js/lib/configuration.js) — configuration-manual entries.
+- [js/lib/faq.js](js/lib/faq.js) — `getFaqEntries()`.
+- [js/lib/glossary.js](js/lib/glossary.js) — `getGlossaryTerms()`.
+- [js/lib/roles.js](js/lib/roles.js) — role loading + `resolveRoleSections()` hydration.
+- [js/lib/module-meta.js](js/lib/module-meta.js) — module back-link/label lookup.
 
-**`content/order.json`** is the authoritative source for ordering. It defines `themes` (array), `modules` (per-theme arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
+See CONTRACTS.md §1 for the exact `content-index.json` schema.
+
+**`content/order.json`** is the authoritative source for ordering. It defines `themes` (array), `modules` (per-theme arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix are both overridden by this file — items not listed get index 9999 and sort to the end. **When adding a chapter or topic, register it in `order.json` to control its position** (and re-run `npm run generate`).
 
 ### Routing
 
-| Route pattern | File |
-|---|---|
-| `/` | `src/pages/index.astro` |
-| `/about` | `src/pages/about.astro` |
-| `/faq` | `src/pages/faq.astro` |
-| `/glossary` | `src/pages/glossary.astro` |
-| `/themes` | `src/pages/themes/index.astro` (pillar/module browser) |
-| `/start` | `src/pages/start.astro` (redirects to first topic) |
-| `/progress` | `src/pages/progress.astro` (standalone My Progress page, renders `UserDashboard` in full-page mode) |
-| `/technology`, `/data`, `/process`, `/people` | `src/pages/{theme}/index.astro` |
-| `/technology/tool-landscape`, `/technology/planning-software`, `/technology/erp`, `/technology/fms`, `/technology/mdm`, `/technology/adoption-and-usage-quality`, `/technology/reporting` | `src/pages/technology/{module}/index.astro` |
-| `/technology/configuration` | `src/pages/technology/configuration/index.astro` |
-| `/data/data-foundations`, `/data/planning-data-domains`, `/data/planning-parameters-and-assumptions`, `/data/performance-and-measurement`, `/data/data-quality-and-governance` | `src/pages/data/{module}/index.astro` |
-| `/{theme}/{module}` (process/people) | `src/pages/{theme}/{module}/index.astro` |
-| `/{theme}/{module}/{chapter}/` | `src/pages/[theme]/[module]/[chapter]/index.astro` |
-| `/{theme}/{module}/{chapter}/{topic}` | `src/pages/[theme]/[module]/[chapter]/[topic].astro` |
-| `/roles` | `src/pages/roles/index.astro` (role listing by department) |
-| `/roles/{role}` | `src/pages/roles/[role].astro` |
-| `/roles/{role}/{phase-number}` | `src/pages/roles/[role]/[phase].astro` (phase is a 1-based index, only generated for non-empty phases) |
+Client-side history-API routing lives in [js/router.js](js/router.js). It swaps `#app-main`'s innerHTML per route; the shell chrome is mounted once at boot and persists. The route table (literal segments win over `:param` patterns):
 
-The module index pages for Technology each filter `getChapters('technology')` by `ch.module === '{module-slug}'`. The dynamic `[theme]/[module]/[chapter]/` pages handle all themes generically.
+| Route pattern | Page module |
+|---|---|
+| `/` | `js/pages/home.js` |
+| `/about` | `js/pages/about.js` |
+| `/progress` | `js/pages/progress.js` |
+| `/pillars` | `js/pages/themes.js` (pillar/module browser) |
+| `/glossary` | `js/pages/glossary.js` |
+| `/faq` | `js/pages/faq.js` |
+| `/roles` | `js/pages/roles-index.js` |
+| `/roles/{role}` | `js/pages/role.js` |
+| `/roles/{role}/{phase}` | `js/pages/role-phase.js` |
+| `/technology/configuration` | `js/pages/configuration.js` |
+| `/{theme}/{module}/{chapter}/{topic}` | `js/pages/topic.js` |
+| `/{theme}/{module}/{chapter}` | `js/pages/chapter-index.js` |
+| `/{theme}/{module}` | `js/pages/module.js` |
+| `/{theme}` | `js/pages/pillar.js` |
+
+The four generic `:theme…` routes handle every pillar/module/chapter/topic uniformly — there are no per-module page files. `:theme` only matches a real theme from the index, so literal routes stay reachable. After every render the router runs `scanGlossary()` and `applyRoleNav()`; see CONTRACTS.md §5.
+
+> **Glossary tooltips on overview pages:** the pillar (`:theme`), module, chapter-index, role, and role-phase routes carry `skipGlossary: true` in the route table, so inline glossary-term tooltips are suppressed on overview pages and only appear inside topic content.
 
 ### Key Patterns
 
-**`moduleBackMap`** — maps module slug → back-link href/label. Defined in `src/pages/[theme]/[module]/[chapter]/index.astro` (chapter index back-link). When adding a new module, add an entry there plus to `moduleLabels` in `SiteOverlay.astro`.
+**Module labels / back-links** — module-slug → display label and back-link lookups live in [js/lib/module-meta.js](js/lib/module-meta.js) and the `MODULE_LABELS` map in [js/pages/progress.js](js/pages/progress.js). `js/shell/site-overlay.js` also carries module display names for the nav palette. Keep these in sync when adding/removing a module.
 
-**`moduleLabels`** — used in `SiteOverlay.astro` to map module slugs to display names. Must be kept in sync with the `moduleBackMap` in `[chapter]/index.astro`.
+**Layout prop flow** — [js/pages/topic.js](js/pages/topic.js) builds a `sharedProps` object (`title, description, chapterTitle, chapterSlug, chapterColor, chapterUrl, topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle, theme, module, totalTopics, …`) and passes it to the selected layout's `render()`. `chapterUrl` drives the topic back-link. See CONTRACTS.md §2 for the layout render contract.
 
-**Layout prop flow** — `[topic].astro` builds a `sharedProps` object passed to whichever layout is selected. All layouts accept:
-```
-title, description, chapterTitle, chapterSlug, chapterColor, chapterUrl,
-topicOrder, chapterOrder, prevUrl, nextUrl, prevTitle, nextTitle,
-theme, module, totalTopics
-```
-`chapterUrl` drives the back-link in topic layouts (links back to the chapter index).
-
-**Tailwind class safety** — color-specific classes must appear as complete strings in source. Never build them with string interpolation (e.g. `` `bg-${color}-500` ``) — Tailwind will purge them. Use lookup maps (`colorBgMap`, `colorTextMap`, etc.) defined inline per page.
+**Tailwind class safety** — `css/site.css` is generated by scanning `js/` + `index.html`, so color-specific classes must appear as complete literal strings in source. Never build them by interpolation (e.g. `` `bg-${color}-500` ``) — use lookup maps (e.g. `badgeBgMap` in `js/layouts/shared.js`). After adding new classes, run `npm run generate`.
 
 ### Client-Side Persistence
 
-Three `localStorage` keys:
+Three `localStorage` keys (see CONTRACTS.md §4/§6):
 
-- **`platform-theme`** — `'dark'` or absent. `ThemeToggle.astro` writes it; `BaseLayout.astro` reads it inline before first render to prevent flash.
-- **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (same format as role references). Chapter slugs are globally unique content-folder names and topic slugs are unique within a chapter, so IDs never collide across themes/modules. This id is derived identically everywhere that reads/writes the store: the topic layouts, `UserDashboard.astro`, `roles.ts` (`topicId`), and the chapter/module index pages. Legacy values of `true` (boolean) are migrated to `'complete'` on read.
-- **`platform-comments`** — `{ [topicId]: string }`. Per-topic freetext notes. Written and read by `src/scripts/topic-progress.ts`; surfaced in `UserDashboard.astro`.
+- **`platform-theme`** — `'dark'` or absent. `js/shell/theme-toggle.js` writes it; `index.html` reads it inline before first paint to prevent flash.
+- **`platform-progress`** — `{ [topicId]: 'complete' | 'unclear' }`. Topic IDs are `{chapterSlug}/{topicSlug}` (globally unique). The id is derived identically everywhere that reads/writes the store. Legacy boolean `true` is migrated to `'complete'` on read.
+- **`platform-comments`** — `{ [topicId]: string }`. Per-topic freetext notes.
 
-After any progress or comment change, topic scripts dispatch `window.dispatchEvent(new CustomEvent('platform-progress-changed'))` so `UserDashboard.astro` can re-render without a page reload.
-
-**`src/scripts/topic-progress.ts`** — the single client-side script bundled with all topic layouts (via `<script>` in `BaseLayout.astro`). Handles mark-complete, mark-unclear, note modal, auto-advance to next topic, and dispatching `platform-progress-changed`.
+After any progress/comment change, [js/shell/topic-progress.js](js/shell/topic-progress.js) dispatches `window.dispatchEvent(new CustomEvent('platform-progress-changed'))` so `js/shell/user-dashboard.js` re-renders without a reload. `topic-progress.js` is re-initialised on every route render (via the `page-rendered` event) — it handles mark-complete, mark-unclear, the note modal, and auto-advance.
 
 ### Glossary System
 
-**`content/glossary.json`** — flat array of term objects with fields `slug`, `term`, `definition`, `aliases`, `related`, `seeAlso`. Loaded by `src/lib/glossary.ts`.
+**`content/glossary.json`** — flat array of term objects with fields `slug`, `term`, `definition`, `aliases`, `related`, `seeAlso`. Folded into `content-index.json` by the generator; `js/lib/glossary.js` exposes `getGlossaryTerms()`. Cross-reference validation runs in `scripts/validate-refs.mjs` (`npm run validate`), not in the browser.
 
-- `getGlossaryTerms()` — returns all terms with array fields defaulted to `[]`.
-- `validateGlossary()` — called at build time from `glossary.astro`; throws on bad cross-references. Run the build (`npm run build`) to catch glossary errors.
-
-**Inline tooltips** — `BaseLayout.astro` injects the full glossary as `<script type="application/json" id="glossary-data">` and wires up hover tooltips for any element with `data-glossary="<slug>"`. The tooltip floats near the cursor; the `data-placement` attribute on `#glossary-tooltip` controls the caret direction (`bottom` = caret points up).
+**Inline tooltips** — `js/app.js` injects the glossary as `<script type="application/json" id="glossary-data">`; [js/shell/glossary-tooltip.js](js/shell/glossary-tooltip.js) (`scanGlossary`) wraps matching terms in rendered `p`/`li` content and shows the shared `#glossary-tooltip` card on hover. Suppressed on overview routes (see Routing note above).
 
 ### FAQ System
 
-**`content/faq.json`** — flat array of FAQ entries with fields `slug`, `question`, `answer`, `theme` (one of: `technology`, `process`, `data`, `people`), `seeAlso` (array of `chapter-slug/topic-slug` refs), `related` (array of glossary slugs). Loaded by `src/lib/faq.ts`.
-
-- `getFaqEntries()` — returns all entries with array fields defaulted to `[]`.
-- `validateFaq()` — called at build time from `faq.astro`; throws on invalid theme, bad topic refs in `seeAlso`, or bad glossary refs in `related`. Run `npm run build` to catch FAQ errors.
+**`content/faq.json`** — flat array with fields `slug`, `question`, `answer`, `theme` (`technology`|`process`|`data`|`people`), `seeAlso` (`chapter-slug/topic-slug` refs), `related` (glossary slugs). `js/lib/faq.js` exposes `getFaqEntries()`. `scripts/validate-refs.mjs` throws on invalid theme, bad topic refs, or bad glossary refs — run `npm run validate`.
 
 ### Components
 
-All shared components live in `src/components/`:
+Fixed shell chrome lives in `js/shell/` (mounted once at boot by `app.js`); interactive content widgets live in `js/widgets/`:
 
-- **`SiteOverlay.astro`** — full-site navigation palette, toggled by pressing `O`. Added to `BaseLayout`.
-- **`UserDashboard.astro`** — progress dashboard panel (slides in from right), toggled by a fixed person-icon button at `top-3 right-16`. Shows per-chapter completion bars, overall stats, and a list of topics marked unclear. Added to `BaseLayout`. Listens for the `platform-progress-changed` custom window event dispatched by topic layout scripts after each state change.
-- **`ThemeToggle.astro`** — light/dark toggle button, included individually in each layout and pillar index page.
-- **`src/components/sim/`** — interactive simulation components (demand/supply flow graphs, demand shock sim, slicing/disaggregation widgets, step walkthrough). Used by the `full-widget` layout and embedded in topic prose.
-- **`src/components/widgets/`** — `OrgChart.astro` and `OrgTreeNode.astro`, used by the org-chart frontmatter field on people-pillar topics.
-- **`Search.astro`** — search modal powered by Pagefind (indexed at build time). Added to `BaseLayout`.
-- **`RoleMatrix.astro`** — role-to-topic responsibility matrix overlay. Added to `BaseLayout`.
-- **`IntroOverlay.astro`** — first-visit welcome/help modal. Added to `BaseLayout`; opened via `window.openIntro()`.
+- **`js/shell/site-overlay.js`** — full-site navigation palette (press `O`).
+- **`js/shell/user-dashboard.js`** — progress dashboard panel; listens for `platform-progress-changed`.
+- **`js/shell/theme-toggle.js`** — light/dark toggle (mounted into `#theme-toggle-slot`).
+- **`js/shell/search.js`** — search modal backed by `data/search-index.json` (opens on `/`).
+- **`js/shell/role-matrix.js`** — role-to-topic responsibility matrix overlay.
+- **`js/shell/intro-overlay.js`** — first-visit welcome/help modal.
+- **`js/shell/role-phase-nav.js`** — applies the `?from=roles/x/y` navigation override after render.
+- **`js/shell/glossary-tooltip.js`**, **`js/shell/topic-progress.js`** — per-route behaviour binders (re-run after each render).
+- **`js/widgets/`** — `graph`, `demand-flow`, `supply-flow`, `demand-slicing`, `variety-disagg`, `seasonal-disagg`, `what-if`, `org-chart` (+ `org-tree-node` helper), dispatched via `registry.js`.
 
 ### Adding Content
 
-**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `content/order.json` under the chapter key to control its position.
+**New topic:** add `slug.md` (optionally `NN-slug.md`) in the chapter folder, set `topicLayout`, register the slug in `content/order.json` under the chapter key, then run `npm run generate`.
 
-**New chapter in an existing module:** create `content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `content/order.json` under the module key. Add the chapter to `content/chapter-phases.json` under the correct pillar and module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
+**New chapter in an existing module:** create `content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `content/order.json` under the module key, add it to `content/chapter-phases.json`, and run `npm run generate`. No routing changes needed — the generic `[theme]/[module]/[chapter]` route picks it up.
 
-**New module (any pillar):** create `src/pages/{theme}/{module}/index.astro`, add a card to the pillar index page (`src/pages/{theme}/index.astro`), add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`. Also register it in `content/order.json`.
+**New module (any pillar):** register it in `content/order.json`, add its label to `js/lib/module-meta.js` and `MODULE_LABELS` in `js/pages/progress.js`, add its display name to `js/shell/site-overlay.js`, then run `npm run generate`. No new page file is required — `js/pages/module.js` renders every module and `js/pages/pillar.js` renders the pillar index generically.
 
-**New role course:** add `content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
+**New role course:** add `content/roles/{slug}.json` (see structure below), then `npm run generate` + `npm run validate`.
 
 ### Removing Content
 
-**Deleting a topic:** remove the topic file and remove its slug from `content/order.json`. The "topics" count badge on the chapter overview page updates automatically at build time.
+Reverse of the above, and **always re-run `npm run generate`** so the deleted item leaves `data/content-index.json` and `data/search-index.json`:
 
-**Deleting a chapter:** remove the chapter folder, remove its slug from `content/order.json`, and remove its entry from `content/chapter-phases.json`. The "chapters available" badge on the module/pillar overview page updates automatically at build time.
+- **Topic:** delete `slug.md` (and its generated `slug.html`), remove the slug from `order.json`.
+- **Chapter:** delete the folder, remove the slug from `order.json`, remove its entry from `chapter-phases.json`.
+- **Module:** remove it from `order.json`, the module-label maps, and `site-overlay.js`.
 
-**Deleting a module:** reverse the steps in "New module" above — remove the page, the pillar index card, the `moduleBackMap` entry, and the `moduleLabels` entry, and remove it from `content/order.json`.
-
-> **Counters are dynamic.** The "X chapters available" badges on pillar overview pages and the "X topics" counts on module/chapter overview pages are computed at build time from `getChapters()` and `getTopics()`. They update automatically — no manual edits needed in any `.astro` file.
+> **Counters are dynamic.** "X chapters available" / "X topics" badges are computed at render time from the index — they update automatically after `npm run generate`.
 
 ### Role JSON Structure
 
-Each role JSON file at `content/roles/{slug}.json` has these fields:
+Each role JSON at `content/roles/{slug}.json`:
 
 ```json
 {
@@ -241,14 +232,14 @@ Each role JSON file at `content/roles/{slug}.json` has these fields:
 }
 ```
 
-- `comingSoon: true` hides the role from the learning paths (omit when the role is ready).
-- Phases with an empty `chapters` array (or absent from the array) render as "Coming soon" on the role page.
-- Phase order in the JSON does not matter — phases always display in the global order defined in `learning-phases.json`.
-- Chapter slugs must exist and must not be hidden — bad references throw at build time.
+- `comingSoon: true` hides the role from the learning paths.
+- Phases with an empty `chapters` array render as "Coming soon".
+- Phase order in the JSON doesn't matter — phases display in the global order from `learning-phases.json`.
+- Chapter slugs must exist and must not be hidden — bad references throw in `npm run validate`.
 
 ### Learning Phases
 
-The global phase definitions live in `content/learning-phases.json`. There are five phases, in order:
+The global phase definitions live in `content/learning-phases.json`. Five phases, in order:
 
 | Phase ID | Title | Purpose |
 |---|---|---|
@@ -258,80 +249,4 @@ The global phase definitions live in `content/learning-phases.json`. There are f
 | `embedded` | Embedded Adoption | Make it business as usual — governance, KPIs, policy, data ownership |
 | `optimization` | Optimization & Continuous Improvement | Drive best practice — advanced features, scenario analysis, SME development |
 
-### Chapter-to-Phase Assignment Guide
-
-Use the table below when building or reviewing a role. Chapters not relevant to a role are simply omitted.
-
-**Phase 1 — Awareness** (what exists and why it matters)
-- `process-03-operating-model` — S&OP / S&OE / Execution overview
-- `people-01-planning-team` — who is in the planning team, high-level roles
-- `data-01-planning-data-fundamentals` — why data matters, cost of bad data
-- `erp-01-erp-basics` — what ERP is, its place in the system landscape
-- `mdm-01-understanding-basics` — what MDM is and why it matters *(for MDM-adjacent roles)*
-- `fms-01-understanding-basics` — what FMS is and why it matters *(for field-facing roles)*
-
-**Phase 2 — Conceptual** (what things are and how they connect)
-- `sop-01-sop-fundamentals` — S&OP cycle, roles, outputs
-- `soe-01-soe-fundamentals` — S&OE cadence, roles, exception-based working
-- `exec-01-execution-fundamentals` — execution fundamentals, from plan to action
-- `people-02-accountability` — RASCI for demand/supply/exec S&OP reviews
-- `01-understanding-basics` — planning software data objects (BOD, BOM, Item, Resource)
-- `02-the-network` — the network/graph data model
-- `03-data-flow` — demand/supply signals, inventory netting
-- `03-the-logic` — push/pull, safety stock, disaggregation, backward consumption
-- `data-03-data-types` — master data, transactional data, planning parameters
-- `data-02-data-quality-and-impact` — what makes data good enough
-- `data-05-data-sources-and-model` — where data comes from, the data model overview
-- `erp-02-the-data-model` — how ERP structures master and transactional data
-- `erp-03-data-flow-into-erp` — where data originates and how it enters ERP
-- `erp-04-data-flow-out-of-erp` — what ERP sends to planning
-- `arch-01-end-to-end` — system interfaces overview, batch runs, data upload
-- `process-01-scenario-planning-fundamentals` — what scenario planning is, types
-- `mdm-02-the-data-model` — MDM data structure *(MDM-adjacent roles)*
-- `mdm-03-data-flow-into-mdm` — how master data enters MDM *(MDM-adjacent roles)*
-- `mdm-04-data-flow-out-of-mdm` — what MDM sends to planning *(MDM-adjacent roles)*
-- `fms-02-the-data-model` — FMS data structure *(field-facing roles)*
-- `fms-03-data-flow-into-fms` — how field data enters FMS *(field-facing roles)*
-- `fms-04-data-flow-out-of-fms` — what FMS sends to planning *(field-facing roles)*
-
-**Phase 3 — Practical** (how to execute, step by step)
-- `sop-demand-forecasting` — data collection, statistical baseline, commercial overlay
-- `sop-supply-planning` — capacity assessment, constrained run, gap identification
-- `sop-inventory-planning` — target setting, coverage analysis, safety stock review
-- `sop-resource-planning` — resource demand projection, capacity mapping
-- `sop-sop-review` — pre-S&OP, financial reconciliation, executive review, plan close
-- `soe-02-running-soe` — monitoring the near-term plan, integrated S&OE review
-- `soe-demand-monitoring` — demand monitoring process
-- `soe-supply-monitoring` — supply monitoring process
-- `soe-integrated-review` — integrated S&OE review steps
-- `exec-actuals-capture` — capturing actuals
-- `exec-order-prioritisation` — order prioritisation workflow
-- `exec-execution-monitoring` — monitoring execution
-- `exec-feedback-to-planning` — feeding actuals back to planning
-- `04-the-simulation` — setting up and running workflow simulations
-- `05-navigation-and-ui` — navigating planning software, reading plan output
-- `process-02-running-scenarios` — creating, comparing, and promoting scenarios
-- `erp-05-the-logic` — ERP business rules, inventory and order management logic
-- `erp-06-key-erp-workflows` — creating orders, goods receipt/issue, reporting
-- `erp-07-navigation-and-ui` — navigating ERP, reading ERP output
-- `mdm-05-the-logic` — MDM governance rules, deduplication, approval workflows *(MDM-adjacent roles)*
-- `mdm-06-key-mdm-workflows` — creating/maintaining records, managing changes *(MDM-adjacent roles)*
-- `mdm-07-navigation-and-ui` — navigating MDM *(MDM-adjacent roles)*
-- `fms-05-the-logic` — FMS business rules, field assignment, yield tracking *(field-facing roles)*
-- `fms-06-key-fms-workflows` — managing field activities, recording actuals *(field-facing roles)*
-- `fms-07-navigation-and-ui` — navigating FMS *(field-facing roles)*
-
-**Phase 4 — Embedded** (making new ways of working stick)
-- `process-04-planning-policy` — safety stock policy, service levels, allocation, prioritisation
-- `process-05-governance-and-escalation` — escalation paths, management by exception
-- `process-06-kpis` — KPI framework, ownership, review cadence
-- `data-04-data-governance` — data ownership, definitions, single source of truth
-- `arch-02-integration` — ERP↔Planning Software↔FMS/MDM integration patterns
-
-**Phase 5 — Optimization** (reserved for advanced/SME-level content; often empty for initial role builds)
-- `exception-management` — exception identification, types, resolution, threshold calibration (`advanced-planning` module)
-- `constraint-management` — identifying and managing binding constraints (`advanced-planning` module)
-- `process-01-scenario-planning-fundamentals` — scenario planning overview
-- `process-02-running-scenarios` — creating, comparing, and promoting scenarios
-
-**Role-profile chapters** (under `roles-and-responsibilities` module) — `demand-planner`, `supply-planner`, `production-planner`, `master-planner`, `sales`, `operations`, `finance`, `management`, `subject-matter-expert`. Each contains "day/week/month/quarter-in-the-life" topics written as prose walkthroughs of the role's planning rhythm. Add these to Phase 3 when building role courses.
+> The chapter-slug → phase mapping used when building roles lives in **`content/chapter-phases.json`**, the current source of truth for which chapter belongs to which phase. Verify any specific slug against `chapter-phases.json` and `order.json` before relying on it. Note the technology restructure replaced several older chapters: `03-the-logic` → `planning-logic`; `arch-01-end-to-end` + `arch-02-integration` → `arch-how-systems-connect`; `fms-05/06/07` and `mdm-05/06/07` → `fms-logic-and-workflows` / `mdm-logic-and-workflows` (module `supporting-systems`).
