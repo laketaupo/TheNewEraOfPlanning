@@ -18,7 +18,7 @@ export const colorMap = {
   red:     'text-red-600 dark:text-red-400 border-red-400 dark:border-red-500',
 };
 
-export const accentColorMap = {
+const accentColorMap = {
   indigo:  '#6366f1',
   violet:  '#8b5cf6',
   sky:     '#0ea5e9',
@@ -30,7 +30,7 @@ export const accentColorMap = {
   red:     '#ef4444',
 };
 
-export const accentSubtleMap = {
+const accentSubtleMap = {
   indigo:  'rgba(99, 102, 241, 0.07)',
   violet:  'rgba(139, 92, 246, 0.07)',
   sky:     'rgba(14, 165, 233, 0.07)',
@@ -42,7 +42,7 @@ export const accentSubtleMap = {
   red:     'rgba(239, 68, 68, 0.07)',
 };
 
-export const badgeBgMap = {
+const badgeBgMap = {
   indigo:  'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400',
   violet:  'bg-violet-50 dark:bg-violet-500/10 border-violet-200 dark:border-violet-500/30 text-violet-600 dark:text-violet-400',
   sky:     'bg-sky-50 dark:bg-sky-500/10 border-sky-200 dark:border-sky-500/30 text-sky-600 dark:text-sky-400',
