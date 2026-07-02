@@ -70,7 +70,7 @@ function getModal() {
   el.setAttribute('aria-modal', 'true');
   el.setAttribute('aria-label', 'Add a note');
   el.style.display = 'none';
-  el.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+  el.className = 'fixed inset-0 z-9999 flex items-center justify-center p-4';
   el.innerHTML = `
     <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" data-modal-backdrop></div>
     <div class="relative w-full max-w-sm bg-white dark:bg-neutral-900 rounded-xl shadow-2xl border border-gray-200 dark:border-neutral-700 p-5">
@@ -161,7 +161,7 @@ function getNoteButton(anchor) {
   btn.type = 'button';
   btn.setAttribute('aria-label', 'Add or edit note');
   btn.className = 'relative flex items-center py-1.5 px-2 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-500 dark:text-neutral-400 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors';
-  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-note-tooltip style="display:none" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 dark:bg-neutral-800 text-white text-sm rounded-xl px-3.5 py-3 shadow-xl pointer-events-none whitespace-normal text-left leading-relaxed z-[9998]"></span>`;
+  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-note-tooltip style="display:none" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 dark:bg-neutral-800 text-white text-sm rounded-xl px-3.5 py-3 shadow-xl pointer-events-none whitespace-normal text-left leading-relaxed z-9998"></span>`;
   anchor.insertAdjacentElement('afterend', btn);
   btn.addEventListener('mouseenter', () => {
     const tip = btn.querySelector('[data-note-tooltip]');

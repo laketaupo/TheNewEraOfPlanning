@@ -71,7 +71,7 @@ ${renderTopHeader(props)}
       <div class="max-w-5xl mx-auto px-6 pt-6 pb-14 animate-slide-up">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           ${cards.map((card) => `
-            <div class="group rounded-2xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col gap-4 hover:border-[var(--accent)] hover:shadow-md transition-all duration-200">
+            <div class="group rounded-2xl border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col gap-4 hover:border-(--accent) hover:shadow-md transition-all duration-200">
               ${renderIcon(iconColorClass, card.icon)}
               <div>
                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1.5">${escapeHtml(card.title)}</h3>

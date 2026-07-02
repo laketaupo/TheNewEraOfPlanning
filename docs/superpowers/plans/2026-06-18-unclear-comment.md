@@ -99,7 +99,7 @@
     el.setAttribute('aria-modal', 'true');
     el.setAttribute('aria-label', 'Add a note');
     el.style.display = 'none';
-    el.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+    el.className = 'fixed inset-0 z-9999 flex items-center justify-center p-4';
     el.innerHTML = `
       <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" data-modal-backdrop></div>
       <div class="relative w-full max-w-sm bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-5">

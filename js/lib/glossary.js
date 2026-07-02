@@ -6,7 +6,3 @@ import { getIndex } from '../content.js';
 export function getGlossaryTerms() {
   return getIndex().glossary;
 }
-
-export function getGlossaryMap() {
-  return Object.fromEntries(getGlossaryTerms().map((t) => [t.slug, t]));
-}

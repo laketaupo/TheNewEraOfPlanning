@@ -53,7 +53,7 @@ A full-screen overlay panel that:
 ## Behaviour
 
 ### ⓘ Button
-- Added to the existing icon bar in `BaseLayout.astro`: `fixed top-2 right-4 z-[55]`
+- Added to the existing icon bar in `BaseLayout.astro`: `fixed top-2 right-4 z-55`
 - Positioned after the dashboard button (rightmost)
 - Same style as existing buttons: `w-8 h-8 rounded-lg`, icon-only, hover `bg-gray-200 dark:bg-gray-800`
 - Icon: info circle (`circle + path d="M12 16v-4M12 8h.01"`)
@@ -72,7 +72,7 @@ A full-screen overlay panel that:
 All four set `platform-intro-seen` in `localStorage` and hide the overlay.
 
 ### z-index
-`z-[9995]` — above the dashboard (`z-[9990]`), below the site overlay (`z-[9999]`).
+`z-9995` — above the dashboard (`z-9990`), below the site overlay (`z-9999`).
 
 ---
 

@@ -111,7 +111,7 @@ export async function render(params, query) {
     </header>
 
     <div class="relative overflow-hidden pt-12">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
       <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
       <div class="relative z-10 px-6 pt-12 pb-12 max-w-3xl mx-auto text-center animate-fade-in">
@@ -120,7 +120,7 @@ export async function render(params, query) {
           ${escapeHtml(params.theme[0].toUpperCase() + params.theme.slice(1))}
         </div>
         <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">${escapeHtml(meta.label)}</span>
+          <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-blue-600">${escapeHtml(meta.label)}</span>
         </h1>
         <p class="text-xl text-gray-600 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
           ${chapters.length} chapter${chapters.length === 1 ? '' : 's'} in this module.

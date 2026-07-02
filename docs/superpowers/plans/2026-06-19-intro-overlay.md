@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - Tailwind class safety: never use string interpolation for class names — use full class strings only.
-- z-index ladder: icon bar `z-[55]`, dashboard `z-[9990]`, **intro overlay `z-[9995]`**, site overlay `z-[9999]`.
+- z-index ladder: icon bar `z-55`, dashboard `z-9990`, **intro overlay `z-9995`**, site overlay `z-9999`.
 - localStorage key: `platform-intro-seen` — set to `'true'` on any dismiss.
 - Toggle mechanism: `.hidden` class on the root overlay element (same pattern as `SiteOverlay` and `UserDashboard`).
 - Dark mode: all elements must use `dark:` variants; panel background `bg-white dark:bg-gray-900`.
@@ -35,7 +35,7 @@
 
 <div
   id="intro-overlay"
-  class="fixed inset-0 z-[9995] hidden flex items-center justify-center p-4 sm:p-8"
+  class="fixed inset-0 z-9995 hidden flex items-center justify-center p-4 sm:p-8"
 >
   <!-- Backdrop -->
   <div id="intro-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
@@ -44,7 +44,7 @@
   <div class="relative z-10 w-[92vw] max-w-4xl max-h-[88vh] flex flex-col bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
 
     <!-- Header -->
-    <div class="flex-shrink-0 flex items-start justify-between px-10 pt-10 pb-6">
+    <div class="shrink-0 flex items-start justify-between px-10 pt-10 pb-6">
       <div>
         <p class="text-[11px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Planning Hub</p>
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white leading-snug">
@@ -54,7 +54,7 @@
       <button
         id="intro-close"
         aria-label="Close intro"
-        class="ml-6 mt-1 flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        class="ml-6 mt-1 shrink-0 w-7 h-7 flex items-center justify-center rounded-lg text-gray-300 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6 6 18M6 6l12 12"/>
@@ -63,14 +63,14 @@
     </div>
 
     <!-- Divider -->
-    <div class="flex-shrink-0 h-px bg-gray-100 dark:bg-gray-800 mx-10"></div>
+    <div class="shrink-0 h-px bg-gray-100 dark:bg-gray-800 mx-10"></div>
 
     <!-- Sections -->
     <div class="flex-1 overflow-y-auto px-10 py-6 space-y-0">
 
       <!-- Pillars -->
       <div class="py-6 flex gap-8 border-b border-gray-100 dark:border-gray-800">
-        <div class="flex-shrink-0 w-7 pt-0.5">
+        <div class="shrink-0 w-7 pt-0.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 dark:text-gray-500">
             <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
           </svg>
@@ -85,7 +85,7 @@
 
       <!-- Navigate -->
       <div class="py-6 flex gap-8 border-b border-gray-100 dark:border-gray-800">
-        <div class="flex-shrink-0 w-7 pt-0.5">
+        <div class="shrink-0 w-7 pt-0.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 dark:text-gray-500">
             <polygon points="3 11 22 2 13 21 11 13 3 11"/>
           </svg>
@@ -100,7 +100,7 @@
 
       <!-- Progress -->
       <div class="py-6 flex gap-8 border-b border-gray-100 dark:border-gray-800">
-        <div class="flex-shrink-0 w-7 pt-0.5">
+        <div class="shrink-0 w-7 pt-0.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 dark:text-gray-500">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
@@ -115,7 +115,7 @@
 
       <!-- Roles -->
       <div class="py-6 flex gap-8">
-        <div class="flex-shrink-0 w-7 pt-0.5">
+        <div class="shrink-0 w-7 pt-0.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 dark:text-gray-500">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
@@ -131,7 +131,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="flex-shrink-0 border-t border-gray-100 dark:border-gray-800 px-10 py-5 flex items-center justify-end">
+    <div class="shrink-0 border-t border-gray-100 dark:border-gray-800 px-10 py-5 flex items-center justify-end">
       <button
         id="intro-get-started"
         class="inline-flex items-center gap-2 text-sm font-medium px-5 py-2 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors"

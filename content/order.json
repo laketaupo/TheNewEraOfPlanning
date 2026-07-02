@@ -65,8 +65,6 @@
     "erp-05-the-logic": ["erp-business-rules", "order-management-logic", "inventory-management-logic"],
     "erp-06-key-erp-workflows": ["creating-and-managing-orders", "goods-receipt-and-issue", "reporting-and-extraction"],
     "erp-07-navigation-and-ui": ["navigating-erp", "the-erp-interface", "reading-erp-output"],
-    "arch-01-end-to-end": ["interfaces", "batchrun", "data-upload"],
-    "arch-02-integration": ["erp-planning-software-integration", "planning-software-fms-mdm"],
     "tool-landscape-overview": ["the-four-systems", "how-the-landscape-fits-together", "what-this-means-for-planners"],
     "system-roles": ["system-of-record", "system-of-engagement", "system-of-intelligence"],
     "arch-how-systems-connect": ["interfaces", "batchrun", "data-upload", "erp-planning-software-integration", "planning-software-fms-mdm"],

@@ -308,7 +308,7 @@ The component renders a search icon button and a `<dialog>` modal. It dynamicall
 <!-- Search modal -->
 <dialog
   id="search-modal"
-  class="fixed inset-0 z-[200] w-full h-full m-0 max-w-none max-h-none bg-black/60 backdrop-blur-sm p-4 flex items-start justify-center pt-[15vh]"
+  class="fixed inset-0 z-200 w-full h-full m-0 max-w-none max-h-none bg-black/60 backdrop-blur-sm p-4 flex items-start justify-center pt-[15vh]"
 >
   <div class="w-full max-w-2xl bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
     <div id="search-container" class="p-2"></div>
@@ -1070,7 +1070,7 @@ const glossaryTerms = getGlossaryTerms().map(t => ({ term: t.term, aliases: t.al
     <div
       id="glossary-tooltip"
       role="tooltip"
-      class="pointer-events-none fixed z-[300] hidden max-w-xs rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 shadow-lg"
+      class="pointer-events-none fixed z-300 hidden max-w-xs rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 shadow-lg"
     >
       <p id="glossary-tooltip-def" class="leading-relaxed"></p>
       <a id="glossary-tooltip-link" href="/glossary" class="pointer-events-auto mt-1 block text-indigo-300 hover:text-indigo-200">→ Glossary</a>

@@ -443,7 +443,7 @@ function renderMarkup(data) {
 
   return `
     <style>${staticCss}${generatedCss}</style>
-    <div id="role-matrix" class="fixed inset-0 z-[9997] hidden flex-col bg-white dark:bg-neutral-900" role="dialog" aria-modal="true" aria-label="Role chapter matrix">
+    <div id="role-matrix" class="fixed inset-0 z-9997 hidden flex-col bg-white dark:bg-neutral-900" role="dialog" aria-modal="true" aria-label="Role chapter matrix">
       <div class="flex items-center justify-between px-5 py-3 border-b border-gray-200 dark:border-neutral-700 shrink-0 bg-white dark:bg-neutral-900">
         <div class="flex items-center gap-3">
           <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Role &times; Chapter Matrix</h2>

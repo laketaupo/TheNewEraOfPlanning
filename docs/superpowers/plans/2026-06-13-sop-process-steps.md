@@ -929,7 +929,7 @@ const stepCount = processSteps.length;
               class="ps-tab flex items-center gap-2 px-5 py-4 text-sm font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none"
               data-step={i}
             >
-              <span class="ps-tab-num flex-shrink-0 w-5 h-5 rounded-full text-xs font-semibold flex items-center justify-center text-gray-400 dark:text-gray-500 transition-colors">{i + 1}</span>
+              <span class="ps-tab-num shrink-0 w-5 h-5 rounded-full text-xs font-semibold flex items-center justify-center text-gray-400 dark:text-gray-500 transition-colors">{i + 1}</span>
               {step.title}
             </button>
           ))}
@@ -948,11 +948,11 @@ const stepCount = processSteps.length;
               <!-- Inputs / Outputs -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
                 <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-5">
-                  <h4 class="text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-4">Inputs</h4>
+                  <h4 class="text-xs font-semibold uppercase tracking-wider text-(--accent) mb-4">Inputs</h4>
                   <ul class="space-y-2.5">
                     {step.inputs.map((inp) => (
                       <li class="flex items-start gap-2.5 text-sm text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 mt-0.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
                         {inp}
@@ -961,11 +961,11 @@ const stepCount = processSteps.length;
                   </ul>
                 </div>
                 <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-5">
-                  <h4 class="text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-4">Outputs</h4>
+                  <h4 class="text-xs font-semibold uppercase tracking-wider text-(--accent) mb-4">Outputs</h4>
                   <ul class="space-y-2.5">
                     {step.outputs.map((out) => (
                       <li class="flex items-start gap-2.5 text-sm text-gray-700 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0 mt-0.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0 mt-0.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                         {out}
@@ -991,7 +991,7 @@ const stepCount = processSteps.length;
                 <ol class="space-y-3">
                   {step.tasks.map((task, ti) => (
                     <li class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
-                      <span class="flex-shrink-0 w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">{ti + 1}</span>
+                      <span class="shrink-0 w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">{ti + 1}</span>
                       {task}
                     </li>
                   ))}
