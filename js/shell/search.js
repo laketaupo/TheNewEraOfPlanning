@@ -91,7 +91,7 @@ export function mountSearch(container) {
   wrap.innerHTML = `
     <dialog
       id="search-modal"
-      class="fixed inset-0 z-[200] w-full h-full m-0 max-w-none max-h-none bg-black/60 backdrop-blur-sm p-4"
+      class="fixed inset-0 z-200 w-full h-full m-0 max-w-none max-h-none bg-black/60 backdrop-blur-sm p-4"
     >
       <div class="relative w-full max-w-[760px] bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-neutral-700 overflow-hidden">
         <span class="pointer-events-none absolute right-3 top-3 z-10 rounded-md border border-b-2 border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 px-2 py-1 text-[11px] font-semibold text-gray-400 dark:text-neutral-500">ESC</span>

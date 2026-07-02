@@ -17,7 +17,7 @@ export function render() {
 
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Disaggregation key</p>
       <div id="vdw-keys" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3"></div>
-      <p id="vdw-key-desc" class="text-xs text-gray-400 mb-6 min-h-[1rem]"></p>
+      <p id="vdw-key-desc" class="text-xs text-gray-400 mb-6 min-h-4"></p>
 
       <div class="flex flex-col md:flex-row items-stretch gap-3 md:gap-4 mb-6">
 

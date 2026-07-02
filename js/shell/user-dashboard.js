@@ -237,7 +237,7 @@ function renderPanel(hierarchy, rolesForClient, totalTopics) {
   return `
 <div
   id="user-dashboard"
-  class="fixed inset-0 z-[9990] hidden"
+  class="fixed inset-0 z-9990 hidden"
   role="dialog"
   aria-modal="true"
   aria-label="Progress dashboard"

@@ -39,7 +39,7 @@ Replace this block:
     <div
       id="glossary-tooltip"
       role="tooltip"
-      class="pointer-events-none fixed z-[300] hidden max-w-xs rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 shadow-lg"
+      class="pointer-events-none fixed z-300 hidden max-w-xs rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 shadow-lg"
     >
       <p id="glossary-tooltip-def" class="leading-relaxed"></p>
       <a id="glossary-tooltip-link" href="/glossary" class="pointer-events-auto mt-1 block text-indigo-300 hover:text-indigo-200">→ Glossary</a>
@@ -54,7 +54,7 @@ with:
       id="glossary-tooltip"
       role="tooltip"
       data-placement="bottom"
-      class="pointer-events-auto fixed z-[300] hidden max-w-sm rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-xl"
+      class="pointer-events-auto fixed z-300 hidden max-w-sm rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-xl"
     >
       <p id="glossary-tooltip-term" class="mb-1 text-sm font-bold text-gray-900 dark:text-white"></p>
       <p id="glossary-tooltip-def" class="text-sm leading-relaxed text-gray-600 dark:text-gray-300"></p>

@@ -16,7 +16,7 @@ const bgClass = 'bg-blue-50 dark:bg-neutral-900';
 
 function lookupChapter(params) {
   // Hidden chapters (e.g. 99-layout-showcase) are excluded from nav-building code (module.js,
-  // site-overlay.js, etc. all filter `!hidden` themselves) but must still render on direct URL —
+  // site-overlay.js, etc. all filter `hidden!` themselves) but must still render on direct URL —
   // per CLAUDE.md: "included in builds, invisible in nav". The original Astro getStaticPaths()
   // excluded hidden chapters entirely (a pre-existing bug that made this reference chapter 404
   // even by direct URL, contradicting its own documented purpose) — fixed here since there's no
@@ -38,7 +38,7 @@ export async function render(params, query) {
     return `
       ${renderHeader(meta)}
       <div class="relative min-h-screen overflow-hidden">
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
         <div class="absolute inset-0 pointer-events-none chapter-radial-bg"></div>
         <main class="relative z-10 max-w-3xl mx-auto px-6 pt-24 pb-16 animate-slide-up">
           <p class="text-sm font-medium ${textClass} mb-2">Chapter ${chapter.order}</p>
@@ -89,7 +89,7 @@ export async function render(params, query) {
   return `
     ${renderHeader(meta)}
     <div class="relative min-h-screen overflow-hidden">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
       <div class="absolute inset-0 pointer-events-none chapter-radial-bg"></div>
 
       <main class="relative z-10 max-w-3xl mx-auto px-6 pt-24 pb-16 animate-slide-up">

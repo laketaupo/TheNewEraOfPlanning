@@ -77,7 +77,7 @@ export function render() {
       </div>
 
       <div class="mt-5 pt-4 border-t border-gray-100 dark:border-neutral-800">
-        <p id="dsw-status" class="text-sm text-gray-500 dark:text-neutral-400 min-h-[1.375rem] transition-all duration-200">
+        <p id="dsw-status" class="text-sm text-gray-500 dark:text-neutral-400 min-h-5.5 transition-all duration-200">
           Adjust the slicing factor above, then press ▶ Play or Step → to run the simulation.
         </p>
       </div>

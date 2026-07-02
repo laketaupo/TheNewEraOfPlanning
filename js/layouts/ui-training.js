@@ -21,7 +21,7 @@ ${renderTopHeader(props)}
     data-pagefind-filter="${themeFilter(props)}"
   >
     ${renderChapterMeta(props)}
-    <div class="flex-shrink-0 bg-gray-50 dark:bg-neutral-950 border-b border-gray-100 dark:border-neutral-800">
+    <div class="shrink-0 bg-gray-50 dark:bg-neutral-950 border-b border-gray-100 dark:border-neutral-800">
       <div class="h-[3px]" style="background: linear-gradient(90deg, ${accentColor}, ${accentColor}44 60%, transparent)"></div>
       <div class="px-6 pt-4 pb-5">
         <div class="inline-flex items-center gap-2 text-xs font-medium border rounded-full px-3 py-1 mb-2 ${badgeBgClass}">
@@ -45,7 +45,7 @@ ${renderTopHeader(props)}
             />
           </div>
 
-          <div class="flex-shrink-0 bg-gray-950 border-t border-gray-800 px-6 py-4">
+          <div class="shrink-0 bg-gray-950 border-t border-gray-800 px-6 py-4">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">What you're looking at</p>
             <div class="text-sm text-gray-400 leading-relaxed prose prose-sm prose-invert max-w-none">
               ${props.bodyHtml ?? ''}
@@ -53,12 +53,12 @@ ${renderTopHeader(props)}
           </div>
         </div>
 
-        <div class="flex-shrink-0 w-60 flex flex-col bg-gray-950 px-5 py-5">
-          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4 flex-shrink-0">Steps</p>
+        <div class="shrink-0 w-60 flex flex-col bg-gray-950 px-5 py-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4 shrink-0">Steps</p>
           <ol class="flex flex-col flex-1 justify-between list-none p-0 m-0">
             ${steps.map((step, i) => `
               <li class="flex items-start gap-3">
-                <div class="flex flex-col items-center flex-shrink-0">
+                <div class="flex flex-col items-center shrink-0">
                   <span class="flex items-center justify-center w-6 h-6 rounded-full border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 text-xs font-bold leading-none">
                     ${i + 1}
                   </span>

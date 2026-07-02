@@ -159,7 +159,7 @@ In `src/components/Search.astro`, inside the `<style is:global>` block, append t
     border: 1px solid rgb(251 191 36);
     color: rgb(180 83 9);
     background: rgb(255 251 235);
-    flex-shrink: 0;
+    shrink: 0;
   }
   .dark .note-badge {
     color: rgb(251 191 36);
