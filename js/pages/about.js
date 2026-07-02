@@ -1,0 +1,88 @@
+// Port of src/pages/about.astro for the build-free SPA. Static route (no params), no
+// content-derived data at all — every string here is static site copy, not user/content data.
+import { url } from '../base-url.js';
+
+export async function render() {
+  return `
+    <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3">
+      <div class="flex items-center gap-3">
+        <a href="${url('')}" title="Home" class="flex h-5 items-center text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+        </a>
+        <a href="${url('')}" class="flex items-center gap-1.5 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          The New Era of Planning
+        </a>
+      </div>
+    </header>
+
+    <div class="relative min-h-screen">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+
+      <div class="relative z-10 px-6 pt-16 pb-20 max-w-2xl mx-auto">
+
+        <div class="mb-12">
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">About This Guide</h1>
+          <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed">
+            A structured learning platform built to support teams navigating a planning transformation.
+          </p>
+        </div>
+
+        <div class="space-y-10">
+
+          <div class="bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl p-8">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-3">What is this?</h2>
+            <p class="text-gray-600 dark:text-neutral-400 leading-relaxed text-sm">
+              This platform gives everyone from supply planners to senior leaders a structured, role-based path through the concepts and tools that matter in modern supply chain planning. Content is organised across four pillars — People, Process, Data and Technology — and structured into five learning phases from initial awareness through to continuous optimisation.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl p-8">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-5">How it's structured</h2>
+            <div class="space-y-4">
+              <div class="flex gap-4">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Four pillars</h3>
+                  <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">People, Process, Data and Technology — each covered in depth with interconnected content.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Role-based paths</h3>
+                  <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Content curated per role so every team member gets exactly what they need, in the right order.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Five learning phases</h3>
+                  <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Awareness → Conceptual → Practical → Embedded → Optimisation. Progress at your own pace.</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Progress tracking</h3>
+                  <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Mark topics complete, flag unclear content, and pick up where you left off on any device.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl p-8">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Who is it for?</h2>
+            <p class="text-gray-600 dark:text-neutral-400 leading-relaxed text-sm">
+              Anyone involved in or affected by a supply chain planning transformation — supply planners, demand planners, data stewards, operations managers, finance business partners, and senior leaders. Whether you're brand new to planning software or looking to deepen your expertise, there's a path for you.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>`;
+}

@@ -1,0 +1,41 @@
+<h2>What is a Resource Consumption?</h2>
+<p>A <strong>Resource Consumption</strong> connects a <strong>Transformation Process</strong> to a <strong>Resource</strong>. It defines <em>how much</em> of a resource is used when the process runs.</p>
+<p>This is the link that makes capacity planning possible. Without resource consumptions, the planning engine has no way to know that producing 1,000 units of Product X will occupy Bottling Line 3 for 8 hours.</p>
+<p>Key attributes:</p>
+<ul>
+<li><strong>Process</strong> — which transformation process uses the resource</li>
+<li><strong>Resource</strong> — which resource is consumed</li>
+<li><strong>Consumption rate</strong> — how much capacity is used per unit of output (e.g., 0.5 hours/unit)</li>
+<li><strong>Consumption type</strong> — fixed (setup time) or variable (run rate)</li>
+</ul>
+<h2>Fixed vs. Variable Consumption</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fixed</strong></td>
+<td>Consumed once per batch, regardless of quantity</td>
+<td>2-hour setup per production run</td>
+</tr>
+<tr>
+<td><strong>Variable</strong></td>
+<td>Consumed proportionally to output quantity</td>
+<td>0.05 hours per unit produced</td>
+</tr>
+</tbody></table>
+<p>Most processes have both: a fixed setup component and a variable run component.</p>
+<h2>How It Fits Together</h2>
+<pre><code>Transformation Process  ──uses──►  Resource
+       │                            │
+       │  Resource Consumption      │
+       │  (rate: 0.5 hr/unit)       │
+       └────────────────────────────┘
+</code></pre>
+<p>When Planning software generates a production plan, it sums all resource consumptions across all planned batches and compares them to available capacity — flagging overloads or underutilization.</p>
+<h2>Placeholder Content</h2>
+<p><em>Replace this section with specific consumption rates, bottleneck analysis, or Planning software screenshots from your environment.</em></p>

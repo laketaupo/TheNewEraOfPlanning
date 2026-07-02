@@ -1,0 +1,27 @@
+<h2>Start with a clear question</h2>
+<p>The most common mistake in simulation setup is starting with the tool rather than the question. Before opening Planning software, you should be able to state: "I want to know what happens to my supply plan if [specific assumption changes]." The more specific the question, the more useful the simulation.</p>
+<p>Vague question: "What if demand is higher?"<br>Good question: "What happens to inventory and shortage risk for Variety X if the June demand signal increases by 25%?"</p>
+<h2>Creating the scenario</h2>
+<p>A simulation runs within a scenario. To set one up:</p>
+<ol>
+<li><strong>Create a new scenario</strong> — copy the current baseline into a new named scenario. Use a name that describes the assumption being tested, not a generic label (e.g., "June demand +25% Variety X" not "Scenario 3").</li>
+<li><strong>Set the planning horizon</strong> — confirm the time range you want the simulation to cover. For most supply risk or demand uncertainty questions, a 12–26 week horizon is appropriate.</li>
+<li><strong>Lock the baseline</strong> — before making changes, note the key baseline metrics you will compare against: total shortage volume, inventory DoH, planned order quantities. These are your reference points.</li>
+</ol>
+<h2>Making input changes</h2>
+<p>With the scenario created, make the specific changes that reflect your assumption:</p>
+<ul>
+<li>Navigate to the relevant demand signal, supply parameter, or lead time field</li>
+<li>Change the value to reflect your assumption</li>
+<li>Document what you changed and why — this makes the scenario interpretable to anyone who reviews it later</li>
+</ul>
+<p>Keep the change set as small as possible. A simulation that changes five things simultaneously is hard to interpret. Test one assumption at a time; if you need to model combined effects, start with the individual components and layer them.</p>
+<h2>Pre-run checklist</h2>
+<p>Before triggering the planning engine:</p>
+<ul>
+<li><input disabled="" type="checkbox"> Scenario is named descriptively</li>
+<li><input disabled="" type="checkbox"> Input changes are documented</li>
+<li><input disabled="" type="checkbox"> Baseline metrics are noted for comparison</li>
+<li><input disabled="" type="checkbox"> Planning horizon is set appropriately</li>
+<li><input disabled="" type="checkbox"> Only intended changes have been made (no accidental edits)</li>
+</ul>

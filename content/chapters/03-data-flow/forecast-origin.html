@@ -1,0 +1,11 @@
+<h2>Item J: the entry point</h2>
+<p>Every demand signal needs a place to land. In the seed-treatment network that entry point is <strong>Item J</strong> — the packed, coated, primed, calibrated seed that is shipped from the Central Warehouse to the customer via the final BOD lane.</p>
+<p>A forecast of <strong>100 units of Item J</strong> in a given planning period is the starting assumption for everything downstream. Until that number exists, the planning engine has no reason to schedule Packing, Coating, Priming, or any upstream process.</p>
+<h2>Forecast vs. demand plan</h2>
+<p>The raw forecast from the ML model is a probability distribution — for example, "90 % confidence the customer will need between 85 and 115 units." The <strong>demand plan</strong> is the single number committed to by the commercial team: 100 units. This is the number that the planning engine uses.</p>
+<p>In Planning software the demand plan lives on the Item J <strong>line item</strong> at the customer location. A line item is a (item, location, time) combination, and the demand plan is one of its key attributes alongside on-hand inventory, safety stock, and lead time.</p>
+<h2>The parent line item relationship</h2>
+<p>Item J at the customer is a <strong>child</strong> demand node. The planning engine traces back through the BOD edge (Ship [J] process) to find Item J at the Central Warehouse — the <strong>parent line item</strong>. The 100-unit forecast propagates to the parent: the Central Warehouse must have 100 units ready to ship.</p>
+<p>This parent → child relationship repeats all the way up the network. Each step upstream creates a new parent that must be planned to satisfy the child.</p>
+<h2>Time offsets begin here</h2>
+<p>The customer expects delivery by a specific date. The Ship [J] process has a lead time — say, 3 days. So the Central Warehouse must have Item J ready <strong>3 days before</strong> the customer needs it. Every hop upstream shifts the required start date back by the process lead time, creating a cascade of time-offset requirements across the whole network.</p>

@@ -1,0 +1,22 @@
+<h2>The handoff chain</h2>
+<p>The journey from S&amp;OE decision to physical action involves several hand-offs across systems and teams. Understanding this chain is important for diagnosing where breakdowns occur.</p>
+<p><strong>Step 1 — Plan publication in planning software</strong>
+At the end of the S&amp;OE cycle, the confirmed near-term plan is published. This locks the replenishment orders, production schedule, and allocation decisions for the current period.</p>
+<p><strong>Step 2 — Order transfer to ERP</strong>
+Released replenishment orders flow from planning software to the ERP system. In the ERP, these become purchase orders (for externally sourced materials) or production orders (for manufactured items). The ERP is the system of record for these commitments.</p>
+<p><strong>Step 3 — Warehouse execution (WMS)</strong>
+Customer orders, confirmed for fulfilment against available stock, are released to the warehouse management system. The WMS generates pick tasks, assigns them to warehouse staff, and tracks progress through pick, pack, and dispatch.</p>
+<p><strong>Step 4 — Production execution (MES)</strong>
+Production orders flow to the manufacturing execution system. Operators receive the production schedule, confirm material availability, and record output against each order. Yield variances, quality failures, and downtime events are captured in the MES and feed back into inventory actuals.</p>
+<p><strong>Step 5 — Transport execution</strong>
+Completed orders are transferred to the transportation management system (TMS) or carrier for dispatch. Proof of delivery data flows back into the ERP, updating customer order status and triggering invoicing.</p>
+<h2>Data flows back upstream</h2>
+<p>Execution generates actuals: shipments dispatched, production output, inbound receipts. These actuals flow back into the planning system and update the inventory position and demand consumption data used in the next S&amp;OE cycle. If this feedback loop is broken — if actual shipments are not updating the planning model — the plan will drift from reality.</p>
+<h2>Where breakdowns happen</h2>
+<p>Most plan-to-action failures occur at the hand-off points:</p>
+<ul>
+<li>Planning publishes an order that ERP cannot process due to a missing master data field</li>
+<li>ERP releases a pick task for stock that WMS shows as unavailable (inventory record inaccuracy)</li>
+<li>The production schedule does not match what the MES can execute due to unrecorded capacity constraints</li>
+</ul>
+<p>Keeping these systems in sync requires clean master data, well-maintained integration mappings, and regular reconciliation of stock positions across systems.</p>

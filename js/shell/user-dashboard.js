@@ -1,0 +1,915 @@
+// Port of src/components/UserDashboard.astro for the build-free SPA.
+// Fixed-chrome shell module (see CONTRACTS.md §4b): exports mountUserDashboard(container),
+// called exactly once at boot by js/app.js (mounted onto document.body). Internally listens
+// for the `platform-progress-changed` event (dispatched by shell/topic-progress.js after every
+// state change) to refresh its own stats/badge — app.js does not orchestrate this.
+//
+// Renders the panel-mode (non-standalone) dashboard only: the slide-in progress panel toggled
+// by `#user-dashboard-btn` / `#dash-badge` (both already present in index.html).
+
+import { getChapters, getTopics, getThemes } from '../lib/chapters.js';
+import { getRoles, resolveRolePhases, resolveRoleSections } from '../lib/roles.js';
+import { escapeHtml } from '../markdown.js';
+import { url } from '../base-url.js';
+
+const STORAGE_KEY  = 'platform-progress';
+const ROLE_KEY     = 'platform-dashboard-role';
+const COMMENTS_KEY = 'platform-comments';
+
+const moduleLabels = {
+  // Technology
+  'planning-software':                   'Planning Software',
+  'erp':                                 'ERP',
+  'tool-landscape':                      'Tool Landscape & Architecture',
+  'fms':                                 'Farm Management System',
+  'mdm':                                 'MDM',
+  'adoption-and-usage-quality':          'Adoption & Usage Quality',
+  // Data
+  'data-foundations':                    'Data Foundations',
+  'planning-data-domains':               'Planning Data Domains',
+  'planning-parameters-and-assumptions': 'Planning Parameters & Assumptions',
+  'performance-and-measurement':         'Performance & Measurement',
+  'data-quality-and-governance':         'Data Quality & Governance',
+  // Process
+  'planning-fundamentals':               'Planning Fundamentals',
+  'planning-cycles-and-governance':      'Planning Cycles & Governance',
+  'sop':                                 'S&OP',
+  'soe':                                 'S&OE',
+  'execution':                           'Execution',
+  'advanced-planning':                   'Advanced Planning',
+  // People
+  'roles-and-responsibilities':          'Roles & Responsibilities',
+  'decision-making-and-ownership':       'Decision Making & Ownership',
+  'collaboration-and-ways-of-working':   'Collaboration & Ways of Working',
+  'capabilities-and-skills':             'Capabilities & Skills',
+};
+
+const themeMeta = {
+  technology: { label: 'Technology', accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  process:    { label: 'Process',    accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  data:       { label: 'Data',       accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+  people:     { label: 'People',     accentClass: 'text-blue-600 dark:text-blue-400', lineClass: 'bg-blue-100 dark:bg-blue-500/20' },
+};
+
+const themeAccentClass = {
+  technology: 'text-blue-600 dark:text-blue-400',
+  process:    'text-blue-600 dark:text-blue-400',
+  data:       'text-blue-600 dark:text-blue-400',
+  people:     'text-blue-600 dark:text-blue-400',
+};
+
+const dotClass = {
+  complete: 'bg-emerald-500',
+  unclear:  'bg-amber-400',
+  none:     'bg-gray-300 dark:bg-neutral-600',
+};
+
+const filterLabels = { complete: 'Complete', unclear: 'Unclear', none: 'Remaining' };
+const filterEmptyText = {
+  complete: 'No completed topics yet',
+  unclear:  'No unclear topics \u{1F389}',
+  none:     'Nothing remaining — all done! \u{1F389}',
+};
+
+// --- localStorage helpers (same keys/migration logic as shell/topic-progress.js) ---
+
+function getProgress() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const result = {};
+    for (const [k, v] of Object.entries(raw)) {
+      if (v === 'complete' || v === 'unclear') result[k] = v;
+      else if (v === true) result[k] = 'complete';
+    }
+    return result;
+  } catch {
+    return {};
+  }
+}
+
+function getComments() {
+  try { return JSON.parse(localStorage.getItem(COMMENTS_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+// --- Data assembly (mirrors the Astro frontmatter computation, now done at mount time) ---
+
+function buildHierarchy(themeOrder, allChapters, allTopics) {
+  return themeOrder.map(themeKey => {
+    const meta = themeMeta[themeKey];
+    const themeChapters = allChapters.filter(c => c.theme === themeKey);
+
+    // Module keys, deduped, preserving first-occurrence order. allChapters is already sorted
+    // theme -> module -> chapter order by getChapters(), so this reproduces the Astro original's
+    // `moduleOrder`-based sort without needing a `moduleOrder` field that chapters never had
+    // (that sort was a no-op there too — both operands defaulted to 999 — since it just sorted
+    // a Set built from an already-ordered array).
+    const moduleKeys = [...new Set(themeChapters.map(c => c.module ?? ''))].filter(Boolean);
+
+    const modules = moduleKeys.map(moduleKey => {
+      const moduleChapters = themeChapters.filter(c => c.module === moduleKey);
+      const chapters = moduleChapters.map(ch => ({
+        slug:       ch.slug,
+        title:      ch.title,
+        topicCount: allTopics.filter(t => t.chapterSlug === ch.slug).length,
+      }));
+      return {
+        key:        moduleKey,
+        label:      moduleLabels[moduleKey] ?? moduleKey,
+        topicCount: chapters.reduce((s, c) => s + c.topicCount, 0),
+        chapters:   chapters.filter(c => c.topicCount > 0),
+      };
+    }).filter(m => m.topicCount > 0);
+
+    const topicCount = modules.reduce((s, m) => s + m.topicCount, 0);
+    if (topicCount === 0) return null;
+    return { key: themeKey, ...meta, topicCount, modules };
+  }).filter(Boolean);
+}
+
+function buildTopicsForClient(allTopics, allChapters) {
+  return allTopics.map(t => {
+    const chapter = allChapters.find(c => c.slug === t.chapterSlug);
+    return {
+      id:           `${t.chapterSlug}/${t.slug}`,
+      title:        t.title,
+      url:          t.url,
+      chapterSlug:  t.chapterSlug,
+      chapterTitle: chapter?.title ?? t.chapterSlug,
+      topicSlug:    t.slug,
+      moduleKey:    chapter?.module ?? '',
+      themeKey:     chapter?.theme ?? '',
+      order:        t.order,
+    };
+  });
+}
+
+// Roles that actually have topics (skip "coming soon" placeholders). Each role keeps its own
+// phase -> section -> topic hierarchy so the dashboard can show the role's learning path rather
+// than the site's theme tree. Roles without phases are normalised to a single untitled phase.
+function buildRolesForClient() {
+  return getRoles()
+    .filter(r => !r.comingSoon)
+    .map(r => {
+      const resolvedPhases = resolveRolePhases(r);
+      const phases = (resolvedPhases ?? [{ title: null, sections: resolveRoleSections(r) }]).map(p => ({
+        title: p.title ?? null,
+        sections: p.sections.map(s => ({
+          title: s.title,
+          topics: s.topics.map(t => ({
+            id:    t.topicId,
+            title: t.title,
+            url:   t.url,
+            ref:   `${t.chapterSlug}/${t.slug}`,
+          })),
+        })),
+      }));
+      const refs = phases.flatMap(p => p.sections.flatMap(s => s.topics.map(t => t.ref)));
+      return { slug: r.slug, label: r.title, refs: [...new Set(refs)], phases };
+    })
+    .filter(r => r.refs.length > 0);
+}
+
+// --- Markup ---
+
+function renderPanel(hierarchy, rolesForClient, totalTopics) {
+  const roleSelectorHtml = rolesForClient.length > 0 ? `
+    <div class="px-5 pt-4 pb-3 border-b border-gray-100 dark:border-neutral-800 shrink-0">
+      <label for="dash-role-select" class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-neutral-500 mb-1.5">
+        View as role
+      </label>
+      <select
+        id="dash-role-select"
+        class="w-full text-xs rounded-md border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-gray-700 dark:text-neutral-200 px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400/40 cursor-pointer"
+      >
+        <option value="">All topics</option>
+        ${rolesForClient.map(r => `<option value="${escapeHtml(r.slug)}">${escapeHtml(r.label)}</option>`).join('')}
+      </select>
+    </div>` : '';
+
+  const themeTreeHtml = hierarchy.map((theme, pi) => `
+    <details data-theme-node="${escapeHtml(theme.key)}">
+      <summary class="flex items-center gap-2 px-5 py-2 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40 ${pi > 0 ? 'mt-1' : ''}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2.5 h-2.5 shrink-0 ${theme.accentClass}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+        <span class="text-[10px] font-bold uppercase tracking-widest ${theme.accentClass}">${escapeHtml(theme.label)}</span>
+        <div class="flex-1 h-px ${theme.lineClass}"></div>
+        <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-theme-count="${escapeHtml(theme.key)}">
+          0/${theme.topicCount}
+        </span>
+      </summary>
+
+      ${theme.modules.map(mod => `
+        <details data-module-node="${escapeHtml(mod.key)}">
+          <summary class="flex items-center gap-2 pl-8 pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+            <span class="text-xs font-medium text-gray-600 dark:text-neutral-300 flex-1 truncate">${escapeHtml(mod.label)}</span>
+            <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-module-count="${escapeHtml(mod.key)}">
+              0/${mod.topicCount}
+            </span>
+          </summary>
+
+          ${mod.chapters.map(ch => `
+            <details data-chapter-node="${escapeHtml(ch.slug)}">
+              <summary class="block pl-11 pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+                <div class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                  <span class="text-xs text-gray-700 dark:text-neutral-300 flex-1 truncate leading-snug">${escapeHtml(ch.title)}</span>
+                  <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-chapter-count="${escapeHtml(ch.slug)}">
+                    0/${ch.topicCount}
+                  </span>
+                </div>
+                <div class="h-1 mt-1.5 ml-4 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden flex">
+                  <div class="h-full bg-emerald-500 transition-all duration-300" data-chapter-complete-bar="${escapeHtml(ch.slug)}" style="width: 0%"></div>
+                  <div class="h-full bg-amber-400 transition-all duration-300"   data-chapter-unclear-bar="${escapeHtml(ch.slug)}"  style="width: 0%"></div>
+                </div>
+              </summary>
+              <div class="pl-[52px] pr-5 pb-2 pt-0.5 space-y-0.5" data-chapter-topics="${escapeHtml(ch.slug)}"></div>
+            </details>`).join('')}
+        </details>`).join('')}
+    </details>`).join('');
+
+  return `
+<div
+  id="user-dashboard"
+  class="fixed inset-0 z-[9990] hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Progress dashboard"
+>
+  <div id="user-dashboard-backdrop" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+
+  <div class="absolute top-0 right-0 bottom-0 w-80 flex flex-col bg-white dark:bg-neutral-900 shadow-2xl">
+
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        <span class="text-sm font-semibold text-gray-900 dark:text-white">Your Progress</span>
+      </div>
+      <button
+        id="user-dashboard-close"
+        class="text-gray-400 hover:text-gray-700 dark:hover:text-neutral-200 transition-colors"
+        aria-label="Close"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex border-b border-gray-100 dark:border-neutral-800 shrink-0">
+      <button id="dash-tab-progress-btn" class="flex-1 py-2.5 text-xs font-semibold transition-colors border-b-2" aria-selected="true">
+        Progress
+      </button>
+      <button id="dash-tab-notes-btn" class="flex-1 py-2.5 text-xs font-semibold transition-colors border-b-2" aria-selected="false">
+        Notes
+      </button>
+    </div>
+
+    <div id="progress-tab" class="flex flex-col flex-1 overflow-hidden">
+
+      ${roleSelectorHtml}
+
+      <div class="px-5 py-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
+        <div class="flex items-start gap-2 mb-3">
+          <button type="button" data-stat-filter="complete"
+            class="dash-stat-tile flex-1 text-left rounded-lg px-2 py-1.5 ring-1 ring-transparent transition-colors hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <div class="text-xl font-bold text-emerald-600 dark:text-emerald-400" id="dash-complete-num">0</div>
+            <div class="text-[11px] text-gray-500 dark:text-neutral-400 mt-0.5">complete</div>
+          </button>
+          <button type="button" data-stat-filter="unclear"
+            class="dash-stat-tile flex-1 text-left rounded-lg px-2 py-1.5 ring-1 ring-transparent transition-colors hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <div class="text-xl font-bold text-amber-500 dark:text-amber-400" id="dash-unclear-num">0</div>
+            <div class="text-[11px] text-gray-500 dark:text-neutral-400 mt-0.5">unclear</div>
+          </button>
+          <button type="button" data-stat-filter="none"
+            class="dash-stat-tile flex-1 text-left rounded-lg px-2 py-1.5 ring-1 ring-transparent transition-colors hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <div class="text-xl font-bold text-gray-300 dark:text-neutral-600" id="dash-remaining-num">0</div>
+            <div class="text-[11px] text-gray-500 dark:text-neutral-400 mt-0.5">remaining</div>
+          </button>
+        </div>
+        <div class="h-2 bg-gray-100 dark:bg-neutral-800 rounded-full overflow-hidden flex">
+          <div id="dash-complete-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+          <div id="dash-unclear-bar"  class="h-full bg-amber-400 transition-all duration-300"   style="width: 0%"></div>
+        </div>
+        <div class="text-[11px] text-gray-400 dark:text-neutral-500 mt-1.5" id="dash-overall-text">
+          0 of ${totalTopics} topics complete
+        </div>
+      </div>
+
+      <div id="dash-filter-chip" class="hidden items-center gap-2 px-5 py-2 border-b border-gray-100 dark:border-neutral-800 shrink-0 bg-gray-50/70 dark:bg-neutral-800/30">
+        <span class="text-[11px] text-gray-500 dark:text-neutral-400">
+          Showing: <span id="dash-filter-label" class="font-semibold text-gray-700 dark:text-neutral-200"></span>
+        </span>
+        <button id="dash-filter-clear" type="button" class="ml-auto inline-flex items-center gap-1 text-[11px] text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          clear
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto py-1 dash-tree">
+
+        <div id="dash-role-view" class="hidden"></div>
+
+        <div id="dash-theme-view">
+        ${themeTreeHtml}
+        </div>
+
+        <div id="dash-empty" class="hidden px-5 py-8 text-center text-xs text-gray-400 dark:text-neutral-500">
+          No topics for this role yet.
+        </div>
+
+        <div id="dash-filter-empty" class="hidden px-5 py-8 text-center text-xs text-gray-400 dark:text-neutral-500"></div>
+
+      </div>
+
+    </div><!-- /progress-tab -->
+
+    <div id="notes-tab" class="hidden flex-1 overflow-y-auto"></div>
+
+    <div class="px-5 py-3 border-t border-gray-100 dark:border-neutral-800 shrink-0">
+      <button id="dash-reset-btn" class="text-xs text-gray-400 dark:text-neutral-600 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+        Reset all progress
+      </button>
+    </div>
+
+  </div>
+</div>`;
+}
+
+/** Mounts the progress dashboard panel into `container` (called once at boot by js/app.js). */
+export function mountUserDashboard(container) {
+  if (!container) return;
+
+  const allChapters = getChapters().filter(c => !c.hidden);
+  const allTopics   = getTopics();
+  const themeOrder  = getThemes();
+
+  const hierarchy       = buildHierarchy(themeOrder, allChapters, allTopics);
+  const topicsForClient = buildTopicsForClient(allTopics, allChapters);
+  const rolesForClient  = buildRolesForClient();
+  const totalTopics     = allTopics.length;
+
+  container.insertAdjacentHTML('beforeend', renderPanel(hierarchy, rolesForClient, totalTopics));
+
+  // Lookups: role slug -> Set of "chapterSlug/topicSlug" refs, and -> full role object
+  const roleRefs = {};
+  const roleBySlug = {};
+  rolesForClient.forEach(r => { roleRefs[r.slug] = new Set(r.refs); roleBySlug[r.slug] = r; });
+
+  let activeRole = localStorage.getItem(ROLE_KEY) || '';
+  if (activeRole && !roleRefs[activeRole]) activeRole = ''; // role no longer exists
+
+  // Session-only state filter: '' (all) | 'complete' | 'unclear' | 'none' (remaining).
+  let activeFilter = '';
+  let openSnapshot = null; // <details> open states captured when entering filter mode
+  let activeTab    = 'progress'; // 'progress' | 'notes'
+
+  function matchesFilter(state) {
+    return !activeFilter || state === activeFilter;
+  }
+
+  function currentTreeRoot() {
+    return roleView.classList.contains('hidden') ? themeView : roleView;
+  }
+
+  function snapshotOpen() {
+    openSnapshot = new Map();
+    currentTreeRoot().querySelectorAll('details').forEach(d => openSnapshot.set(d, d.open));
+  }
+  function restoreOpen() {
+    if (openSnapshot) {
+      openSnapshot.forEach((wasOpen, d) => { if (d.isConnected) d.open = wasOpen; });
+      openSnapshot = null;
+    }
+  }
+
+  function setFilter(next) {
+    if (activeFilter === '' && next !== '')      snapshotOpen();
+    else if (activeFilter !== '' && next === '') restoreOpen();
+    activeFilter = next;
+    refreshDashboard();
+  }
+
+  function inScope(t) {
+    if (!activeRole) return true;
+    return roleRefs[activeRole].has(`${t.chapterSlug}/${t.topicSlug}`);
+  }
+
+  function formatNotesForClipboard() {
+    const comments = getComments();
+    const now   = new Date();
+    const day   = now.getDate();
+    const month = now.toLocaleString('en-GB', { month: 'long' });
+    const year  = now.getFullYear();
+
+    const lines = [
+      'My Learning Notes',
+      `Exported ${day} ${month} ${year}`,
+      '================================',
+      '',
+    ];
+
+    let first = true;
+    topicsForClient.forEach(t => {
+      const comment = comments[t.id];
+      if (!comment) return;
+      if (!first) lines.push('');
+      first = false;
+      const moduleLabel = t.moduleKey.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      lines.push(`${t.themeKey.toUpperCase()} › ${moduleLabel} › ${t.chapterTitle} › ${t.title}`);
+      lines.push(`  "${comment.split('\n').join('\n  ')}"`);
+    });
+
+    return lines.join('\n');
+  }
+
+  async function copyAllNotes(btn) {
+    const icon  = btn.querySelector('svg');
+    const label = btn.querySelector('[data-copy-label]');
+    if (!icon || !label) return;
+
+    const text = formatNotesForClipboard();
+
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); copied = true; } catch { /* silent fail */ }
+      document.body.removeChild(ta);
+    }
+    if (!copied) return;
+
+    btn.disabled = true;
+    btn.classList.remove(
+      'border-gray-300', 'dark:border-neutral-700',
+      'text-gray-400', 'dark:text-neutral-500',
+      'hover:border-amber-400', 'hover:text-amber-600', 'dark:hover:text-amber-400'
+    );
+    btn.classList.add(
+      'border-emerald-400', 'text-emerald-600', 'dark:text-emerald-400',
+      'bg-emerald-50', 'dark:bg-emerald-500/10'
+    );
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>';
+    icon.setAttribute('stroke-width', '2.5');
+    label.textContent = 'Copied!';
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.classList.add(
+        'border-gray-300', 'dark:border-neutral-700',
+        'text-gray-400', 'dark:text-neutral-500',
+        'hover:border-amber-400', 'hover:text-amber-600', 'dark:hover:text-amber-400'
+      );
+      btn.classList.remove(
+        'border-emerald-400', 'text-emerald-600', 'dark:text-emerald-400',
+        'bg-emerald-50', 'dark:bg-emerald-500/10'
+      );
+      icon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';
+      icon.setAttribute('stroke-width', '2');
+      label.textContent = 'Copy all';
+    }, 2000);
+  }
+
+  const panel          = document.getElementById('user-dashboard');
+  const triggerBtn      = document.getElementById('user-dashboard-btn');
+  const closeBtn        = document.getElementById('user-dashboard-close');
+  const backdrop        = document.getElementById('user-dashboard-backdrop');
+  const badge           = document.getElementById('dash-badge');
+  const roleSelect       = document.getElementById('dash-role-select');
+  const themeView        = document.getElementById('dash-theme-view');
+  const roleView         = document.getElementById('dash-role-view');
+  const filterChip       = document.getElementById('dash-filter-chip');
+  const filterLabel      = document.getElementById('dash-filter-label');
+  const filterClear      = document.getElementById('dash-filter-clear');
+  const filterEmpty      = document.getElementById('dash-filter-empty');
+  const statTiles        = Array.from(panel.querySelectorAll('.dash-stat-tile'));
+  const progressTab      = document.getElementById('progress-tab');
+  const notesTab         = document.getElementById('notes-tab');
+  const tabProgressBtn   = document.getElementById('dash-tab-progress-btn');
+  const tabNotesBtn      = document.getElementById('dash-tab-notes-btn');
+
+  // --- Tab management ---
+
+  function applyTabStyles() {
+    const active   = 'text-gray-900 dark:text-white border-gray-900 dark:border-white';
+    const inactive = 'text-gray-400 dark:text-neutral-500 border-transparent hover:text-gray-700 dark:hover:text-neutral-200';
+    const base     = 'flex-1 py-2.5 text-xs font-semibold transition-colors border-b-2';
+    tabProgressBtn.className = `${base} ${activeTab === 'progress' ? active : inactive}`;
+    tabNotesBtn.className    = `${base} ${activeTab === 'notes'    ? active : inactive}`;
+    tabProgressBtn.setAttribute('aria-selected', String(activeTab === 'progress'));
+    tabNotesBtn.setAttribute('aria-selected',    String(activeTab === 'notes'));
+  }
+
+  function setTab(tab) {
+    activeTab = tab;
+    applyTabStyles();
+    if (tab === 'progress') {
+      progressTab.classList.remove('hidden');
+      notesTab.classList.add('hidden');
+    } else {
+      progressTab.classList.add('hidden');
+      notesTab.classList.remove('hidden');
+      buildNotesTab();
+    }
+  }
+
+  function buildNotesTab() {
+    const progress = getProgress();
+    const comments = getComments();
+
+    const chapterGroups = [];
+    const chapterIndex  = new Map();
+
+    topicsForClient.forEach(t => {
+      const comment = comments[t.id];
+      if (!comment) return;
+      if (!chapterIndex.has(t.chapterSlug)) {
+        const group = { slug: t.chapterSlug, title: t.chapterTitle, theme: t.themeKey, topics: [] };
+        chapterGroups.push(group);
+        chapterIndex.set(t.chapterSlug, group);
+      }
+      chapterIndex.get(t.chapterSlug).topics.push({ t, comment, state: progress[t.id] ?? 'none' });
+    });
+
+    if (chapterGroups.length === 0) {
+      notesTab.innerHTML = '<div class="px-5 py-10 text-center text-xs text-gray-400 dark:text-neutral-500">No notes yet — add one from any topic page.</div>';
+      return;
+    }
+
+    const copyBtnHtml = `
+      <div class="px-5 pt-3 pb-2.5 flex justify-end">
+        <button data-copy-notes-btn type="button"
+          class="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-gray-300 dark:border-neutral-700 text-gray-400 dark:text-neutral-500 hover:border-amber-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+          <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+          <span data-copy-label>Copy all</span>
+        </button>
+      </div>`;
+
+    notesTab.innerHTML = copyBtnHtml + chapterGroups.map(group => {
+      const accent = themeAccentClass[group.theme] ?? 'text-gray-500 dark:text-neutral-400';
+      const items = group.topics.map(({ t, comment, state }) => {
+        const dot = dotClass[state] ?? dotClass.none;
+        return `<div class="py-2.5 border-b border-gray-50 dark:border-neutral-800/60 last:border-0">
+          <a href="${escapeHtml(url(t.url))}"
+             class="flex items-start gap-2 group mb-1"
+             data-dash-nav-link>
+            <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0 mt-[3px]"></span>
+            <span class="text-[11px] font-medium text-gray-700 dark:text-neutral-300 group-hover:text-gray-900 dark:group-hover:text-white leading-snug">${escapeHtml(t.title)}</span>
+          </a>
+          <p class="ml-3.5 text-[11px] text-gray-500 dark:text-neutral-400 leading-relaxed whitespace-pre-wrap">${escapeHtml(comment)}</p>
+        </div>`;
+      }).join('');
+
+      return `<div class="px-5 pt-3 pb-1">
+        <div class="text-[10px] font-bold uppercase tracking-widest ${accent} mb-0.5">${escapeHtml(group.title)}</div>
+        ${items}
+      </div>`;
+    }).join('');
+
+    notesTab.querySelectorAll('[data-dash-nav-link]').forEach(a => a.addEventListener('click', closeDashboard));
+
+    const copyBtn = notesTab.querySelector('[data-copy-notes-btn]');
+    if (copyBtn) copyBtn.addEventListener('click', () => copyAllNotes(copyBtn));
+  }
+
+  // --- Dashboard open/close ---
+
+  function closeDashboard() {
+    panel.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function openDashboard() {
+    activeFilter = '';
+    openSnapshot = null;
+    setTab('progress');
+    refreshDashboard();
+    panel.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Badge is always global (total completed across the whole site)
+  function updateBadge() {
+    if (!badge) return;
+    const progress = getProgress();
+    const n = topicsForClient.filter(t => progress[t.id] === 'complete').length;
+    if (n > 0) {
+      badge.textContent = String(n);
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  // A topic row used in both views
+  function topicRow(t, state, comment) {
+    const dot = dotClass[state] ?? dotClass.none;
+    const commentLine = (state === 'unclear' && comment)
+      ? `<span class="block text-[10px] italic text-amber-600 dark:text-amber-400 truncate" title="${escapeHtml(comment)}">${escapeHtml(comment)}</span>`
+      : '';
+    return `<a href="${escapeHtml(url(t.url))}"
+               class="flex items-start gap-2 py-0.5 group"
+               data-dash-nav-link>
+              <span class="w-1.5 h-1.5 rounded-full ${dot} shrink-0 mt-1"></span>
+              <span class="flex-1 min-w-0">
+                <span class="block text-[11px] text-gray-600 dark:text-neutral-400 group-hover:text-gray-900 dark:group-hover:text-white leading-snug truncate">${escapeHtml(t.title)}</span>
+                ${commentLine}
+              </span>
+            </a>`;
+  }
+
+  // Build the role view (phase -> section -> topic) once, collapsed. Counts/dots are filled in
+  // by updateRoleView so user collapse state survives refreshes.
+  function buildRoleView(role) {
+    roleView.innerHTML = role.phases.map((phase, pi) => {
+      const sectionsHtml = phase.sections.map((section, si) => `
+        <details data-rolesec-node="${pi}-${si}">
+          <summary class="flex items-center gap-2 ${phase.title ? 'pl-8' : 'pl-5'} pr-5 py-1.5 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2 h-2 shrink-0 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="text-xs font-medium text-gray-600 dark:text-neutral-300 flex-1 truncate">${escapeHtml(section.title)}</span>
+            <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-rolesec-count="${pi}-${si}">0/${section.topics.length}</span>
+          </summary>
+          <div class="${phase.title ? 'pl-12' : 'pl-9'} pr-5 pb-2 pt-0.5 space-y-0.5" data-rolesec-topics="${pi}-${si}"></div>
+        </details>`).join('');
+
+      // Untitled phase (role had no phases) -> render sections directly, no wrapper
+      if (!phase.title) return sectionsHtml;
+
+      const phaseTotal = phase.sections.reduce((s, sec) => s + sec.topics.length, 0);
+      return `
+        <details data-rolephase-node="${pi}" ${pi > 0 ? 'class="mt-1"' : ''}>
+          <summary class="flex items-center gap-2 px-5 py-2 select-none hover:bg-gray-50 dark:hover:bg-neutral-800/40">
+            <svg xmlns="http://www.w3.org/2000/svg" class="dash-chevron w-2.5 h-2.5 shrink-0 text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400">Phase ${pi + 1}: ${escapeHtml(phase.title)}</span>
+            <div class="flex-1 h-px bg-sky-100 dark:bg-sky-500/20"></div>
+            <span class="text-[10px] text-gray-400 dark:text-neutral-500 tabular-nums shrink-0" data-rolephase-count="${pi}">0/${phaseTotal}</span>
+          </summary>
+          ${sectionsHtml}
+        </details>`;
+    }).join('');
+  }
+
+  // Update counts/dots in the (already-built) role view
+  function updateRoleView(role, progress, comments) {
+    role.phases.forEach((phase, pi) => {
+      let phaseDone = 0, phaseTotal = 0, phaseMatch = 0;
+      phase.sections.forEach((section, si) => {
+        let secDone = 0, secMatch = 0;
+        const rows = section.topics.map(t => {
+          const state = progress[t.id] ?? 'none';
+          if (state === 'complete') secDone++;
+          if (matchesFilter(state)) secMatch++;
+          return matchesFilter(state) ? topicRow(t, state, comments[t.id]) : '';
+        }).join('');
+        const cont = roleView.querySelector(`[data-rolesec-topics="${pi}-${si}"]`);
+        if (cont) {
+          cont.innerHTML = rows;
+          cont.querySelectorAll('[data-dash-nav-link]').forEach(a => a.addEventListener('click', closeDashboard));
+        }
+        const cnt = roleView.querySelector(`[data-rolesec-count="${pi}-${si}"]`);
+        if (cnt) cnt.textContent = `${secDone}/${section.topics.length}`;
+        const secNode = roleView.querySelector(`[data-rolesec-node="${pi}-${si}"]`);
+        if (secNode) {
+          if (activeFilter) {
+            secNode.classList.toggle('hidden', secMatch === 0);
+            if (secMatch > 0) secNode.open = true;
+          } else {
+            secNode.classList.remove('hidden');
+          }
+        }
+        phaseDone += secDone; phaseTotal += section.topics.length; phaseMatch += secMatch;
+      });
+      const pCnt = roleView.querySelector(`[data-rolephase-count="${pi}"]`);
+      if (pCnt) pCnt.textContent = `${phaseDone}/${phaseTotal}`;
+      const phaseNode = roleView.querySelector(`[data-rolephase-node="${pi}"]`);
+      if (phaseNode) {
+        if (activeFilter) {
+          phaseNode.classList.toggle('hidden', phaseMatch === 0);
+          if (phaseMatch > 0) phaseNode.open = true;
+        } else {
+          phaseNode.classList.remove('hidden');
+        }
+      }
+    });
+  }
+
+  function updateThemeView(progress, comments) {
+    const chapterComplete = {}, chapterUnclear = {};
+    const moduleComplete  = {}, themeComplete = {};
+    const chapterTotal    = {}, moduleTotal    = {}, themeTotal = {};
+    const chapterMatch    = {}, moduleMatch    = {}, themeMatch = {};
+    const byChapter = {};
+
+    topicsForClient.forEach(t => {
+      (byChapter[t.chapterSlug] ??= []).push(t);
+      chapterTotal[t.chapterSlug] = (chapterTotal[t.chapterSlug] ?? 0) + 1;
+      moduleTotal[t.moduleKey]    = (moduleTotal[t.moduleKey]    ?? 0) + 1;
+      themeTotal[t.themeKey]      = (themeTotal[t.themeKey]      ?? 0) + 1;
+      const state = progress[t.id];
+      if (state === 'complete') {
+        chapterComplete[t.chapterSlug] = (chapterComplete[t.chapterSlug] ?? 0) + 1;
+        moduleComplete[t.moduleKey]    = (moduleComplete[t.moduleKey]    ?? 0) + 1;
+        themeComplete[t.themeKey]      = (themeComplete[t.themeKey]      ?? 0) + 1;
+      } else if (state === 'unclear') {
+        chapterUnclear[t.chapterSlug] = (chapterUnclear[t.chapterSlug] ?? 0) + 1;
+      }
+      if (matchesFilter(state ?? 'none')) {
+        chapterMatch[t.chapterSlug] = (chapterMatch[t.chapterSlug] ?? 0) + 1;
+        moduleMatch[t.moduleKey]    = (moduleMatch[t.moduleKey]    ?? 0) + 1;
+        themeMatch[t.themeKey]      = (themeMatch[t.themeKey]      ?? 0) + 1;
+      }
+    });
+
+    themeView.querySelectorAll('[data-theme-node]').forEach(node => {
+      const key = node.dataset.themeNode;
+      const countEl = node.querySelector('[data-theme-count]');
+      if (countEl) countEl.textContent = `${themeComplete[key] ?? 0}/${themeTotal[key] ?? 0}`;
+      if (activeFilter) {
+        node.classList.toggle('hidden', (themeMatch[key] ?? 0) === 0);
+        if ((themeMatch[key] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
+      }
+    });
+    themeView.querySelectorAll('[data-module-node]').forEach(node => {
+      const key = node.dataset.moduleNode;
+      const countEl = node.querySelector('[data-module-count]');
+      if (countEl) countEl.textContent = `${moduleComplete[key] ?? 0}/${moduleTotal[key] ?? 0}`;
+      if (activeFilter) {
+        node.classList.toggle('hidden', (moduleMatch[key] ?? 0) === 0);
+        if ((moduleMatch[key] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
+      }
+    });
+    themeView.querySelectorAll('[data-chapter-node]').forEach(node => {
+      const slug    = node.dataset.chapterNode;
+      const total   = chapterTotal[slug] ?? 0;
+      const done    = chapterComplete[slug] ?? 0;
+      const unclear = chapterUnclear[slug] ?? 0;
+      const countEl = node.querySelector('[data-chapter-count]');
+      if (countEl) countEl.textContent = `${done}/${total}`;
+      const cBar = node.querySelector('[data-chapter-complete-bar]');
+      if (cBar) cBar.style.width = `${total > 0 ? (done / total) * 100 : 0}%`;
+      const uBar = node.querySelector('[data-chapter-unclear-bar]');
+      if (uBar) uBar.style.width = `${total > 0 ? (unclear / total) * 100 : 0}%`;
+      const cont = node.querySelector('[data-chapter-topics]');
+      if (cont) {
+        cont.innerHTML = (byChapter[slug] ?? [])
+          .sort((a, b) => a.order - b.order)
+          .filter(t => matchesFilter(progress[t.id] ?? 'none'))
+          .map(t => topicRow(t, progress[t.id] ?? 'none', comments[t.id])).join('');
+        cont.querySelectorAll('[data-dash-nav-link]').forEach(a => a.addEventListener('click', closeDashboard));
+      }
+      if (activeFilter) {
+        node.classList.toggle('hidden', (chapterMatch[slug] ?? 0) === 0);
+        if ((chapterMatch[slug] ?? 0) > 0) node.open = true;
+      } else {
+        node.classList.remove('hidden');
+      }
+    });
+  }
+
+  function refreshDashboard() {
+    const progress = getProgress();
+    const comments = getComments();
+    const role = activeRole ? roleBySlug[activeRole] : null;
+
+    // Topics in the active scope (role filter, or everything) drive the header stats
+    const scoped = topicsForClient.filter(inScope);
+    let completedCount = 0, unclearCount = 0;
+    scoped.forEach(t => {
+      const state = progress[t.id];
+      if (state === 'complete') completedCount++;
+      else if (state === 'unclear') unclearCount++;
+    });
+
+    const scopeTotal      = scoped.length;
+    const remainingCount  = scopeTotal - completedCount - unclearCount;
+    const completePct     = scopeTotal > 0 ? (completedCount / scopeTotal) * 100 : 0;
+    const unclearPct      = scopeTotal > 0 ? (unclearCount   / scopeTotal) * 100 : 0;
+
+    document.getElementById('dash-complete-num').textContent  = String(completedCount);
+    document.getElementById('dash-unclear-num').textContent   = String(unclearCount);
+    document.getElementById('dash-remaining-num').textContent = String(remainingCount);
+    document.getElementById('dash-complete-bar').style.width  = `${completePct}%`;
+    document.getElementById('dash-unclear-bar').style.width   = `${unclearPct}%`;
+    document.getElementById('dash-overall-text').textContent  =
+      `${completedCount} of ${scopeTotal} topics complete`;
+
+    if (role) {
+      themeView.classList.add('hidden');
+      roleView.classList.remove('hidden');
+      updateRoleView(role, progress, comments);
+    } else {
+      roleView.classList.add('hidden');
+      themeView.classList.remove('hidden');
+      updateThemeView(progress, comments);
+    }
+
+    if (activeFilter) {
+      filterChip.classList.remove('hidden');
+      filterChip.classList.add('flex');
+      filterLabel.textContent = filterLabels[activeFilter];
+    } else {
+      filterChip.classList.add('hidden');
+      filterChip.classList.remove('flex');
+    }
+    statTiles.forEach(btn =>
+      btn.classList.toggle('dash-stat-tile-active', btn.dataset.statFilter === activeFilter)
+    );
+
+    const filterMatchCount =
+      activeFilter === 'complete' ? completedCount :
+      activeFilter === 'unclear'  ? unclearCount   :
+      activeFilter === 'none'     ? remainingCount : scopeTotal;
+    const showFilterEmpty = !!activeFilter && scopeTotal > 0 && filterMatchCount === 0;
+    if (showFilterEmpty) {
+      filterEmpty.textContent = filterEmptyText[activeFilter];
+      filterEmpty.classList.remove('hidden');
+      themeView.classList.add('hidden');
+      roleView.classList.add('hidden');
+    } else {
+      filterEmpty.classList.add('hidden');
+    }
+
+    document.getElementById('dash-empty').classList.toggle('hidden', scopeTotal > 0);
+    updateBadge();
+  }
+
+  // --- Init ---
+
+  applyTabStyles();
+  updateBadge();
+
+  if (roleSelect) {
+    roleSelect.value = activeRole;
+    if (activeRole) buildRoleView(roleBySlug[activeRole]); // restore persisted role
+    roleSelect.addEventListener('change', () => {
+      activeRole = roleSelect.value;
+      activeFilter = '';
+      openSnapshot = null;
+      if (activeRole) {
+        localStorage.setItem(ROLE_KEY, activeRole);
+        buildRoleView(roleBySlug[activeRole]); // rebuild structure, collapsed, on role change
+      } else {
+        localStorage.removeItem(ROLE_KEY);
+      }
+      refreshDashboard();
+    });
+  }
+
+  statTiles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.statFilter;
+      setFilter(activeFilter === f ? '' : f);
+    });
+  });
+  filterClear.addEventListener('click', () => setFilter(''));
+
+  tabProgressBtn.addEventListener('click', () => setTab('progress'));
+  tabNotesBtn.addEventListener('click',   () => setTab('notes'));
+
+  if (triggerBtn) triggerBtn.addEventListener('click', () =>
+    panel.classList.contains('hidden') ? openDashboard() : closeDashboard()
+  );
+  if (closeBtn) closeBtn.addEventListener('click', closeDashboard);
+  if (backdrop) backdrop.addEventListener('click', closeDashboard);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.classList.contains('hidden')) closeDashboard();
+  });
+
+  document.getElementById('dash-reset-btn').addEventListener('click', () => {
+    if (confirm('Reset all progress? This cannot be undone.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(COMMENTS_KEY);
+      refreshDashboard();
+      location.reload();
+    }
+  });
+
+  window.addEventListener('platform-progress-changed', () => {
+    updateBadge();
+    if (!panel.classList.contains('hidden')) {
+      if (activeTab === 'notes') buildNotesTab();
+      else refreshDashboard();
+    }
+  });
+}

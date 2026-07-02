@@ -1,0 +1,13 @@
+<h2>The plan as a diagnostic instrument</h2>
+<p>When a plan looks wrong — unexpectedly high orders, implausible inventory levels, contradictory recommendations — the cause is almost always one of three things: a wrong assumption in the logic, a changed business condition, or bad data. Learning to distinguish them is one of the most valuable planning skills.</p>
+<h2>Diagnostic signatures</h2>
+<p><strong>Spike-then-zero patterns</strong>
+A planned order that is very large in one period, then zero for several periods. Often caused by a one-time demand spike in historical data being treated as recurring, or a demand override applied to the wrong bucket.</p>
+<p><strong>Persistently high safety stock</strong>
+Safety stock that never gets consumed, suggesting either very accurate supply, very low demand variability, or — more likely — a variability setting that hasn't been recalibrated since implementation.</p>
+<p><strong>Inventory oscillation</strong>
+Stock levels that swing dramatically between periods: overstock, then understock, then overstock again. Often caused by lead times that don't match reality, causing the engine to over-order in anticipation and then cancel when the goods arrive early.</p>
+<p><strong>Unexplained transfer recommendations</strong>
+Transfers between locations for items that appear to have adequate stock on both ends. Often caused by demand being allocated to the wrong location, or inventory not being visible at the source location due to a system booking delay.</p>
+<h2>From signature to root cause</h2>
+<p>When you see one of these patterns, the question to ask is: what data would produce this output? Work backwards from the plan to the input. Check the demand signal, the inventory record, the BOM, the lead time. The engine is telling you where the inconsistency is — you just need to learn to read it.</p>

@@ -1,0 +1,58 @@
+<p>Modern supply chain planning does not run on a single system. It runs on four — each with a distinct purpose, a distinct data domain, and a distinct relationship to the others. Understanding what each system does, and what it cannot do, is the foundation for understanding why planning breaks down when any one of them is absent, poorly configured, or out of sync.</p>
+<h2>ERP — The Transactional Backbone</h2>
+<p><strong>ERP</strong> (Enterprise Resource Planning — SAP and Microsoft D365 are the most common examples in agricultural and FMCG contexts) is the system in which the business executes its plans. When a planner decides that 500 tonnes of raw material should be ordered, it is ERP that raises the purchase order: it records the supplier, the quantity, the expected delivery date, the unit price, and the warehouse location it should be received into. When that delivery arrives, ERP records the goods receipt — updating on-hand stock in real time. When production draws down that stock to manufacture finished goods, ERP records the goods issue. When product moves to a distribution centre, ERP records the stock transfer. At every step, ERP writes a transactional fact into its ledger.</p>
+<p>This makes ERP the <strong>system of record for what actually happened</strong>. It does not predict. It does not optimise. It records, executes, and accounts. The financial accounting module lives here because the cost of every transaction — the value of stock on hand, the accrued cost of goods received, the revenue recognised on despatch — flows directly from those transactional postings.</p>
+<p>The implications for planning are significant. ERP is where confirmed orders, on-hand inventory, open purchase orders, and production orders exist as authoritative facts. Planning Software depends entirely on ERP to know where the business stands right now. If ERP's inventory positions are wrong — because goods receipts have not been posted, or because a stock adjustment was entered with the wrong date — the planning engine will build its recommendations on a false picture of reality.</p>
+<p>ERP's weakness is that it is designed for execution, not foresight. It can tell you that you have 400 tonnes of Product A in Warehouse B today, but it has no native capability to tell you whether that is the right amount relative to expected demand over the next twelve weeks, or whether you should be raising more purchase orders now. That is the job of Planning Software.</p>
+<h2>Planning Software — The Planning Engine</h2>
+<p><strong>Planning Software</strong> (also called APS — Advanced Planning and Scheduling — or IBP — Integrated Business Planning — tools; examples include o9 Solutions, Kinaxis, and Blue Yonder) is the system in which a planner thinks about the future. It ingests supply and demand signals from all the other systems in the landscape — sales forecasts, confirmed orders, open purchase orders, on-hand stock, production schedules, supplier lead times — and applies optimisation and netting logic to produce a forward-looking plan.</p>
+<p>The core function of Planning Software is to answer a deceptively simple question: given what we know about future demand and current supply constraints, what do we need to do, when, and where? It does this by netting demand against available supply (on-hand plus open orders), identifying gaps, proposing replenishment or production orders to close those gaps, checking those proposals against capacity and lead time constraints, and surfacing exceptions where the plan cannot be met without a decision. The planner's job is to work those exceptions — to make the trade-offs that optimisation logic alone cannot make.</p>
+<p>Planning Software also supports the structured planning cycles that govern how the business reviews and adjusts its plan. <strong>S&amp;OP</strong> (Sales and Operations Planning) and <strong>S&amp;OE</strong> (Sales and Operations Execution) workflows are built around the planning engine: the demand review, the supply review, the integrated reconciliation, the executive sign-off. Scenario simulation — the ability to ask "what if demand is 20% higher than forecast, can we respond?" — is another core capability.</p>
+<p>What Planning Software cannot do is execute. It can recommend that a purchase order be raised for 500 tonnes of raw material, but the order does not exist until it is written into ERP. The planning engine is a recommendation machine. Execution happens elsewhere.</p>
+<h2>MDM System — The Source of Reference Data</h2>
+<p><strong>MDM</strong> (Master Data Management) is the system that answers the question: what exactly is this product? Every item that flows through the business — every raw material, every semi-finished good, every SKU — has an identity: a code, a name, a unit of measure, a pack configuration, a shelf life, a weight, a customs classification. That identity is a <strong>master data record</strong>, and it must be consistent across every system that uses it.</p>
+<p>Without MDM, ERP and Planning Software each maintain their own version of "what Product A is." The ERP system might record the lead time for a raw material as 14 days because that was the agreed parameter when the item was set up two years ago. The planning engine might be running with 21 days because a planner updated the parameter locally and it was never reconciled. The result is a plan that ERP cannot execute because the assumptions it was built on do not match the rules ERP applies.</p>
+<p>MDM governs the data structures that all other systems depend on. This includes <strong>item master records</strong> (the identity of every product), <strong>bills of material</strong> (BOMs — what a finished product is made from, in what quantities), <strong>bills of distribution</strong> (BODs — how a product flows through the distribution network), <strong>product hierarchies</strong> (how items group up for planning, forecasting, and reporting), and <strong>planning parameters</strong> (lead times, safety stock targets, lot sizes, reorder points). These parameters are not operational preferences — they are the constants that the planning engine's mathematics rely on. A wrong lead time in MDM propagates through every plan that uses that item.</p>
+<p>MDM is often the least visible system in the landscape, but it is the one that breaks everything else when it is wrong. Data quality issues in ERP and Planning Software can frequently be traced back to a root cause in MDM: a parameter that was never updated after a supplier change, a BOM that was not maintained after a product reformulation, a new SKU that was created in ERP but never given a planning parameter set.</p>
+<h2>FMS — Field-Level Supply Visibility</h2>
+<p><strong>FMS</strong> (Field Management System) is specific to businesses where supply originates in the field rather than in a factory or a supplier's warehouse. In agricultural, fresh produce, and soft commodity planning, supply visibility does not begin at the point of harvest or receipt — it begins weeks or months earlier, in the field, with a crop that is growing.</p>
+<p>FMS is the system that captures this early supply signal. It records <strong>grower contracts</strong> (which growers have committed to supply what volumes, of what product, over what period), <strong>planted area and crop progress</strong> (what is in the ground, at what growth stage), <strong>harvest estimates</strong> (based on agronomic data, inspection records, or yield models), and <strong>field actuals</strong> (what was actually harvested and when). From these records, FMS generates supply forecasts that can be fed into Planning Software weeks before any physical product exists.</p>
+<p>The planning implications are substantial. A fresh-produce planner who relies only on ERP for supply visibility is essentially planning blind until the moment product is received into a warehouse — at which point it may already be too late to adjust customer commitments, production schedules, or logistics. FMS moves the planning horizon backwards: instead of knowing what you have, you begin to know what you will have, and when.</p>
+<p>FMS also captures the variability that is inherent in agricultural supply. Yield is not deterministic. A crop estimate can change because of weather, pest pressure, or water availability. FMS tracks that progression and allows the planning engine to incorporate updated estimates as the growing season advances, narrowing the uncertainty in the supply plan as harvest approaches.</p>
+<h2>How the Four Systems Connect</h2>
+<p>The four systems are not alternatives to each other — they are complementary layers of a single capability. MDM provides the reference data that gives every transaction and every plan its meaning. ERP records what the business has done and what it has committed to do. FMS provides early supply signals before those signals have become ERP transactions. Planning Software synthesises all of this into a coherent forward-looking plan and surfaces the decisions that humans need to make.</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Primary function</th>
+<th>System of record for</th>
+<th>Cannot do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ERP</td>
+<td>Transactional execution</td>
+<td>What actually happened</td>
+<td>Optimise future plans</td>
+</tr>
+<tr>
+<td>Planning Software</td>
+<td>Forward planning &amp; optimisation</td>
+<td>Recommended plans &amp; scenarios</td>
+<td>Execute transactions</td>
+</tr>
+<tr>
+<td>MDM</td>
+<td>Master data governance</td>
+<td>What every product and entity is</td>
+<td>Process transactions or plans</td>
+</tr>
+<tr>
+<td>FMS</td>
+<td>Field supply visibility</td>
+<td>What is growing and when it will arrive</td>
+<td>Manage finished goods or execute orders</td>
+</tr>
+</tbody></table>
+<p>When any one of these systems is absent, poorly maintained, or out of sync with the others, the planning process degrades in predictable ways. Bad master data in MDM means plans built on false assumptions. Slow or incomplete transaction posting in ERP means the planning engine netting against a stale inventory position. No FMS means fresh-produce supply remains invisible until it arrives at the warehouse gate. Understanding which system owns which data — and why — is the first step toward understanding where to look when a plan does not match reality.</p>

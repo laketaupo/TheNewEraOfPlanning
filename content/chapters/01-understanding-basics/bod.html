@@ -1,0 +1,40 @@
+<h2>What is a Transportation Process?</h2>
+<p>A <strong>Transportation Process</strong> defines how items move from one location to another. This is the <strong>Bill of Distribution (BOD)</strong> in Planning software — the lanes and routes that form your distribution network.</p>
+<p>Key attributes:</p>
+<ul>
+<li><strong>Origin</strong> — the source node (warehouse, plant, supplier)</li>
+<li><strong>Destination</strong> — the target node (DC, customer, store)</li>
+<li><strong>Item(s)</strong> — which items can travel this lane</li>
+<li><strong>Transit time</strong> — how many days/hours the movement takes</li>
+<li><strong>Minimum / maximum order quantity</strong> — shipment constraints</li>
+<li><strong>Transport mode</strong> — truck, rail, air, sea</li>
+</ul>
+<h2>BOD vs. BOM</h2>
+<table>
+<thead>
+<tr>
+<th>Transformation Process (BOM)</th>
+<th>Transportation Process (BOD)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Changes the <em>form</em> of an item</td>
+<td>Moves an item without changing it</td>
+</tr>
+<tr>
+<td>Happens <em>at</em> a node</td>
+<td>Happens <em>between</em> nodes</td>
+</tr>
+<tr>
+<td>Consumes resources (machines, labor)</td>
+<td>Consumes transport capacity</td>
+</tr>
+<tr>
+<td>Generates production orders</td>
+<td>Generates transfer orders / shipments</td>
+</tr>
+</tbody></table>
+<h2>How the Planner Uses BODs</h2>
+<p>When demand exists at a downstream node, Planning software traces back through transportation processes to find the upstream source. The planner can configure <strong>sourcing rules</strong> to prioritize lanes — e.g., ship from the nearest DC first, then escalate to the plant.</p>
+<h2>Placeholder Content</h2>
+<p><em>Replace this section with your specific distribution lanes, screenshots, or BOD examples from your network.</em></p>

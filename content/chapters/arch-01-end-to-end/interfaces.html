@@ -1,0 +1,73 @@
+<h2>The four-system landscape</h2>
+<p>The planning technology landscape consists of four systems, each with a distinct role:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Planning software</strong></td>
+<td>Planning engine — demand signals, supply plan, scenario simulation</td>
+</tr>
+<tr>
+<td><strong>ERP</strong></td>
+<td>ERP — transactional execution, purchase orders, production orders, inventory posting</td>
+</tr>
+<tr>
+<td><strong>MDM system</strong></td>
+<td>Master Data Management (MDM) — product master, item attributes, hierarchy management</td>
+</tr>
+<tr>
+<td><strong>FMS</strong></td>
+<td>Field Management System (FMS) — grower contracts, field activity, crop forecasting</td>
+</tr>
+</tbody></table>
+<p>No single system has the full picture. The planning capability of Planning software depends on accurate master data from MDM system, transactional actuals from ERP, and field-level supply signals from FMS. The interfaces between these systems are what make the integrated landscape function.</p>
+<h2>Interface directions</h2>
+<p>Each interface carries data in a defined direction:</p>
+<p><strong>MDM system → Planning software</strong> — product master data: item codes, descriptions, BOMs, BODs, planning parameters. MDM system is the single source of truth for master data; Planning software receives it rather than maintaining its own copy.</p>
+<p><strong>FMS → Planning software</strong> — field supply signals: grower contracts, planted area, expected harvest quantities and timing. These become supply-side demand signals in the Planning software planning model.</p>
+<p><strong>ERP → Planning software</strong> — transactional actuals: open purchase orders, production order completions, inventory positions, goods receipts. Planning software uses these to reconcile its planned view against what has actually happened.</p>
+<p><strong>Planning software → ERP</strong> — planned orders for execution: purchase order proposals, production order proposals. These are reviewed by planners and released as actual orders in ERP.</p>
+<p><strong>MDM system → ERP</strong> — item master synchronisation: ensuring ERP's item cards reflect the same attributes and hierarchy as MDM system.</p>
+<h2>Integration middleware</h2>
+<p>Direct system-to-system connections in a four-system landscape create a maintenance burden. Most implementations use a middleware layer — an integration platform (iPaaS) or custom API hub — that sits between the systems and manages the data flows. This middleware handles:</p>
+<ul>
+<li>Message routing and transformation</li>
+<li>Error handling and retry logic</li>
+<li>Logging and monitoring of interface health</li>
+<li>Schema mapping between source and target formats</li>
+</ul>
+<p>Understanding the middleware layer is important for troubleshooting: when data does not arrive in Planning software as expected, the issue may be in the source system, the middleware, or the target system configuration.</p>
+<h2>Interface frequency</h2>
+<p>Not all interfaces run at the same frequency:</p>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Typical frequency</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MDM system → Planning software (master data)</td>
+<td>Daily or on change</td>
+</tr>
+<tr>
+<td>FMS → Planning software (field signals)</td>
+<td>Weekly or daily</td>
+</tr>
+<tr>
+<td>ERP → Planning software (transactional actuals)</td>
+<td>Daily (overnight)</td>
+</tr>
+<tr>
+<td>Planning software → ERP (planned orders)</td>
+<td>On planner release (manual trigger)</td>
+</tr>
+<tr>
+<td>MDM system → ERP (item master)</td>
+<td>Daily or on change</td>
+</tr>
+</tbody></table>

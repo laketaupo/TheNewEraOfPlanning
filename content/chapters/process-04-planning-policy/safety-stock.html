@@ -1,0 +1,21 @@
+<h2>What safety stock does</h2>
+<p>Safety stock is inventory held specifically to protect against uncertainty — demand that comes in higher than forecast, supply that arrives later than planned, or both simultaneously. Without safety stock, any deviation from plan results in a stock-out. With it, the system absorbs a defined range of variability before service is affected.</p>
+<p>Safety stock is not the same as cycle stock (the inventory used to meet average demand between replenishment cycles). It is an additional buffer that sits on top of the cycle stock and is only consumed when deviations occur.</p>
+<h2>How safety stock is calculated</h2>
+<p>The standard safety stock formula takes three inputs:</p>
+<ol>
+<li><strong>Demand variability</strong> — the standard deviation of demand over the lead time period</li>
+<li><strong>Lead time variability</strong> — how much the replenishment lead time varies from its average</li>
+<li><strong>Service level target</strong> — the desired probability of not stocking out (expressed as a Z-score)</li>
+</ol>
+<p>The formula: <code>SS = Z × √(LT × σ_demand² + D_avg² × σ_LT²)</code></p>
+<p>In practice, Planning software handles this calculation using the planning parameters set for each item-location. The planner's role is to set the right service level target and ensure that demand and lead time variability data is accurate.</p>
+<h2>Safety stock as a policy decision</h2>
+<p>The calculation is mechanical, but the inputs are policy decisions:</p>
+<ul>
+<li><strong>Which items get safety stock?</strong> Not every item warrants a buffer. Highly predictable items, items with very short lead times, or items where stock-outs carry low commercial cost may be planned without safety stock.</li>
+<li><strong>Where in the network is safety stock held?</strong> Holding safety stock upstream (as raw material or work-in-progress) is cheaper per unit but takes longer to convert to finished goods. Holding it downstream (as finished product) gives faster response but at higher cost.</li>
+<li><strong>How often are targets reviewed?</strong> Demand and supply variability change over time. Safety stock parameters that were right last year may be too high (wasting working capital) or too low (causing service failures) today.</li>
+</ul>
+<h2>Safety stock in an agricultural context</h2>
+<p>Seed production supply chains have asymmetric safety stock challenges: production quantities are determined seasons in advance, and finished seed cannot be held indefinitely (germination rates decline over time). Safety stock policy in this context must balance service level protection against the risk of carrying stock past its usable window — making the policy more conservative than standard FMCG approaches.</p>

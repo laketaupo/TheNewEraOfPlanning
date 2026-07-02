@@ -1,0 +1,29 @@
+<h2>Demand is information, not inventory</h2>
+<p>In everyday language, "demand" feels like a pull — customers want things, so we make them. In Planning software S&amp;OP, demand is modelled more precisely: it is a <strong>signal</strong> — a quantity and a time — that propagates backwards through the supply chain graph.</p>
+<p>When a customer forecast lands on Item J (the finished packed seed), that number doesn't stay there. The planning engine reads the network graph, follows the edges upstream, and derives what every upstream node must contribute to satisfy that forecast.</p>
+<h2>Why upstream?</h2>
+<p>The graph you built in Chapter 2 flows physically <strong>downstream</strong>: raw inputs at the left, finished goods at the right. Demand moves in the <strong>opposite</strong> direction. A signal at Item J creates demand for Packing, which creates demand for Item I, which creates demand for Coating — and so on, all the way back to Items A and B.</p>
+<p>This reverse traversal is sometimes called <strong>demand explosion</strong> or <strong>MRP netting</strong> in traditional planning systems. Planning software performs the same logic natively on its graph model, but extends it to handle co-products, multi-echelon transportation, and probabilistic forecasts.</p>
+<h2>Two kinds of demand input</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Where it comes from</th>
+<th>Typical horizon</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Statistical forecast</strong></td>
+<td>ML model trained on history and market signals</td>
+<td>Weeks to months ahead</td>
+</tr>
+<tr>
+<td><strong>Sales order</strong></td>
+<td>Confirmed customer commitment</td>
+<td>Days to weeks ahead</td>
+</tr>
+</tbody></table>
+<p>In the seed-treatment network, the planning horizon is measured in growing seasons, so statistical forecasts dominate the long-range signal. Confirmed orders net against the forecast as they arrive, replacing uncertainty with hard commitments.</p>
+<h2>What you will see in this chapter</h2>
+<p>The next two topics trace a <strong>100-unit customer forecast</strong> as it travels upstream, step by step, through every node in the seed-treatment network — from Item J all the way back to Items A and B. You will also see how lead times shift the demand signal back in time at each hop.</p>

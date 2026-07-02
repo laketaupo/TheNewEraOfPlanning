@@ -1,0 +1,71 @@
+// Port of src/pages/index.astro for the build-free SPA. Route: /
+import { url } from '../base-url.js';
+
+export async function render() {
+  return `
+    <div class="relative min-h-screen flex flex-col items-center px-6 pt-12 pb-12 md:block md:p-0">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-home-radial pointer-events-none"></div>
+
+      <div class="relative z-20 w-full text-center md:absolute md:top-[15%] md:inset-x-0 md:px-8">
+        <h1 class="text-5xl sm:text-6xl font-bold tracking-tight leading-tight text-gray-900 dark:text-white mb-4">
+          The New Era of <span style="color:#635CFA">Planning</span>
+        </h1>
+        <p class="text-gray-500 dark:text-neutral-400 text-lg leading-relaxed max-w-lg mx-auto">
+          A structured learning platform covering the people, processes, data, and technology behind modern supply chain planning.
+        </p>
+      </div>
+
+      <div class="relative z-10 mt-10 w-full max-w-md md:absolute md:inset-0 md:flex md:items-center md:justify-center md:mt-0 md:max-w-none md:px-8">
+        <div class="flex flex-col gap-6 w-full md:grid md:grid-cols-2 md:max-w-3xl">
+          <a href="${url('pillars')}" class="lcard">
+            <div class="lcard-header">
+              <h3 class="lcard-title">Learn by pillar</h3>
+              <div class="lcard-icon">🏛️</div>
+            </div>
+            <p class="lcard-desc">Explore content across four pillars — People, Process, Data and Technology — each broken into modules and topics.</p>
+            <span class="lcard-link">Browse by pillar →</span>
+          </a>
+
+          <a href="${url('roles')}" class="lcard">
+            <div class="lcard-header">
+              <h3 class="lcard-title">Learn by role</h3>
+              <div class="lcard-icon">👤</div>
+            </div>
+            <p class="lcard-desc">Choose your role and follow a guided path through five phases — from awareness to hands-on execution.</p>
+            <span class="lcard-link">Browse by role →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .bg-home-radial { background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.08), transparent); }
+      .dark .bg-home-radial { background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59,130,246,0.15), transparent); }
+
+      .lcard {
+        background: #eff6ff; border: 1.5px solid #bfdbfe; border-top: 4px solid #93c5fd;
+        border-radius: 20px; padding: 2.75rem; text-decoration: none; color: inherit;
+        display: flex; flex-direction: column; gap: 1.1rem;
+        transition: transform 0.2s, box-shadow 0.25s, border-color 0.2s;
+      }
+      .lcard:hover { transform: translateY(-4px); box-shadow: 0 6px 24px rgba(59,130,246,0.12); }
+      .dark .lcard { background: #2c2c2c; border-color: rgba(59,130,246,0.18); border-top-color: rgba(147,197,253,0.5); }
+      .dark .lcard:hover { background: #363636; box-shadow: 0 6px 28px rgba(59,130,246,0.12); }
+
+      .lcard-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+      .lcard-icon {
+        width: 60px; height: 60px; border-radius: 14px; display: flex; align-items: center;
+        justify-content: center; font-size: 1.75rem; flex-shrink: 0; background: #dbeafe;
+      }
+      .dark .lcard-icon { background: rgba(59,130,246,0.12); }
+
+      .lcard-title { font-size: 1.25rem; font-weight: 700; color: #111827; letter-spacing: -0.02em; }
+      .dark .lcard-title { color: #f3f4f6; }
+      .lcard-desc { font-size: 0.93rem; color: #6b7280; line-height: 1.7; }
+      .dark .lcard-desc { color: rgba(243,244,246,0.45); }
+      .lcard-link { display: inline-flex; align-items: center; font-size: 0.85rem; font-weight: 600; margin-top: auto; color: #1d4ed8; }
+      .dark .lcard-link { color: #93c5fd; }
+    </style>
+  `;
+}

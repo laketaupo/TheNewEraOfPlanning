@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+  GitHub Pages serves this file for any unmatched path. It has no matching static file/route,
+  so we redirect back to the SPA root with the originally-requested path encoded as a `?p=`
+  query param; index.html's boot script (see inline script below `js/app.js` load in index.html
+  is NOT used for this — see the tiny inline script at the bottom of THIS file) reads `?p=` and
+  restores the real URL via history.replaceState before the router renders it.
+
+  BASE is hardcoded to match astro.config.mjs's default (`/TheNewEraOfPlanning/`) since this file
+  can't reliably detect it from a relative script src (it's served from arbitrary path depths).
+  Update BASE_CANDIDATE below if the repo/deployment base ever changes.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <script>
+      (function () {
+        var BASE_CANDIDATE = '/TheNewEraOfPlanning/';
+        var base = window.location.pathname.startsWith(BASE_CANDIDATE) ? BASE_CANDIDATE : '/';
+        var path = window.location.pathname.slice(base.length);
+        var qs = window.location.search ? window.location.search.slice(1) : '';
+        var p = encodeURIComponent(path + (qs ? '?' + qs : '') + window.location.hash);
+        window.location.replace(base + '?p=' + p);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting…</p>
+  </body>
+</html>

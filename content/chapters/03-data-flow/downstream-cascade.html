@@ -1,0 +1,71 @@
+<h2>From inputs to customer</h2>
+<p>The animation below traces supply moving <strong>downstream</strong> through the seed-treatment network. Each step shows planned orders being executed and inventory advancing through the chain. Use <strong>Next</strong> to step through each stage, or <strong>Play</strong> to watch the full flow automatically.</p>
+<p>Notice how inventory netting reduces quantities at each node before triggering a new planned order, and how co-product splits at Calibrating determine what flows into Priming versus what accumulates as Item E and Item G inventory.</p>
+<h2>The downstream sequence</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Supply event</th>
+<th>Quantity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Items A + B (Central Warehouse)</td>
+<td>Available stock confirmed</td>
+<td>167 units each</td>
+</tr>
+<tr>
+<td>Ship [A] / Ship [B]</td>
+<td>Transportation planned orders released</td>
+<td>167 units each</td>
+</tr>
+<tr>
+<td>Items A + B (Grower)</td>
+<td>Inputs arrive at Grower</td>
+<td>167 units each</td>
+</tr>
+<tr>
+<td>Seed Production</td>
+<td>Production order runs</td>
+<td>→ 167 units of Item C</td>
+</tr>
+<tr>
+<td>Ship [C]</td>
+<td>Transportation order</td>
+<td>→ 167 units to Central Warehouse</td>
+</tr>
+<tr>
+<td>Cleaning</td>
+<td>Production order (net of 20 on-hand)</td>
+<td>→ 147 units of Item D</td>
+</tr>
+<tr>
+<td>Calibrating</td>
+<td>Production order; co-product split</td>
+<td>→ 100 units F, 33 units E, 33 units G</td>
+</tr>
+<tr>
+<td>Priming</td>
+<td>Production order</td>
+<td>→ 100 units of Item H</td>
+</tr>
+<tr>
+<td>Coating</td>
+<td>Production order</td>
+<td>→ 100 units of Item I</td>
+</tr>
+<tr>
+<td>Packing</td>
+<td>Production order</td>
+<td>→ 100 units of Item J</td>
+</tr>
+<tr>
+<td>Ship [J]</td>
+<td>Transportation order</td>
+<td>→ 100 units delivered to customer</td>
+</tr>
+</tbody></table>
+<h2>Reading the supply plan</h2>
+<p>The table above is a simplified, single-period snapshot. In practice, the planning engine calculates this for every time bucket in the horizon — often 52+ weeks — simultaneously. The output is a <strong>time-phased supply plan</strong>: a complete schedule of when each node starts and completes its work, and how much inventory is projected at each location in each period.</p>
+<p>This plan is the foundation for everything in the next chapters: the constraint optimisation that refines it, the scenario simulation that stress-tests it, and the plan-vs-actuals comparison that measures how well reality tracked the plan.</p>

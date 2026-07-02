@@ -1,0 +1,33 @@
+<h2>The three types of plan output</h2>
+<p>The Planning software planning engine produces three main types of output:</p>
+<p><strong>1. Planned orders</strong> — recommendations to order, produce, or transfer material. Each planned order has a quantity, a due date, a source (supplier, production resource, sending location), and a destination. Planned orders are proposals until they are released to the ERP as purchase orders, production orders, or transfer orders.</p>
+<p><strong>2. Inventory projections</strong> — the calculated stock position at each node, for each period, given the planned orders and demand signals. The projection shows whether stock is expected to be above or below the safety stock target, and identifies periods where stock is projected to reach zero (a shortage).</p>
+<p><strong>3. Exception flags</strong> — items where the calculated plan does not meet a defined target. Examples: projected stock below safety stock, a planned order that cannot be fulfilled by the required date, demand that exceeds available supply.</p>
+<h2>Reading a planned order list</h2>
+<p>The planned order list shows all pending recommendations in date order. For each order, verify:</p>
+<ul>
+<li><strong>Item and location</strong> — is this the right product at the right site?</li>
+<li><strong>Quantity</strong> — does the quantity match the net requirement? Is it a round number due to minimum order quantity (MOQ) rounding?</li>
+<li><strong>Due date</strong> — when does the order need to arrive? Is the due date within the supplier's lead time?</li>
+<li><strong>Source</strong> — which supplier or production resource is assigned? Is this the intended source?</li>
+</ul>
+<p>Items that appear unexpected in the planned order list (very large quantities, unusual timing, wrong source) should be investigated before release to ERP.</p>
+<h2>Reading the inventory projection</h2>
+<p>The inventory projection is most readable as a waterfall chart or a time-bucketed grid row. Read it from left to right through time:</p>
+<ul>
+<li><strong>Opening stock</strong> — what the plan starts with in the first period</li>
+<li><strong>Receipts</strong> — planned order arrivals scheduled for each period</li>
+<li><strong>Demand</strong> — expected consumption per period (from demand signals)</li>
+<li><strong>Closing stock</strong> — opening + receipts − demand, carried forward as the next period's opening</li>
+</ul>
+<p>A closing stock that drops below zero in any period is a projected shortage. A closing stock that significantly exceeds the safety stock target for many periods indicates excess inventory.</p>
+<h2>Understanding exception flags</h2>
+<p>Exceptions in Planning software use a standard severity coding:</p>
+<ul>
+<li><strong>Red / Critical</strong> — the item will stock out within the actionable horizon (typically 4–6 weeks); a decision must be made now</li>
+<li><strong>Amber / Warning</strong> — the item is at risk of stocking out within the planning horizon; action is needed soon</li>
+<li><strong>Green / Informational</strong> — the item is within targets; no action required</li>
+</ul>
+<p>An exception flag tells you <em>that</em> there is an issue. The inventory projection and planned order list tell you <em>why</em> — whether the shortage is caused by insufficient supply orders, a demand spike, a delayed shipment, or inadequate safety stock.</p>
+<h2>Connecting output to action</h2>
+<p>The plan output is only valuable if it drives decisions. For each exception, the question is: what action resolves it? That action might be placing an expedited order, reducing a demand commitment, adjusting a safety stock parameter, or escalating to the S&amp;OE meeting. The plan output tells you where the problem is; the planning process determines what to do about it.</p>

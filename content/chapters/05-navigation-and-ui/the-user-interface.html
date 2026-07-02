@@ -1,0 +1,31 @@
+<h2>The grid view</h2>
+<p>The grid is the most common view type in Planning software. It presents planning data in a row-column structure: rows represent items (products, locations, customers) and columns represent time periods. Cells contain values — inventory quantities, planned order volumes, demand signals.</p>
+<p>Key grid features:</p>
+<ul>
+<li><strong>Freeze panes</strong> — the left column (item hierarchy) and time headers can be frozen while scrolling</li>
+<li><strong>Inline editing</strong> — many cells are directly editable; changes trigger a recalculation of dependent values</li>
+<li><strong>Color coding</strong> — cells are color-coded to indicate status: green for on-target, yellow for at-risk, red for exception</li>
+<li><strong>Row grouping</strong> — items can be grouped and collapsed by product family, location, or customer to manage visual complexity</li>
+</ul>
+<h2>Filters and slicers</h2>
+<p>Every workspace has a filter panel that lets you narrow the data visible in the grid or chart. Common filters:</p>
+<ul>
+<li><strong>Product / SKU</strong> — show only specific items or item groups</li>
+<li><strong>Location</strong> — filter to a site, warehouse, or distribution node</li>
+<li><strong>Time horizon</strong> — show only the near-term (e.g., next 13 weeks) or a specific period</li>
+<li><strong>Exception type</strong> — show only items with active exceptions (shortage, excess, late order)</li>
+</ul>
+<p>Filters are applied at the workspace level and persist while you navigate within the workspace. Be aware of active filters — viewing a workspace with a narrow filter applied can make the model look smaller or simpler than it is.</p>
+<h2>Charts and visualisations</h2>
+<p>Chart views in Planning software typically show:</p>
+<ul>
+<li><strong>Inventory waterfall</strong> — stock projection over time, showing opening stock, receipts, demand, and closing stock per period</li>
+<li><strong>Demand vs. supply bar chart</strong> — side-by-side comparison of demand signal and supply plan by period</li>
+<li><strong>Exception trend</strong> — the number and type of exceptions over time, useful for tracking whether the planning process is improving or degrading</li>
+</ul>
+<p>Charts are linked to the grid: selecting a row in the grid updates the chart to show that item's profile. This allows quick visual inspection without switching views.</p>
+<h2>The exception panel</h2>
+<p>Most workspaces have an exception panel — a sidebar or tab that lists active exceptions for the current view. Exceptions are prioritised by severity and due date. Clicking an exception navigates directly to the affected item.</p>
+<p>The exception panel is the starting point for exception-based working: open the workspace, review the exception panel, work through the list from most urgent to least. Items not in the exception panel do not need intervention.</p>
+<h2>Saving and sharing views</h2>
+<p>Planning software allows personalised view configurations — filter settings, column arrangements, chart types — to be saved and shared. Creating a saved view for your standard daily exception check saves time and ensures consistency across the team.</p>

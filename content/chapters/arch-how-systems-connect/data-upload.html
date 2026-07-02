@@ -1,0 +1,25 @@
+<h2>When manual uploads are needed</h2>
+<p>Automated interfaces handle the steady-state data flow. Manual uploads are needed for:</p>
+<ul>
+<li><strong>One-off corrections</strong> — a single item's parameter needs updating immediately, outside the next overnight batch cycle</li>
+<li><strong>Historical data loads</strong> — when setting up Planning software or adding a new product line, historical demand data may need to be loaded from a spreadsheet</li>
+<li><strong>New data sources</strong> — when a new supplier or grower is onboarded before the automated interface is configured</li>
+<li><strong>Interface outages</strong> — when an interface fails and data needs to be loaded manually to keep the planning cycle running</li>
+</ul>
+<h2>Upload formats in Planning software</h2>
+<p>Planning software supports data uploads via:</p>
+<ul>
+<li><strong>Excel templates</strong> — pre-formatted spreadsheets with defined column structures for each data type (demand signals, supply orders, inventory positions, planning parameters)</li>
+<li><strong>CSV import</strong> — structured flat files that map to the Planning software data model</li>
+<li><strong>API upload</strong> — for technical users, the Planning software API allows programmatic data upload for larger volumes</li>
+</ul>
+<p>Each upload type has a defined schema. Uploading data in the wrong format or with missing required fields will fail with a validation error. Always use the latest template from the Planning software configuration rather than a copy from a previous upload.</p>
+<h2>Upload governance</h2>
+<p>Manual uploads bypass the standard data quality controls in the automated interface. They require governance:</p>
+<ul>
+<li><strong>Who can upload</strong> — data uploads should be restricted to trained users who understand the impact. An incorrect demand signal upload can corrupt the planning model immediately.</li>
+<li><strong>What is uploaded</strong> — uploads should be documented: what data, what reason, what time period. This creates an audit trail for when discrepancies are investigated.</li>
+<li><strong>Review after upload</strong> — after a manual upload, trigger a partial planning run (scoped to the affected items) and review the impact on planned orders and exceptions before the full overnight batch runs.</li>
+</ul>
+<h2>Upload vs. interface correction</h2>
+<p>If a manual upload is being used regularly to compensate for a broken or missing automated interface, that is a system maintenance issue — not a normal data management task. Repeated manual uploads indicate that the underlying interface needs to be fixed or built. Track manual upload frequency; a trend of increasing uploads is a signal that the interface landscape needs attention.</p>

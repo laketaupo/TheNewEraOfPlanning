@@ -1,0 +1,24 @@
+<h2>The two directions</h2>
+<p>The ERP ↔ Planning software integration is bidirectional but asymmetric:</p>
+<p><strong>ERP → Planning software</strong> carries actuals: what has already happened or is currently in progress in the ERP.
+<strong>Planning software → ERP</strong> carries proposals: what the planning engine recommends should happen.</p>
+<h2>ERP → Planning software: what flows</h2>
+<p>The following data flows from ERP to Planning software on a daily basis (typically as part of the overnight batch):</p>
+<ul>
+<li><strong>Inventory positions</strong> — on-hand stock by item and location. These replace Planning software's projected inventory with confirmed actual quantities, grounding the planning model in reality.</li>
+<li><strong>Goods receipts</strong> — confirmed deliveries from suppliers, which consume open purchase order lines in Planning software.</li>
+<li><strong>Production order completions</strong> — finished production quantities posted in ERP, which update the supply-side of the planning model.</li>
+<li><strong>Open purchase orders</strong> — current open orders with their expected delivery dates, giving Planning software visibility of committed incoming supply.</li>
+<li><strong>Open production orders</strong> — in-progress production jobs with their target completion dates.</li>
+</ul>
+<h2>Planning software → ERP: what flows</h2>
+<p>Planning software generates planned orders — recommendations for what should be ordered or produced. These flow to ERP as:</p>
+<ul>
+<li><strong>Purchase order proposals</strong> — recommendations to place orders with specific suppliers for specific quantities and dates</li>
+<li><strong>Production order proposals</strong> — recommendations to produce specific items at specific facilities and dates</li>
+</ul>
+<p>The flow from Planning software to ERP is not automatic. Planners review planned orders in Planning software, decide which to release, and trigger the creation of actual orders in ERP. This review step is a governance control point — not all planned orders should be released without human review.</p>
+<h2>Common integration issues</h2>
+<p><strong>Inventory discrepancy</strong> — Planning software shows a different stock level than ERP. Usually caused by a batch import failure or a timing gap (ERP updated after Planning software's last import). Resolve by checking the last import timestamp and triggering a manual refresh if needed.</p>
+<p><strong>Ghost orders</strong> — an order exists in Planning software but not in ERP (or vice versa). Usually caused by an order being created or cancelled in one system without the other being updated. Requires manual reconciliation.</p>
+<p><strong>Duplicate planned orders</strong> — Planning software generates a planned order, it is released to ERP, but Planning software then generates it again because the ERP confirmation has not yet fed back. Usually a timing issue in the integration cycle.</p>

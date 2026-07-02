@@ -1,7 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  // Scans the vanilla JS render functions + shell HTML for literal Tailwind class strings.
+  // Dynamic class-string concatenation (e.g. `text-${color}-600`) is invisible to this scanner —
+  // any such pattern must be added to `safelist` below or refactored to a literal lookup map.
+  content: ['./index.html', './404.html', './js/**/*.js'],
+  safelist: [],
   theme: {
     extend: {
       fontFamily: {

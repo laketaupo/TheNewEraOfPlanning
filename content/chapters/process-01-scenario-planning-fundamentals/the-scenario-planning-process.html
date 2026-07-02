@@ -1,0 +1,34 @@
+<h2>Step 1: Define the question</h2>
+<p>A scenario without a clear question is just an experiment. Before opening Planning software, know what decision you're trying to support.</p>
+<p>Good scenario questions:</p>
+<ul>
+<li>"Should we accept this large order given our current capacity situation?"</li>
+<li>"How much buffer stock do we need to build before this supplier goes to maintenance?"</li>
+<li>"Can we cut inventory 15% without increasing stockout risk?"</li>
+</ul>
+<p>Bad scenario questions:</p>
+<ul>
+<li>"What does a disruption look like?" (too vague — disruption of what?)</li>
+<li>"What if something goes wrong?" (no specific assumption to model)</li>
+</ul>
+<p>The question defines which assumptions to change, which outputs to examine, and what a "good" vs "bad" result looks like.</p>
+<h2>Step 2: Model the assumption</h2>
+<p>This is the technical step — making the change in Planning software that represents the what-if. You might:</p>
+<ul>
+<li>Adjust demand quantities for specific items and periods</li>
+<li>Modify a supplier's delivery capability</li>
+<li>Block or constrain a production resource</li>
+<li>Change a lead time or transit time</li>
+</ul>
+<p>The key discipline: change only what the scenario is testing. If you change too many things at once, you can't tell which change drove which outcome.</p>
+<h2>Step 3: Compare the outputs</h2>
+<p>Run the scenario and compare the plan it produces against the baseline. The comparison should be structured: which KPIs changed, by how much, and where in the network?</p>
+<p>Useful comparisons:</p>
+<ul>
+<li>Inventory levels by location and period</li>
+<li>Service level (can we fulfil all demand?)</li>
+<li>Production load by resource</li>
+<li>Cost implications (additional orders, expedite costs)</li>
+</ul>
+<h2>Step 4: Decide</h2>
+<p>The scenario output is an input to a decision, not the decision itself. Someone with authority over the business outcome needs to review the comparison, make a call, and communicate it. Document the decision and the scenario that supported it — future planners will want to understand why the baseline changed.</p>

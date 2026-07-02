@@ -1,0 +1,43 @@
+<h2>Supply is the response to demand</h2>
+<p>In the previous chapter, you saw how a 100-unit forecast travels <strong>upstream</strong> from Item J to Items A and B. Now the planning engine runs in the other direction: it generates <strong>planned orders</strong> — decisions about what to produce, transport, or procure — and these decisions flow <strong>downstream</strong>, from raw material inputs toward the customer.</p>
+<p>Supply flow is the physical answer to the demand signal. Where demand propagates as information, supply propagates as inventory: seeds being grown, cleaned, calibrated, primed, coated, packed, and shipped.</p>
+<h2>What a planned order contains</h2>
+<p>A planned order is a structured record attached to a node in the network. It specifies:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Item + Location</strong></td>
+<td>What is being made and where</td>
+</tr>
+<tr>
+<td><strong>Quantity</strong></td>
+<td>How many units to produce or move</td>
+</tr>
+<tr>
+<td><strong>Start date</strong></td>
+<td>When the process must begin</td>
+</tr>
+<tr>
+<td><strong>Completion date</strong></td>
+<td>When the output will be available</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>Which upstream node provides the input</td>
+</tr>
+</tbody></table>
+<p>In Planning software these records are called <strong>line items</strong> or <strong>supply line items</strong>. They are the supply-side counterpart to the demand line items you saw in Chapter 3.</p>
+<h2>Two supply sources</h2>
+<p>Every node in the network can receive supply from one of two places:</p>
+<ol>
+<li><strong>Existing inventory</strong> — on-hand stock already at the location, available immediately (up to the amount not reserved for safety stock).</li>
+<li><strong>Planned order</strong> — a new production run, transportation, or purchase that must be triggered and will arrive after the process lead time.</li>
+</ol>
+<p>The planning engine prefers inventory: it only creates planned orders for the net requirement after available inventory has been applied. This is the inventory netting you read about at the end of Chapter 3, now seen from the supply side.</p>
+<h2>Downstream propagation</h2>
+<p>Once a planned order is placed for Seed Production (Item C), its expected output becomes available supply for the next downstream process — Cleaning. Cleaning's planned order, in turn, feeds Calibrating, which feeds Priming, and so on. Each planned order unlocks supply for the next stage, creating a <strong>downstream cascade</strong> of commitments that eventually delivers Item J to the customer.</p>

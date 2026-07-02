@@ -1,0 +1,26 @@
+<h2>The S&amp;OE demand monitoring workspace</h2>
+<p>Planning software surfaces demand monitoring through a dedicated workspace or view, typically labelled along the lines of "S&amp;OE Demand" or "Near-Term Demand Monitor." This workspace is distinct from the S&amp;OP demand planning module — it is scoped to the near-term horizon (usually the next four to eight weeks) and is oriented around exceptions rather than plan creation.</p>
+<p>The workspace typically shows a grid of SKUs and locations with colour-coded deviation indicators, alongside an exception queue that lists items that have breached the configured alert thresholds. The planner starts each monitoring cycle here, working through the exception queue before scanning the wider deviation grid.</p>
+<h2>Exception queues filtered to demand-type exceptions</h2>
+<p>Planning systems classify exceptions by type. Demand-type exceptions include: demand deviation above threshold, demand deviation below threshold, order confirmation rate below threshold, and near-term forecast revision above threshold. The exception queue can be filtered to show only demand exceptions, separating them from supply and inventory exceptions that are handled by different parts of the S&amp;OE process.</p>
+<p>Each exception record shows the affected item, the nature of the deviation, the current value versus the plan value, and the severity flag — typically a traffic-light rating based on how far the deviation exceeds the configured tolerance. High-severity exceptions appear at the top of the queue and require same-day attention.</p>
+<h2>Reading demand deviation charts</h2>
+<p>For each exception item, the planner can open a deviation chart that shows the full short-horizon demand picture: the baseline plan (the agreed S&amp;OP number), the current near-term forecast, and the actual order intake to date. The chart makes it visually clear whether the deviation is a one-week spike or a sustained trend, and whether it is worsening or stabilising.</p>
+<p>The shape of the deviation matters. A single spike that has already passed without follow-through is typically treated differently from a deviation that has grown for three consecutive weeks. The chart provides the context the planner needs to make that judgement.</p>
+<h2>Distinguishing noise from signal</h2>
+<p>Not every exception requires action. Planning systems apply statistical tolerances — typically a percentage deviation threshold — but those thresholds are calibrated for broad coverage, not perfect precision. The planner's task is to apply judgment:</p>
+<ul>
+<li>Is this a large absolute volume impact, or a large percentage on a low-volume item?</li>
+<li>Is the deviation driven by a known event (promotion, customer special order, seasonal effect)?</li>
+<li>Has the same item flagged in previous weeks, or is this the first occurrence?</li>
+</ul>
+<p>Items that are explainable by known causes and within the plan's built-in buffer are typically acknowledged and monitored rather than escalated. Items that are unexplained, large in volume impact, and sustained are escalated.</p>
+<h2>Actions available per exception type</h2>
+<p>The S&amp;OE demand monitoring workspace is not read-only. Depending on the exception type and its severity, the planner has several response options available within the system:</p>
+<ul>
+<li><strong>Acknowledge and monitor</strong> — record a note on the exception, leave the plan unchanged, and flag for review next cycle.</li>
+<li><strong>Adjust near-term forecast</strong> — update the short-horizon forecast to reflect the confirmed deviation, so downstream supply planning picks up the revised signal.</li>
+<li><strong>Flag for integrated S&amp;OE review</strong> — add the item to the agenda of the weekly cross-functional meeting for a joint decision.</li>
+<li><strong>Raise an S&amp;OP escalation</strong> — mark the deviation as exceeding the S&amp;OE resolution threshold and trigger an out-of-cycle S&amp;OP review.</li>
+</ul>
+<p>Each action is logged in the system, creating an audit trail of what was observed, what decision was made, and who made it.</p>
