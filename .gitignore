@@ -1,5 +1,10 @@
 node_modules/
 .superpowers/
 
+# stale Astro-era build artifacts
+dist/
+.astro/
+.vercel/
+
 # macOS
 .DS_Store
