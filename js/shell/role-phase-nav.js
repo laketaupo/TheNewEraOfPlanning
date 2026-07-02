@@ -4,6 +4,7 @@
 // js/pages/chapter-index.js and js/pages/topic.js compute live per CONTRACTS.md "tricky spots" #1
 // (these replace what Astro used to inject at build time per-route).
 import { url } from '../base-url.js';
+import { escapeHtml } from '../markdown.js';
 
 function setNavLabel(a, longLabel, shortLabel) {
   const spans = a.querySelectorAll('span');
@@ -63,7 +64,7 @@ export function applyRoleNav(fromParam) {
           const cls = isActive
             ? `text-xs px-3 py-1 rounded-full transition-colors ${chapterPhaseCtx.bgClass} ${chapterPhaseCtx.textClass} font-medium`
             : 'text-xs px-3 py-1 rounded-full transition-colors text-gray-500 dark:text-neutral-500 hover:text-gray-900 dark:hover:text-neutral-300';
-          return `<a href="${url(ch.url)}" class="${cls}">${i + 1}. ${ch.title.replace(/</g, '&lt;')}</a>`;
+          return `<a href="${escapeHtml(url(ch.url))}" class="${cls}">${i + 1}. ${escapeHtml(ch.title)}</a>`;
         })
         .join('');
     }

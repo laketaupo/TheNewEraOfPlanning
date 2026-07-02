@@ -43,7 +43,7 @@ function renderResults(items, q) {
   resultsEl.innerHTML = items
     .map(
       (item) => `
-      <a href="${url(item.url)}" class="block rounded-xl px-4 py-2.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/25">
+      <a href="${escapeHtml(url(item.url))}" class="block rounded-xl px-4 py-2.5 hover:bg-indigo-50 dark:hover:bg-indigo-900/25">
         <p class="text-[15px] font-semibold text-gray-900 dark:text-white">${escapeHtml(item.title || '')}</p>
         ${item.description ? `<p class="text-[13px] text-gray-500 dark:text-neutral-400 leading-snug mt-0.5">${escapeHtml(item.description)}</p>` : ''}
       </a>`
