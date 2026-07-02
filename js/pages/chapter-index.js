@@ -2,7 +2,7 @@
 // Route: /:theme/:module/:chapter — the per-chapter topic list / chapter overview page.
 import { url } from '../base-url.js';
 import { escapeHtml } from '../markdown.js';
-import { getChapters, getTopicsForChapter, getChapterUrl } from '../lib/chapters.js';
+import { getChapters, getTopicsForChapter } from '../lib/chapters.js';
 import { getRoles, resolveRolePhases } from '../lib/roles.js';
 import { getModuleMeta } from '../lib/module-meta.js';
 import { render as renderNotFound } from './not-found.js';

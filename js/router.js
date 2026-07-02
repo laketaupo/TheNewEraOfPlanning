@@ -1,6 +1,6 @@
 // History-API client-side router. Shell-once, swap-#app-main model.
 // See CONTRACTS.md §5 for the full post-render lifecycle this drives.
-import { BASE, stripBase } from './base-url.js';
+import { stripBase } from './base-url.js';
 import { getIndex } from './content.js';
 import { scanGlossary } from './shell/glossary-tooltip.js';
 import { applyRoleNav } from './shell/role-phase-nav.js';
