@@ -1,8 +1,6 @@
 // Port of the `topic.widget` -> component dispatch previously done inline in
 // src/pages/[theme]/[module]/[chapter]/[topic].astro (see CONTRACTS.md §3).
 import * as whatIf from './what-if.js';
-import * as demandShock from './demand-shock.js';
-import * as walkthrough from './walkthrough.js';
 import * as graph from './graph.js';
 import * as demandFlow from './demand-flow.js';
 import * as supplyFlow from './supply-flow.js';
@@ -13,8 +11,6 @@ import * as seasonalDisagg from './seasonal-disagg.js';
 
 const registry = {
   'what-if': whatIf,
-  'demand-shock': demandShock,
-  'walkthrough': walkthrough,
   'graph': graph,
   'demand-flow': demandFlow,
   'supply-flow': supplyFlow,

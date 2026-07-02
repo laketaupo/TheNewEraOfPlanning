@@ -21,7 +21,7 @@ export async function render() {
     </header>
 
     <div class="relative min-h-screen">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
 
       <div class="relative z-10 px-6 pt-16 pb-20 max-w-2xl mx-auto">
 
@@ -45,28 +45,28 @@ export async function render() {
             <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-5">How it's structured</h2>
             <div class="space-y-4">
               <div class="flex gap-4">
-                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold shrink-0">1</div>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Four pillars</h3>
                   <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">People, Process, Data and Technology — each covered in depth with interconnected content.</p>
                 </div>
               </div>
               <div class="flex gap-4">
-                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold shrink-0">2</div>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Role-based paths</h3>
                   <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Content curated per role so every team member gets exactly what they need, in the right order.</p>
                 </div>
               </div>
               <div class="flex gap-4">
-                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold shrink-0">3</div>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Five learning phases</h3>
                   <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Awareness → Conceptual → Practical → Embedded → Optimisation. Progress at your own pace.</p>
                 </div>
               </div>
               <div class="flex gap-4">
-                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm font-bold shrink-0">4</div>
                 <div>
                   <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1">Progress tracking</h3>
                   <p class="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">Mark topics complete, flag unclear content, and pick up where you left off on any device.</p>

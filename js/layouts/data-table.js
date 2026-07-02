@@ -45,7 +45,7 @@ ${renderTopHeader(props)}
               </thead>` : ''}
             <tbody class="bg-white dark:bg-neutral-900 divide-y divide-gray-100 dark:divide-neutral-800">
               ${tableRows.map((row) => `
-                <tr class="hover:bg-[var(--accent-subtle)] transition-colors">
+                <tr class="hover:bg-(--accent-subtle) transition-colors">
                   ${row.map((cell, cellIdx) => `
                     <td class="px-5 py-3.5 text-gray-700 dark:text-neutral-300 leading-relaxed ${cellIdx === 0 ? 'font-medium text-gray-900 dark:text-white' : ''}">
                       ${escapeHtml(cell)}

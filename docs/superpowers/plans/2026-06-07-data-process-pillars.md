@@ -744,7 +744,7 @@ const iconMap: Record<string, string> = {
   </div>
 
   <div class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-6 max-w-3xl mx-auto">
@@ -762,7 +762,7 @@ const iconMap: Record<string, string> = {
         Data
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        Data-Driven <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Planning</span>
+        Data-Driven <span class="text-transparent bg-clip-text bg-linear-to-r from-emerald-500 to-teal-500">Planning</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
         Understand how data quality and structure determine the quality of every plan your organisation produces.
@@ -1329,7 +1329,7 @@ const iconMap: Record<string, string> = {
   </div>
 
   <div class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
     <div class="absolute inset-0 bg-radial-gradient pointer-events-none"></div>
 
     <div class="relative z-10 px-6 pt-6 max-w-3xl mx-auto">
@@ -1347,7 +1347,7 @@ const iconMap: Record<string, string> = {
         Process
       </div>
       <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight">
-        Scenario <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-purple-500">Planning</span>
+        Scenario <span class="text-transparent bg-clip-text bg-linear-to-r from-violet-500 to-purple-500">Planning</span>
       </h1>
       <p class="text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
         Learn how to use what-if scenarios to explore uncertainty, compare outcomes, and make better planning decisions.

@@ -91,7 +91,7 @@ Replace everything from `<main class="min-h-screen ...">` through `</main>` with
     <!-- ── Hero: landing-page treatment ── -->
     <div class="relative overflow-hidden bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800">
       <!-- Grid background -->
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
       <!-- Radial gradient -->
       <div class="absolute inset-0 topic-radial-gradient pointer-events-none"></div>
 

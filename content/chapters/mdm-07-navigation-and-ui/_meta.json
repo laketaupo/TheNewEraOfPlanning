@@ -1,9 +1,0 @@
-{
-  "title": "Navigating MDM",
-  "description": "How to move around MDM efficiently — finding records, using search and filters, and reading the output that confirms data has been distributed correctly.",
-  "icon": "database",
-  "color": "emerald",
-  "theme": "technology",
-  "module": "mdm",
-  "hidden": true
-}

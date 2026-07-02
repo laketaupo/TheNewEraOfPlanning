@@ -59,7 +59,7 @@ Insert the following block immediately before that `<!-- Roles -->` comment:
 ```html
       <!-- Notes -->
       <div class="py-6 flex gap-8 border-b border-gray-100 dark:border-neutral-800">
-        <div class="flex-shrink-0 w-7 pt-0.5">
+        <div class="shrink-0 w-7 pt-0.5">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 dark:text-neutral-500">
             <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
           </svg>

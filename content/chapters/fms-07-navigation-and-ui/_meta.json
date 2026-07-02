@@ -1,9 +1,0 @@
-{
-  "title": "Navigating FMS",
-  "description": "How to move around FMS efficiently — finding grower records, reading crop status, and navigating to the supply signals that matter for planning.",
-  "icon": "globe",
-  "color": "emerald",
-  "theme": "technology",
-  "module": "fms",
-  "hidden": true
-}

@@ -170,7 +170,7 @@ function renderMarkup({ themes, liveRoles, totalTopics }) {
       .chapter-chevron { transition: transform 0.15s ease; }
       .chapter-card[data-expanded] .chapter-chevron { transform: rotate(90deg); }
     </style>
-    <div id="site-overlay" class="fixed inset-0 z-[9999] hidden" role="dialog" aria-modal="true" aria-label="Site overview">
+    <div id="site-overlay" class="fixed inset-0 z-9999 hidden" role="dialog" aria-modal="true" aria-label="Site overview">
       <div id="site-overlay-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       <div class="relative z-10 flex flex-col h-full max-w-2xl mx-auto px-4 py-6 pointer-events-none">
         <div class="flex flex-col bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto max-h-full">

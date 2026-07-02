@@ -4,7 +4,7 @@ import { url } from '../base-url.js';
 export async function render() {
   return `
     <div class="relative min-h-screen flex flex-col items-center px-6 pt-12 pb-12 md:block md:p-0">
-      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-[size:64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#444444_1px,transparent_1px),linear-gradient(to_bottom,#444444_1px,transparent_1px)] bg-size-[64px_64px] opacity-60 dark:opacity-40 pointer-events-none"></div>
       <div class="absolute inset-0 bg-home-radial pointer-events-none"></div>
 
       <div class="relative z-20 w-full text-center md:absolute md:top-[15%] md:inset-x-0 md:px-8">

@@ -31,7 +31,7 @@ const TEMPLATE = `
   <div
     id="theme-picker-menu"
     role="menu"
-    class="hidden absolute top-full right-0 mt-1.5 w-36 rounded-xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden z-[200]"
+    class="hidden absolute top-full right-0 mt-1.5 w-36 rounded-xl border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-xl overflow-hidden z-200"
   >
     <button role="menuitem" data-theme="light"  class="theme-option w-full flex items-center gap-2.5 px-3 py-2 text-sm text-gray-700 dark:text-neutral-300 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

@@ -64,8 +64,8 @@ ${renderTopHeader(props)}
               </thead>` : ''}
             <tbody class="bg-white dark:bg-neutral-900 divide-y divide-gray-100 dark:divide-neutral-800">
               ${steps.map((step) => `
-                <tr class="hover:bg-[var(--accent-subtle)] transition-colors">
-                  <td class="sticky left-0 bg-white dark:bg-neutral-900 hover:bg-[var(--accent-subtle)] z-10 px-5 py-3.5 font-medium text-gray-900 dark:text-white leading-relaxed whitespace-nowrap">
+                <tr class="hover:bg-(--accent-subtle) transition-colors">
+                  <td class="sticky left-0 bg-white dark:bg-neutral-900 hover:bg-(--accent-subtle) z-10 px-5 py-3.5 font-medium text-gray-900 dark:text-white leading-relaxed whitespace-nowrap">
                     ${escapeHtml(step.label)}
                   </td>
                   ${roles.map((role) => {

@@ -47,7 +47,3 @@ export function getModuleMeta(moduleSlug) {
   }
   return undefined;
 }
-
-export function getModuleLabel(moduleSlug) {
-  return LABELS[moduleSlug] ?? moduleSlug;
-}

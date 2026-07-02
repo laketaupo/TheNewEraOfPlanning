@@ -1,4 +1,4 @@
-/* Verbatim port of BaseLayout.astro's <style is:global> block. Hand-authored CSS —
+/* Verbatim port of BaseLayout.astro's \3c style is:global> block. Hand-authored CSS —
    not scanned/purged by Tailwind, so it survives regardless of gen-css.mjs's content globs. */
 
 /* ── Reading theme ─────────────────────────────────────────────── */
