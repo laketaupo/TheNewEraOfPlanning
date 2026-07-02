@@ -8,7 +8,9 @@ import { applyRoleNav } from './shell/role-phase-nav.js';
 const mainEl = () => document.getElementById('app-main');
 
 // Ordered route table: literal segments win before the generic `:theme...` patterns.
-// Each entry: { pattern: string[] (':name' = param), load: () => import(module) }
+// Each entry: { pattern: string[] (':name' = param), load: () => import(module), skipGlossary? }
+// skipGlossary: true suppresses inline glossary-term tooltips on pillar/module/chapter overview
+// pages and learn-by-role phase pages — tooltips stay active inside actual topic content.
 const routes = [
   { pattern: [], load: () => import('./pages/home.js') },
   { pattern: ['about'], load: () => import('./pages/about.js') },
@@ -21,13 +23,13 @@ const routes = [
   { pattern: ['glossary'], load: () => import('./pages/glossary.js') },
   { pattern: ['faq'], load: () => import('./pages/faq.js') },
   { pattern: ['roles'], load: () => import('./pages/roles-index.js') },
-  { pattern: ['roles', ':role'], load: () => import('./pages/role.js') },
-  { pattern: ['roles', ':role', ':phase'], load: () => import('./pages/role-phase.js') },
+  { pattern: ['roles', ':role'], load: () => import('./pages/role.js'), skipGlossary: true },
+  { pattern: ['roles', ':role', ':phase'], load: () => import('./pages/role-phase.js'), skipGlossary: true },
   { pattern: ['technology', 'configuration'], load: () => import('./pages/configuration.js') },
   { pattern: [':theme', ':module', ':chapter', ':topic'], load: () => import('./pages/topic.js') },
-  { pattern: [':theme', ':module', ':chapter'], load: () => import('./pages/chapter-index.js') },
-  { pattern: [':theme', ':module'], load: () => import('./pages/module.js') },
-  { pattern: [':theme'], load: () => import('./pages/pillar.js') },
+  { pattern: [':theme', ':module', ':chapter'], load: () => import('./pages/chapter-index.js'), skipGlossary: true },
+  { pattern: [':theme', ':module'], load: () => import('./pages/module.js'), skipGlossary: true },
+  { pattern: [':theme'], load: () => import('./pages/pillar.js'), skipGlossary: true },
 ];
 
 function matchRoute(segments) {
@@ -72,7 +74,9 @@ async function render(pathname, search) {
     await mod.afterMount(main, params, query);
   }
 
-  scanGlossary(main.querySelector('[data-pagefind-body]') ?? main);
+  if (!matched?.route.skipGlossary) {
+    scanGlossary(main.querySelector('[data-pagefind-body]') ?? main);
+  }
   if (query.get('from')) applyRoleNav(query.get('from'));
 
   window.scrollTo(0, 0);
