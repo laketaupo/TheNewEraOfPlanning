@@ -1,0 +1,57 @@
+<h2>Demand netting: inventory first</h2>
+<p>Before a demand signal triggers a new planned order, the planning engine checks whether existing inventory can already cover it. This step is called <strong>netting</strong>.</p>
+<p>For example, if the Central Warehouse has 40 units of Item D on hand and 167 units are demanded, the net requirement is only 127 units. Cleaning only needs to be scheduled for 127 units, not 167. The same netting logic applies at every node in the network, using the on-hand inventory recorded on each line item.</p>
+<p>Safety stock is treated as a floor: the engine will not net below it. If Item D has a safety stock of 30 units, those 30 units are reserved and cannot be used to satisfy gross demand.</p>
+<h2>Time-phased demand</h2>
+<p>Planning software plans in discrete time buckets — typically days or weeks. The demand signal is not just a quantity; it is a <strong>quantity at a specific time</strong>. The planning engine must ensure that each upstream node completes its work in time to feed the next downstream node.</p>
+<p>Each process has a <strong>lead time</strong> attribute (set on the Transformation or Transportation Process node). When the engine places demand upstream, it subtracts the lead time to find the latest possible start date:</p>
+<pre><code>Required start = Required delivery − Process lead time
+</code></pre>
+<p>For the seed-treatment network, process lead times stack significantly:</p>
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Typical lead time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ship [J] to customer</td>
+<td>3 days</td>
+</tr>
+<tr>
+<td>Packing</td>
+<td>1 day</td>
+</tr>
+<tr>
+<td>Coating</td>
+<td>2 days</td>
+</tr>
+<tr>
+<td>Priming</td>
+<td>5 days</td>
+</tr>
+<tr>
+<td>Calibrating</td>
+<td>1 day</td>
+</tr>
+<tr>
+<td>Cleaning</td>
+<td>1 day</td>
+</tr>
+<tr>
+<td>Ship [C] from Grower</td>
+<td>7 days</td>
+</tr>
+<tr>
+<td>Seed Production (growing season)</td>
+<td>90–120 days</td>
+</tr>
+<tr>
+<td>Ship [A/B] to Grower</td>
+<td>5 days</td>
+</tr>
+</tbody></table>
+<p>Adding these up, a customer forecast for delivery in Week 30 may require Items A and B to leave the Central Warehouse in <strong>Week 10</strong> — 20 weeks earlier. This is the core reason why long-horizon planning matters in agriculture: the demand signal must be visible far enough upstream to trigger procurement and growing decisions in time.</p>
+<h2>What the plan looks like</h2>
+<p>After netting and time-phasing, each node in the network has a time-phased <strong>planned order</strong>: a quantity to produce or transport, starting on a specific date. These planned orders collectively form the supply plan — which is the subject of the next chapter.</p>

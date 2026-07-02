@@ -1,0 +1,26 @@
+<h2>On-Time In-Full (OTIF)</h2>
+<p><strong>What it measures:</strong> The percentage of customer orders delivered both on time (by the confirmed delivery date) and in full (at the ordered quantity).</p>
+<p><strong>Formula:</strong> <code>OTIF % = (Orders delivered on time AND in full) / (Total orders) × 100</code></p>
+<p><strong>Why it matters:</strong> OTIF is the most direct measure of customer service. A customer who receives 95% of their order on time and the other 5% late has experienced a service failure — OTIF captures this where simpler metrics might not.</p>
+<p><strong>Typical benchmarks:</strong> World-class OTIF is 95–98%. Below 90% generally indicates a structural supply-demand alignment problem.</p>
+<hr>
+<h2>Forecast Accuracy (MAPE)</h2>
+<p><strong>What it measures:</strong> The average magnitude of the difference between the forecast and actual demand, expressed as a percentage of actual demand.</p>
+<p><strong>Formula:</strong> <code>MAPE = (1/n) × Σ |Actual − Forecast| / Actual × 100</code></p>
+<p><strong>Why it matters:</strong> Forecast accuracy drives safety stock requirements. A planner who can forecast within 10% needs far less safety stock than one who is regularly 30% off. Improving forecast accuracy is often the highest-leverage action available to reduce working capital while maintaining service levels.</p>
+<p><strong>Typical benchmarks:</strong> MAPE below 20% at the monthly/product-family level is good. At the weekly/SKU level, below 30% is typically considered acceptable for seasonal agricultural products. Always interpret MAPE alongside forecast bias.</p>
+<hr>
+<h2>Forecast Bias</h2>
+<p><strong>What it measures:</strong> Whether the forecast is systematically over- or under-predicting demand.</p>
+<p><strong>Formula:</strong> <code>Bias % = (Forecast − Actual) / Actual × 100</code> (averaged over time)</p>
+<p><strong>Why it matters:</strong> MAPE can be low while bias is high if errors are consistent in one direction. A persistent positive bias (over-forecasting) builds excess inventory. A persistent negative bias (under-forecasting) causes chronic shortfalls. Bias often indicates a process problem — a commercial team that inflates forecasts as a buffer, or a system that anchors on last year's actuals — rather than random uncertainty.</p>
+<hr>
+<h2>Inventory Days on Hand (DoH)</h2>
+<p><strong>What it measures:</strong> How many days of forward demand is currently in stock.</p>
+<p><strong>Formula:</strong> <code>DoH = Current stock / Average daily demand</code></p>
+<p><strong>Why it matters:</strong> DoH translates an inventory balance (a financial number) into a supply chain reality (how long can we sustain service without replenishment). High DoH indicates potential excess; low DoH indicates potential shortage risk.</p>
+<hr>
+<h2>Plan Adherence</h2>
+<p><strong>What it measures:</strong> The percentage of planned orders that are executed as planned — in the right quantity, at the right time.</p>
+<p><strong>Formula:</strong> <code>Plan adherence % = (Orders executed per plan) / (Total planned orders) × 100</code></p>
+<p><strong>Why it matters:</strong> Low plan adherence indicates that the planning model is not being followed — either because the plan is wrong and teams are correcting it informally, or because execution is undisciplined. Either is a problem. Plan adherence below 80% typically signals that the planning process is not embedded in operational behaviour.</p>

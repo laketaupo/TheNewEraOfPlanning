@@ -1,0 +1,38 @@
+<h2>What is an Item?</h2>
+<p>An <strong>Item</strong> is the most fundamental building block in Planning software. It represents anything that can be planned, produced, stored, bought, or sold — a raw material, semi-finished good, finished product, or packaging component.</p>
+<p>In Planning software, every item has a unique identifier and a set of attributes that drive planning behavior:</p>
+<ul>
+<li><strong>Item ID</strong> — unique key across the network</li>
+<li><strong>Item type</strong> — raw material, WIP, finished good</li>
+<li><strong>Unit of measure</strong> — kg, units, liters, pallets</li>
+<li><strong>Shelf life</strong> — how long it can be stored before expiry</li>
+<li><strong>Planning horizon</strong> — how far ahead to plan this item</li>
+</ul>
+<h2>Why Items Matter</h2>
+<p>The Planning software planning engine generates supply and demand signals at the item level. Everything — from demand forecasts to production orders to purchase requisitions — is tied to an item.</p>
+<blockquote>
+<p>Think of items as the <strong>nouns</strong> of your supply chain. Everything else (processes, resources, networks) acts on them or connects them.</p>
+</blockquote>
+<h2>Key Relationships</h2>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Item → BOM</td>
+<td>An item can be <em>output of</em> a transformation process</td>
+</tr>
+<tr>
+<td>Item → BOD</td>
+<td>An item can be <em>transported</em> via a distribution process</td>
+</tr>
+<tr>
+<td>Item → Location</td>
+<td>An item is <em>stocked at</em> one or more nodes in the network</td>
+</tr>
+</tbody></table>
+<h2>Placeholder Content</h2>
+<p><em>This topic is ready for your detailed content. Replace this section with specific Planning software item attributes, screenshots, or examples from your environment.</em></p>

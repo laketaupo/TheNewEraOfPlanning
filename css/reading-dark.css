@@ -1,0 +1,224 @@
+/* Verbatim port of BaseLayout.astro's <style is:global> block. Hand-authored CSS —
+   not scanned/purged by Tailwind, so it survives regardless of gen-css.mjs's content globs. */
+
+/* ── Reading theme ─────────────────────────────────────────────── */
+.reading {
+  --reading-bg:              #F7F6F5;
+  --reading-surface:         #EEEDEB;
+  --reading-surface-high:    #E5E4E2;
+  --reading-surface-low:     #F3F2F1;
+  --reading-heading:         #1E1D1E;
+  --reading-text:            #4A494A;
+  --reading-text-muted:      #787678;
+  --reading-border:          #ADAAAC;
+  --reading-border-strong:   #787678;
+  --reading-accent:          #4A494A;
+  --reading-accent-hover:    #7A7672;
+}
+
+.reading body {
+  background-color: var(--reading-bg) !important;
+  color: var(--reading-text) !important;
+}
+
+/* Main content area backgrounds — bg-gray-50 intentionally excluded (it's on body) */
+.reading .bg-white,
+.reading .bg-gray-100 {
+  background-color: var(--reading-surface-high) !important;
+}
+
+/* Cards, panels, sidebars */
+.reading .bg-gray-200 { background-color: var(--reading-surface-high) !important; }
+
+/* Borders */
+.reading .border-gray-200,
+.reading .border-gray-100 { border-color: var(--reading-border) !important; }
+.reading .border-gray-300  { border-color: var(--reading-border-strong) !important; }
+
+/* Strip gradient clip-text and apply solid colour */
+.reading .bg-clip-text {
+  background-image: none !important;
+  -webkit-text-fill-color: var(--reading-text) !important;
+  color: var(--reading-text) !important;
+}
+
+/* Override inline style="color:..." accent spans inside headings */
+.reading h1 span,
+.reading h2 span { color: var(--reading-text) !important; }
+
+/* Text colours */
+.reading h1, .reading h2, .reading h3, .reading h4 { color: var(--reading-heading) !important; }
+.reading .text-gray-900 { color: var(--reading-heading) !important; }
+.reading .text-gray-700,
+.reading .text-gray-800 { color: var(--reading-text) !important; }
+.reading .text-gray-500,
+.reading .text-gray-600 { color: var(--reading-text-muted) !important; }
+.reading .text-gray-400 { color: var(--reading-border-strong) !important; }
+
+/* Navigation / top bar */
+.reading nav,
+.reading header { background-color: transparent !important; border-color: var(--reading-border) !important; }
+
+/* Scrollbar */
+.reading ::-webkit-scrollbar { width: 10px; height: 10px; }
+.reading ::-webkit-scrollbar-track  { background: var(--reading-surface-low); }
+.reading ::-webkit-scrollbar-thumb  { background-color: var(--reading-border-strong); border-radius: 5px; border: 2px solid var(--reading-surface-low); }
+.reading ::-webkit-scrollbar-corner { background: var(--reading-surface-low); }
+
+/* Glossary tooltip */
+.reading #glossary-tooltip {
+  background-color: var(--reading-surface) !important;
+  border-color: var(--reading-border) !important;
+  color: var(--reading-text) !important;
+}
+
+/* ── Pillar / module / chapter cards ───────────────────────────── */
+
+/* /themes page theme-cards */
+.reading .theme-people,
+.reading .theme-process,
+.reading .theme-technology,
+.reading .theme-data {
+  background: var(--reading-surface-high) !important;
+  border-color: var(--reading-border) !important;
+  border-top-color: var(--reading-border-strong) !important;
+}
+.reading .theme-people:hover,
+.reading .theme-process:hover,
+.reading .theme-technology:hover,
+.reading .theme-data:hover {
+  background: var(--reading-surface) !important;
+  box-shadow: 0 6px 24px rgba(120,118,120,0.12) !important;
+}
+.reading .theme-title { color: var(--reading-heading) !important; }
+.reading .theme-desc  { color: var(--reading-text-muted) !important; }
+.reading .theme-people .theme-icon,
+.reading .theme-process .theme-icon,
+.reading .theme-technology .theme-icon,
+.reading .theme-data .theme-icon {
+  background: var(--reading-bg) !important;
+  color: var(--reading-text-muted) !important;
+}
+.reading .theme-people .theme-badge,
+.reading .theme-process .theme-badge,
+.reading .theme-technology .theme-badge,
+.reading .theme-data .theme-badge {
+  background: var(--reading-bg) !important;
+  color: var(--reading-text-muted) !important;
+}
+
+/* Home page lcard */
+.reading .lcard {
+  background: var(--reading-surface-high) !important;
+  border-color: var(--reading-border) !important;
+  border-top-color: var(--reading-border-strong) !important;
+  box-shadow: none !important;
+}
+.reading .lcard:hover {
+  background: var(--reading-surface) !important;
+  box-shadow: 0 6px 24px rgba(120,118,120,0.12) !important;
+}
+.reading .lcard-icon  { background: var(--reading-bg) !important; }
+.reading .lcard-title { color: var(--reading-heading) !important; }
+.reading .lcard-desc  { color: var(--reading-text-muted) !important; }
+.reading .lcard-link  { color: var(--reading-text-muted) !important; }
+
+/* Pillar index track-cards (scoped styles with hardcoded hex) */
+.reading .track-how-platform,
+.reading .track-bc,
+.reading .track-arch,
+.reading .track-fms,
+.reading .track-fundamentals,
+.reading .track-planning,
+.reading .track-governance,
+.reading .track-process,
+.reading .track-people,
+.reading .track-card {
+  background: var(--reading-surface-high) !important;
+  border-color: var(--reading-border) !important;
+  border-top-color: var(--reading-border-strong) !important;
+}
+.reading .track-card:hover {
+  background: var(--reading-surface) !important;
+  box-shadow: 0 6px 24px rgba(120,118,120,0.12) !important;
+}
+.reading .track-title { color: var(--reading-heading) !important; }
+.reading .track-desc  { color: var(--reading-text-muted) !important; }
+.reading .track-icon  {
+  background: var(--reading-bg) !important;
+  color: var(--reading-text-muted) !important;
+}
+.reading .track-badge {
+  background: var(--reading-bg) !important;
+  color: var(--reading-text-muted) !important;
+}
+.reading .track-badge-soon {
+  background: var(--reading-bg) !important;
+  color: var(--reading-text-muted) !important;
+}
+
+/* Module / chapter card Tailwind blue classes */
+.reading .bg-blue-50      { background-color: var(--reading-surface-high) !important; }
+.reading .border-blue-200 { border-color: var(--reading-border) !important; }
+.reading .text-blue-600,
+.reading .text-blue-400   { color: var(--reading-text-muted) !important; }
+
+/* ── Icon bar hover states ───────────────────────────────────── */
+.reading #theme-picker-menu {
+  background-color: var(--reading-surface) !important;
+  border-color: var(--reading-border) !important;
+}
+.reading .theme-option:hover {
+  background-color: var(--reading-surface-high) !important;
+}
+.reading .theme-option {
+  color: var(--reading-text) !important;
+}
+
+/* ── Scrollbar dark mode ────────────────────────────────────────── */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #2c2c2c; /* neutral-900 */
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #404040; /* neutral-700 */
+  border-radius: 5px;
+  border: 2px solid #2c2c2c;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #525252; /* neutral-600 */
+}
+.dark ::-webkit-scrollbar-corner {
+  background: #2c2c2c;
+}
+
+.glossary-term {
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+  opacity: 0.9;
+}
+.glossary-term:hover {
+  opacity: 1;
+}
+#glossary-tooltip::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  width: 12px;
+  height: 12px;
+  background-color: inherit;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-color: inherit;
+}
+#glossary-tooltip[data-placement='bottom']::before {
+  top: -7px;
+  transform: rotate(45deg);
+}
+#glossary-tooltip[data-placement='top']::before {
+  bottom: -7px;
+  transform: rotate(225deg);
+}

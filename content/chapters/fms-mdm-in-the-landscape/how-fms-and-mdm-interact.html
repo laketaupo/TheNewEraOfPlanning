@@ -1,0 +1,12 @@
+<p>FMS and MDM do not have a direct integration with each other in most implementations. They each connect independently to Planning software. But they share a dependency that is easy to overlook: <strong>item codes</strong>.</p>
+<p>FMS records grower activity against crop variety codes — the codes it uses internally to identify what is planted. Planning software maps those codes to item records that Planning software received from MDM. If the variety code in FMS does not match the item code in MDM (and therefore in Planning software), the FMS supply signal arrives at Planning software referencing an item it cannot recognise.</p>
+<p>The result is a silent planning gap: the supply signal is received but cannot be applied to any planning record. No error is raised in FMS. No error is raised in Planning software. The supply simply disappears from the plan.</p>
+<p><strong>The dependency chain for a new crop variety to be plannable end-to-end:</strong></p>
+<ol>
+<li>Item created in MDM with the correct variety code and planning parameters</li>
+<li>Item synced from MDM to Planning software</li>
+<li>Item synced from MDM to ERP</li>
+<li>Grower contract set up in FMS using the same variety code</li>
+<li>FMS → Planning software integration tested with the new variety code</li>
+</ol>
+<p>Skipping or partially completing any step creates a ghost variety: present in one system, absent from another, with no automatic alert.</p>

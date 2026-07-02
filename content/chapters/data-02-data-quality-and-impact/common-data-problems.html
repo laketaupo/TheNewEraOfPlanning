@@ -1,0 +1,19 @@
+<h2>Master data problems</h2>
+<p><strong>Incomplete or outdated BOMs</strong>
+Bills of materials change when products are reformulated, repackaged, or re-sourced. If the BOM in Planning software isn't updated to reflect the current recipe, the engine plans the wrong components.</p>
+<p><strong>Wrong lead times</strong>
+Lead times entered at implementation and never reviewed. A supplier that used to deliver in 4 weeks now delivers in 6. The plan places orders too late, stockouts occur, and no one knows why — until someone checks the master data.</p>
+<p><strong>Duplicate or inactive items</strong>
+Items that were superseded, discontinued, or merged but not deactivated still appear in the model. Forecasts get split. Inventory is held against the wrong code.</p>
+<h2>Transactional data problems</h2>
+<p><strong>Open order discrepancies</strong>
+Purchase orders confirmed as received in the ERP but not yet closed. The system counts them as on-hand stock or in-transit inventory, reducing planned orders that are actually needed.</p>
+<p><strong>Forecast override drift</strong>
+Planners apply manual overrides to forecasts that later expire or get overwritten by new statistical runs. The override stays; the reason for it is lost. The plan reflects a decision no one remembers making.</p>
+<p><strong>Inventory timing mismatches</strong>
+A large production run completed at 11pm is not booked until the next morning. The nightly planning run sees stock that doesn't exist yet. The morning run sees stock that is already committed.</p>
+<h2>Integration problems</h2>
+<p><strong>Unit of measure mismatches</strong>
+A forecast in cases when the planning system expects eaches. A capacity in tonnes when planning uses pallets. The conversion factor is wrong or missing.</p>
+<p><strong>Truncated identifiers</strong>
+Item codes or location identifiers get truncated or padded differently in different systems. The same SKU appears as two different items. Inventory and demand never match.</p>

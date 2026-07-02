@@ -21,22 +21,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build site
-        run: npm run build
+      # No npm ci / build step — css/site.css, data/*.json, and content/ are generated once by
+      # `npm run generate` (see package.json) and committed by whoever authored the content
+      # change, not regenerated per-deploy. This step only curates which committed, already-static
+      # files get published — it copies, it doesn't compile.
+      - name: Assemble static site
+        run: |
+          mkdir -p _site
+          cp index.html 404.html favicon.svg .nojekyll _site/
+          cp -r css js content data ui-training _site/
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

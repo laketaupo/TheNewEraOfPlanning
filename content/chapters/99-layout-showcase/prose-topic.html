@@ -1,0 +1,45 @@
+<h2>What this layout is for</h2>
+<p>The default <code>topic</code> layout is the workhorse of the site. Every topic that doesn't declare a <code>topicLayout:</code> in its frontmatter lands here. It's optimised for flowing explanations, definitions, and narrative content.</p>
+<p>Use it when you have a few paragraphs to write and don't need any special structure.</p>
+<h2>Formatting options</h2>
+<h3>Headings</h3>
+<p><code>h2</code> gets a bottom border with a short accent underline — good for major sections. <code>h3</code> gets a left accent bar — good for sub-points within a section.</p>
+<h3>Blockquotes</h3>
+<blockquote>
+<p>This is a pull quote. Use it to call out a key insight, a definition, or a "remember this" statement. It gets a left border in the chapter accent colour.</p>
+</blockquote>
+<h3>Lists</h3>
+<ul>
+<li>Each bullet marker picks up the chapter accent colour.</li>
+<li>Lists are great for enumerable facts that don't need prose connective tissue.</li>
+<li>Three items feels right; more than six starts to look like a dump.</li>
+</ul>
+<h3>Inline code</h3>
+<p>Refer to Planning software objects like <code>Item</code>, <code>BOM</code>, or <code>BOD</code> inline without breaking the sentence flow.</p>
+<h3>Tables</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>order</code></td>
+<td>number</td>
+<td>Sort position within the chapter</td>
+</tr>
+<tr>
+<td><code>topicLayout</code></td>
+<td>string</td>
+<td>Which layout component to render</td>
+</tr>
+<tr>
+<td><code>estimatedMinutes</code></td>
+<td>number</td>
+<td>Shown on the chapter index page</td>
+</tr>
+</tbody></table>
+<h2>When to switch layouts</h2>
+<p>If you're presenting a list of concepts — use <strong>card-grid</strong>. If you need to compare two approaches side-by-side — use <strong>comparison</strong>. If you have tabular reference data — use <strong>data-table</strong>. If the interactive widget is the main event — use <strong>full-widget</strong>.</p>

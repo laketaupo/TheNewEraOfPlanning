@@ -1,0 +1,53 @@
+<h2>Following the signal</h2>
+<p>The animation below traces the demand signal as it moves upstream through the seed-treatment network. Use the <strong>Next</strong> button to step through each stage, or press <strong>Play</strong> to watch the full cascade automatically.</p>
+<p>Notice two things as the signal travels:</p>
+<ul>
+<li><strong>Direction</strong>: demand always moves against the physical flow — from right to left, from customer toward raw materials.</li>
+<li><strong>Quantity change at Calibrating</strong>: because Calibrating yields co-products (Items E, F, and G), only a fraction of the output is Item F. To produce 100 units of Item F, roughly 167 units of Item D must enter the Calibrating process (assuming Item F represents about 60 % of the calibrated output by weight). Every node upstream of Calibrating therefore sees a higher quantity than the original 100 units.</li>
+</ul>
+<h2>Key nodes in the cascade</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Item produced</th>
+<th>Quantity demanded</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Customer delivery</td>
+<td>Item J (out)</td>
+<td>100 units</td>
+</tr>
+<tr>
+<td>Ship [J] / Central Warehouse</td>
+<td>Item J</td>
+<td>100 units</td>
+</tr>
+<tr>
+<td>Packing → Coating → Priming</td>
+<td>Items I, H, F</td>
+<td>100 units each</td>
+</tr>
+<tr>
+<td>Calibrating (60 % F yield)</td>
+<td>Item D → F</td>
+<td>~167 units of D</td>
+</tr>
+<tr>
+<td>Cleaning → Ship [C]</td>
+<td>Item C (CW + Grower)</td>
+<td>~167 units</td>
+</tr>
+<tr>
+<td>Seed Production</td>
+<td>Items A + B (at Grower)</td>
+<td>~167 units each</td>
+</tr>
+<tr>
+<td>Ship [A] / Ship [B]</td>
+<td>Items A + B (Central Warehouse)</td>
+<td>~167 units each</td>
+</tr>
+</tbody></table>
+<p>The planning engine performs this calculation for every planning period in the horizon simultaneously, producing a full time-phased demand picture for each node in the network.</p>

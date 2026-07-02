@@ -46,7 +46,7 @@ A four-pillar learning hub (Technology, Process, Data, People). Each pillar has 
 
 > **"Pillar" vs "theme":** The product calls these four areas "pillars", but the codebase calls them **themes** — in `_meta.json`, `order.json`, function names, URL parameters, and `localStorage`. Always use `theme` in code.
 
-Current modules per pillar (authoritative order from `src/content/order.json`):
+Current modules per pillar (authoritative order from `content/order.json`):
 
 | Pillar | Modules |
 |---|---|
@@ -55,13 +55,13 @@ Current modules per pillar (authoritative order from `src/content/order.json`):
 | `data` | `data-foundations`, `planning-data-domains`, `planning-parameters-and-assumptions`, `performance-and-measurement`, `data-quality-and-governance` |
 | `technology` | `tool-landscape`, `planning-software`, `erp`, `fms`, `mdm`, `adoption-and-usage-quality` |
 
-The Configuration Manual is available both as a standalone page at `/technology/configuration` (content in `src/content/configuration/`) and as a chapter `08-configuration-manual` within the `planning-software` module (content in `src/content/chapters/08-configuration-manual/`).
+The Configuration Manual is available both as a standalone page at `/technology/configuration` (content in `content/configuration/`) and as a chapter `08-configuration-manual` within the `planning-software` module (content in `content/chapters/08-configuration-manual/`).
 
 > **Known slug mismatch:** The process `planning-governance` module page is at `src/pages/process/planning-cycles-and-governance/index.astro` and filters chapters by `c.module === 'planning-cycles-and-governance'`. All chapter `_meta.json` files and `order.json` use `planning-governance`, so no chapters appear on that page. Fix by changing the filter in the page file to `'planning-governance'` (or renaming the folder and matching the filter).
 
 ### Content Model
 
-**Chapter content** lives in `src/content/chapters/<chapter-slug>/`:
+**Chapter content** lives in `content/chapters/<chapter-slug>/`:
 - `_meta.json` — chapter metadata. Required fields: `title`, `description`, `icon`, `color`, `theme`, `module`. Optional: `hidden` (bool).
 - `topic-slug.md` — one file per topic, frontmatter-heavy. **Do not use a numeric prefix (`NN-`) on topic filenames.** The content loader in `[topic].astro` resolves the file by matching `${chapterSlug}/${topicSlug}.md` — the slug is derived by stripping any leading digits, so a file named `01-the-four-systems.md` produces slug `the-four-systems` but the loader then looks for `the-four-systems.md` and fails to find it. Chapter directory names may have the `NN-` prefix; topic filenames must not.
 
@@ -83,9 +83,9 @@ Both `theme` and `module` are required in every `_meta.json`. Omitting either ca
 | `process-step-detail` | `ProcessStepDetailLayout.astro` — step execution layout with inputs/outputs/roles/systems/tasks metadata panels |
 | `prose-topic` or omitted | `TopicLayout.astro` — generic prose + optional widget |
 
-**Configuration manual** lives in `src/content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
+**Configuration manual** lives in `content/configuration/` — one `.md` per screen with frontmatter fields `title`, `description`, `order`, `screenshot` (path under `/public/configuration/`).
 
-**`src/content/chapter-phases.json`** — maps every non-hidden chapter to one of the five learning phases, organized as `pillar → module → chapter-slug: "phase"`. Used as a content-author reference when building or reviewing role learning paths. Must be updated manually whenever a chapter is added or deleted — add/remove the chapter slug under the correct pillar and module key.
+**`content/chapter-phases.json`** — maps every non-hidden chapter to one of the five learning phases, organized as `pillar → module → chapter-slug: "phase"`. Used as a content-author reference when building or reviewing role learning paths. Must be updated manually whenever a chapter is added or deleted — add/remove the chapter slug under the correct pillar and module key.
 
 ```json
 {
@@ -97,7 +97,7 @@ Both `theme` and `module` are required in every `_meta.json`. Omitting either ca
 }
 ```
 
-**Roles** live in `src/content/roles/<slug>.json` — defines role-based courses as a list of `"chapter-slug/topic-slug"` references. Bad references throw at build time via `resolveRoleSections()`.
+**Roles** live in `content/roles/<slug>.json` — defines role-based courses as a list of `"chapter-slug/topic-slug"` references. Bad references throw at build time via `resolveRoleSections()`.
 
 ### Data Loading
 
@@ -115,7 +115,7 @@ Content is loaded via `import.meta.glob` (not Astro content collections):
 - `src/lib/faq.ts` — loads FAQ entries; `getFaqEntries()` / `validateFaq()`.
 - `src/lib/roles.ts` — loads role JSON files; `resolveRoleSections()` validates and hydrates topic references.
 
-**`src/content/order.json`** is the authoritative source for ordering. It defines `themes` (array), `modules` (per-theme arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
+**`content/order.json`** is the authoritative source for ordering. It defines `themes` (array), `modules` (per-theme arrays), `chapters` (per-module arrays), and `topics` (per-chapter arrays). The `order` field in `_meta.json` and the `NN-` numeric prefix in topic filenames are both overridden by this file — items not listed in `order.json` get order index 9999 and sort to the end. **When adding a new chapter or topic, register it in `order.json` to control its position.**
 
 ### Routing
 
@@ -171,7 +171,7 @@ After any progress or comment change, topic scripts dispatch `window.dispatchEve
 
 ### Glossary System
 
-**`src/content/glossary.json`** — flat array of term objects with fields `slug`, `term`, `definition`, `aliases`, `related`, `seeAlso`. Loaded by `src/lib/glossary.ts`.
+**`content/glossary.json`** — flat array of term objects with fields `slug`, `term`, `definition`, `aliases`, `related`, `seeAlso`. Loaded by `src/lib/glossary.ts`.
 
 - `getGlossaryTerms()` — returns all terms with array fields defaulted to `[]`.
 - `validateGlossary()` — called at build time from `glossary.astro`; throws on bad cross-references. Run the build (`npm run build`) to catch glossary errors.
@@ -180,7 +180,7 @@ After any progress or comment change, topic scripts dispatch `window.dispatchEve
 
 ### FAQ System
 
-**`src/content/faq.json`** — flat array of FAQ entries with fields `slug`, `question`, `answer`, `theme` (one of: `technology`, `process`, `data`, `people`), `seeAlso` (array of `chapter-slug/topic-slug` refs), `related` (array of glossary slugs). Loaded by `src/lib/faq.ts`.
+**`content/faq.json`** — flat array of FAQ entries with fields `slug`, `question`, `answer`, `theme` (one of: `technology`, `process`, `data`, `people`), `seeAlso` (array of `chapter-slug/topic-slug` refs), `related` (array of glossary slugs). Loaded by `src/lib/faq.ts`.
 
 - `getFaqEntries()` — returns all entries with array fields defaulted to `[]`.
 - `validateFaq()` — called at build time from `faq.astro`; throws on invalid theme, bad topic refs in `seeAlso`, or bad glossary refs in `related`. Run `npm run build` to catch FAQ errors.
@@ -200,27 +200,27 @@ All shared components live in `src/components/`:
 
 ### Adding Content
 
-**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `src/content/order.json` under the chapter key to control its position.
+**New topic:** add `NN-slug.md` in the relevant chapter folder. Set `topicLayout` to one of the valid values above. Register the topic slug in `content/order.json` under the chapter key to control its position.
 
-**New chapter in an existing module:** create `src/content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `src/content/order.json` under the module key. Add the chapter to `src/content/chapter-phases.json` under the correct pillar and module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
+**New chapter in an existing module:** create `content/chapters/<slug>/` with `_meta.json` (including `theme` and `module`) and topic files. Register the chapter slug in `content/order.json` under the module key. Add the chapter to `content/chapter-phases.json` under the correct pillar and module key. No routing changes needed — the dynamic `[theme]/[module]/[chapter]/` route picks it up automatically.
 
-**New module (any pillar):** create `src/pages/{theme}/{module}/index.astro`, add a card to the pillar index page (`src/pages/{theme}/index.astro`), add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`. Also register it in `src/content/order.json`.
+**New module (any pillar):** create `src/pages/{theme}/{module}/index.astro`, add a card to the pillar index page (`src/pages/{theme}/index.astro`), add the module to `moduleBackMap` in `[chapter]/index.astro`, and add it to `moduleLabels` in `SiteOverlay.astro`. Also register it in `content/order.json`.
 
-**New role course:** add `src/content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
+**New role course:** add `content/roles/{slug}.json`. See the Role JSON structure and phase guidance below.
 
 ### Removing Content
 
-**Deleting a topic:** remove the topic file and remove its slug from `src/content/order.json`. The "topics" count badge on the chapter overview page updates automatically at build time.
+**Deleting a topic:** remove the topic file and remove its slug from `content/order.json`. The "topics" count badge on the chapter overview page updates automatically at build time.
 
-**Deleting a chapter:** remove the chapter folder, remove its slug from `src/content/order.json`, and remove its entry from `src/content/chapter-phases.json`. The "chapters available" badge on the module/pillar overview page updates automatically at build time.
+**Deleting a chapter:** remove the chapter folder, remove its slug from `content/order.json`, and remove its entry from `content/chapter-phases.json`. The "chapters available" badge on the module/pillar overview page updates automatically at build time.
 
-**Deleting a module:** reverse the steps in "New module" above — remove the page, the pillar index card, the `moduleBackMap` entry, and the `moduleLabels` entry, and remove it from `src/content/order.json`.
+**Deleting a module:** reverse the steps in "New module" above — remove the page, the pillar index card, the `moduleBackMap` entry, and the `moduleLabels` entry, and remove it from `content/order.json`.
 
 > **Counters are dynamic.** The "X chapters available" badges on pillar overview pages and the "X topics" counts on module/chapter overview pages are computed at build time from `getChapters()` and `getTopics()`. They update automatically — no manual edits needed in any `.astro` file.
 
 ### Role JSON Structure
 
-Each role JSON file at `src/content/roles/{slug}.json` has these fields:
+Each role JSON file at `content/roles/{slug}.json` has these fields:
 
 ```json
 {
@@ -248,7 +248,7 @@ Each role JSON file at `src/content/roles/{slug}.json` has these fields:
 
 ### Learning Phases
 
-The global phase definitions live in `src/content/learning-phases.json`. There are five phases, in order:
+The global phase definitions live in `content/learning-phases.json`. There are five phases, in order:
 
 | Phase ID | Title | Purpose |
 |---|---|---|

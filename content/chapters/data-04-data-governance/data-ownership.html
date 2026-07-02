@@ -1,0 +1,62 @@
+<h2>What data ownership means</h2>
+<p>A data owner is the person or role responsible for a specific data element or data domain. Ownership means being accountable for:</p>
+<ul>
+<li>Ensuring the data is accurate and up to date</li>
+<li>Reviewing and approving changes to the data</li>
+<li>Investigating and resolving data quality issues</li>
+<li>Defining the standards and rules that govern how the data is managed</li>
+</ul>
+<p>Data ownership is not the same as data entry. An operations manager may own the production capacity data even if they do not personally input it into MDM system. The owner defines what the data should be; others may maintain the technical records.</p>
+<h2>Data ownership in the planning context</h2>
+<p>For supply chain planning, the key data domains and their typical owners are:</p>
+<table>
+<thead>
+<tr>
+<th>Data domain</th>
+<th>Typical owner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Item master / product hierarchy</td>
+<td>Master Data Manager / Product team</td>
+</tr>
+<tr>
+<td>BOM and BOD structures</td>
+<td>Engineering / Supply Chain design</td>
+</tr>
+<tr>
+<td>Planning parameters (lead times, MOQs)</td>
+<td>Planning Manager / Supply Chain</td>
+</tr>
+<tr>
+<td>Demand forecast</td>
+<td>Demand Planner / Commercial</td>
+</tr>
+<tr>
+<td>Customer master</td>
+<td>Commercial / Sales Operations</td>
+</tr>
+<tr>
+<td>Supplier master</td>
+<td>Procurement</td>
+</tr>
+<tr>
+<td>Inventory positions</td>
+<td>Warehouse / Operations</td>
+</tr>
+<tr>
+<td>Grower contracts and field data</td>
+<td>Agricultural / Field team</td>
+</tr>
+</tbody></table>
+<h2>Why ownership gaps cause data problems</h2>
+<p>When data has no clear owner, it accumulates errors over time. No one is responsible for noticing when a lead time becomes outdated, when a BOM ratio changes after a product reformulation, or when a new customer location is missing from the network. The data silently becomes wrong, and the planning model silently produces wrong outputs.</p>
+<p>Ownership gaps are especially common at the boundaries between functions. Who owns the planning parameters that sit at the intersection of procurement (supplier lead times) and planning (how those times are used in the model)? If the answer is "both" or "neither," there is a governance gap.</p>
+<h2>Operationalising data ownership</h2>
+<p>Data ownership only has value if it is exercised. Owners need:</p>
+<ul>
+<li>A defined process for how data change requests are submitted and approved</li>
+<li>A review cadence — when do they review their data domain to check for accuracy?</li>
+<li>Escalation authority — if someone uses data incorrectly (e.g., overrides a parameter in Planning software without updating MDM system), the owner has the authority to require correction</li>
+</ul>
+<p>Documenting data owners in a data catalogue (even a simple spreadsheet) and reviewing it in the S&amp;OP cycle is enough to make ownership operational. The goal is not bureaucracy — it is ensuring that someone can be called when a data problem is found.</p>

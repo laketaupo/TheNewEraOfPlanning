@@ -1,0 +1,29 @@
+<h2>What a batch run is</h2>
+<p>A batch run is a scheduled, automated job that executes a defined set of operations on a recurring basis — typically overnight or at defined intervals during the day. In the planning context, batch runs do the work that would otherwise require manual intervention: pulling fresh data from source systems, running the planning engine, and surfacing updated exceptions for planners to review.</p>
+<p>Batch runs are what make the daily planning cycle sustainable. Without them, planners would need to manually trigger data refreshes and planning runs — a time-consuming and error-prone process.</p>
+<h2>The overnight planning cycle</h2>
+<p>A standard overnight batch cycle for the Planning software planning environment runs in sequence:</p>
+<ol>
+<li><p><strong>Master data sync</strong> — updated item master, BOMs, and BODs are pulled from MDM system into Planning software. Any new items, changed parameters, or updated lead times are applied.</p>
+</li>
+<li><p><strong>Transactional data import</strong> — actual inventory positions, goods receipts, and production order completions from ERP are imported into Planning software. Open purchase orders and production orders are updated to reflect current status.</p>
+</li>
+<li><p><strong>Field signal refresh</strong> — updated crop forecasts and grower contract data from FMS are loaded into Planning software as updated supply signals.</p>
+</li>
+<li><p><strong>Planning engine run</strong> — Planning software recalculates the supply plan across the full network, incorporating the updated master data and transactional actuals. New planned orders are generated, existing orders are rescheduled where needed, and exception flags are updated.</p>
+</li>
+<li><p><strong>Exception report generation</strong> — the updated exception list is made available to planners for the morning S&amp;OE review.</p>
+</li>
+</ol>
+<h2>Monitoring batch run health</h2>
+<p>A failed batch run silently breaks the planning process. If the overnight transactional import fails, planners are working with yesterday's inventory positions — their exceptions may be stale and their planned orders wrong. Every batch run should produce a success/failure log that is reviewed at the start of the planning day.</p>
+<p>Key indicators of batch run health:</p>
+<ul>
+<li><strong>Last successful run timestamp</strong> — when did the batch last complete without errors?</li>
+<li><strong>Record count</strong> — how many records were processed? A run that completes but processes zero records may indicate a connectivity issue.</li>
+<li><strong>Error log</strong> — any records that failed to import should be flagged for investigation</li>
+</ul>
+<h2>Common batch run issues</h2>
+<p><strong>Data format errors</strong> — a change to the source system's data structure (e.g., a new field in MDM system) can break the interface mapping. The batch run fails on the records that don't conform to the expected schema.</p>
+<p><strong>Timeout errors</strong> — large data volumes combined with network latency can cause batch jobs to exceed their timeout window. This is common when a source system is upgraded or when a month-end close increases transaction volumes.</p>
+<p><strong>Dependency failures</strong> — if the master data sync fails, the planning run may run on stale master data. Batch jobs should be sequenced with dependency checks: only run the planning engine if the data import completed successfully.</p>

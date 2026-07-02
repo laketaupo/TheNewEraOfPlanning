@@ -1,0 +1,40 @@
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>FMS</th>
+<th>MDM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Data type</strong></td>
+<td>Operational field data (what is growing, where, when)</td>
+<td>Reference master data (what products are, how they are structured)</td>
+</tr>
+<tr>
+<td><strong>Data owner</strong></td>
+<td>Field operations / agronomists</td>
+<td>Product management / data stewardship teams</td>
+</tr>
+<tr>
+<td><strong>Change frequency</strong></td>
+<td>Daily to weekly (as growing conditions evolve)</td>
+<td>Event-driven (new product, supplier change, reformulation)</td>
+</tr>
+<tr>
+<td><strong>Effect on planning</strong></td>
+<td>Changes supply-side quantity and timing in Planning software</td>
+<td>Changes the structural rules Planning software and ERP use to plan and execute</td>
+</tr>
+<tr>
+<td><strong>Risk if wrong</strong></td>
+<td>Supply plan is built on incorrect yield or timing data</td>
+<td>Plans and transactions use wrong parameters, BOMs, or item codes</td>
+</tr>
+<tr>
+<td><strong>Who notices first</strong></td>
+<td>Supply planner (unexpected supply signal change)</td>
+<td>Demand or supply planner (item missing from plan, wrong netting logic)</td>
+</tr>
+</tbody></table>
+<p>The practical implication: FMS errors tend to surface as <strong>quantity or timing surprises</strong> in the plan. MDM errors tend to surface as <strong>structural gaps</strong> — items that cannot be planned, transactions that fail validation, or parameters that produce nonsensical plan outputs.</p>
